@@ -12,8 +12,6 @@ public class Iscrizioni implements Serializable
 	
 	public static void  addFruitore(Vector<Fruitore> fruitori)
 	{
-		
-		
 		String nome = InputDati.leggiStringa("Inserisci il tuo nome \n");
 		String cognome = InputDati.leggiStringa("Inserisci il tuo cognome \n");
 		Data dataNascita = InputDati.leggiData();

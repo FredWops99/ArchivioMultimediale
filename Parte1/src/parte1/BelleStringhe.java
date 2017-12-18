@@ -2,7 +2,6 @@ package parte1;
 
 public class BelleStringhe
 {
-
 	private final static String SPAZIO = " ";
 	private final static String CORNICE = "---------------------------------------------------";
 	private final static String ACAPO = "\n";

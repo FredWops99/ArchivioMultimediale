@@ -7,7 +7,6 @@ public class ServizioFileVector implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	
 	private final static String MSG_NO_FILE = "ATTENZIONE: NON TROVO IL FILE ";
 	private final static String MSG_NO_LETTURA = "ATTENZIONE: PROBLEMI CON LA LETTURA DEL FILE ";
 	private final static String MSG_NO_SCRITTURA = "ATTENZIONE: PROBLEMI CON LA SCRITTURA DEL FILE ";

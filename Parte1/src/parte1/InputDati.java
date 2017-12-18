@@ -5,7 +5,6 @@ import java.util.*;
 
 public class InputDati implements Serializable
 {
-	 
 	private static final long serialVersionUID = 1L;
 
 	private static Scanner lettore = creaScanner();
@@ -18,8 +17,6 @@ public class InputDati implements Serializable
 	
 	private final static char RISPOSTA_SI='S';
 	private final static char RISPOSTA_NO='N';
-	
-	
 	
 	private static Scanner creaScanner ()
 	{
