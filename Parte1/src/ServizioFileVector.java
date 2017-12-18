@@ -1,8 +1,12 @@
 import java.io.*;
 import java.util.Vector;
 
+<<<<<<< HEAD
 public class ServizioFileVector implements Serializable
 {
+=======
+public class ServizioFileVector implements Serializable{
+>>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,8 +17,12 @@ public class ServizioFileVector implements Serializable
 	private final static String MSG_NO_CHIUSURA ="ATTENZIONE: PROBLEMI CON LA CHIUSURA DEL FILE ";
 		
 		
+<<<<<<< HEAD
 	public static Vector<?> caricaSingoloOggetto(File file)
 	{
+=======
+	public static Vector<?> caricaSingoloOggetto(File file){
+>>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 	 
 		Vector<?> letto = null;
 		ObjectInputStream ingresso = null;

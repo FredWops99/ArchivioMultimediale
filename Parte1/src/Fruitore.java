@@ -1,7 +1,12 @@
 import java.io.Serializable;
 
+<<<<<<< HEAD
 public class Fruitore implements Serializable 
 {
+=======
+public class Fruitore implements Serializable {
+	
+>>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 	private static final long serialVersionUID = 1L;
 	private String nome; 
 	private String cognome;
