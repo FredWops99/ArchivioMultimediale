@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class Iscrizioni implements Serializable{
 
-	
+
 	public static void  addFruitore(Vector<Fruitore> fruitori){
 		
 		
@@ -67,7 +67,6 @@ public class Iscrizioni implements Serializable{
 	
 	public static void rinnovo(Vector<Fruitore> fruitori){  // String nome,String Cognome
 		
-		if()
 		System.out.println("");
 	}
 }
