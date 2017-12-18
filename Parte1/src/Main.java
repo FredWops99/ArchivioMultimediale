@@ -32,7 +32,7 @@ public class Main implements Serializable{
 	
 	
 	public static void main(String[] args){
-		// ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
 		fruitori = ServizioFileVector.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
 		Iscrizioni.controlloIscrizioni(fruitori);
