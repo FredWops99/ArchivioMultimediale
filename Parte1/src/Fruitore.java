@@ -1,8 +1,9 @@
 import java.io.Serializable;
 
-public class Fruitore implements Serializable {
+public class Fruitore implements Serializable 
+{
 	
-	
+	private static final long serialVersionUID = 1L;
 	private String nome; 
 	private String cognome;
 	private Data dataNascita; 
@@ -10,7 +11,8 @@ public class Fruitore implements Serializable {
 	
 	
 	
-	public Fruitore(String nome, String cognome, Data dataNascita, Data dataIscrizione) {
+	public Fruitore(String nome, String cognome, Data dataNascita, Data dataIscrizione) 
+	{
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
@@ -20,28 +22,36 @@ public class Fruitore implements Serializable {
 	
 	
 	
-	public String getNome() {
+	public String getNome() 
+	{
 		return nome;
 	}
-	public String getCognome() {
+	public String getCognome() 
+	{
 		return cognome;
 	}
-	public Data getDataNascita() {
+	public Data getDataNascita() 
+	{
 		return dataNascita;
 	}
-	public Data getDataIscrizione() {
+	public Data getDataIscrizione() 
+	{
 		return dataIscrizione;
 	}
-	public void setNome(String nome) {
+	public void setNome(String nome) 
+	{
 		this.nome = nome;
 	}
-	public void setCognome(String cognome) {
+	public void setCognome(String cognome) 
+	{
 		this.cognome = cognome;
 	}
-	public void setDataNascita(Data dataNascita) {
+	public void setDataNascita(Data dataNascita) 
+	{
 		this.dataNascita = dataNascita;
 	}
-	public void setDataIscrizione(Data dataIscrizione) {
+	public void setDataIscrizione(Data dataIscrizione) 
+	{
 		this.dataIscrizione = dataIscrizione;
 	}
 

@@ -1,22 +1,23 @@
-import java.io.File;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-public class Iscrizioni implements Serializable{
+public class Iscrizioni implements Serializable
+{
 
+	private static final long serialVersionUID = 1L;
 
-	public static void  addFruitore(Vector<Fruitore> fruitori){
-		
-		
+	public static void  addFruitore(Vector<Fruitore> fruitori)
+	{	
 		String nome = InputDati.leggiStringa("Inserisci il tuo nome \n");
 		String cognome = InputDati.leggiStringa("Inserisci il tuo cognome \n");
 		Data dataNascita = InputDati.leggiData();
 		
-		if(dataNascita.età() < 18){
+		if(dataNascita.età() < 18)
+		{
 			System.out.println("Ci dispiace ma non puoi accedere per questioni di età");
-		return;
+			return;
 		}
 		
 		GregorianCalendar gc = new GregorianCalendar();
@@ -33,10 +34,12 @@ public class Iscrizioni implements Serializable{
 		
 	}
 	
-	public static void stampaFruitori(Vector<Fruitore> fruitori){
+	public static void stampaFruitori(Vector<Fruitore> fruitori)
+	{
 		
 		System.out.println(fruitori.size());
-		for(int i = 0;i<fruitori.size();i++){
+		for(int i = 0;i<fruitori.size();i++)
+		{
 			
 			System.out.println("-----------------------------");
 			System.out.println("Nome: " + fruitori.get(i).getNome() + "\n");
@@ -46,9 +49,11 @@ public class Iscrizioni implements Serializable{
 		}
 	}
 	
-	public static void controlloIscrizioni(Vector<Fruitore> fruitori){
+	public static void controlloIscrizioni(Vector<Fruitore> fruitori)
+	{
 		
-		for (int i=0; i<fruitori.size();i++) {
+		for (int i=0; i<fruitori.size();i++) 
+		{
 			
 			GregorianCalendar gc = new GregorianCalendar();
 			int annoCorrente = gc.get(Calendar.YEAR);
@@ -58,14 +63,16 @@ public class Iscrizioni implements Serializable{
 			Data dataCorrente = new Data();
 			dataCorrente.setData(""+giornoCorrente,""+meseCorrente,""+annoCorrente);
 			
-			if(Data.comparaDate(dataCorrente, fruitori.get(i).getDataIscrizione())){
+			if(Data.comparaDate(dataCorrente, fruitori.get(i).getDataIscrizione()))
+			{
 				fruitori.remove(i); // se è scaduta l'iscrizione rimuovo il fruitore
 			}
 			
 		}
 	}
 	
-	public static void rinnovo(Vector<Fruitore> fruitori){  // String nome,String Cognome
+	public static void rinnovo(Vector<Fruitore> fruitori)
+	{  // String nome,String Cognome
 		
 		System.out.println("");
 	}

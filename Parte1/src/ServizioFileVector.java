@@ -1,12 +1,8 @@
-
 import java.io.*;
 import java.util.Vector;
 
-
-
-public class ServizioFileVector implements Serializable{
-	
-	
+public class ServizioFileVector implements Serializable
+{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -17,16 +13,17 @@ public class ServizioFileVector implements Serializable{
 	private final static String MSG_NO_CHIUSURA ="ATTENZIONE: PROBLEMI CON LA CHIUSURA DEL FILE ";
 		
 		
-	public static Vector caricaSingoloOggetto(File file){
+	public static Vector<?> caricaSingoloOggetto(File file)
+	{
 	 
-		Vector letto = null;
+		Vector<?> letto = null;
 		ObjectInputStream ingresso = null;
 		
 		try
 		{
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			Vector lista = (Vector) ois.readObject();
+			Vector<?> lista = (Vector<?>) ois.readObject();
 			ois.close();
 			
 			return lista;
@@ -61,7 +58,7 @@ public class ServizioFileVector implements Serializable{
 	 return letto;
 }
 
-	public static void salvaSingoloOggetto (File file, Vector daSalvare)
+	public static void salvaSingoloOggetto (File file, Vector<?> daSalvare)
 	{
 		ObjectOutputStream uscita = null;
 		

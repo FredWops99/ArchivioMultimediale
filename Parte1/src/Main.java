@@ -19,22 +19,24 @@ l’elenco degli attuali fruitori.*/
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
-public class Main implements Serializable{
+public class Main implements Serializable
+{
 
+	private static final long serialVersionUID = 1L;
 	static Vector<Fruitore> fruitori = new Vector<>();
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);
 	
 	
 	
-	public static void main(String[] args){
+	@SuppressWarnings("unchecked")	//per il cast in Vector<>
+	public static void main(String[] args)
+	{
 		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
-		fruitori = ServizioFileVector.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
+		fruitori = (Vector<Fruitore>)ServizioFileVector.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
 		Iscrizioni.controlloIscrizioni(fruitori);
 		
 		
