@@ -23,8 +23,8 @@ import java.util.Vector;
 
 public class Main implements Serializable
 {
-
 	private static final long serialVersionUID = 1L;
+
 	static Vector<Fruitore> fruitori = new Vector<>();
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);

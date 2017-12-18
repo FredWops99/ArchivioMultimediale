@@ -2,14 +2,11 @@ import java.io.Serializable;
 
 public class Fruitore implements Serializable 
 {
-	
 	private static final long serialVersionUID = 1L;
 	private String nome; 
 	private String cognome;
 	private Data dataNascita; 
 	private Data dataIscrizione;
-	
-	
 	
 	public Fruitore(String nome, String cognome, Data dataNascita, Data dataIscrizione) 
 	{
@@ -19,8 +16,6 @@ public class Fruitore implements Serializable
 		this.dataNascita = dataNascita;
 		this.dataIscrizione = dataIscrizione;
 	}
-	
-	
 	
 	public String getNome() 
 	{
@@ -54,5 +49,4 @@ public class Fruitore implements Serializable
 	{
 		this.dataIscrizione = dataIscrizione;
 	}
-
 }

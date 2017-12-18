@@ -10,8 +10,6 @@ public class Data implements Serializable
 	private String mese;
 	private String anno;
 
-	
-	
 	public Data()
 	{ // Costruttore 1
 		this.giorno = "01";
@@ -23,7 +21,6 @@ public class Data implements Serializable
 	
 	public int getGiorno()
 	{
-		
 		return Integer.parseInt(this.giorno);
 	}
 	
@@ -46,7 +43,7 @@ public class Data implements Serializable
 		return  Integer.parseInt(this.anno);
 	}
 	
-	public void setData(String gg,String mm,String aaaa)
+	public void setData(String gg, String mm, String aaaa)
 	{
 		
 		this.giorno = gg;
