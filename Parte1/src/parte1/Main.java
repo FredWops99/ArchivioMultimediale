@@ -16,6 +16,7 @@ da parte dell’operatore:
  - rinnovo dell’iscrizione di un fruitore che ne ha fatto richiesta nei termini prescritti.
 Inoltre la prima versione dell’applicazione deve consentire all’operatore di visualizzare
 l’elenco degli attuali fruitori.*/
+package parte1;
 
 import java.io.File;
 import java.io.Serializable;

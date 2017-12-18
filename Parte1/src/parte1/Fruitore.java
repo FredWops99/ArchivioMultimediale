@@ -1,3 +1,5 @@
+package parte1;
+
 import java.io.Serializable;
 
 public class Fruitore implements Serializable {
