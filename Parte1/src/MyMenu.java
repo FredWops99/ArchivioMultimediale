@@ -8,6 +8,7 @@ e sia presentata in fondo al menu
 */
 public class MyMenu implements Serializable
 {
+  private static final long serialVersionUID = 1L;
   final private static String CORNICE = "--------------------------------";
   final private static String VOCE_USCITA = "0)\tEsci";
   final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";

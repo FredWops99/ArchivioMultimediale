@@ -1,12 +1,11 @@
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 // ho messo il gg e mm e aaaa come stringhe così che l'utente possa inserire sia 1/1/2000 sia che 01/01/2000
 
 public class Data implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String giorno;
 	private String mese;
 	private String anno;

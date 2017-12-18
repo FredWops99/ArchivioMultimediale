@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -6,6 +5,7 @@ import java.util.Vector;
 
 public class Iscrizioni implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 
 	public static void  addFruitore(Vector<Fruitore> fruitori){
 		
