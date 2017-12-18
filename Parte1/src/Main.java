@@ -23,9 +23,9 @@ import java.util.Vector;
 
 public class Main implements Serializable
 {
-	private static final long serialVersionUID = 1L;
 
 	private static final long serialVersionUID = 1L;
+	
 	static Vector<Fruitore> fruitori = new Vector<>();
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);
@@ -33,12 +33,9 @@ public class Main implements Serializable
 	
 	
 	@SuppressWarnings("unchecked")	//per il cast in Vector<>
-<<<<<<< HEAD
+	
 	public static void main(String[] args)
 	{
-=======
-	public static void main(String[] args){
->>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
 		fruitori = (Vector<Fruitore>)ServizioFileVector.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file

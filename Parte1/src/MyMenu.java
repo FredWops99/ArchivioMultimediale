@@ -8,17 +8,11 @@ e sia presentata in fondo al menu
 */
 public class MyMenu implements Serializable
 {
-<<<<<<< HEAD
-	private static final long serialVersionUID = 1L;
-	final private static String CORNICE = "--------------------------------";
-	final private static String VOCE_USCITA = "0)\tEsci";
-	final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
-=======
+
   private static final long serialVersionUID = 1L;
   final private static String CORNICE = "--------------------------------";
   final private static String VOCE_USCITA = "0)\tEsci";
   final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
->>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 
 	private String titolo;
 	private String [] voci;

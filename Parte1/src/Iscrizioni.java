@@ -6,17 +6,12 @@ import java.util.Vector;
 public class Iscrizioni implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-
-<<<<<<< HEAD
-	public static void addFruitore(Vector<Fruitore> fruitori)
-	{	
-=======
-	private static final long serialVersionUID = 1L;
-
-	public static void  addFruitore(Vector<Fruitore> fruitori){
+	
+	
+	public static void  addFruitore(Vector<Fruitore> fruitori)
+	{
 		
 		
->>>>>>> branch 'master' of https://github.com/FredWops/ArchivioMultimediale
 		String nome = InputDati.leggiStringa("Inserisci il tuo nome \n");
 		String cognome = InputDati.leggiStringa("Inserisci il tuo cognome \n");
 		Data dataNascita = InputDati.leggiData();
