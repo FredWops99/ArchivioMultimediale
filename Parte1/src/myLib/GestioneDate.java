@@ -13,7 +13,7 @@ public class GestioneDate
 	private static final int GIORNO_MAX_31 = 31;
 	private static final int GIORNO_MAX_30 = 30;
 	private static final int GIORNO_MAX_29 = 29;
-	private static final int GIORNO_MAX_28 = 28;
+	private static final int GIORNO_MAX_28 = 28; 
 	
 	private static final int ORARIO_MIN = 0;
 	private static final int SECONDI_MINUTI_MAX = 59;
