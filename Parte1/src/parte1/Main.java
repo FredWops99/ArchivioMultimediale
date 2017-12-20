@@ -30,7 +30,10 @@ public class Main implements Serializable
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);	
 	
+<<<<<<< HEAD
 		
+=======
+>>>>>>> refs/remotes/origin/master
 	@SuppressWarnings("unchecked")	//per il cast in Vector<>
 	
 	public static void main(String[] args)
