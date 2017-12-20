@@ -10,16 +10,11 @@ public class Iscrizioni implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	
-<<<<<<< HEAD
+
 	public static void addFruitore(Vector<Fruitore> fruitori)
-=======
-	public static void  addFruitore(Vector<Fruitore> fruitori)
->>>>>>> refs/remotes/origin/master
 	{
 		String nome = InputDati.leggiStringa("Inserisci il tuo nome \n");
 		String cognome = InputDati.leggiStringa("Inserisci il tuo cognome \n");
-//		Data dataNascita = InputDati.leggiData();
 		GregorianCalendar dataNascita = GestioneDate.creaDataGuidataPassata("inserisci la tua data di nascita: ", 1900);
 		
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
@@ -28,24 +23,18 @@ public class Iscrizioni implements Serializable
 			return;
 		}
 		
-		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
-		
-
 		
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione);
 		
 		fruitori.add(f);
-		
 	}
 	
 	public static void stampaFruitori(Vector<Fruitore> fruitori)
 	{
-		
 		System.out.println(fruitori.size());
-		for(int i = 0;i<fruitori.size();i++)
+		for(int i = 0; i<fruitori.size(); i++)
 		{
-			
 			System.out.println("-----------------------------");
 			System.out.println("Nome: " + fruitori.get(i).getNome() + "\n");
 			System.out.println("Cognome: " + fruitori.get(i).getCognome() + "\n");
@@ -56,7 +45,6 @@ public class Iscrizioni implements Serializable
 	
 	public static void controlloIscrizioni(Vector<Fruitore> fruitori)
 	{
-		
 		for (int i=0; i<fruitori.size();i++) 
 		{
 			if(GestioneDate.differenzaAnniDaOggi(fruitori.get(i).getDataIscrizione()) >= 5)

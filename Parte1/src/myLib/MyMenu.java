@@ -29,22 +29,22 @@ public class MyMenu
   
   public MyMenu (String titolo, String [] voci, boolean isSottoMenu)
   {
-	this.titolo = titolo;
-	this.voci = voci;
-	if(!isSottoMenu)
-	{
-		indietro = false;
-	}
-	else
-	{
-		indietro = true;
-	}
+	  this.titolo = titolo;
+	  this.voci = voci;
+	  if(!isSottoMenu)
+	  {
+		  indietro = false;
+	  }
+	  else
+	  {
+		  indietro = true;
+	  }
   }
 
   public int scegli ()
   {
-	stampaMenu();
-	return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
+	  stampaMenu();
+	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
   }
   
   public int scegliNoPrintMenu()
@@ -63,9 +63,9 @@ public class MyMenu
 	System.out.println(titolo);
 	System.out.println(CORNICE);
     for (int i=0; i<voci.length; i++)
-	 {
-	  System.out.println( (i+1) + "\t" + voci[i]);
-	 }
+    {
+    	System.out.println( (i+1) + "\t" + voci[i]);
+    }
     System.out.println();
 	if(indietro)
 	{
@@ -78,13 +78,27 @@ public class MyMenu
     System.out.println();
   }
   
+  public void stampaMenuPlus (String cornice)
+  {
+	  System.out.println(cornice);
+	  System.out.println(titolo);
+	  System.out.println(cornice);
+	  for (int i=0; i<voci.length; i++)
+	  {
+		  System.out.println( (i+1) + ")\t" + voci[i]);
+	  }
+	  System.out.println();
+	  System.out.println(VOCE_USCITA);
+	  System.out.println();
+	}
+  
   public String toString()
   {
 	  String stringa=CORNICE + "\n"+ titolo + "\n" + CORNICE+"\n";
 	  for (int i=0; i<voci.length; i++)
-		 {
+	  {
 		  stringa +=( (i+1) + "\t" + voci[i] + "\n");
-		 }
+	  }
 	  stringa += VOCE_USCITA + "\n";
 	  
 	  return stringa;

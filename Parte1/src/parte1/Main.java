@@ -16,26 +16,21 @@ package parte1;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 import java.util.Vector;
-
-import myLib.GestioneDate;
 import myLib.ServizioFile;
 
 public class Main implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
+	
+//	far diventare FRUITORI una classe con dentro tutti i metodi che ora sono presenti in ISCRIZIONI?
 	static Vector<Fruitore> fruitori = new Vector<>();
+	
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);	
 	
-<<<<<<< HEAD
-		
-=======
->>>>>>> refs/remotes/origin/master
 	@SuppressWarnings("unchecked")	//per il cast in Vector<>
-	
 	public static void main(String[] args)
 	{
 //		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
@@ -52,22 +47,18 @@ public class Main implements Serializable
 		
 		fruitori = (Vector<Fruitore>)ServizioFile.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
 		
-		Iscrizioni.controlloIscrizioni(fruitori);
-		
+		Iscrizioni.controlloIscrizioni(fruitori);		
 		
 		
 		Iscrizioni.addFruitore(fruitori);
 		Iscrizioni.stampaFruitori(fruitori);
 		
-		
-		
-		
-		
-//		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+				
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
 	}
 
+//	da mettere in ServizioFile?
 	private static void checkFile(File file) throws IOException 
 	{
 		if (file.exists())
