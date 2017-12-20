@@ -464,4 +464,34 @@ public class GestioneDate
 		
 		return s;
 	}
+	
+	public static short differenzaAnniDaOggi(GregorianCalendar date)
+	{		
+		
+		int giornoCorrente = DATA_CORRENTE.get(GregorianCalendar.DAY_OF_MONTH);
+		int meseCorrente = DATA_CORRENTE.get(GregorianCalendar.MONTH);
+		int annoCorrente = DATA_CORRENTE.get(GregorianCalendar.YEAR);
+		int giorno = date.DAY_OF_MONTH;
+		int mese = date.MONTH;
+		int anno = date.YEAR;
+		
+		
+		short data;
+		if (mese < meseCorrente)
+		{
+			 data = (short) (annoCorrente - anno);
+			 return data;
+		}
+		if (mese == meseCorrente && giorno < giornoCorrente)
+		{
+			 data = (short) (annoCorrente - anno);
+			 return data;
+		}
+		else
+		{
+			 data = (short)(annoCorrente - anno);
+			 data = (short) (data - 1);
+			 return data;
+		}
+	}	
 }

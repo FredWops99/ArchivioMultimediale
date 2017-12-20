@@ -1,16 +1,17 @@
 package parte1;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 
-public class Fruitore implements Serializable {
-	
+public class Fruitore implements Serializable 
+{	
 	private static final long serialVersionUID = 1L;
 	private String nome; 
 	private String cognome;
-	private Data dataNascita; 
-	private Data dataIscrizione;
+	private GregorianCalendar dataNascita; 
+	private GregorianCalendar dataIscrizione;
 	
-	public Fruitore(String nome, String cognome, Data dataNascita, Data dataIscrizione) 
+	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione) 
 	{
 		super();
 		this.nome = nome;
@@ -27,11 +28,11 @@ public class Fruitore implements Serializable {
 	{
 		return cognome;
 	}
-	public Data getDataNascita() 
+	public GregorianCalendar getDataNascita() 
 	{
 		return dataNascita;
 	}
-	public Data getDataIscrizione() 
+	public GregorianCalendar getDataIscrizione() 
 	{
 		return dataIscrizione;
 	}
@@ -43,11 +44,11 @@ public class Fruitore implements Serializable {
 	{
 		this.cognome = cognome;
 	}
-	public void setDataNascita(Data dataNascita) 
+	public void setDataNascita(GregorianCalendar dataNascita) 
 	{
 		this.dataNascita = dataNascita;
 	}
-	public void setDataIscrizione(Data dataIscrizione) 
+	public void setDataIscrizione(GregorianCalendar dataIscrizione) 
 	{
 		this.dataIscrizione = dataIscrizione;
 	}

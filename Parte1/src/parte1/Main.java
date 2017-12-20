@@ -14,8 +14,13 @@
 package parte1;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import myLib.GestioneDate;
+import myLib.ServizioFile;
 
 public class Main implements Serializable
 {
@@ -25,13 +30,25 @@ public class Main implements Serializable
 	private final static String PATH = "Fruitori.dat";
 	static File fileFruitori = new File(PATH);	
 	
+		
 	@SuppressWarnings("unchecked")	//per il cast in Vector<>
 	
 	public static void main(String[] args)
 	{
-		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+//		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
-		fruitori = (Vector<Fruitore>)ServizioFileVector.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
+		try 
+		{
+			checkFile(fileFruitori);
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		
+		fruitori = (Vector<Fruitore>)ServizioFile.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
+		
 		Iscrizioni.controlloIscrizioni(fruitori);
 		
 		
@@ -43,9 +60,22 @@ public class Main implements Serializable
 		
 		
 		
-		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+//		ServizioFileVector.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+
 	}
 
-	
+	private static void checkFile(File file) throws IOException 
+	{
+		if (file.exists())
+            System.out.println("Il file " + file.getPath() + " esiste");
+        else if (file.createNewFile())
+            System.out.println("Il file " + file.getPath() + " è stato creato");
+        else
+            System.out.println("Il file " + file.getPath() + " non può essere creato");
+	}
+
 
 }
+
+
