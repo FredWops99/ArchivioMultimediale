@@ -110,7 +110,7 @@ public class Main implements Serializable
 				{
 					
 				}
-				continuaMenuIniziale = true;
+				continuaMenuIniziale = true ;
 				
 				break;
 			}
