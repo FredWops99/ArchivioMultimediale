@@ -1,5 +1,4 @@
 # ArchivioMultimediale
 Progetto Zanella, parte 1
-
-##Authors
+## Authors
 Stefano Prandini, Federico Landi 
