@@ -16,28 +16,25 @@ package parte1;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-
 import myLib.MyMenu;
 import myLib.ServizioFile;
 
 public class Main implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Rinnova iscrizione", "Visualizza fruitori"};
 	private static final String PATH = "Fruitori.dat";
 	
 	private static boolean continuaMenuIniziale;
 	private static File fileFruitori = new File(PATH);	
-//	serve a tutti i metodi ???
+//	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
 	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
 	{		
 //		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
-
 		try 
 		{
 //			se non c'è il file lo crea

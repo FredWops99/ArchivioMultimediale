@@ -2,7 +2,6 @@ package parte1;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
-
 import myLib.GestioneDate;
 
 public class Fruitore implements Serializable 

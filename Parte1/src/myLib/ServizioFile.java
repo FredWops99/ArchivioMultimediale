@@ -2,7 +2,6 @@ package myLib;
 
 import java.io.*;
 
-
 public class ServizioFile
 {
 	private final static String MSG_NO_FILE = "ATTENZIONE: NON TROVO IL FILE ";

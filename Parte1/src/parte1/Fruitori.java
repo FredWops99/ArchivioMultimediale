@@ -9,14 +9,12 @@ import myLib.InputDati;
 public class Fruitori implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
 	private Vector<Fruitore> fruitori;
 	
 	public Fruitori()
 	{
 		this.fruitori = new Vector<Fruitore>();
-	}
-	
+	}	
 
 	public Vector<Fruitore> getFruitori() 
 	{
