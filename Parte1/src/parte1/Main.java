@@ -16,23 +16,30 @@ package parte1;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+
+import myLib.MyMenu;
 import myLib.ServizioFile;
 
 public class Main implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	private final static String PATH = "Fruitori.dat";
-	static File fileFruitori = new File(PATH);	
+	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
+	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Visualizza fruitori"};
+	private static final String PATH = "Fruitori.dat";
+	
+	private static boolean continuaMenuIniziale;
+	private static File fileFruitori = new File(PATH);	
+//	serve a tutti i metodi ???
+	private static Fruitori fruitori = new Fruitori();
 	
 	public static void main(String[] args)
-	{
-		Fruitori fruitori = new Fruitori();
-		
+	{		
 //		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 
 		try 
 		{
+//			se non c'è il file lo crea
 			ServizioFile.checkFile(fileFruitori);
 		} 
 		catch (IOException e) 
@@ -40,15 +47,62 @@ public class Main implements Serializable
 			e.printStackTrace();
 		}
 		
-		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); //carico i fruitori da file
+//		avviato il programma carico i fruitori dal file
+		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); 
 		
+//		elimino i fruitori scaduti (elimino o no??)
 		fruitori.controlloIscrizioni();		
 		
-		fruitori.addFruitore();
-		fruitori.stampaFruitori();
+		MyMenu menuIniziale=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE);
+		continuaMenuIniziale=true;
+		do
+		{
+			gestisciMenuIniziale(menuIniziale.scegli());
+		}
+		while(continuaMenuIniziale);
+	}
+	
+	private static void gestisciMenuIniziale(int scelta)
+	{
+		continuaMenuIniziale=true;
+		
+		switch(scelta)
+		{
+			case 0:
+			{
+				System.out.println("Grazie per aver usato ArchivioMultimediale!");
 				
-		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
-
+				continuaMenuIniziale=false;
+				break;
+			}
+			case 1:	//registrazione nuovo fruitore
+			{					
+				fruitori.addFruitore();
+						
+				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file "fileFruitori"
+				
+				continuaMenuIniziale=true;//torna al menu
+				
+				break;				
+			}
+			case 2:	//login
+			{
+				System.out.println("WORK IN PROGRESS");
+				
+				continuaMenuIniziale=true;
+				
+				break;
+			}
+			
+			case 3:	//visualizza fruitori
+			{
+				fruitori.stampaFruitori();
+				
+				continuaMenuIniziale = true;
+				
+				break;
+			}
+		}	
 	}
 
 }

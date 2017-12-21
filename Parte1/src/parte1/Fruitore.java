@@ -24,6 +24,7 @@ public class Fruitore implements Serializable
 //		gli passo dataIscrizione perchè sennò il metodo non potrebbe accedere a dataIscrizione, non ancora salvato
 		this.dataScadenza = calcolaScadenza(dataIscrizione);
 	}
+	
 	/**
 	 * se mi iscrivo il 29 febbraio, tra 5 anni non ci sarà il 29 febbraio: la scadenza sarà il 1 marzo.
 	 * se mi iscrivo un giorno diverso dal 29 febbraio, la scadenza sarà il giorno stesso ma 5 anni dopo
