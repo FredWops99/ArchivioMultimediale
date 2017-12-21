@@ -471,9 +471,9 @@ public class GestioneDate
 		int giornoCorrente = DATA_CORRENTE.get(GregorianCalendar.DAY_OF_MONTH);
 		int meseCorrente = DATA_CORRENTE.get(GregorianCalendar.MONTH);
 		int annoCorrente = DATA_CORRENTE.get(GregorianCalendar.YEAR);
-		int giorno = date.DAY_OF_MONTH;
-		int mese = date.MONTH;
-		int anno = date.YEAR;
+		int giorno = date.get(GregorianCalendar.DAY_OF_MONTH);
+		int mese = date.get(GregorianCalendar.MONTH);
+		int anno = date.get(GregorianCalendar.YEAR);
 		
 		
 		short data;

@@ -109,5 +109,14 @@ public class ServizioFile
 	      }
 	}
 	
+	public static void checkFile(File file) throws IOException 
+	{
+		if (file.exists())
+            System.out.println("Il file " + file.getPath() + " esiste");
+        else if (file.createNewFile())
+            System.out.println("Il file " + file.getPath() + " è stato creato");
+        else
+            System.out.println("Il file " + file.getPath() + " non può essere creato");
+	}
 }
 
