@@ -110,9 +110,9 @@ public class Main implements Serializable
 				{
 					
 				}
-				continuaMenuIniziale = true ;
+				continuaMenuIniziale = true;
 				
-				break;
+				break; 
 			}
 			
 			case 4:	//visualizza fruitori
