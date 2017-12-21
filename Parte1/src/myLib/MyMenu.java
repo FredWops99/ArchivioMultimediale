@@ -59,6 +59,7 @@ public class MyMenu
 		
   public void stampaMenu ()
   {
+	System.out.println();
 	System.out.println(CORNICE);
 	System.out.println(titolo);
 	System.out.println(CORNICE);

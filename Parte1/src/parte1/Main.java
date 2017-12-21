@@ -25,13 +25,14 @@ public class Main implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Visualizza fruitori"};
+	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Rinnova iscrizione", "Visualizza fruitori"};
 	private static final String PATH = "Fruitori.dat";
 	
 	private static boolean continuaMenuIniziale;
 	private static File fileFruitori = new File(PATH);	
 //	serve a tutti i metodi ???
 	private static Fruitori fruitori = new Fruitori();
+	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
 	{		
@@ -68,7 +69,7 @@ public class Main implements Serializable
 		
 		switch(scelta)
 		{
-			case 0:
+			case 0:	//EXIT
 			{
 				System.out.println("Grazie per aver usato ArchivioMultimediale!");
 				
@@ -89,12 +90,35 @@ public class Main implements Serializable
 			{
 				System.out.println("WORK IN PROGRESS");
 				
+//				va assegnato utenteLoggato
+				
 				continuaMenuIniziale=true;
 				
 				break;
 			}
 			
-			case 3:	//visualizza fruitori
+			case 3:	//rinnovo iscrizione
+			{
+//				
+				System.out.println("WORK IN PROGRESS");
+				
+				if(utenteLoggato == (null))
+				{
+					System.out.println("devi effettuare il login per accedere a questa sezione");
+				}
+				
+//				dopo login utente può accedere a questa sezione
+
+				else
+				{
+					
+				}
+				continuaMenuIniziale = true;
+				
+				break;
+			}
+			
+			case 4:	//visualizza fruitori
 			{
 				fruitori.stampaFruitori();
 				
@@ -104,7 +128,4 @@ public class Main implements Serializable
 			}
 		}	
 	}
-
 }
-
-
