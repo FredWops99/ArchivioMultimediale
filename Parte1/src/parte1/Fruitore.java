@@ -14,7 +14,7 @@ public class Fruitore implements Serializable
 	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione) 
 	{
 		super();
-		this.nome = nome;
+		this.nome = nome ;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
 		this.dataIscrizione = dataIscrizione;
