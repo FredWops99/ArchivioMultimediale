@@ -1,3 +1,4 @@
 # ArchivioMultimediale
-##Stefano Prandini, Federico Landi 
-##Progetto Zanella, parte 1
+Stefano Prandini, Federico Landi 
+
+Progetto Zanella, parte 1
