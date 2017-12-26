@@ -34,16 +34,34 @@ public class Fruitori implements Serializable
 		String cognome = InputDati.leggiStringa("Inserisci il tuo cognome: ");
 		GregorianCalendar dataNascita = GestioneDate.creaDataGuidataPassata("inserisci la tua data di nascita: ", 1900);
 		
+		//controllo che l'utente sia maggiorenne
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
 		{
 			System.out.println("Ci dispiace, non puoi accedere per questioni di età.");
 			return;
 		}
 		
+		String user = InputDati.leggiStringa("Inserisci il tuo username: ");
+		String password1;
+		//crea Passowrd + controllo password
+		boolean corretta = false;
+		do
+		{
+			password1 = InputDati.leggiStringa("Inserisci la password: ");
+			String password2 = InputDati.leggiStringa("Inserisci nuovamente la password: ");
+			
+			if(password1.equals(password2)) 
+			{corretta = true;}
+			else
+			{System.out.println("Le due password non coincidono, riprova");}
+			
+		}while(!corretta);
+		
+		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
-		
-		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione);
-		
+		//creo il nuovo fruitore
+		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione,user,password1); 
+		//aggiungo al vector fruitore il nuovo fruitore
 		fruitori.add(f);
 	}
 	
@@ -67,9 +85,19 @@ public class Fruitori implements Serializable
 		}
 	}
 	
-	public void rinnovo()
-	{  // String nome,String Cognome
+	public void rinnovo(Fruitore fruitore)
+	{  
+		if(fruitore.fruitoreRinnovabile())
+		{
+			GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
+			fruitore.setDataIscrizione(dataIscrizione);
+			System.out.println("la tua iscrizione è stata rinnovata");
+		}
+		else
+		{
+			System.out.println("la tua iscrizione non può essere rinnovata");
+		}
 		
-		System.out.println("");
 	}
+		
 }

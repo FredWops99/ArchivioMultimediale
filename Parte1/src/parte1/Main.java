@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import myLib.InputDati;
 import myLib.MyMenu;
 import myLib.ServizioFile;
 
@@ -24,7 +25,7 @@ public class Main implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
+	private static final String MENU_INIZIALE_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Visualizza fruitori"};
 	private static final String PATH = "Fruitori.dat";
 	
@@ -47,13 +48,14 @@ public class Main implements Serializable
 			e.printStackTrace();
 		}
 		
+		
 //		avviato il programma carico i fruitori dal file
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); 
 		
 //		elimino i fruitori scaduti (elimino o no??)
 		fruitori.controlloIscrizioni();		
 		
-		MyMenu menuIniziale=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE);
+		MyMenu menuIniziale=new MyMenu(MENU_INIZIALE_INTESTAZIONE, MENU_INIZIALE_SCELTE);
 		continuaMenuIniziale=true;
 		do
 		{
@@ -61,6 +63,7 @@ public class Main implements Serializable
 		}
 		while(continuaMenuIniziale);
 	}
+	
 	
 	private static void gestisciMenuIniziale(int scelta)
 	{
@@ -76,7 +79,7 @@ public class Main implements Serializable
 				break;
 			}
 			case 1:	//registrazione nuovo fruitore
-			{					
+			{
 				fruitori.addFruitore();
 						
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file "fileFruitori"
@@ -87,7 +90,33 @@ public class Main implements Serializable
 			}
 			case 2:	//login
 			{
-				System.out.println("WORK IN PROGRESS");
+				
+				/////////// CREDENZIALI ////////////
+				Fruitore fruitoreLoggato = null;
+				String user = InputDati.leggiStringa("Inserisci il tuo username \n");
+				String password = InputDati.leggiStringa("Inserisci la tua password \n");
+				boolean fruitoreTrovato = false;
+				for (int i = 0; i < fruitori.getFruitori().size(); i++) 
+				{
+					if(fruitori.getFruitori().get(i).getUser().equals(user) && 
+							fruitori.getFruitori().get(i).getPassword().equals(password))
+					{
+						fruitoreLoggato = fruitori.getFruitori().get(i);
+						fruitoreTrovato = true;
+					}
+				}
+				if(!fruitoreTrovato)
+				{
+					System.out.println("Utente non trovato !");
+					return;
+				}
+				
+				System.out.println("Benvenuto " + fruitoreLoggato.getNome());
+				
+				fruitori.rinnovo(fruitoreLoggato);
+				///////// AREA RISERVATA ///////////
+				
+				
 				
 				continuaMenuIniziale=true;
 				

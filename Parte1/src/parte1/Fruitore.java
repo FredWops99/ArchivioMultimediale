@@ -13,8 +13,11 @@ public class Fruitore implements Serializable
 	private GregorianCalendar dataNascita; 
 	private GregorianCalendar dataIscrizione;
 	private GregorianCalendar dataScadenza;
+	private String user;
+	private String password;
 	
-	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione) 
+	
+	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione, String user, String password) 
 	{
 		super();
 		this.nome = nome;
@@ -23,6 +26,8 @@ public class Fruitore implements Serializable
 		this.dataIscrizione = dataIscrizione;
 //		gli passo dataIscrizione perchè sennò il metodo non potrebbe accedere a dataIscrizione, non ancora salvato
 		this.dataScadenza = calcolaScadenza(dataIscrizione);
+		this.user = user;
+		this.password = password;
 	}
 	
 	/**
@@ -43,7 +48,17 @@ public class Fruitore implements Serializable
 		}
 		return scadenza;
 	}
+	
+	public boolean fruitoreRinnovabile()
+	{
+		if(GestioneDate.calcoloDieciGiorniPrima(dataIscrizione) && GestioneDate.differenzaAnniDaOggi(dataIscrizione) >= 4 && GestioneDate.differenzaAnniDaOggi(dataIscrizione) < 5)
+			return true;
+		else
+			return false;
+	}
 
+	// -- Getter --
+	
 	public String getNome() 
 	{
 		return nome;
@@ -60,6 +75,17 @@ public class Fruitore implements Serializable
 	{
 		return dataIscrizione;
 	}
+	public String getUser() 
+	{
+		return user;
+	}
+	public String getPassword() 
+	{
+		return password;
+	}
+	
+	// -- Setter --
+	
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
@@ -84,6 +110,16 @@ public class Fruitore implements Serializable
 	public void setDataScadenza(GregorianCalendar dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
+	public void setUser(String user) 
+	{
+		this.user = user;
+	}
+	public void setPassword(String password) 
+	{
+		this.password = password;
+	}
+
+	
 	public void stampaDati() 
 	{
 		System.out.println("----------------------------------------\n");
