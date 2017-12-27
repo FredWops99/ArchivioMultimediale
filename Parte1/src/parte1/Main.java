@@ -38,12 +38,15 @@ public class Main
 	
 	public static void main(String[] args)
 	{		
-//		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
 		try 
 		{
-//			se non c'è il file lo crea
-			ServizioFile.checkFile(fileFruitori);
+//			se non c'è il file lo crea (vuoto) e salva all'interno "fruitori", un vector per adesso vuoto.
+//			così quando dopo si fa il caricamento non ci sono eccezioni
+			ServizioFile.checkFile(fileFruitori, fruitori);
 		} 
+		
+//		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
+
 		catch (IOException e) 
 		{
 			e.printStackTrace();
@@ -80,7 +83,7 @@ public class Main
 			case 1:	//registrazione nuovo fruitore
 			{
 				fruitori.addFruitore();
-				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file "fileFruitori"
+				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, true); // salvo i fruitori nel file "fileFruitori"
 				
 				continuaMenuIniziale=true;//torna al menu
 				break;				

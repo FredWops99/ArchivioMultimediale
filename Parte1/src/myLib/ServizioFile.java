@@ -57,7 +57,7 @@ public class ServizioFile
 	 } // metodo caricaSingoloOggetto
 	
 	
-	public static void salvaSingoloOggetto (File f, Object daSalvare)
+	public static void salvaSingoloOggetto (File f, Object daSalvare, boolean stampaConferma)
 	 {
 		 ObjectOutputStream uscita = null;
 			
@@ -67,7 +67,8 @@ public class ServizioFile
 				
 			 uscita.writeObject(daSalvare);
 			 
-			 System.out.println(MSG_SALVATO);
+			 if(stampaConferma)
+				 System.out.println(MSG_SALVATO);
 				
 			}
 		 catch (IOException excScrittura)
@@ -111,9 +112,36 @@ public class ServizioFile
 	public static void checkFile(File file) throws IOException 
 	{
 		if (file.exists())
+		{
             System.out.println("Il file " + file.getPath() + " esiste");
+
+		}
         else if (file.createNewFile())
+        {
             System.out.println("Il file " + file.getPath() + " è stato creato");
+        }
+        else
+            System.out.println("Il file " + file.getPath() + " non può essere creato");
+	}
+	
+	/**
+	 * passo anche un oggetto da salvare nel file quando non esiste e viene creato: utile quando il programma inizia con un caricamento da file: se l'oggetto viene creato vuoto si genera una eccezione
+	 * @param file il file del quale si controlla l'esistenza
+	 * @param obj l'oggetto da salvare nel file nel caso in cui non esista e debba essere creato
+	 * @throws IOException se si verificano errori nella creazione del file
+	 */
+	public static void checkFile(File file, Object obj) throws IOException 
+	{
+		if (file.exists())
+		{
+            System.out.println("Il file " + file.getPath() + " esiste");
+
+		}
+        else if (file.createNewFile())
+        {
+            System.out.println("Il file " + file.getPath() + " è stato creato");
+    		ServizioFile.salvaSingoloOggetto(file, obj, false);
+        }
         else
             System.out.println("Il file " + file.getPath() + " non può essere creato");
 	}

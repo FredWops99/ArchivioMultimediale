@@ -20,7 +20,6 @@ public class Fruitori implements Serializable
 	{
 		return fruitori;
 	}
-
 	public void setFruitori(Vector<Fruitore> fruitori) 
 	{
 		this.fruitori = fruitori;
@@ -80,10 +79,10 @@ public class Fruitori implements Serializable
 	{
 		for (int i=0; i<fruitori.size(); i++) 
 		{
-			if(GestioneDate.differenzaAnniDaOggi(fruitori.get(i).getDataIscrizione()) >= 5)
+			if(fruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
 			{
 				fruitori.remove(i);
-			}	
+			}
 		}
 	}
 	
@@ -91,8 +90,7 @@ public class Fruitori implements Serializable
 	{
 		for(int i = 0; i < fruitori.size(); i++) 
 		{
-			if(fruitori.get(i).getUser().equals(username) && 
-			   fruitori.get(i).getPassword().equals(password))
+			if(fruitori.get(i).getUser().equals(username) && fruitori.get(i).getPassword().equals(password))
 			{
 				return fruitori.get(i);
 			}
