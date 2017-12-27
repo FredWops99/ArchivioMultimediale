@@ -49,7 +49,6 @@ public class Main
 			e.printStackTrace();
 		}
 		
-		
 //		avviato il programma carico i fruitori dal file
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); 
 		
@@ -69,10 +68,6 @@ public class Main
 	{
 		continuaMenuIniziale=true;
 		
-		/*
-		 * invece che avere opzione "rinnova iscrizione" che richiede di essere loggati, si potrebbe fare un menù interno al login
-		 */
-		
 		switch(scelta)
 		{
 			case 0:	//EXIT
@@ -85,16 +80,13 @@ public class Main
 			case 1:	//registrazione nuovo fruitore
 			{
 				fruitori.addFruitore();
-						
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file "fileFruitori"
 				
 				continuaMenuIniziale=true;//torna al menu
-				
 				break;				
 			}
 			case 2:	//login
 			{
-				
 				/////////// CREDENZIALI ////////////
 				String user = InputDati.leggiStringa("Inserisci il tuo username: ");
 				String password = InputDati.leggiStringa("Inserisci la tua password: ");
@@ -119,7 +111,6 @@ public class Main
 				while(continuaMenuPersonale);
 								
 				continuaMenuIniziale=true;
-				
 				break;
 			}
 			
@@ -128,7 +119,6 @@ public class Main
 				fruitori.stampaFruitori();
 				
 				continuaMenuIniziale = true;
-				
 				break;
 			}
 		}	
@@ -147,7 +137,6 @@ public class Main
 			}
 			case 1:	//RINNOVA ISCRIZIONE
 			{
-				
 				utenteLoggato.rinnovo();
 				
 				continuaMenuPersonale = true;

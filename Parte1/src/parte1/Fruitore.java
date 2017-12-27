@@ -16,7 +16,6 @@ public class Fruitore implements Serializable
 	private String username;
 	private String password;
 	
-	
 	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione, String user, String password) 
 	{
 		super();
@@ -29,7 +28,6 @@ public class Fruitore implements Serializable
 //		calcolo scadenza e inizioRinnovo in base alla data di iscrizione
 		this.dataScadenza = calcolaScadenza();
 		this.dataInizioRinnovo = CalcolaInizioRinnovo();
-		
 	}
 	
 	/**
@@ -148,9 +146,15 @@ public class Fruitore implements Serializable
 	{
 		this.dataNascita = dataNascita;
 	}
+	/**
+	 * quando viene modificata la data iscrizione (rinnovi) vengono ricalcolate modificate anche le date di scadenza e di inzio rinnovo
+	 * @param dataIscrizione la nuova data di iscrizione
+	 */
 	public void setDataIscrizione(GregorianCalendar dataIscrizione) 
 	{
 		this.dataIscrizione = dataIscrizione;
+		this.dataScadenza = calcolaScadenza();
+		this.dataInizioRinnovo = CalcolaInizioRinnovo();
 	}
 	public GregorianCalendar getDataScadenza() 
 	{

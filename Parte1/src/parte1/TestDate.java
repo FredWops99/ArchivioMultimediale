@@ -36,7 +36,5 @@ public class TestDate
 			System.out.println("data inserita precendete a oggi");
 		else 
 			System.out.println("data inserita antecedente a oggi");
-
 	}
-
 }

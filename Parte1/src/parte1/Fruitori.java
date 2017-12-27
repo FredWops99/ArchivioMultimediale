@@ -62,8 +62,8 @@ public class Fruitori implements Serializable
 		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
 		//creo il nuovo fruitore
-		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione,user,password1); 
-		//aggiungo al vector fruitore il nuovo fruitore
+		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
+		//aggiungo al vector fruitori il nuovo fruitore
 		fruitori.add(f);
 	}
 	
@@ -87,8 +87,6 @@ public class Fruitori implements Serializable
 		}
 	}
 	
-	
-	
 	public Fruitore trovaUtente(String username, String password)
 	{
 		for(int i = 0; i < fruitori.size(); i++) 
@@ -99,6 +97,6 @@ public class Fruitori implements Serializable
 				return fruitori.get(i);
 			}
 		}
-		return null;
+		return null;	//se non è presente
 	}	
 }
