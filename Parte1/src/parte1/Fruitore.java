@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 import myLib.GestioneDate;
 
+
 public class Fruitore implements Serializable 
 {	
 	private static final long serialVersionUID = 1L;
