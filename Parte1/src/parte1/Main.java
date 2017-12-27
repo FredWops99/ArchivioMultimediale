@@ -15,18 +15,22 @@ package parte1;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
+
+import myLib.BelleStringhe;
+import myLib.InputDati;
 import myLib.MyMenu;
 import myLib.ServizioFile;
 
-public class Main implements Serializable
+public class Main 
 {
-	private static final long serialVersionUID = 1L;
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Login", "Rinnova iscrizione", "Visualizza fruitori"};
+	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)", "Visualizza fruitori"};
+	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
+	
 	private static final String PATH = "Fruitori.dat";
 	
 	private static boolean continuaMenuIniziale;
+	private static boolean continuaMenuPersonale;
 	private static File fileFruitori = new File(PATH);	
 //	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
@@ -44,6 +48,7 @@ public class Main implements Serializable
 		{
 			e.printStackTrace();
 		}
+		
 		
 //		avviato il programma carico i fruitori dal file
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); 
@@ -64,17 +69,21 @@ public class Main implements Serializable
 	{
 		continuaMenuIniziale=true;
 		
+		/*
+		 * invece che avere opzione "rinnova iscrizione" che richiede di essere loggati, si potrebbe fare un menù interno al login
+		 */
+		
 		switch(scelta)
 		{
 			case 0:	//EXIT
 			{
-				System.out.println("Grazie per aver usato ArchivioMultimediale!");
+				System.out.println(BelleStringhe.incornicia("Grazie per aver usato ArchivioMultimediale!"));
 				
 				continuaMenuIniziale=false;
 				break;
 			}
 			case 1:	//registrazione nuovo fruitore
-			{					
+			{
 				fruitori.addFruitore();
 						
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file "fileFruitori"
@@ -85,37 +94,36 @@ public class Main implements Serializable
 			}
 			case 2:	//login
 			{
-				System.out.println("WORK IN PROGRESS");
 				
-//				va assegnato utenteLoggato
+				/////////// CREDENZIALI ////////////
+				String user = InputDati.leggiStringa("Inserisci il tuo username: ");
+				String password = InputDati.leggiStringa("Inserisci la tua password: ");
 				
+				utenteLoggato = fruitori.trovaUtente(user, password);
+				
+				if(utenteLoggato==null)
+				{
+					System.out.println("Utente non trovato! ");
+					return;
+				}
+//				-> utente trovato
+				System.out.println("Benvenuto " + utenteLoggato.getNome() + "!");
+				
+				///////// AREA RISERVATA ///////////
+				MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
+				continuaMenuPersonale=true;
+				do
+				{
+					gestisciMenuPersonale(menuPersonale.scegli());
+				}
+				while(continuaMenuPersonale);
+								
 				continuaMenuIniziale=true;
 				
 				break;
 			}
 			
-			case 3:	//rinnovo iscrizione
-			{
-//				
-				System.out.println("WORK IN PROGRESS");
-				
-				if(utenteLoggato == (null))
-				{
-					System.out.println("devi effettuare il login per accedere a questa sezione");
-				}
-				
-//				dopo login utente può accedere a questa sezione
-
-				else
-				{
-					
-				}
-				continuaMenuIniziale = true;
-				
-				break; 
-			}
-			
-			case 4:	//visualizza fruitori
+			case 3:	//visualizza fruitori
 			{
 				fruitori.stampaFruitori();
 				
@@ -124,5 +132,34 @@ public class Main implements Serializable
 				break;
 			}
 		}	
+	}
+
+	private static void gestisciMenuPersonale(int scelta) 
+	{
+		continuaMenuPersonale=true;
+		
+		switch(scelta)
+		{
+			case 0:	//TORNA A MENU PRINCIPALE (fare LOGOUT?)
+			{
+				continuaMenuPersonale=false;
+				break;
+			}
+			case 1:	//RINNOVA ISCRIZIONE
+			{
+				
+				utenteLoggato.rinnovo();
+				
+				continuaMenuPersonale = true;
+				break;
+			}
+			case 2:	//VISUALIZZA INFO
+			{
+				utenteLoggato.stampaDati();
+				
+				continuaMenuPersonale = true;
+				break;
+			}
+		}
 	}
 }

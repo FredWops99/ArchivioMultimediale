@@ -12,37 +12,105 @@ public class Fruitore implements Serializable
 	private GregorianCalendar dataNascita; 
 	private GregorianCalendar dataIscrizione;
 	private GregorianCalendar dataScadenza;
+	private GregorianCalendar dataInizioRinnovo; //la data dalla quale si può rinnovare l'iscrizione
+	private String username;
+	private String password;
 	
-	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione) 
+	
+	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione, String user, String password) 
 	{
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
 		this.dataIscrizione = dataIscrizione;
-//		gli passo dataIscrizione perchè sennò il metodo non potrebbe accedere a dataIscrizione, non ancora salvato
-		this.dataScadenza = calcolaScadenza(dataIscrizione);
+		this.username = user;
+		this.password = password;
+//		calcolo scadenza e inizioRinnovo in base alla data di iscrizione
+		this.dataScadenza = calcolaScadenza();
+		this.dataInizioRinnovo = CalcolaInizioRinnovo();
+		
 	}
 	
 	/**
-	 * se mi iscrivo il 29 febbraio, tra 5 anni non ci sarà il 29 febbraio: la scadenza sarà il 1 marzo.
-	 * se mi iscrivo un giorno diverso dal 29 febbraio, la scadenza sarà il giorno stesso ma 5 anni dopo
-	 * @return	la data di scadenza calcolata
+	 * calcola la data in cui scade l'iscrizione, cioè 5 anni dopo essa
+	 * @return	la data di scadenza calcolata (5 anni dopo l'iscrizione)
 	 */
-	private GregorianCalendar calcolaScadenza(GregorianCalendar dataIscrizione) 
+	private GregorianCalendar calcolaScadenza() 
 	{
-		GregorianCalendar scadenza = new GregorianCalendar();
-		if(dataIscrizione.get(GregorianCalendar.DAY_OF_MONTH)==29 && dataIscrizione.get(GregorianCalendar.MONTH)==1)
+//		il metodo add tiene conto degli anni bisestili e della lunghezza dei mesi: se mi iscrivo il 29 febbraio e tra 5 anni non c'è il 29 febbraio, ritorna il 28.
+//		metto scadenza uguale a dataIscrizione e poi aggiungo 5 anni, non faccio scadenza = dataIscrizione sennò si modifica anche dataIscrizione
+		GregorianCalendar scadenza = new GregorianCalendar(dataIscrizione.get(GregorianCalendar.YEAR), dataIscrizione.get(GregorianCalendar.MONTH), dataIscrizione.get(GregorianCalendar.DAY_OF_MONTH));
+		scadenza.add(GregorianCalendar.YEAR, 5);
+		return scadenza;
+	}
+	
+	/**
+	 * calcola la data dalla quale l'utente puà richiedere il rinnovo dell'iscrizione (10 giorni prima della scadenza)
+	 * il metodo add(field, amount) tiene conto della lunghezza dei mesi e degli anni bisestili
+	 * @return la data dalla quale si può rinnovare l'iscrizione
+	 */
+	public GregorianCalendar CalcolaInizioRinnovo()
+	{
+//		metto scadenza uguale a dataIscrizione e poi tolgo i 10 giorni, non faccio scadenza = dataIscrizione sennò si modifica anche data iscrizione
+		GregorianCalendar scadenza = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
+		scadenza.add(GregorianCalendar.DAY_OF_MONTH, -10);
+		return scadenza;
+	}
+	
+	/**
+	 * controlla che la data odierna sia successiva alla data dalla quale si può rinnovare l'iscrizione
+	 * non controllo che sia precedente alla data di scadenza perchè a inizio programma le iscrizioni scadute vengono rimosse
+	 * @return true se il fruitore può rinnovare l'iscrizione
+	 */
+	public boolean fruitoreRinnovabile()
+	{
+//		compareTo ritorna 1 solo quando DATACORRENTE è successiva a dataInizioRinnovo
+		if(GestioneDate.DATA_CORRENTE.compareTo(dataInizioRinnovo) == 1)
 		{
-			scadenza = new GregorianCalendar(dataIscrizione.get(GregorianCalendar.YEAR)+5, 2, 1);
+			return true;
+		}
+		else return false;
+		
+//		if(GestioneDate.calcoloDieciGiorniPrima(dataIscrizione) && GestioneDate.differenzaAnniDaOggi(dataIscrizione) >= 4 
+//				&& GestioneDate.differenzaAnniDaOggi(dataIscrizione) < 5)
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+	}
+	
+	public void rinnovo()
+	{  
+		if(fruitoreRinnovabile())
+		{
+//			potrebbe servire mantenere la vera data di iscrizione?
+			setDataIscrizione(GestioneDate.DATA_CORRENTE);
+			System.out.println("la tua iscrizione è stata rinnovata");
 		}
 		else
 		{
-			scadenza = new GregorianCalendar(dataIscrizione.get(GregorianCalendar.YEAR)+5,dataIscrizione.get(GregorianCalendar.MONTH), dataIscrizione.get(GregorianCalendar.DAY_OF_MONTH));
+			System.out.println("Al momento la tua iscrizione non può essere rinnovata:");
+			System.out.println("Potrai effettuare il rinnovo tra il " + GestioneDate.visualizzaData(dataInizioRinnovo) + " e il " + GestioneDate.visualizzaData(dataScadenza));
 		}
-		return scadenza;
+	}
+	
+	public void stampaDati() 
+	{
+		System.out.println("----------------------------------------\n");
+		System.out.println("Nome----------------------: " + nome);
+		System.out.println("Cognome-------------------: " + cognome);
+		System.out.println("Username------------------: " + username);
+		System.out.println("Data di nascita-----------: " + GestioneDate.visualizzaData(dataNascita));
+		System.out.println("Data di iscrizione--------: " + GestioneDate.visualizzaData(dataIscrizione));
+		System.out.println("Data scadenza iscrizione--: " + GestioneDate.visualizzaData(dataScadenza));
+		System.out.println("Rinnovo iscrizione dal----: " + GestioneDate.visualizzaData(dataInizioRinnovo));
 	}
 
+	// -- Getter --
 	public String getNome() 
 	{
 		return nome;
@@ -59,6 +127,15 @@ public class Fruitore implements Serializable
 	{
 		return dataIscrizione;
 	}
+	public String getUser() 
+	{
+		return username;
+	}
+	public String getPassword() 
+	{
+		return password;
+	}
+	// -- Setter --
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
@@ -75,21 +152,20 @@ public class Fruitore implements Serializable
 	{
 		this.dataIscrizione = dataIscrizione;
 	}
-
-	public GregorianCalendar getDataScadenza() {
+	public GregorianCalendar getDataScadenza() 
+	{
 		return dataScadenza;
 	}
-
-	public void setDataScadenza(GregorianCalendar dataScadenza) {
+	public void setDataScadenza(GregorianCalendar dataScadenza) 
+	{
 		this.dataScadenza = dataScadenza;
 	}
-	public void stampaDati() 
+	public void setUser(String user) 
 	{
-		System.out.println("----------------------------------------\n");
-		System.out.println("Nome----------------------: " + nome);
-		System.out.println("Cognome-------------------: " + cognome);
-		System.out.println("Data di nascita-----------: " + GestioneDate.visualizzaData(dataNascita));
-		System.out.println("Data di iscrizione--------: " + GestioneDate.visualizzaData(dataIscrizione));
-		System.out.println("Data scadenza iscrizione--: " + GestioneDate.visualizzaData(dataScadenza) + "\n");
+		this.username = user;
+	}
+	public void setPassword(String password) 
+	{
+		this.password = password;
 	}
 }

@@ -465,7 +465,7 @@ public class GestioneDate
 		return s;
 	}
 	
-	public static short differenzaAnniDaOggi(GregorianCalendar date)
+	public static int differenzaAnniDaOggi(GregorianCalendar date)
 	{		
 		
 		int giornoCorrente = DATA_CORRENTE.get(GregorianCalendar.DAY_OF_MONTH);
@@ -476,22 +476,85 @@ public class GestioneDate
 		int anno = date.get(GregorianCalendar.YEAR);
 		
 		
-		short data;
+		int data;
 		if (mese < meseCorrente)
 		{
-			 data = (short) (annoCorrente - anno);
+			 data = annoCorrente - anno;
 			 return data;
 		}
 		if (mese == meseCorrente && giorno < giornoCorrente)
 		{
-			 data = (short) (annoCorrente - anno);
+			 data = annoCorrente - anno;
 			 return data;
 		}
 		else
 		{
-			 data = (short)(annoCorrente - anno);
-			 data = (short) (data - 1);
+			 data = annoCorrente - anno;
+			 data = data - 1;
 			 return data;
 		}
-	}	
+	}
+	
+//	public static boolean calcoloDieciGiorniPrima(GregorianCalendar date)
+//	{
+//		int giornoCorrente = DATA_CORRENTE.get(GregorianCalendar.DAY_OF_YEAR);
+//		int annoCorrente = DATA_CORRENTE.get(GregorianCalendar.YEAR);
+//
+//		
+//		boolean condizione = false;
+//		
+//		//se la data di iscrizione è avvenuta tra il 01/01 e il 10/01 procedo con i case
+//		//altrimenti uso il default
+//		
+//		switch (date.get(GregorianCalendar.DAY_OF_YEAR)) {
+//		
+//		case 1:
+//			if(giornoCorrente >= 356) return true;
+//			
+//			break;
+//		case 2:
+//			if(giornoCorrente >= 357 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-1) condizione = true;
+//		
+//			break;
+//		case 3:
+//			if(giornoCorrente >= 358 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-2) condizione = true;
+//		
+//			break;
+//		case 4:
+//			if(giornoCorrente >= 359 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-3) condizione = true;
+//		
+//			break;
+//		case 5:
+//			if(giornoCorrente >= 360 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-4) condizione = true;
+//		
+//			break;
+//		case 6:
+//			if(giornoCorrente >= 361 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-5) condizione = true;
+//		
+//			break;
+//		case 7:
+//			if(giornoCorrente >= 362 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-6) condizione = true;
+//		
+//			break;
+//		case 8:
+//			if(giornoCorrente >= 363 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-7) condizione = true;
+//		
+//			break;
+//		case 9:
+//			if(giornoCorrente >= 364 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-8) condizione = true;
+//		
+//			break;
+//		case 10:
+//			if(giornoCorrente >= 365 && giornoCorrente <= date.get(GregorianCalendar.DAY_OF_YEAR)-9) condizione = true;
+//		
+//			break;
+//
+//		default:
+//			if(giornoCorrente >= date.get(GregorianCalendar.DAY_OF_YEAR)-10 && giornoCorrente < date.get(GregorianCalendar.DAY_OF_YEAR))
+//				condizione = true;
+//			break;
+//		}
+//		return condizione;
+//	}
+	
 }
