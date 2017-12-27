@@ -82,6 +82,9 @@ public class Fruitore implements Serializable
 //		}
 	}
 	
+	/**
+	 * Rinnova l'iscrizione di un Fruitore (se possibile)
+	 */
 	public void rinnovo()
 	{  
 		if(fruitoreRinnovabile())
@@ -109,7 +112,8 @@ public class Fruitore implements Serializable
 		System.out.println("Rinnovo iscrizione dal----: " + GestioneDate.visualizzaData(dataInizioRinnovo));
 	}
 
-	// -- Getter --
+	// -- GETTER -- //
+	
 	public String getNome() 
 	{
 		return nome;
@@ -134,7 +138,9 @@ public class Fruitore implements Serializable
 	{
 		return password;
 	}
-	// -- Setter --
+	
+	// -- SETTER -- //
+	
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
@@ -147,6 +153,7 @@ public class Fruitore implements Serializable
 	{
 		this.dataNascita = dataNascita;
 	}
+	
 	/**
 	 * quando viene modificata la data iscrizione (rinnovi) vengono ricalcolate modificate anche le date di scadenza e di inzio rinnovo
 	 * @param dataIscrizione la nuova data di iscrizione
@@ -157,6 +164,7 @@ public class Fruitore implements Serializable
 		this.dataScadenza = calcolaScadenza();
 		this.dataInizioRinnovo = CalcolaInizioRinnovo();
 	}
+	
 	public GregorianCalendar getDataScadenza() 
 	{
 		return dataScadenza;

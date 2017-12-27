@@ -11,6 +11,7 @@ public class Fruitori implements Serializable
 	private static final long serialVersionUID = 1L;
 	private Vector<Fruitore> fruitori;
 	
+	
 	public Fruitori()
 	{
 		this.fruitori = new Vector<Fruitore>();
@@ -25,6 +26,9 @@ public class Fruitori implements Serializable
 		this.fruitori = fruitori;
 	}
 
+	/**
+	 * Aggiunge un Fruitore nel vettore "fruitori"
+	 */
 	public void addFruitore()
 	{
 		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
@@ -66,6 +70,17 @@ public class Fruitori implements Serializable
 		fruitori.add(f);
 	}
 	
+	/**
+	 * Stampa tutti i fruitori:
+	 * 	- Nome
+	 *	- Cognome
+	 *	- Username
+	 *	- SData di nascita
+	 *	- Data di iscrizione
+	 *	- Data scadenza iscrizione
+	 *	- Rinnovo iscrizione dal
+	 *	
+	 */
 	public void stampaFruitori()
 	{
 		System.out.println("Numero fruitori: " + fruitori.size());
@@ -75,6 +90,10 @@ public class Fruitori implements Serializable
 		}
 	}
 	
+	/**
+	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati
+	 * i 5 anni elimina il fruitore dal vettore "fruitori"
+	 */
 	public void controlloIscrizioni()
 	{
 		for (int i=0; i<fruitori.size(); i++) 
@@ -86,6 +105,10 @@ public class Fruitori implements Serializable
 		}
 	}
 	
+	/**
+	 * Restituisce un fruitore prendendo in ingresso un username e una password
+	 * @return Fruitore
+	 */
 	public Fruitore trovaUtente(String username, String password)
 	{
 		for(int i = 0; i < fruitori.size(); i++) 
