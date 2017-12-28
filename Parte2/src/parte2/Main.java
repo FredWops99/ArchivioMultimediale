@@ -11,7 +11,7 @@
  * - rinnovo dell’iscrizione di un fruitore che ne ha fatto richiesta nei termini prescritti.
  * Inoltre la prima versione dell’applicazione deve consentire all’operatore di visualizzare l’elenco degli attuali fruitori.
  * */
-package parte1;
+package parte2;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,13 +24,20 @@ import myLib.ServizioFile;
 public class Main 
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)", "Visualizza fruitori"};
+	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
-	
+	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
+	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
+	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori"};
+	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
+
 	private static final String PATH = "Fruitori.dat";
 	
-	private static boolean continuaMenuIniziale;
+	private static boolean continuaMenuAccesso;
+	private static boolean continuaMenuFruitore;
+	private static boolean continuaMenuOperatore;
 	private static boolean continuaMenuPersonale;
+	
 	private static File fileFruitori = new File(PATH);	
 //	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
@@ -58,26 +65,95 @@ public class Main
 //		elimino i fruitori scaduti (elimino o no??)
 		fruitori.controlloIscrizioni();		
 		
-		MyMenu menuIniziale=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE);
-		continuaMenuIniziale=true;
+		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
+		continuaMenuAccesso=true;
 		do
 		{
-			gestisciMenuIniziale(menuIniziale.scegli());
+			gestisciMenuAccesso(menuAccesso.scegli());
 		}
-		while(continuaMenuIniziale);
+		while(continuaMenuAccesso);		
 	}
 	
-	private static void gestisciMenuIniziale(int scelta)
+	private static void gestisciMenuAccesso(int scelta) 
 	{
-		continuaMenuIniziale=true;
+		continuaMenuAccesso=true;
+		
+		switch(scelta)
+		{
+			case 0://EXIT
+			{
+				System.out.println(BelleStringhe.incornicia("Grazie per aver usato ArchivioMultimediale!"));
+				continuaMenuAccesso=false;
+				break;
+			}
+			case 1://accesso FRUITORE
+			{
+				MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE, true);
+				continuaMenuFruitore=true;
+				do
+				{
+					gestisciMenuFruitore(menuFruitore.scegli());
+				}
+				while(continuaMenuFruitore);
+				
+				continuaMenuAccesso=true;
+				break;
+			}
+			case 2://accesso OPERATORE
+			{
+				String passwordOperatore = InputDati.leggiStringa("Inserire la password per accedere all'area riservata agli operatori: ");
+				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
+				{
+					System.out.println("Accesso eseguito con successo!");
+					
+					MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_VOCI, true);
+					continuaMenuOperatore=true;
+					do
+					{
+						gestisciMenuOperatore(menuOperatore.scegli());
+					}
+					while(continuaMenuOperatore);
+				}
+				else
+				{
+					System.out.println("Password errata!");
+				}
+				
+				continuaMenuAccesso=true;
+				break;
+			}
+		}
+	}
+
+	private static void gestisciMenuOperatore(int scelta) 
+	{
+		continuaMenuOperatore=true;
+		switch(scelta)
+		{
+			case 0://EXIT
+			{
+				continuaMenuOperatore=false;
+				break;
+			}
+			case 1://VISUALIZZA FRUITORI
+			{
+				fruitori.stampaFruitori();
+				
+				continuaMenuOperatore=true;
+				break;
+			}
+		}
+	}
+
+	private static void gestisciMenuFruitore(int scelta)
+	{
+		continuaMenuFruitore=true;
 		
 		switch(scelta)
 		{
 			case 0:	//EXIT
 			{
-				System.out.println(BelleStringhe.incornicia("Grazie per aver usato ArchivioMultimediale!"));
-				
-				continuaMenuIniziale=false;
+				continuaMenuFruitore=false;
 				break;
 			}
 			case 1:	//registrazione nuovo fruitore
@@ -85,7 +161,7 @@ public class Main
 				fruitori.addFruitore();
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, true); // salvo i fruitori nel file "fileFruitori"
 				
-				continuaMenuIniziale=true;//torna al menu
+				continuaMenuFruitore=true;//torna al menu
 				break;				
 			}
 			case 2:	//login
@@ -113,15 +189,7 @@ public class Main
 				}
 				while(continuaMenuPersonale);
 								
-				continuaMenuIniziale=true;
-				break;
-			}
-			
-			case 3:	//visualizza fruitori
-			{
-				fruitori.stampaFruitori();
-				
-				continuaMenuIniziale = true;
+				continuaMenuFruitore=true;
 				break;
 			}
 		}	
@@ -147,6 +215,7 @@ public class Main
 			}
 			case 2:	//VISUALIZZA INFO
 			{
+				System.out.println("Informazioni personali:");
 				utenteLoggato.stampaDati();
 				
 				continuaMenuPersonale = true;

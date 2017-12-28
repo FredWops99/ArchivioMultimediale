@@ -1,4 +1,4 @@
-package parte1;
+package parte2;
 
 import java.util.GregorianCalendar;
 import myLib.GestioneDate;
