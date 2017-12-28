@@ -4,8 +4,8 @@
   router="FAN">  
   <class id="1" language="java" name="parte1.Main" project="Parte1" file="/Parte1/src/parte1/Main.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="268" width="324" x="509" y="35"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="607" y="245"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -13,8 +13,8 @@
   </class>  
   <class id="2" language="java" name="parte1.Fruitori" project="Parte1" file="/Parte1/src/parte1/Fruitori.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="214" width="280" x="79" y="426"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="143" y="674"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -22,37 +22,37 @@
   </class>  
   <class id="3" language="java" name="parte1.Fruitore" project="Parte1" file="/Parte1/src/parte1/Fruitore.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="592" width="524" x="892" y="240"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1177" y="673"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
   <association id="4">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="5" name="fruitori"/>      
-      <multiplicity id="6" minimum="0" maximum="2147483647"/>    
+    <bendpoint x="1174" y="246"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="5" name="utenteLoggato"/>      
+      <multiplicity id="6" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="7">    
-    <bendpoint x="220" y="168"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
+    <end type="SOURCE" refId="2" navigable="false">      
       <attribute id="8" name="fruitori"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
+      <multiplicity id="9" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="10">    
-    <bendpoint x="1157" y="169"/>    
+    <bendpoint x="143" y="244"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="11" name="utenteLoggato"/>      
+      <attribute id="11" name="fruitori"/>      
       <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

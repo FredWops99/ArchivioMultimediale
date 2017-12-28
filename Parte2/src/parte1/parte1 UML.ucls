@@ -30,27 +30,39 @@
     </display>  
   </class>  
   <association id="4">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="5" name="fruitori"/>      
-      <multiplicity id="6" minimum="0" maximum="2147483647"/>    
+    <bendpoint x="220" y="168"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="5" name="fruitori">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="6" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="7">    
-    <bendpoint x="220" y="168"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="8" name="fruitori"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="8" name="fruitori">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="9" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="10">    
     <bendpoint x="1157" y="169"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="11" name="utenteLoggato"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
+      <attribute id="11" name="utenteLoggato">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
