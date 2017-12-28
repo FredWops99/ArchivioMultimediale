@@ -28,7 +28,7 @@ public class Main
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
-	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori"};
+	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori"};//archivia risorsa(aggiungi/elimina), visualizza risorse
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 
 	private static final String PATH = "Fruitori.dat";
