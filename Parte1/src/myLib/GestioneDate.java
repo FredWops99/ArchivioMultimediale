@@ -19,6 +19,7 @@ public class GestioneDate
 	private static final int SECONDI_MINUTI_MAX = 59;
 	private static final int ORE_MAX = 23;
 	
+//	campi della data come interi
 	public static final GregorianCalendar DATA_CORRENTE = (GregorianCalendar)GregorianCalendar.getInstance();
 	public static final int ANNO_CORRENTE = GregorianCalendar.getInstance().get(Calendar.YEAR);
 	public static final int MESE_CORRENTE = GregorianCalendar.getInstance().get(Calendar.MONTH) + 1;	//+1 perchè parte da 0
@@ -26,6 +27,13 @@ public class GestioneDate
 	public static final int	ORA_CORRENTE = GregorianCalendar.getInstance().get(Calendar.HOUR_OF_DAY);
 	public static final int MINUTO_CORRENTE = GregorianCalendar.getInstance().get(Calendar.MINUTE);
 	public static final int SECONDO_CORRENTE = GregorianCalendar.getInstance().get(Calendar.SECOND);
+	
+//	campi della data come stringhe (così c'è lo 0 davanti)
+	public static String giorno_corrente = (GIORNO_CORRENTE < 10) ? "0"+GIORNO_CORRENTE : ""+GIORNO_CORRENTE;
+	public static String mese_corrente = (MESE_CORRENTE < 10) ? "0"+MESE_CORRENTE : ""+MESE_CORRENTE;
+	public static String ora_corrente = (ORA_CORRENTE < 10) ? "0"+ORA_CORRENTE : ""+ORA_CORRENTE;
+	public static String minuto_corrente = (MINUTO_CORRENTE < 10) ? "0"+MINUTO_CORRENTE : ""+MINUTO_CORRENTE;	
+	public static String secondo_corrente = (SECONDO_CORRENTE < 10) ? "0"+SECONDO_CORRENTE : ""+SECONDO_CORRENTE;
 	
 	private static final String INSERISCI_ORA = "Inserire l'ora: ";
 	private static final String INSERISCI_MINUTO = "Inserire i minuti: ";

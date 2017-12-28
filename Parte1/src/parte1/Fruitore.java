@@ -49,7 +49,7 @@ public class Fruitore implements Serializable
 	 * il metodo add(field, amount) tiene conto della lunghezza dei mesi e degli anni bisestili
 	 * @return la data dalla quale si può rinnovare l'iscrizione
 	 */
-	public GregorianCalendar CalcolaInizioRinnovo()
+	private GregorianCalendar CalcolaInizioRinnovo()
 	{
 //		metto scadenza uguale a dataIscrizione e poi tolgo i 10 giorni, non faccio scadenza = dataIscrizione sennò si modifica anche data iscrizione
 		GregorianCalendar scadenza = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
@@ -62,7 +62,7 @@ public class Fruitore implements Serializable
 	 * non controllo che sia precedente alla data di scadenza perchè a inizio programma le iscrizioni scadute vengono rimosse
 	 * @return true se il fruitore può rinnovare l'iscrizione
 	 */
-	public boolean fruitoreRinnovabile()
+	private boolean fruitoreRinnovabile()
 	{
 //		compareTo ritorna 1 solo quando DATACORRENTE è successiva a dataInizioRinnovo
 		if(GestioneDate.DATA_CORRENTE.compareTo(dataInizioRinnovo) == 1)

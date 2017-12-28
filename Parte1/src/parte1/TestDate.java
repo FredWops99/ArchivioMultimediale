@@ -12,6 +12,7 @@ public class TestDate
 {
 	public static void main(String[] args) 
 	{
+		System.out.println(GestioneDate.minuto_corrente);
 //		acquisisco data da tastiera
 		GregorianCalendar data = GestioneDate.creaDataGuidata(0, 9999);
 		System.out.println(GestioneDate.visualizzaData(data));
