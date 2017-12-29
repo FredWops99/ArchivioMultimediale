@@ -54,7 +54,6 @@ public class Main
 	
 	public static void main(String[] args)
 	{		
-		
 		try 
 		{
 //			se non c'è il file lo crea (vuoto) e salva all'interno "fruitori", un vector per adesso vuoto.
@@ -160,32 +159,34 @@ public class Main
 			case 1://VISUALIZZA FRUITORI
 			{
 				fruitori.stampaFruitori();
+				
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 2:
+			case 2://AGGIUNGI LIBRO
 			{
 				libri.addLibro();
 				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 3:
+			case 3://RIMUOVI LIBRO
 			{
 				libri.removeLibro();
+				System.out.println("Libro rimosso con successo");
 				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 4:
+			case 4://STAMPA LIBRI
 			{
-				//NULL POINTER EXCEPTION
 				libri.stampaLibri();
 				continuaMenuOperatore=true;
 				break;
 			}
 		}
-		ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
 	}
 
 	/**

@@ -50,7 +50,7 @@ public class MyMenu
   public int scegliBase(String cornice)
   {
 	  stampaMenuBase(cornice);
-	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
+	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 1, voci.length);	 
   }
   
   public int scegliNoPrintMenu()
