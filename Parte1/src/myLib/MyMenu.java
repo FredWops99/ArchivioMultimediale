@@ -51,7 +51,11 @@ public class MyMenu
   {
 	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
   }
-  
+  public int scegliBase(String cornice)
+  {
+	  stampaMenuBase(cornice);
+	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
+  }
   public char seiSicuro()
   {
 	  return InputDati.leggiUpperChar(SEI_SICURO, SEI_SICURO_CARATTERI);
@@ -92,7 +96,15 @@ public class MyMenu
 	  System.out.println(VOCE_USCITA);
 	  System.out.println();
 	}
-  
+  public void stampaMenuBase(String cornice)
+  {
+	  System.out.println(titolo);
+	  for (int i=0; i<voci.length; i++)
+	  {
+		  System.out.println( (i+1) + ")\t" + voci[i]);
+	  }
+	  System.out.println();
+	}
   public String toString()
   {
 	  String stringa=CORNICE + "\n"+ titolo + "\n" + CORNICE+"\n";
@@ -104,5 +116,5 @@ public class MyMenu
 	  
 	  return stringa;
   }
-  
+
 }

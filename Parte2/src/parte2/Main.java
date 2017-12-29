@@ -28,39 +28,48 @@ public class Main
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
-	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori"};//archivia risorsa(aggiungi/elimina), visualizza risorse
+	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri"};//archivia risorsa(aggiungi/elimina), visualizza risorse
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 
-	private static final String PATH = "Fruitori.dat";
+	private static final String PATHfruitori = "Fruitori.dat";
+	private static final String PATHarchivio = "Archivio.dat";
 	
 	private static boolean continuaMenuAccesso;
 	private static boolean continuaMenuFruitore;
 	private static boolean continuaMenuOperatore;
 	private static boolean continuaMenuPersonale;
 	
-	private static File fileFruitori = new File(PATH);	
+	private static File fileFruitori = new File(PATHfruitori);
+	private static File fileArchivio = new File(PATHarchivio);
 //	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
+	private static Libri libri = new Libri();
+	
 	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
 	{		
+		
 		try 
 		{
 //			se non c'è il file lo crea (vuoto) e salva all'interno "fruitori", un vector per adesso vuoto.
 //			così quando dopo si fa il caricamento non ci sono eccezioni
 			ServizioFile.checkFile(fileFruitori, fruitori);
+			ServizioFile.checkFile(fileArchivio, libri);
 		} 
 		
 //		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
-
+		
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
 		
-//		avviato il programma carico i fruitori dal file
-		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori); 
+//		avviato il programma carico i fruitori dal file + 
+//		carico i Libri dal file
+		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
+		libri = (Libri)ServizioFile.caricaSingoloOggetto(fileArchivio);
+		
 		
 //		elimino i fruitori scaduti (elimino o no??)
 		fruitori.controlloIscrizioni();		
@@ -138,11 +147,31 @@ public class Main
 			case 1://VISUALIZZA FRUITORI
 			{
 				fruitori.stampaFruitori();
-				
+				continuaMenuOperatore=true;
+				break;
+			}
+			case 2:
+			{
+				libri.addLibro();
+				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				continuaMenuOperatore=true;
+				break;
+			}
+			case 3:
+			{
+				libri.removeLibro();
+				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				continuaMenuOperatore=true;
+				break;
+			}
+			case 4:
+			{
+				libri.stampaLibri();
 				continuaMenuOperatore=true;
 				break;
 			}
 		}
+		ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
 	}
 
 	private static void gestisciMenuFruitore(int scelta)
