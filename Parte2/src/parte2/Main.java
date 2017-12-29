@@ -21,6 +21,11 @@ import myLib.InputDati;
 import myLib.MyMenu;
 import myLib.ServizioFile;
 
+/**
+ * Classe main del programma Archivio Multimediale
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Main 
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
@@ -83,6 +88,10 @@ public class Main
 		while(continuaMenuAccesso);		
 	}
 	
+	/**
+	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
+	 * @param scelta la scelta selezionata dall'utente
+	 */
 	private static void gestisciMenuAccesso(int scelta) 
 	{
 		continuaMenuAccesso=true;
@@ -134,6 +143,10 @@ public class Main
 		}
 	}
 
+	/**
+	 * menu che compare una volta che si esegue l'accesso come operatore
+	 * @param scelta la scelta selezionata dall'utente
+	 */
 	private static void gestisciMenuOperatore(int scelta) 
 	{
 		continuaMenuOperatore=true;
@@ -174,6 +187,10 @@ public class Main
 		ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
 	}
 
+	/**
+	 * menu che compare una volta che si esegue l'accesso come fruitore
+	 * @param scelta la scelta selezionata dall'utente
+	 */
 	private static void gestisciMenuFruitore(int scelta)
 	{
 		continuaMenuFruitore=true;
@@ -224,6 +241,10 @@ public class Main
 		}	
 	}
 
+	/**
+	 * menu che compare dopo che un fruitore esegue il login
+	 * @param scelta la scelta selezionata dall'utente
+	 */
 	private static void gestisciMenuPersonale(int scelta) 
 	{
 		continuaMenuPersonale=true;

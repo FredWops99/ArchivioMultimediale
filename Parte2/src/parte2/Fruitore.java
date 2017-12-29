@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 import myLib.GestioneDate;
 
-
+/**
+ * Classe rappresentate un fruitore dell'archivio multimediale
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Fruitore implements Serializable 
 {	
 	private static final long serialVersionUID = 1L;
@@ -17,6 +21,15 @@ public class Fruitore implements Serializable
 	private String username;
 	private String password;
 	
+	/**
+	 * Costruttore della classe Fruitore
+	 * @param nome il nome del fruitore
+	 * @param cognome il cognome del fruitore
+	 * @param dataNascita la data di nascita del fruitore
+	 * @param dataIscrizione la data di iscrizione del fruitore
+	 * @param user username del fruitore
+	 * @param password password del fruitore
+	 */
 	public Fruitore(String nome, String cognome, GregorianCalendar dataNascita, GregorianCalendar dataIscrizione, String user, String password) 
 	{
 		super();
@@ -70,16 +83,6 @@ public class Fruitore implements Serializable
 			return true;
 		}
 		else return false;
-		
-//		if(GestioneDate.calcoloDieciGiorniPrima(dataIscrizione) && GestioneDate.differenzaAnniDaOggi(dataIscrizione) >= 4 
-//				&& GestioneDate.differenzaAnniDaOggi(dataIscrizione) < 5)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
 	}
 	
 	/**
@@ -100,6 +103,9 @@ public class Fruitore implements Serializable
 		}
 	}
 	
+	/**
+	 * stampa tutti i dati di un fruitore
+	 */
 	public void stampaDati() 
 	{
 		System.out.println("----------------------------------------\n");
@@ -113,7 +119,6 @@ public class Fruitore implements Serializable
 	}
 
 	// -- GETTER -- //
-	
 	public String getNome() 
 	{
 		return nome;
@@ -138,9 +143,12 @@ public class Fruitore implements Serializable
 	{
 		return password;
 	}
+	public GregorianCalendar getDataScadenza() 
+	{
+		return dataScadenza;
+	}
 	
 	// -- SETTER -- //
-	
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
@@ -163,11 +171,6 @@ public class Fruitore implements Serializable
 		this.dataIscrizione = dataIscrizione;
 		this.dataScadenza = calcolaScadenza();
 		this.dataInizioRinnovo = CalcolaInizioRinnovo();
-	}
-	
-	public GregorianCalendar getDataScadenza() 
-	{
-		return dataScadenza;
 	}
 	public void setDataScadenza(GregorianCalendar dataScadenza) 
 	{

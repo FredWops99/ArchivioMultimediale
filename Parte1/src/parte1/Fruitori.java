@@ -6,12 +6,20 @@ import java.util.Vector;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
+/**
+ * Classe rappresentante tutti i fruitori che hanno accesso all'archivio multimediale
+ * @author Prandini Stefano
+ * @author Landi Federico
+ *
+ */
 public class Fruitori implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private Vector<Fruitore> fruitori;
 	
-	
+	/**
+	 * Costuttore della classe: inizializza l'attributo fruitori con un Vector vuoto
+	 */
 	public Fruitori()
 	{
 		this.fruitori = new Vector<Fruitore>();
@@ -81,6 +89,11 @@ public class Fruitori implements Serializable
 		System.out.println("Registrazione avvenuta con successo!");
 	}
 	
+	/**
+	 * Controlla se lo username passato sia già in uso da un altro fruitore
+	 * @param user lo username da verificare
+	 * @return true se non è utilizzato da nessun altro (quindi è disponibile)
+	 */
 	private boolean usernameDisponibile(String user) 
 	{
 		for(Fruitore fruitore : fruitori)
