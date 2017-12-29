@@ -34,87 +34,70 @@ public class Libro implements Serializable
 	{
 		return nome;
 	}
-
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
 	}
-
 	public Vector<String> getAutori() 
 	{
 		return autori;
 	}
-
 	public void setAutori(Vector<String> autori) 
 	{
 		this.autori = autori;
 	}
-
 	public int getPagine()
 	{
 		return pagine;
 	}
-
 	public void setPagine(int pagine) 
 	{
 		this.pagine = pagine;
 	}
-
 	public int getAnnoPubblicazione() 
 	{
 		return annoPubblicazione;
 	}
-
 	public void setAnnoPubblicazione(int annoPubblicazione) 
 	{
 		this.annoPubblicazione = annoPubblicazione;
 	}
-
 	public String getCasaEditrice() 
 	{
 		return casaEditrice;
 	}
-
 	public void setCasaEditrice(String casaEditrice) 
 	{
 		this.casaEditrice = casaEditrice;
 	}
-
 	public String getLingua() 
 	{
 		return lingua;
 	}
-
 	public void setLingua(String lingua) 
 	{
 		this.lingua = lingua;
 	}
-
 	public String getGenere() 
 	{
 		return genere;
 	}
-
 	public void setGenere(String genere) 
 	{
 		this.genere = genere;
 	}
-
 	public String getSottoGenere() 
 	{
 		return sottoGenere;
 	}
-
 	public void setSottoGenere(String sottoGenere) 
 	{
 		this.sottoGenere = sottoGenere;
 	}
-
 	public int getnLicenze() 
 	{
 		return nLicenze;
 	}
-
 	public void setnLicenze(int nLicenze) 
 	{
 		this.nLicenze = nLicenze;

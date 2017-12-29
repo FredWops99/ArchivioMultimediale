@@ -13,12 +13,10 @@ public class Libri implements Serializable
 	private static final String[] SOTTOGENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	
 	private Vector<Libro> libri;
-	private Vector<String> autori;
 	
 	public Libri()
 	{
 		this.libri = new Vector<Libro>();
-		this.autori = new Vector<String>();
 	}
 	
 	public Vector<Libro> getLibri() 
@@ -29,42 +27,34 @@ public class Libri implements Serializable
 	{
 		this.libri = libri;
 	}
-	public Vector<String> getAutori() 
-	{
-		return autori;
-	}
-	public void setAutori(Vector<String> autori) 
-	{
-		this.autori = autori;
-	}
 
 	public void addLibro()
 	{
-		String titolo = InputDati.leggiStringa("Inserisci il nome del titolo: ");
-		
+		String titolo = InputDati.leggiStringaNonVuota("Inserisci il nome del titolo: ");
+		Vector<String> autori = new Vector<String>();
 		do
 		{
-			String autore = InputDati.leggiStringa("Inserisci l'autore: ");
+			String autore = InputDati.leggiStringaNonVuota("Inserisci l'autore: ");
 			autori.add(autore);
-		} while(InputDati.yesOrNo("ci sono altri autori ?"));
+		} while(InputDati.yesOrNo("ci sono altri autori? "));
 		
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
 		int annoPubblicazione = InputDati.leggiInteroPositivo("Inserisci l'anno di pubblicazione: ");
-		String casaEditrice = InputDati.leggiStringa("Inserisci la casa editrice: ");
-		String lingua = InputDati.leggiStringa("Inserisci la lingua del testo: ");
+		String casaEditrice = InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
+		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
 		String genere = this.scegliGenere();
 		String sottoGenere = this.scegliSottoGenere(genere);
-		int nLicenza = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
+		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
-		Libro l = new Libro(titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, sottoGenere, nLicenza);
+		Libro l = new Libro(titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, sottoGenere, nLicenze);
 		libri.add(l);
 		System.out.println("Libro aggiunto con successo!");
 	}
 	
 	public void removeLibro()
 	{
-		String titolo = InputDati.leggiStringa("Inserisci il titolo del libro da rimuovere: ");
-		for (int i=0;i<libri.size();i++) 
+		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro da rimuovere: ");
+		for (int i=0; i<libri.size(); i++) 
 		{
 			if(libri.get(i).getNome().equals(titolo))
 			{
@@ -72,9 +62,12 @@ public class Libri implements Serializable
 				return;
 			}
 		}
-		System.out.println("Spiacente, non è stato possibilie rimuovere il libro");
+		System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
 	}
 	
+	/**
+	 * stampa tutti i libri raggruppandoli per genere e sottogenere
+	 */
 	public void stampaLibri()
 	{
 		if(libri.isEmpty())
@@ -85,17 +78,18 @@ public class Libri implements Serializable
 		
 		Vector<Libro> listaLibri = libri;
 		
-		for(int j=0;j<listaLibri.size();j++)
+		for(int j = 0; j < listaLibri.size(); j++)
 		{
+			System.out.println("");
+			System.out.println("---------------------- ");
+			
 			if(! listaLibri.get(j).getSottoGenere().equals("-"))
 			{
-				System.out.println("");
-				System.out.println("---------------------- ");
-				System.out.println("Categoria: " + listaLibri.get(j).getGenere() + ", Sottocategoria: "  +
+				System.out.println("Genere: " + listaLibri.get(j).getGenere() + ", Sottogenere: "  +
 						listaLibri.get(j).getSottoGenere() + "\n");
 				System.out.println("titolo: " + listaLibri.get(j).getNome());
 				
-				for (int i=j+1;i<listaLibri.size();i++) 
+				for (int i = j+1; i < listaLibri.size(); i++) 
 				{
 					if(listaLibri.get(j).getGenere().equals(listaLibri.get(i).getGenere()))
 					{
@@ -109,9 +103,7 @@ public class Libri implements Serializable
 			}
 			else
 			{
-				System.out.println("");
-				System.out.println("---------------------- ");
-				System.out.println("Categoria: " + listaLibri.get(j).getGenere());
+				System.out.println("Genere: " + listaLibri.get(j).getGenere());
 				System.out.println("titolo: " + listaLibri.get(j).getNome());
 				for (int i=j+1;i<listaLibri.size();i++) 
 				{
