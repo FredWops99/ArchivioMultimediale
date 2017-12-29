@@ -36,7 +36,8 @@ public class Libri implements Serializable
 		{
 			String autore = InputDati.leggiStringaNonVuota("Inserisci l'autore: ");
 			autori.add(autore);
-		} while(InputDati.yesOrNo("ci sono altri autori? "));
+		} 
+		while(InputDati.yesOrNo("ci sono altri autori? "));
 		
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
 		int annoPubblicazione = InputDati.leggiInteroPositivo("Inserisci l'anno di pubblicazione: ");
@@ -47,10 +48,38 @@ public class Libri implements Serializable
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Libro l = new Libro(titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, sottoGenere, nLicenze);
-		libri.add(l);
+		addPerCategorie(l);
+		
 		System.out.println("Libro aggiunto con successo!");
 	}
 	
+	/**
+	 * inserisco i libri nel vettore in modo che siano ordinati per genere, così quando vengono stampati i generi sono in ordine
+	 * (il metodo stampaLibri li raccoglierà per sottogeneri: il suo difetto era che tra sottogeneri dello stesso genere potevano esserci 
+	 * altri generi con i relativi sottogeneri)
+	 * @param l il libro da inserire
+	 */
+	private void addPerCategorie(Libro l)
+	{
+		if(libri.isEmpty())
+		{
+			libri.add(l);
+		}
+		else
+		{
+			for(int i = 0; i < libri.size(); i++)
+			{
+				if(libri.get(i).getGenere().equals(l.getGenere()))
+				{
+					libri.add(i+1, l);
+					return;
+				}
+			}
+			libri.add(l);
+		}
+		
+	}
+
 	public void removeLibro()
 	{
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro da rimuovere: ");
