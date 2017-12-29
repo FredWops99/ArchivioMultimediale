@@ -159,7 +159,7 @@ public class Main
 			case 1:	//registrazione nuovo fruitore
 			{
 				fruitori.addFruitore();
-				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, true); // salvo i fruitori nel file "fileFruitori"
+				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false); // salvo i fruitori nel file "fileFruitori"
 				
 				continuaMenuFruitore=true;//torna al menu
 				break;				

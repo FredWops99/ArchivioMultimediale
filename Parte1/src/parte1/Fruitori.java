@@ -42,7 +42,17 @@ public class Fruitori implements Serializable
 			return;
 		}
 		
-		String user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+		String user;
+		do
+		{
+			user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+			if(!usernameDisponibile(user))
+			{
+				System.out.println("Nome utente non disponibile!");
+			}
+		}
+		while(!usernameDisponibile(user));
+				
 		String password1;
 		String password2;
 		//crea Passowrd + controllo password
@@ -68,14 +78,27 @@ public class Fruitori implements Serializable
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 		//aggiungo al vector fruitori il nuovo fruitore
 		fruitori.add(f);
+		System.out.println("Registrazione avvenuta con successo!");
 	}
 	
+	private boolean usernameDisponibile(String user) 
+	{
+		for(Fruitore fruitore : fruitori)
+		{
+			if(fruitore.getUser().equals(user))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
-	 * Stampa tutti i fruitori:
+	 * Stampa per ogni fruitore:
 	 * 	- Nome
 	 *	- Cognome
 	 *	- Username
-	 *	- SData di nascita
+	 *	- Data di nascita
 	 *	- Data di iscrizione
 	 *	- Data scadenza iscrizione
 	 *	- Rinnovo iscrizione dal
@@ -107,7 +130,7 @@ public class Fruitori implements Serializable
 	
 	/**
 	 * Restituisce un fruitore prendendo in ingresso un username e una password
-	 * @return Fruitore
+	 * @return Fruitore il fruitore corrispondente ai dati passati (null se non presente)
 	 */
 	public Fruitore trovaUtente(String username, String password)
 	{

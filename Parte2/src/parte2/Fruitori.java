@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 import myLib.GestioneDate;
 import myLib.InputDati;
+import parte2.Fruitore;
 
 public class Fruitori implements Serializable
 {
@@ -42,7 +43,17 @@ public class Fruitori implements Serializable
 			return;
 		}
 		
-		String user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+		String user;
+		do
+		{
+			user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+			if(!usernameDisponibile(user))
+			{
+				System.out.println("Nome utente non disponibile!");
+			}
+		}
+		while(!usernameDisponibile(user));
+		
 		String password1;
 		String password2;
 		//crea Passowrd + controllo password
@@ -68,6 +79,20 @@ public class Fruitori implements Serializable
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 		//aggiungo al vector fruitori il nuovo fruitore
 		fruitori.add(f);
+		System.out.println("Registrazione avvenuta con successo!");
+
+	}
+	
+	private boolean usernameDisponibile(String user) 
+	{
+		for(Fruitore fruitore : fruitori)
+		{
+			if(fruitore.getUser().equals(user))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
