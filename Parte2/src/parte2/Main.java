@@ -179,6 +179,7 @@ public class Main
 			}
 			case 4:
 			{
+				//NULL POINTER EXCEPTION
 				libri.stampaLibri();
 				continuaMenuOperatore=true;
 				break;

@@ -9,10 +9,27 @@ public class Libri {
 	private static final String[] generi = {"Romanzo","Fumetti","Poesia"}; 
 	private static final String[] sottoGeneri = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	
-	Vector<Libro> libri = new Vector<>();
-	Vector<String> autori = new Vector<>();
+	private Vector<Libro> libri = new Vector<>();
+	private Vector<String> autori = new Vector<>();
 	
 	
+	public Vector<Libro> getLibri() 
+	{
+		return libri;
+	}
+	public void setLibri(Vector<Libro> libri) 
+	{
+		this.libri = libri;
+	}
+	public Vector<String> getAutori() 
+	{
+		return autori;
+	}
+	public void setAutori(Vector<String> autori) 
+	{
+		this.autori = autori;
+	}
+
 	public void addLibro()
 	{
 		String titolo = InputDati.leggiStringa("Inserisci il nome del titolo: ");
