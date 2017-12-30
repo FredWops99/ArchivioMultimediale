@@ -2,6 +2,11 @@ package parte2;
 import java.io.Serializable;
 import java.util.Vector;
 
+/**
+ * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Libro implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -16,6 +21,18 @@ public class Libro implements Serializable
 	private String sottoGenere;
 	private int nLicenze;
 	
+	/**
+	 * Costuttore della classe libro
+	 * @param nome il titolo del libro
+	 * @param autori il vector degli autori del libro
+	 * @param pagine il numero di pagine
+	 * @param annoPubblicazione l'anno di pubblicazione
+	 * @param casaEditrice la casa editrice
+	 * @param lingua la lingua del testo
+	 * @param genere il genere del libro
+	 * @param sottoGenere il sottogenere del libro ( "-" se il genere non ha sottogeneri)
+	 * @param nLicenze il numero di licenze disponibili
+	 */
 	public Libro(String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
 			String lingua, String genere,String sottoGenere,int nLicenze) 
 	{
@@ -29,10 +46,13 @@ public class Libro implements Serializable
 		this.setSottoGenere(sottoGenere);
 		this.setnLicenze(nLicenze);
 	}
-	
+
+	/**
+	 * Stampa tutte le informazioni del libro
+	 */
 	public void stampaDati()
 	{
-		System.out.println("------------------------------------------------\n");
+		System.out.println("------------------------------------------------");
 		System.out.println("Titolo--------------------: " + nome);
 		System.out.print("Autori--------------------:");
 		for(int i = 0; i < autori.size(); i++)

@@ -4,7 +4,7 @@
   router="FAN">  
   <class id="1" language="java" name="parte2.Fruitori" project="Parte2" file="/Parte2/src/parte2/Fruitori.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="44" y="234"/>    
+    <position height="-1" width="-1" x="48" y="234"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -31,7 +31,7 @@
   </class>  
   <class id="4" language="java" name="parte2.Fruitore" project="Parte2" file="/Parte2/src/parte2/Fruitore.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="336" y="858"/>    
+    <position height="-1" width="-1" x="336" y="934"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -40,7 +40,7 @@
   </class>  
   <class id="5" language="java" name="parte2.Libro" project="Parte2" file="/Parte2/src/parte2/Libro.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1337" y="857"/>    
+    <position height="-1" width="-1" x="1337" y="933"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,43 +48,63 @@
     </display>  
   </class>  
   <association id="6">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="7" name="fruitori"/>      
-      <multiplicity id="8" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="7" name="libri">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="9">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="utenteLoggato"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
+      <attribute id="10" name="fruitori">        
+        <position height="0" width="0" x="4" y="0"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="1">        
+        <position height="0" width="0" x="4" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="12">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="13" name="fruitori"/>      
-      <multiplicity id="14" minimum="0" maximum="2147483647"/>    
+      <attribute id="13" name="fruitori">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="15">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="16" name="libri"/>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
+      <attribute id="16" name="utenteLoggato">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="76"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="18">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="19" name="libri"/>      
-      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="19" name="libri">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

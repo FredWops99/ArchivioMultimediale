@@ -49,7 +49,6 @@ public class Main
 //	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
 	private static Libri libri = new Libri();
-	
 	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
@@ -179,7 +178,7 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 4://STAMPA LIBRI
+			case 4://VISUALIZZA ELENCO LIBRI
 			{
 				libri.stampaLibri();
 				

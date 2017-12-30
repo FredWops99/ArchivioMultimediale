@@ -6,6 +6,11 @@ import myLib.GestioneDate;
 import myLib.InputDati;
 import myLib.MyMenu;
 
+/**
+ * Classe che rappresenta l'insieme dei libri presenti in archivio
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Libri implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -15,6 +20,9 @@ public class Libri implements Serializable
 	
 	private Vector<Libro> libri;
 	
+	/**
+	 * costruttore della classe: inizializza il Vector di libri
+	 */
 	public Libri()
 	{
 		this.libri = new Vector<Libro>();
@@ -29,6 +37,9 @@ public class Libri implements Serializable
 		this.libri = libri;
 	}
 
+	/**
+	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari
+	 */
 	public void addLibro()
 	{
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il nome del titolo: ");
@@ -55,7 +66,7 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * inserisco i libri nel vettore in modo che siano ordinati per genere, così quando vengono stampati i generi sono in ordine
+	 * inserisco i libri nel Vector in modo che siano ordinati per genere, così, quando vengono stampati, i generi sono in ordine
 	 * (il metodo stampaLibri li raccoglierà per sottogeneri: il suo difetto era che tra sottogeneri dello stesso genere potevano esserci 
 	 * altri generi con i relativi sottogeneri)
 	 * @param l il libro da inserire
@@ -81,20 +92,49 @@ public class Libri implements Serializable
 		
 	}
 
+	/**
+	 * procedura per rimuovere un libro dalla raccolta
+	 */
 	public void removeLibro()
 	{
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro da rimuovere: ");
-		for (int i=0; i<libri.size(); i++) 
+		
+		Vector<Integer> posizioni = new Vector<>();
+		
+		for (int i = 0; i < libri.size(); i++) 
 		{
 			if(libri.get(i).getNome().equals(titolo))
 			{
-				libri.remove(i);
-				System.out.println("Libro rimosso con successo");
-
-				return;
+				posizioni.add(i);
 			}
 		}
-		System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
+		if(posizioni.size()==0)
+		{
+			System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
+		}
+		else if(posizioni.size()==1)
+		{
+			libri.remove((int)posizioni.get(0));
+			
+			System.out.println("Rimozione avvenuta con successo!");
+		}
+		else//Più elementi con lo stesso nome
+		{
+			System.out.println("Sono presenti più libri dal titolo \"" + titolo + "\": ");
+			int pos = 0;
+			for(Integer i : posizioni)
+			{
+				System.out.println("\nRicorrenza " + ++pos + ":");
+				libri.elementAt((int)i).stampaDati();
+			}
+			
+			int daRimuovere = InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioni.size());
+			if(daRimuovere > 0)
+			{
+				libri.remove(daRimuovere-1);
+				System.out.println("Rimozione avvenuta con successo!");
+			}
+		}	
 	}
 	
 	/**
@@ -109,11 +149,12 @@ public class Libri implements Serializable
 		{
 			if(libro.getNome().equals(titolo))
 			{
+				System.out.println();
 				libro.stampaDati();
 				numLibri++;
 			}
 		}
-		if(numLibri==0)
+		if(numLibri == 0)
 		{
 			System.out.println("In archivio non sono presenti libri il cui titolo è " + titolo);
 		}
@@ -131,41 +172,40 @@ public class Libri implements Serializable
 			return;
 		}
 		
-		Vector<Libro> listaLibri = libri;
+		System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
 		
-		for(int j = 0; j < listaLibri.size(); j++)
+		for(int j = 0; j < libri.size(); j++)
 		{
-			System.out.println("");
-			System.out.println("---------------------- ");
+			System.out.println("\n---------------------- ");
 			
-			if(! listaLibri.get(j).getSottoGenere().equals("-"))
+			if(! libri.get(j).getSottoGenere().equals("-"))
 			{
-				System.out.println("Genere: " + listaLibri.get(j).getGenere() + ", Sottogenere: "  +
-						listaLibri.get(j).getSottoGenere() + "\n");
-				System.out.println("titolo: " + listaLibri.get(j).getNome());
+				System.out.println("Genere: " + libri.get(j).getGenere() + ", Sottogenere: "  +
+						libri.get(j).getSottoGenere() + "\n");
+				System.out.println("titolo: " + libri.get(j).getNome());
 				
-				for (int i = j+1; i < listaLibri.size(); i++) 
+				for (int i = j+1; i < libri.size(); i++) 
 				{
-					if(listaLibri.get(j).getGenere().equals(listaLibri.get(i).getGenere()))
+					if(libri.get(j).getGenere().equals(libri.get(i).getGenere()))
 					{
-						if(listaLibri.get(j).getSottoGenere().equals(listaLibri.get(i).getSottoGenere()))
+						if(libri.get(j).getSottoGenere().equals(libri.get(i).getSottoGenere()))
 						{
-							System.out.println("titolo: " + listaLibri.get(i).getNome());
-							listaLibri.remove(i);
+							System.out.println("titolo: " + libri.get(i).getNome());
+							libri.remove(i);
 						}
 					}
 				}
 			}
 			else
 			{
-				System.out.println("Genere: " + listaLibri.get(j).getGenere() + "\n");
-				System.out.println("titolo: " + listaLibri.get(j).getNome());
-				for (int i=j+1;i<listaLibri.size();i++) 
+				System.out.println("Genere: " + libri.get(j).getGenere() + "\n");
+				System.out.println("titolo: " + libri.get(j).getNome());
+				for (int i=j+1;i<libri.size();i++) 
 				{
-					if(listaLibri.get(j).getGenere().equals(listaLibri.get(i).getGenere()))
+					if(libri.get(j).getGenere().equals(libri.get(i).getGenere()))
 					{
-							System.out.println("titolo: " + listaLibri.get(i).getNome());
-							listaLibri.remove(i);
+							System.out.println("titolo: " + libri.get(i).getNome());
+							libri.remove(i);
 					}
 				}
 			}
