@@ -29,6 +29,31 @@ public class Libro implements Serializable
 		this.setSottoGenere(sottoGenere);
 		this.setnLicenze(nLicenze);
 	}
+	
+	public void stampaDati()
+	{
+		System.out.println("------------------------------------------------\n");
+		System.out.println("Titolo--------------------: " + nome);
+		System.out.print("Autori--------------------:");
+		for(int i = 0; i < autori.size(); i++)
+		{
+			System.out.print(" " + autori.elementAt(i));
+			if(i < autori.size()-1)
+			{
+				System.out.print(",");
+			}
+		}
+		System.out.println("\nNumero pagine-------------: " + pagine);
+		System.out.println("Anno di pubblicazione-----: " + annoPubblicazione);
+		System.out.println("Casa editrice-------------: " + casaEditrice);
+		System.out.println("Lingua--------------------: " + lingua);
+		System.out.println("Genere--------------------: " + genere);
+		if(!sottoGenere.equals("-"))
+		{
+			System.out.println("Sottogenere---------------: " + sottoGenere);
+		}
+		System.out.println("Numero licenze------------: " + nLicenze);
+	}
 
 	public String getNome()
 	{

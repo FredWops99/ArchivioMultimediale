@@ -2,6 +2,7 @@ package parte2;
 import java.io.Serializable;
 import java.util.Vector;
 
+import myLib.GestioneDate;
 import myLib.InputDati;
 import myLib.MyMenu;
 
@@ -40,7 +41,7 @@ public class Libri implements Serializable
 		while(InputDati.yesOrNo("ci sono altri autori? "));
 		
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
-		int annoPubblicazione = InputDati.leggiInteroPositivo("Inserisci l'anno di pubblicazione: ");
+		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
 		String casaEditrice = InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
 		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
 		String genere = this.scegliGenere();
@@ -88,11 +89,36 @@ public class Libri implements Serializable
 			if(libri.get(i).getNome().equals(titolo))
 			{
 				libri.remove(i);
+				System.out.println("Libro rimosso con successo");
+
 				return;
 			}
 		}
 		System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
 	}
+	
+	/**
+	 * libri con lo stesso nome vengono stampati entrambi
+	 */
+	public void dettagliLibro()
+	{
+		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
+		int numLibri = 0;
+		
+		for(Libro libro : libri)
+		{
+			if(libro.getNome().equals(titolo))
+			{
+				libro.stampaDati();
+				numLibri++;
+			}
+		}
+		if(numLibri==0)
+		{
+			System.out.println("In archivio non sono presenti libri il cui titolo è " + titolo);
+		}
+	}
+	
 	
 	/**
 	 * stampa tutti i libri raggruppandoli per genere e sottogenere
@@ -132,7 +158,7 @@ public class Libri implements Serializable
 			}
 			else
 			{
-				System.out.println("Genere: " + listaLibri.get(j).getGenere());
+				System.out.println("Genere: " + listaLibri.get(j).getGenere() + "\n");
 				System.out.println("titolo: " + listaLibri.get(j).getNome());
 				for (int i=j+1;i<listaLibri.size();i++) 
 				{

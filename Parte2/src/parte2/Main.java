@@ -33,7 +33,7 @@ public class Main
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
-	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri"};//archivia risorsa(aggiungi/elimina), visualizza risorse
+	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri","Visualizza dettagli libro"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 
 	private static final String PATHfruitori = "Fruitori.dat";
@@ -99,7 +99,7 @@ public class Main
 		{
 			case 0://EXIT
 			{
-				System.out.println(BelleStringhe.incornicia("Grazie per aver usato ArchivioMultimediale!"));
+				System.out.println(BelleStringhe.incornicia("\nGrazie per aver usato ArchivioMultimediale!"));
 				continuaMenuAccesso=false;
 				break;
 			}
@@ -174,7 +174,6 @@ public class Main
 			case 3://RIMUOVI LIBRO
 			{
 				libri.removeLibro();
-				System.out.println("Libro rimosso con successo");
 				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
 				
 				continuaMenuOperatore=true;
@@ -183,6 +182,14 @@ public class Main
 			case 4://STAMPA LIBRI
 			{
 				libri.stampaLibri();
+				
+				continuaMenuOperatore=true;
+				break;
+			}
+			case 5://VISUALIZZA DETTAGLI LIBRO
+			{
+				libri.dettagliLibro();
+				
 				continuaMenuOperatore=true;
 				break;
 			}
