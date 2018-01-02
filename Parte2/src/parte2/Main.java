@@ -1,16 +1,31 @@
-/*
- * Un cittadino maggiorenne, per divenire fruitore dei servizi di prestito temporaneo, deve avanzare una richiesta interagendo con l’applicazione software. 
- * Tale richiesta determina l’attribuzione dello status di fruitore a partire dalla data di iscrizione del cittadino all’elenco dei fruitori fino alla data 
- * di scadenza, fissata esattamente 5 anni dopo quella di iscrizione. Lo status di fruitore può essere rinnovato, ogni volta per 5 anni, un numero indefinito
- * di volte purché l’interessato richieda il rinnovo entro la data di scadenza e non prima dei 10 giorni precedenti la data della scadenza stessa. 
- * La mancata richiesta di rinnovo nei termini prescritti comporta la decadenza dallo status di fruitore. Un fruitore decaduto può comunque effettuare una 
- * nuova richiesta di iscrizione. La prima versione dell’applicazione è focalizzata sulle funzionalità per la gestione di una minimale “anagrafica fruitori” 
- * elencate di seguito, che non prevedono alcun intervento da parte dell’operatore:
- * - iscrizione di un nuovo fruitore;
- * - decadenza (automatica) di un fruitore che non ha chiesto il rinnovo nei termini prescritti;
- * - rinnovo dell’iscrizione di un fruitore che ne ha fatto richiesta nei termini prescritti.
- * Inoltre la prima versione dell’applicazione deve consentire all’operatore di visualizzare l’elenco degli attuali fruitori.
- * */
+/**
+ * 	Le risorse multimediali (file) vengono conservate in varie cartelle di un server, una per
+	ogni categoria di risorse che possono essere concesse in prestito. Una categoria può
+	articolarsi in più sottocategorie (a un solo livello di profondità), ciascuna delle quali
+	corrisponde a una sottocartella della cartella relativa alla categoria di riferimento. Se una
+	cartella - relativa a una categoria - contiene delle sottocartelle, essa non contiene
+	direttamente delle risorse, cioè le risorse sono tutte collocate nelle sottocartelle. Una
+	risorsa è collocata in una singola (sotto)cartella, cioè non esistono più copie della
+	medesima risorsa collocate in (sotto)cartelle distinte.
+	L’applicazione non deve occuparsi delle (sotto)cartelle del server né dei file in esse
+	contenuti. L’applicazione deve invece occuparsi della conservazione di un “archivio”
+	persistente locale che descriva le risorse multimediali, classificate per categorie ed
+	eventuali sottocategorie, riflettendo la suddivisione delle risorse presenti sul server.
+	Ciascuna risorsa è dotata di un suo numero di licenze d’uso (perenni), che può differire
+	da quello di altre risorse. Esistono alcune informazioni che caratterizzano ciascuna
+	risorsa, dipendenti dalla categoria della risorsa stessa. La seconda versione
+	dell’applicazione considera una sola categoria di risorse, i libri. Ciascun libro è descritto
+	da vari campi, ad esempio, titolo, autore/i, numero di pagine, anno di pubblicazione, casa
+	editrice, lingua, genere.
+
+	La versione corrente dell’applicazione deve consentire all’operatore di archiviare le
+	descrizioni delle risorse e visualizzare il contenuto dell’archivio, secondo le specifiche
+	seguenti:
+		- aggiunta (della descrizione) di una risorsa, completa in ogni suo campo, a una
+		(sotto)categoria in archivio;
+		- rimozione (della descrizione) di una risorsa dall’archivio;
+		- visualizzazione dell’elenco delle risorse per (sotto)categoria
+ */
 package parte2;
 
 import java.io.File;

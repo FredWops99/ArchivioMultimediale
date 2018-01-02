@@ -43,6 +43,14 @@ public class Libri implements Serializable
 	public void addLibro()
 	{
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il nome del titolo: ");
+		
+		
+		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
+		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
+		String casaEditrice = InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
+		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
+		
+		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		Vector<String> autori = new Vector<String>();
 		do
 		{
@@ -50,14 +58,8 @@ public class Libri implements Serializable
 			autori.add(autore);
 		} 
 		while(InputDati.yesOrNo("ci sono altri autori? "));
-		
-		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
-		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
-		String casaEditrice = InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
-		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
 		String genere = this.scegliGenere();
 		String sottoGenere = this.scegliSottoGenere(genere);
-		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Libro l = new Libro(titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, sottoGenere, nLicenze);
 		addPerCategorie(l);
