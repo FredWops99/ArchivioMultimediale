@@ -15,8 +15,8 @@ public class Libri implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String[] GENERI = {"Romanzo","Fumetto","Poesia"}; 
-	private static final String[] SOTTOGENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
+	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
+	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	
 	private Vector<Libro> libri;
 	
@@ -42,15 +42,12 @@ public class Libri implements Serializable
 	 */
 	public void addLibro()
 	{
-		String titolo = InputDati.leggiStringaNonVuota("Inserisci il nome del titolo: ");
-		
-		
-		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero delle pagine: ");
+		String sottoCategoria = this.scegliSottoCategoria();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
+		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
+		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero di pagine: ");
 		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
 		String casaEditrice = InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
 		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
-		
-		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		Vector<String> autori = new Vector<String>();
 		do
 		{
@@ -58,11 +55,11 @@ public class Libri implements Serializable
 			autori.add(autore);
 		} 
 		while(InputDati.yesOrNo("ci sono altri autori? "));
-		String genere = this.scegliGenere();
-		String sottoGenere = this.scegliSottoGenere(genere);
+		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
+		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
-		Libro l = new Libro(titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, sottoGenere, nLicenze);
-		addPerCategorie(l);
+		Libro l = new Libro(sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		addPerSottoCategorie(l);
 		
 		System.out.println("Libro aggiunto con successo!");
 	}
@@ -73,7 +70,7 @@ public class Libri implements Serializable
 	 * altri generi con i relativi sottogeneri)
 	 * @param l il libro da inserire
 	 */
-	private void addPerCategorie(Libro l)
+	private void addPerSottoCategorie(Libro l)
 	{
 		if(libri.isEmpty())
 		{
@@ -83,7 +80,7 @@ public class Libri implements Serializable
 		{
 			for(int i = 0; i < libri.size(); i++)
 			{
-				if(libri.get(i).getGenere().equals(l.getGenere()))
+				if(libri.get(i).getSottoCategoria().equals(l.getSottoCategoria()))
 				{
 					libri.add(i+1, l);
 					return;
@@ -91,7 +88,6 @@ public class Libri implements Serializable
 			}
 			libri.add(l);
 		}
-		
 	}
 
 	/**
@@ -117,7 +113,6 @@ public class Libri implements Serializable
 		else if(posizioni.size()==1)
 		{
 			libri.remove((int)posizioni.get(0));
-			
 			System.out.println("Rimozione avvenuta con successo!");
 		}
 		else//Più elementi con lo stesso nome
@@ -162,7 +157,6 @@ public class Libri implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * stampa tutti i libri raggruppandoli per genere e sottogenere
 	 */
@@ -171,60 +165,76 @@ public class Libri implements Serializable
 		if(libri.isEmpty())
 		{
 			System.out.println("Nessun libro presente");
-			return;
 		}
-		
-		System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
-		
-		for(int j = 0; j < libri.size(); j++)
+		else
 		{
-			System.out.println("\n---------------------- ");
-			
-			if(! libri.get(j).getSottoGenere().equals("-"))
+			if(libri.size()==1)
 			{
-				System.out.println("Genere: " + libri.get(j).getGenere() + ", Sottogenere: "  +
-						libri.get(j).getSottoGenere() + "\n");
-				System.out.println("titolo: " + libri.get(j).getNome());
-				
-				for (int i = j+1; i < libri.size(); i++) 
+				System.out.println("\nE' presente " + libri.size() + " libro in archivio: ");
+			}
+			else//piu di un libro in archivio
+			{
+				System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
+
+			}
+			
+//			uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
+			Vector<Libro> libriDaStampare = new Vector<>();
+			for(int i = 0; i < libri.size(); i++)
+			{
+				libriDaStampare.add(libri.get(i));
+			}
+			
+			for(int j = 0; j < libriDaStampare.size(); j++)
+			{				
+				System.out.println("\n---------------------- ");
+				if(! libriDaStampare.get(j).getGenere().equals("-"))
 				{
-					if(libri.get(j).getGenere().equals(libri.get(i).getGenere()))
+					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
+							", genere: "  + libriDaStampare.get(j).getGenere() + "\n");
+					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
+					
+					for (int i = j+1; i < libriDaStampare.size(); i++) 
 					{
-						if(libri.get(j).getSottoGenere().equals(libri.get(i).getSottoGenere()))
+						if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
 						{
-							System.out.println("titolo: " + libri.get(i).getNome());
-							libri.remove(i);
+							if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
+							{
+								System.out.println("titolo: " + libriDaStampare.get(i).getNome());
+								libriDaStampare.remove(i);
+							}
+						}
+					}
+				}
+				else
+				{
+					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n");
+					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
+					for (int i=j+1;i<libriDaStampare.size();i++) 
+					{
+						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
+						{
+								System.out.println("titolo: " + libriDaStampare.get(i).getNome());
+								libriDaStampare.remove(i);
 						}
 					}
 				}
 			}
-			else
-			{
-				System.out.println("Genere: " + libri.get(j).getGenere() + "\n");
-				System.out.println("titolo: " + libri.get(j).getNome());
-				for (int i=j+1;i<libri.size();i++) 
-				{
-					if(libri.get(j).getGenere().equals(libri.get(i).getGenere()))
-					{
-							System.out.println("titolo: " + libri.get(i).getNome());
-							libri.remove(i);
-					}
-				}
-			}
 		}
+		
 	}
-	private String scegliGenere()
+	private String scegliSottoCategoria()
 	{
-		MyMenu menu = new MyMenu("scegli un genere", GENERI);
-		return GENERI[menu.scegliBase("") - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE);
+		return SOTTOCATEGORIE[menu.scegliBase("") - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 	}
 	
-	private String scegliSottoGenere(String genere)
+	private String scegliGenere(String sottoCategoria)
 	{
-		if(genere.equals("Romanzo") || genere.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
+		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
 		{
-			MyMenu menu = new MyMenu("scegli un sotto-genere", SOTTOGENERI);
-			return SOTTOGENERI[menu.scegliBase("") - 1];	
+			MyMenu menu = new MyMenu("scegli un genere: ", GENERI);
+			return GENERI[menu.scegliBase("") - 1];	
 		}
 		else
 		{

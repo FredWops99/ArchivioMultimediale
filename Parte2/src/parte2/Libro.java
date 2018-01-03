@@ -11,6 +11,7 @@ public class Libro implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
+	private String sottoCategoria;//sottocategorie della categoria LIBRO: Romanzo, Fumetto, Poesia...
 	private String nome;
 	private Vector<String> autori = new Vector<>();
 	private int pagine;
@@ -18,7 +19,6 @@ public class Libro implements Serializable
 	private String casaEditrice;
 	private String lingua;
 	private String genere;
-	private String sottoGenere;
 	private int nLicenze;
 	
 	/**
@@ -29,13 +29,14 @@ public class Libro implements Serializable
 	 * @param annoPubblicazione l'anno di pubblicazione
 	 * @param casaEditrice la casa editrice
 	 * @param lingua la lingua del testo
-	 * @param genere il genere del libro
-	 * @param sottoGenere il sottogenere del libro ( "-" se il genere non ha sottogeneri)
+	 * @param sottoCategoria la sottocategoria della categoria LIBRO (es. Romanzo, Fumetto, Poesia...)
+	 * @param genere il genere del libro ( "-" se il genere non ha sottogeneri)
 	 * @param nLicenze il numero di licenze disponibili
 	 */
-	public Libro(String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
-			String lingua, String genere,String sottoGenere,int nLicenze) 
+	public Libro(String sottoCategoria, String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
+			String lingua, String genere, int nLicenze) 
 	{
+		this.setSottoCategoria(sottoCategoria);
 		this.setNome(nome);
 		this.setAutori(autori);
 		this.setPagine(pagine);
@@ -43,7 +44,6 @@ public class Libro implements Serializable
 		this.setCasaEditrice(casaEditrice);
 		this.setLingua(lingua);
 		this.setGenere(genere);
-		this.setSottoGenere(sottoGenere);
 		this.setnLicenze(nLicenze);
 	}
 
@@ -53,6 +53,8 @@ public class Libro implements Serializable
 	public void stampaDati()
 	{
 		System.out.println("------------------------------------------------");
+		System.out.println("Categoria-----------------: Libro");
+		System.out.println("Sottocategoria------------: " + sottoCategoria);
 		System.out.println("Titolo--------------------: " + nome);
 		System.out.print("Autori--------------------:");
 		for(int i = 0; i < autori.size(); i++)
@@ -62,16 +64,16 @@ public class Libro implements Serializable
 			{
 				System.out.print(",");
 			}
+			else System.out.println();
 		}
-		System.out.println("\nNumero pagine-------------: " + pagine);
+		if(!genere.equals("-"))
+		{
+			System.out.println("Genere--------------------: " + genere);
+		}
+		System.out.println("Numero pagine-------------: " + pagine);
 		System.out.println("Anno di pubblicazione-----: " + annoPubblicazione);
 		System.out.println("Casa editrice-------------: " + casaEditrice);
 		System.out.println("Lingua--------------------: " + lingua);
-		System.out.println("Genere--------------------: " + genere);
-		if(!sottoGenere.equals("-"))
-		{
-			System.out.println("Sottogenere---------------: " + sottoGenere);
-		}
 		System.out.println("Numero licenze------------: " + nLicenze);
 	}
 
@@ -123,21 +125,21 @@ public class Libro implements Serializable
 	{
 		this.lingua = lingua;
 	}
+	public String getSottoCategoria() 
+	{
+		return sottoCategoria;
+	}
+	public void setSottoCategoria(String sottoCategoria) 
+	{
+		this.sottoCategoria = sottoCategoria;
+	}
 	public String getGenere() 
 	{
 		return genere;
 	}
-	public void setGenere(String genere) 
+	public void setGenere(String sottoGenere) 
 	{
-		this.genere = genere;
-	}
-	public String getSottoGenere() 
-	{
-		return sottoGenere;
-	}
-	public void setSottoGenere(String sottoGenere) 
-	{
-		this.sottoGenere = sottoGenere;
+		this.genere = sottoGenere;
 	}
 	public int getnLicenze() 
 	{
