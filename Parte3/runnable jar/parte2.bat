@@ -1,1 +1,0 @@
-java -jar parte2.jar

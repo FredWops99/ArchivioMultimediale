@@ -26,7 +26,7 @@
 		- rimozione (della descrizione) di una risorsa dall’archivio;
 		- visualizzazione dell’elenco delle risorse per (sotto)categoria
  */
-package parte2;
+package parte3;
 
 import java.io.File;
 import java.io.IOException;
