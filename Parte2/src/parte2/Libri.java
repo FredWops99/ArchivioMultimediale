@@ -38,7 +38,7 @@ public class Libri implements Serializable
 	}
 
 	/**
-	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari
+	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
 	 */
 	public void addLibro()
 	{
@@ -65,9 +65,8 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * inserisco i libri nel Vector in modo che siano ordinati per genere, così, quando vengono stampati, i generi sono in ordine
-	 * (il metodo stampaLibri li raccoglierà per sottogeneri: il suo difetto era che tra sottogeneri dello stesso genere potevano esserci 
-	 * altri generi con i relativi sottogeneri)
+	 * inserisco i libri nel Vector in modo che siano ordinati per sottocategorie, così, quando vengono stampati, i generi sono in ordine
+	 * (il metodo stampaLibri li raccoglierà per generi)
 	 * @param l il libro da inserire
 	 */
 	private void addPerSottoCategorie(Libro l)
@@ -91,7 +90,7 @@ public class Libri implements Serializable
 	}
 
 	/**
-	 * procedura per rimuovere un libro dalla raccolta
+	 * procedura per rimuovere un libro dalla raccolta: viene chiesto il nome del libro e se ce ne sono più di uno viene chiesto all'utente quale eliminare
 	 */
 	public void removeLibro()
 	{
@@ -135,7 +134,7 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * libri con lo stesso nome vengono stampati entrambi
+	 * chiede all'utente il nome del libro del quale visualizzare tutte le informazioni: se ce ne sono più uno con lo stesso stampa i dettagli di questi ultimi
 	 */
 	public void dettagliLibro()
 	{
@@ -158,7 +157,7 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * stampa tutti i libri raggruppandoli per genere e sottogenere
+	 * stampa tutti i libri raggruppandoli per sottocategoria e genere
 	 */
 	public void stampaLibri()
 	{
@@ -223,12 +222,23 @@ public class Libri implements Serializable
 		}
 		
 	}
+	
+	/**
+	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
+	 * @return la scelta dell'utente
+	 */
 	private String scegliSottoCategoria()
 	{
 		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE);
 		return SOTTOCATEGORIE[menu.scegliBase("") - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 	}
 	
+	/**
+	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
+	 * se la sottocategoria non ne prevede restituisce un simbolo di default
+	 * @param sottoCategoria la sottocategoria di libro che l'utente sta inserendo
+	 * @return la scelta dell'utente o "-" se la sottocategoria non prevede generi
+	 */
 	private String scegliGenere(String sottoCategoria)
 	{
 		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !

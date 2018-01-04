@@ -143,6 +143,8 @@ public class Fruitori implements Serializable
 	
 	/**
 	 * Restituisce un fruitore prendendo in ingresso un username e una password
+	 * @param username lo username inserito dall'utente
+	 * @param password la password inserita dall'utente
 	 * @return Fruitore il fruitore corrispondente ai dati passati (null se non presente)
 	 */
 	public Fruitore trovaUtente(String username, String password)
