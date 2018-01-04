@@ -230,7 +230,7 @@ public class Libri implements Serializable
 	private String scegliSottoCategoria()
 	{
 		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE);
-		return SOTTOCATEGORIE[menu.scegliBase("") - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+		return SOTTOCATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class Libri implements Serializable
 		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
 		{
 			MyMenu menu = new MyMenu("scegli un genere: ", GENERI);
-			return GENERI[menu.scegliBase("") - 1];	
+			return GENERI[menu.scegliBase() - 1];	
 		}
 		else
 		{

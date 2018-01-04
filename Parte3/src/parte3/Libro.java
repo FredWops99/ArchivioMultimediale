@@ -7,11 +7,33 @@ import java.util.Vector;
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Libro implements Serializable
-{
-	private static final long serialVersionUID = 1L;
+public class Libro extends Risorsa implements Serializable
+{	
+	/*******************************************************************
+	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI:*
+	 *******************************************************************/
+	/**
+	 * quanto tempo un Libro può restare in prestito ad un fruitore
+	 */
+	private static final int GIORNI_DURATA_PRESTITO = 30;
+	/**
+	 * quanto dura una proroga del prestito di un Libro
+	 */
+	private static final int GIORNI_DURATA_PROROGA = 30;
+	/**
+	 * quanti giorni prima della scadenza si può chiedere una proroga del prestito del Libro
+	 */
+	private static final int GIORNI_PRIMA_PER_PROROGA = -7;
+	/**
+	 * quanti Libri possono essere in prestito contemporaneamente allo stesso fruitore
+	 */
+	private static final int PRESTITI_MAX = 3;
 	
-	private String sottoCategoria;//sottocategorie della categoria LIBRO: Romanzo, Fumetto, Poesia...
+	private static final long serialVersionUID = 1L;
+	/**
+	 * sottocategorie della categoria LIBRO: Romanzo, Fumetto, Poesia...
+	 */
+	private String sottoCategoria;
 	private String nome;
 	private Vector<String> autori = new Vector<>();
 	private int pagine;
@@ -20,6 +42,10 @@ public class Libro implements Serializable
 	private String lingua;
 	private String genere;
 	private int nLicenze;
+	/**
+	 * quante copie di questo libro sono già in prestito (<= nLicenze)
+	 */
+	private int inPrestito;
 	
 	/**
 	 * Costuttore della classe libro
@@ -45,6 +71,7 @@ public class Libro implements Serializable
 		this.setLingua(lingua);
 		this.setGenere(genere);
 		this.setnLicenze(nLicenze);
+		this.setInPrestito(0);
 	}
 
 	/**
@@ -148,5 +175,30 @@ public class Libro implements Serializable
 	public void setnLicenze(int nLicenze) 
 	{
 		this.nLicenze = nLicenze;
+	}
+	public int getInPrestito() 
+	{
+		return inPrestito;
+	}
+	public void setInPrestito(int inPrestito)
+	{
+		this.inPrestito = inPrestito;
+	}
+
+	public int getGiorniDurataPrestito() 
+	{
+		return GIORNI_DURATA_PRESTITO;
+	}
+	public int getGiorniDurataProroga()
+	{
+		return GIORNI_DURATA_PROROGA;
+	}
+	public int getGiorniPrimaPerProroga() 
+	{
+		return GIORNI_PRIMA_PER_PROROGA;
+	}
+	public int getPrestitiMax()
+	{
+		return PRESTITI_MAX;
 	}
 }

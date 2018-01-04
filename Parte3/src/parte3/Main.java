@@ -1,30 +1,11 @@
 /**
- * 	Le risorse multimediali (file) vengono conservate in varie cartelle di un server, una per
-	ogni categoria di risorse che possono essere concesse in prestito. Una categoria può
-	articolarsi in più sottocategorie (a un solo livello di profondità), ciascuna delle quali
-	corrisponde a una sottocartella della cartella relativa alla categoria di riferimento. Se una
-	cartella - relativa a una categoria - contiene delle sottocartelle, essa non contiene
-	direttamente delle risorse, cioè le risorse sono tutte collocate nelle sottocartelle. Una
-	risorsa è collocata in una singola (sotto)cartella, cioè non esistono più copie della
-	medesima risorsa collocate in (sotto)cartelle distinte.
-	L’applicazione non deve occuparsi delle (sotto)cartelle del server né dei file in esse
-	contenuti. L’applicazione deve invece occuparsi della conservazione di un “archivio”
-	persistente locale che descriva le risorse multimediali, classificate per categorie ed
-	eventuali sottocategorie, riflettendo la suddivisione delle risorse presenti sul server.
-	Ciascuna risorsa è dotata di un suo numero di licenze d’uso (perenni), che può differire
-	da quello di altre risorse. Esistono alcune informazioni che caratterizzano ciascuna
-	risorsa, dipendenti dalla categoria della risorsa stessa. La seconda versione
-	dell’applicazione considera una sola categoria di risorse, i libri. Ciascun libro è descritto
-	da vari campi, ad esempio, titolo, autore/i, numero di pagine, anno di pubblicazione, casa
-	editrice, lingua, genere.
+ * 	
+ * VERSIONE 3.0
 
-	La versione corrente dell’applicazione deve consentire all’operatore di archiviare le
-	descrizioni delle risorse e visualizzare il contenuto dell’archivio, secondo le specifiche
-	seguenti:
-		- aggiunta (della descrizione) di una risorsa, completa in ogni suo campo, a una
-		(sotto)categoria in archivio;
-		- rimozione (della descrizione) di una risorsa dall’archivio;
-		- visualizzazione dell’elenco delle risorse per (sotto)categoria
+* La versione corrente dell’applicazione deve consentire all’operatore di archiviare le descrizioni delle risorse e visualizzare il contenuto dell’archivio,
+  secondo le specifiche seguenti: 
+  aggiunta (della descrizione) di una risorsa, completa in ogni suo campo, a una (sotto) categoria in archivio; 
+  rimozione (della descrizione) di una risorsa dall’archivio; visualizzazione dell’elenco delle risorse per (sotto)categoria.
  */
 package parte3;
 
@@ -45,25 +26,30 @@ public class Main
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali"};//"modifica dati" ?
+	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri","Visualizza dettagli libro"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 
-	private static final String PATHfruitori = "Fruitori.dat";
-	private static final String PATHarchivio = "Archivio.dat";
+	private static final String PATH_FRUITORI = "Fruitori.dat";
+//	poi salverò solo archivio in "Archivio.dat", dentro al quale ci sarà Libri, Films, ecc
+	private static final String PATH_LIBRI = "Libri.dat";
+	private static final String PATH_PRESTITI = "Prestiti.dat";
+	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 	
 	private static boolean continuaMenuAccesso;
 	private static boolean continuaMenuFruitore;
 	private static boolean continuaMenuOperatore;
 	private static boolean continuaMenuPersonale;
 	
-	private static File fileFruitori = new File(PATHfruitori);
-	private static File fileArchivio = new File(PATHarchivio);
+	private static File fileFruitori = new File(PATH_FRUITORI);
+	private static File fileLibri = new File(PATH_LIBRI);
+	private static File filePrestiti = new File(PATH_PRESTITI);
 //	serve a tutti i metodi (va qua?)
 	private static Fruitori fruitori = new Fruitori();
 	private static Libri libri = new Libri();
+	private static Prestiti prestiti = new Prestiti();
 	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
@@ -73,7 +59,8 @@ public class Main
 //			se non c'è il file lo crea (vuoto) e salva all'interno "fruitori", un vector per adesso vuoto.
 //			così quando dopo si fa il caricamento non ci sono eccezioni
 			ServizioFile.checkFile(fileFruitori, fruitori);
-			ServizioFile.checkFile(fileArchivio, libri);
+			ServizioFile.checkFile(fileLibri, libri);
+			ServizioFile.checkFile(filePrestiti, prestiti);
 		} 
 		
 //		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
@@ -86,11 +73,15 @@ public class Main
 //		avviato il programma carico i fruitori dal file + 
 //		carico i Libri dal file
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
-		libri = (Libri)ServizioFile.caricaSingoloOggetto(fileArchivio);
+		libri = (Libri)ServizioFile.caricaSingoloOggetto(fileLibri);
+		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
 		
 		
-//		elimino i fruitori scaduti (elimino o no??)
-		fruitori.controlloIscrizioni();		
+		
+//		elimino i fruitori scaduti
+		fruitori.controlloIscrizioni();	
+//		elimino i prestiti scaduti
+		prestiti.controlloPrestiti();
 		
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
@@ -132,7 +123,7 @@ public class Main
 			}
 			case 2://accesso OPERATORE
 			{
-				String passwordOperatore = InputDati.leggiStringa("Inserire la password per accedere all'area riservata agli operatori: ");
+				String passwordOperatore = InputDati.leggiStringaNonVuota("Inserire la password per accedere all'area riservata agli operatori: ");
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
 					System.out.println("Accesso eseguito con successo!");
@@ -180,7 +171,7 @@ public class Main
 			case 2://AGGIUNGI LIBRO
 			{
 				libri.addLibro();
-				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -188,7 +179,7 @@ public class Main
 			case 3://RIMUOVI LIBRO
 			{
 				libri.removeLibro();
-				ServizioFile.salvaSingoloOggetto(fileArchivio, libri, false);
+				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -235,9 +226,8 @@ public class Main
 			}
 			case 2:	//login
 			{
-				/////////// CREDENZIALI ////////////
-				String user = InputDati.leggiStringa("Inserisci il tuo username: ");
-				String password = InputDati.leggiStringa("Inserisci la tua password: ");
+				String user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+				String password = InputDati.leggiStringaNonVuota("Inserisci la tua password: ");
 				
 				utenteLoggato = fruitori.trovaUtente(user, password);
 				
@@ -249,7 +239,6 @@ public class Main
 //				-> utente trovato
 				System.out.println("Benvenuto " + utenteLoggato.getNome() + "!");
 				
-				///////// AREA RISERVATA ///////////
 				MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
 				continuaMenuPersonale=true;
 				do
@@ -274,7 +263,7 @@ public class Main
 		
 		switch(scelta)
 		{
-			case 0:	//TORNA A MENU PRINCIPALE (fare LOGOUT?)
+			case 0:	//TORNA A MENU PRINCIPALE
 			{
 				continuaMenuPersonale=false;
 				break;
@@ -293,6 +282,22 @@ public class Main
 				
 				continuaMenuPersonale = true;
 				break;
+			}
+			case 3: //RICHIEDI PRESTITO
+			{
+//				prestiti.addPrestito();			
+				
+				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+				continuaMenuPersonale = true;
+				break;
+
+				
+//				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
+//				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+			}
+			case 4: //PROROGA PRESTITO
+			{
+				
 			}
 		}
 	}
