@@ -1,5 +1,6 @@
 package parte3;
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import myLib.BelleStringhe;
@@ -21,6 +22,11 @@ public class Libri implements Serializable
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	
+	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
+	private static final String[] VOCI_TITOLO_MENU_FILTRO = {	"Filtra per titolo",
+																"Filtra per anno di pubblicazione",
+																"Filtra per autore"};
+	
 	private Vector<Libro> libri;
 	
 	/**
@@ -40,7 +46,9 @@ public class Libri implements Serializable
 	{
 		this.libri = libri;
 	}
-
+	
+	
+	
 	/**
 	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
 	 */
@@ -142,7 +150,60 @@ public class Libri implements Serializable
 	 */
 	public void dettagliLibro()
 	{
-		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
+		Vector<Libro> libriFiltrati = null;
+		String titoloParziale = null;
+		int annoPubblicazione = 0;
+		String nomeAutore = null;
+		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO); 
+		int scelta = menuFiltro.scegliBase();
+		switch(scelta) 
+		{
+			case 1: 
+			{
+				titoloParziale = InputDati.leggiStringa("Inserisci il titolo del libro: \n");
+				libriFiltrati = filtraLibroPerTitolo(titoloParziale);
+				break;
+			}
+			
+			case 2:
+			{
+				annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
+				libriFiltrati = filtraLibroPerData(annoPubblicazione);
+				break;
+			}
+			
+			case 3: 
+			{
+				nomeAutore = InputDati.leggiStringa("Inserisci il nome dell'autore:  \n");
+				libriFiltrati = filtraLibroPerAutori(nomeAutore);
+				break;
+			}
+		}
+		
+		if(scelta ==1 && libriFiltrati.isEmpty()) 
+		{
+			System.out.println("In archivio non sono presenti libri il cui titolo è " + titoloParziale);
+			return;
+		}
+		if(scelta ==2 && libriFiltrati.isEmpty())
+		{
+			System.out.println("In archivio non sono presenti libri il cui anno di pubblicazione è " + annoPubblicazione);
+			return;
+		}
+		if(scelta ==3 && libriFiltrati.isEmpty())
+		{
+			System.out.println("In archivio non sono presenti libri il cui autore è " + nomeAutore);
+			return;
+		}
+		
+		for (int i=0;i <libriFiltrati.size();i++) 
+		{
+			System.out.println();
+			libriFiltrati.get(i).stampaDati(false);
+		}
+		/* codice modificato per la ricerca con diversi parametri**/
+		
+		/*String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
 		int numLibri = 0;
 		
 		for(Libro libro : libri)
@@ -158,6 +219,7 @@ public class Libri implements Serializable
 		{
 			System.out.println("In archivio non sono presenti libri il cui titolo è " + titolo);
 		}
+		*/
 	}
 	
 	/**
@@ -180,6 +242,8 @@ public class Libri implements Serializable
 				System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
 
 			}
+		
+			
 			
 //			uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
 			Vector<Libro> libriDaStampare = new Vector<>();
@@ -285,5 +349,61 @@ public class Libri implements Serializable
 			}
 		}
 		while(true);
+	}
+	
+	
+	/** * * * * * * * * * * * * * * * * * * * * * * * *
+	 * MEDOTO PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI
+	 * 
+	 *  filtraLibroPerTitolo  -> fltra in base al titolo parziale passato dall'utente
+	 *  filtraLibroPerData    -> filtra in base all'anno di pubblicazione immesso dall'utente
+	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore che gli viene passato dall'utente
+	 *  
+	 *  ogni metodo restituisce un vector di libri contenente i libri che rispondono a determinati parametri
+	 *  * * * * * * * * * * * * * * * * * * * * * * * *
+	 */ 
+	
+	public Vector<Libro> filtraLibroPerTitolo(String titoloParziale)
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		
+		for(Libro libro : libri)
+		{
+			if(libro.getNome().contains(titoloParziale))
+			{
+				libriTrovati.add(libro);
+			}
+		}
+		return libriTrovati;
+	}
+	
+	public Vector<Libro> filtraLibroPerData(int annoPubblicazione)
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		
+		for(Libro libro : libri)
+		{
+			if(libro.getAnnoPubblicazione() == annoPubblicazione)
+			{
+				libriTrovati.add(libro);
+			}
+		}
+		return libriTrovati;
+	}
+	
+	public Vector<Libro> filtraLibroPerAutori(String autore)
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		for(Libro libro : libri)
+		{
+			for(String s: libro.getAutori())
+			{
+			if(s.equals(autore))
+				{
+					libriTrovati.add(libro);
+				}
+			}
+		}
+		return libriTrovati;
 	}
 }
