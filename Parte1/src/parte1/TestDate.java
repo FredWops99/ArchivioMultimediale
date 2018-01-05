@@ -12,6 +12,10 @@ public class TestDate
 {
 	public static void main(String[] args) 
 	{
+		Fruitori f = new Fruitori();
+		System.out.println(f.getClass().getSimpleName());
+		
+		
 //		acquisisco data da tastiera
 		GregorianCalendar data = GestioneDate.creaDataGuidata(0, 9999);
 		System.out.println(GestioneDate.visualizzaData(data));

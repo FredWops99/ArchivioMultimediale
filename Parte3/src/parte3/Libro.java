@@ -73,11 +73,11 @@ public class Libro extends Risorsa implements Serializable
 		this.setnLicenze(nLicenze);
 		this.setInPrestito(0);
 	}
-
+	
 	/**
 	 * Stampa tutte le informazioni del libro
 	 */
-	public void stampaDati()
+	public void stampaDati(boolean perPrestito)
 	{
 		System.out.println("------------------------------------------------");
 		System.out.println("Categoria-----------------: Libro");
@@ -101,7 +101,15 @@ public class Libro extends Risorsa implements Serializable
 		System.out.println("Anno di pubblicazione-----: " + annoPubblicazione);
 		System.out.println("Casa editrice-------------: " + casaEditrice);
 		System.out.println("Lingua--------------------: " + lingua);
-		System.out.println("Numero licenze------------: " + nLicenze);
+		if(!perPrestito)
+		{
+			System.out.println("Numero licenze------------: " + nLicenze);
+			System.out.println("In prestito---------------: " + inPrestito);
+		}
+		else
+		{
+			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
+		}
 	}
 
 	public String getNome()
@@ -184,7 +192,7 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.inPrestito = inPrestito;
 	}
-
+	
 	public int getGiorniDurataPrestito() 
 	{
 		return GIORNI_DURATA_PRESTITO;
@@ -201,4 +209,19 @@ public class Libro extends Risorsa implements Serializable
 	{
 		return PRESTITI_MAX;
 	}
+
+	/**
+	 * precondizione: ci sono copie del Libro disponibili per il prestito
+	 */
+	public void mandaInPrestito() 
+	{
+		inPrestito++;
+	}
+	public void tornaDalPrestito()
+	{
+		inPrestito--;
+	}
+
+
+	
 }

@@ -132,13 +132,16 @@ public class Fruitori implements Serializable
 	 */
 	public void controlloIscrizioni()
 	{
+		int rimossi = 0;
 		for (int i=0; i<fruitori.size(); i++) 
 		{
 			if(fruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
 			{
 				fruitori.remove(i);
+				rimossi++;
 			}
 		}
+		System.out.println("\nIscrizioni scadute (utenti rimossi): " + rimossi);
 	}
 	
 	/**

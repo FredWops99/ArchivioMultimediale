@@ -1,12 +1,11 @@
 /**
- * 	
  * VERSIONE 3.0
-
-* La versione corrente dell’applicazione deve consentire all’operatore di archiviare le descrizioni delle risorse e visualizzare il contenuto dell’archivio,
-  secondo le specifiche seguenti: 
-  aggiunta (della descrizione) di una risorsa, completa in ogni suo campo, a una (sotto) categoria in archivio; 
-  rimozione (della descrizione) di una risorsa dall’archivio; visualizzazione dell’elenco delle risorse per (sotto)categoria.
+ * 	La versione corrente dell’applicazione deve consentire all’operatore di archiviare le descrizioni delle risorse e visualizzare il contenuto dell’archivio,
+ *  secondo le specifiche seguenti: 
+ *  aggiunta (della descrizione) di una risorsa, completa in ogni suo campo, a una (sotto) categoria in archivio; 
+ *  rimozione (della descrizione) di una risorsa dall’archivio; visualizzazione dell’elenco delle risorse per (sotto)categoria.
  */
+
 package parte3;
 
 import java.io.File;
@@ -26,17 +25,19 @@ public class Main
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito"};
+	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito",
+													"Visualizza prestiti in corso","Annulla prestito"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
-	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri","Visualizza dettagli libro"};
+	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
+													"Visualizza dettagli libro", "Visualizza tutti i prestiti attivi"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
+	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 
 	private static final String PATH_FRUITORI = "Fruitori.dat";
 //	poi salverò solo archivio in "Archivio.dat", dentro al quale ci sarà Libri, Films, ecc
 	private static final String PATH_LIBRI = "Libri.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
-	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 	
 	private static boolean continuaMenuAccesso;
 	private static boolean continuaMenuFruitore;
@@ -53,7 +54,7 @@ public class Main
 	private static Fruitore utenteLoggato = null;
 	
 	public static void main(String[] args)
-	{		
+	{				
 		try 
 		{
 //			se non c'è il file lo crea (vuoto) e salva all'interno "fruitori", un vector per adesso vuoto.
@@ -76,12 +77,12 @@ public class Main
 		libri = (Libri)ServizioFile.caricaSingoloOggetto(fileLibri);
 		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
 		
-		
-		
 //		elimino i fruitori scaduti
 		fruitori.controlloIscrizioni();	
+		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 //		elimino i prestiti scaduti
 		prestiti.controlloPrestiti();
+		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 		
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
@@ -198,6 +199,13 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
+			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
+			{
+				prestiti.visualizzaTuttiPrestiti();
+				
+				continuaMenuOperatore = true;
+				break;
+			}
 		}
 	}
 
@@ -285,19 +293,45 @@ public class Main
 			}
 			case 3: //RICHIEDI PRESTITO
 			{
-//				prestiti.addPrestito();			
+				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
+				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+				if(categoria == "Libri")
+				{
+					Libro libro = libri.scegliLibro();
+					if(libro != null)
+					{
+						prestiti.addPrestito(utenteLoggato, libro);	
+					}
+				}
+				
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
+				
 				continuaMenuPersonale = true;
 				break;
 
-				
-//				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
-//				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 			}
 			case 4: //PROROGA PRESTITO
 			{
 				
+				continuaMenuPersonale = true;
+				break;
+			}
+			case 5: //VISUALIZZA PRESTITI IN CORSO
+			{
+				prestiti.prestitiAttiviDi(utenteLoggato.getUser());
+				
+				continuaMenuPersonale = true;
+				break;
+			}
+			case 6://ANNULLA PRESTITO
+			{
+				System.out.println("verranno eliminati i tuoi prestiti");
+				prestiti.annullaPrestiti(utenteLoggato);
+				
+				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, true);
+				ServizioFile.salvaSingoloOggetto(fileLibri, libri, true);
 			}
 		}
 	}

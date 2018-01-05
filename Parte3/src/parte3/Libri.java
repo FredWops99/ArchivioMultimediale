@@ -2,6 +2,7 @@ package parte3;
 import java.io.Serializable;
 import java.util.Vector;
 
+import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
 import myLib.MyMenu;
@@ -121,7 +122,7 @@ public class Libri implements Serializable
 			for(Integer i : posizioni)
 			{
 				System.out.println("\nRicorrenza " + ++pos + ":");
-				libri.elementAt((int)i).stampaDati();
+				libri.elementAt((int)i).stampaDati(false);
 			}
 			
 			int daRimuovere = InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioni.size());
@@ -146,7 +147,7 @@ public class Libri implements Serializable
 			if(libro.getNome().equals(titolo))
 			{
 				System.out.println();
-				libro.stampaDati();
+				libro.stampaDati(false);
 				numLibri++;
 			}
 		}
@@ -250,5 +251,37 @@ public class Libri implements Serializable
 		{
 			return "-";
 		}
+	}
+
+	public Libro scegliLibro() 
+	{
+		int selezione;
+		
+		System.out.println("\nLibri in archivio: \n");
+		for(int i = 0; i < libri.size(); i++)
+		{
+			System.out.println(i+1 + ")");
+			libri.get(i).stampaDati(true);
+			System.out.println(BelleStringhe.CORNICE+ "\n");		
+		}
+		
+		do
+		{
+			selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
+			if(selezione == 0)
+			{
+				return null;
+			}
+			else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
+			{
+				System.out.println(libri.get(selezione-1).getNome() + " selezionato!");
+				return libri.get(selezione-1);
+			}
+			else
+			{
+				System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+			}
+		}
+		while(true);
 	}
 }

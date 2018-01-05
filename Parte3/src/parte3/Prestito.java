@@ -39,6 +39,29 @@ public class Prestito implements Serializable
 		prorogato = false;		
 	}
 	
+	public void visualizzaPrestito()
+	{
+//		CON STAMPA DATI A VOLTE FUNZIONA ?NOSENSE?
+		
+		risorsa.stampaDati(true);
+		
+		
+//		System.out.println();
+//		System.out.println("Categoria-------------: " + risorsa.getClass().getSimpleName());
+//		System.out.println("Titolo----------------: " + risorsa.getNome());
+//		System.out.println("Fruitore--------------: " + fruitore.getUser());
+//		System.out.println("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio));
+//		System.out.println("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));
+//		if(!prorogato)
+//		{
+//			System.out.println("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataRichiestaProroga));
+//		}
+//		else
+//		{
+//			System.out.println("Prestito non rinnovabile");
+//		}
+	}
+	
 	public Risorsa getRisorsa() 
 	{
 		return risorsa;
