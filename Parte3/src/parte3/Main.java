@@ -26,11 +26,11 @@ public class Main
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito",
-													"Visualizza prestiti in corso","Annulla prestito"};
+															"Visualizza prestiti in corso","Annulla prestito"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
-													"Visualizza dettagli libro", "Visualizza tutti i prestiti attivi"};
+															"Visualizza dettagli libro", "Visualizza tutti i prestiti attivi"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 
@@ -63,23 +63,24 @@ public class Main
 			ServizioFile.checkFile(fileLibri, libri);
 			ServizioFile.checkFile(filePrestiti, prestiti);
 		} 
-		
-//		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori); // salvo i fruitori nel file
-		
+				
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
 		
-//		avviato il programma carico i fruitori dal file + 
-//		carico i Libri dal file
+//		avviato il programma carico i fruitori, i libri e i prestiti da file
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
 		libri = (Libri)ServizioFile.caricaSingoloOggetto(fileLibri);
 		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
 		
-//		elimino i fruitori scaduti
+//		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
+		ricostruisciPrestiti();
+		
+//		elimino i fruitori con iscrizione scaduta
 		fruitori.controlloIscrizioni();	
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
+		
 //		elimino i prestiti scaduti
 		prestiti.controlloPrestiti();
 		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
@@ -304,7 +305,6 @@ public class Main
 					}
 				}
 				
-				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
 				
@@ -328,11 +328,51 @@ public class Main
 			case 6://ANNULLA PRESTITO
 			{
 				System.out.println("verranno eliminati i tuoi prestiti");
+				
 				prestiti.annullaPrestiti(utenteLoggato);
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, true);
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, true);
 			}
+		}
+	}
+	
+	/**
+	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 
+	 * uguale prima del caricamento diventa diverso dopo il caricamento)
+	 * in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
+	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
+	 */
+	public static void ricostruisciPrestiti()
+	{
+		for(Prestito prestito : prestiti.getPrestiti())
+		{
+			if(prestito.getRisorsa() instanceof Libro)
+			{
+				for(Libro libro : libri.getLibri())
+				{
+					if(prestito.getRisorsa().getId() == (libro.getId()))
+					{
+						prestito.setRisorsa(libro);
+					}
+				}
+			}
+//			PER LE PROSSIME CATEGORIE
+//			else if(prestito.getRisorsa() instanceof Film)
+//			{
+//				for(Film film : films.getFilms())
+//				{
+//					if(prestito.getRisorsa().getId() == (film.getId()))
+//					{
+//						prestito.setRisorsa(film);
+//					}
+//				}
+//			}
+//			else if(altra categoria)
+//			{
+//				...
+//			}
+			
 		}
 	}
 }

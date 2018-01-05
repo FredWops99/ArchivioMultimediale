@@ -9,9 +9,9 @@ import java.util.Vector;
  */
 public class Libro extends Risorsa implements Serializable
 {	
-	/*******************************************************************
-	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI:*
-	 *******************************************************************/
+	/********************************************************************
+	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI: *
+	 ********************************************************************/
 	/**
 	 * quanto tempo un Libro può restare in prestito ad un fruitore
 	 */
@@ -30,6 +30,8 @@ public class Libro extends Risorsa implements Serializable
 	private static final int PRESTITI_MAX = 3;
 	
 	private static final long serialVersionUID = 1L;
+	
+	private int id;
 	/**
 	 * sottocategorie della categoria LIBRO: Romanzo, Fumetto, Poesia...
 	 */
@@ -59,9 +61,10 @@ public class Libro extends Risorsa implements Serializable
 	 * @param genere il genere del libro ( "-" se il genere non ha sottogeneri)
 	 * @param nLicenze il numero di licenze disponibili
 	 */
-	public Libro(String sottoCategoria, String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
+	public Libro(int id, String sottoCategoria, String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
 			String lingua, String genere, int nLicenze) 
 	{
+		this.setId(id);
 		this.setSottoCategoria(sottoCategoria);
 		this.setNome(nome);
 		this.setAutori(autori);
@@ -81,6 +84,8 @@ public class Libro extends Risorsa implements Serializable
 	{
 		System.out.println("------------------------------------------------");
 		System.out.println("Categoria-----------------: Libro");
+//		System.out.println("ID------------------------: " + id);
+//		System.out.println("Hashcode------------------: " + hashCode());
 		System.out.println("Sottocategoria------------: " + sottoCategoria);
 		System.out.println("Titolo--------------------: " + nome);
 		System.out.print("Autori--------------------:");
@@ -112,6 +117,14 @@ public class Libro extends Risorsa implements Serializable
 		}
 	}
 
+	public int getId() 
+	{
+		return id;
+	}
+	public void setId(int id) 
+	{
+		this.id = id;
+	}
 	public String getNome()
 	{
 		return nome;

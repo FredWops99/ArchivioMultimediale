@@ -43,15 +43,9 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	/*********************************************************************
-	 * mandaInPrestito funziona, tornaDalPrestito funziona solo a volte: se chiudo e apro programma, quando elimino i prestiti i libri non aggiornano il loro
-	 * valore di inPrestito (copie spariscono nel nulla)
-	 * 
-	 * probabilmente i libri in Prestito non fanno riferimento agli stessi in Libri...
-	 *********************************************************************/
-	
 	public void annullaPrestiti(Fruitore utente) 
 	{
+//		dal fondo perchè se elimino dall'inizio si sballano le posizioni
 		for(int i = prestiti.size()-1; i >= 0; i--)
 		{
 			if(prestiti.get(i).getFruitore().getUser().equals(utente.getUser()))
@@ -115,6 +109,5 @@ public class Prestiti implements Serializable
 			}
 		}
 	}
-
 	
 }

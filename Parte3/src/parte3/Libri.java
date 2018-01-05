@@ -15,6 +15,8 @@ import myLib.MyMenu;
 public class Libri implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+//	a ogni libro viene assegnato un ID incrementale univoco
+	private int lastId;
 	
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
@@ -27,6 +29,7 @@ public class Libri implements Serializable
 	public Libri()
 	{
 		this.libri = new Vector<Libro>();
+		lastId = 0;
 	}
 	
 	public Vector<Libro> getLibri() 
@@ -59,7 +62,7 @@ public class Libri implements Serializable
 		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
-		Libro l = new Libro(sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		Libro l = new Libro(lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		addPerSottoCategorie(l);
 		
 		System.out.println("Libro aggiunto con successo!");
@@ -221,7 +224,6 @@ public class Libri implements Serializable
 				}
 			}
 		}
-		
 	}
 	
 	/**
