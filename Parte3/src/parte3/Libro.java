@@ -15,19 +15,19 @@ public class Libro extends Risorsa implements Serializable
 	/**
 	 * quanto tempo un Libro può restare in prestito ad un fruitore
 	 */
-	private static final int GIORNI_DURATA_PRESTITO = 30;
+	public static final int GIORNI_DURATA_PRESTITO = 30;
 	/**
 	 * quanto dura una proroga del prestito di un Libro
 	 */
-	private static final int GIORNI_DURATA_PROROGA = 30;
+	public static final int GIORNI_DURATA_PROROGA = 30;
 	/**
 	 * quanti giorni prima della scadenza si può chiedere una proroga del prestito del Libro
 	 */
-	private static final int GIORNI_PRIMA_PER_PROROGA = -7;
+	public static final int GIORNI_PRIMA_PER_PROROGA = -7;
 	/**
 	 * quanti Libri possono essere in prestito contemporaneamente allo stesso fruitore
 	 */
-	private static final int PRESTITI_MAX = 3;
+	public static final int PRESTITI_MAX = 3;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -205,23 +205,6 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.inPrestito = inPrestito;
 	}
-	
-	public int getGiorniDurataPrestito() 
-	{
-		return GIORNI_DURATA_PRESTITO;
-	}
-	public int getGiorniDurataProroga()
-	{
-		return GIORNI_DURATA_PROROGA;
-	}
-	public int getGiorniPrimaPerProroga() 
-	{
-		return GIORNI_PRIMA_PER_PROROGA;
-	}
-	public int getPrestitiMax()
-	{
-		return PRESTITI_MAX;
-	}
 
 	/**
 	 * precondizione: ci sono copie del Libro disponibili per il prestito
@@ -235,6 +218,27 @@ public class Libro extends Risorsa implements Serializable
 		inPrestito--;
 	}
 
+	@Override
+	public int getGiorniDurataPrestito() 
+	{
+		return Libro.GIORNI_DURATA_PRESTITO;
+	}
 
-	
+	@Override
+	public int getGiorniDurataProroga() 
+	{
+		return Libro.GIORNI_DURATA_PROROGA;
+	}
+
+	@Override
+	public int getGiorniPrimaPerProroga() 
+	{
+		return Libro.GIORNI_PRIMA_PER_PROROGA;
+	}
+
+	@Override
+	public int getPrestitiMax() 
+	{
+		return Libro.PRESTITI_MAX;
+	}
 }

@@ -1,8 +1,6 @@
 package parte3;
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
@@ -46,8 +44,6 @@ public class Libri implements Serializable
 	{
 		this.libri = libri;
 	}
-	
-	
 	
 	/**
 	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
@@ -146,7 +142,7 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * chiede all'utente il nome del libro del quale visualizzare tutte le informazioni: se ce ne sono più uno con lo stesso stampa i dettagli di questi ultimi
+	 * 
 	 */
 	public void dettagliLibro()
 	{
@@ -154,6 +150,7 @@ public class Libri implements Serializable
 		String titoloParziale = null;
 		int annoPubblicazione = 0;
 		String nomeAutore = null;
+		
 		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO); 
 		int scelta = menuFiltro.scegliBase();
 		switch(scelta) 
@@ -174,23 +171,23 @@ public class Libri implements Serializable
 			
 			case 3: 
 			{
-				nomeAutore = InputDati.leggiStringa("Inserisci il nome dell'autore:  \n");
+				nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
 				libriFiltrati = filtraLibroPerAutori(nomeAutore);
 				break;
 			}
 		}
 		
-		if(scelta ==1 && libriFiltrati.isEmpty()) 
+		if(scelta == 1 && libriFiltrati.isEmpty()) 
 		{
 			System.out.println("In archivio non sono presenti libri il cui titolo è " + titoloParziale);
 			return;
 		}
-		if(scelta ==2 && libriFiltrati.isEmpty())
+		if(scelta == 2 && libriFiltrati.isEmpty())
 		{
 			System.out.println("In archivio non sono presenti libri il cui anno di pubblicazione è " + annoPubblicazione);
 			return;
 		}
-		if(scelta ==3 && libriFiltrati.isEmpty())
+		if(scelta == 3 && libriFiltrati.isEmpty())
 		{
 			System.out.println("In archivio non sono presenti libri il cui autore è " + nomeAutore);
 			return;
@@ -242,8 +239,6 @@ public class Libri implements Serializable
 				System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
 
 			}
-		
-			
 			
 //			uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
 			Vector<Libro> libriDaStampare = new Vector<>();
@@ -340,7 +335,7 @@ public class Libri implements Serializable
 			}
 			else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
 			{
-				System.out.println(libri.get(selezione-1).getNome() + " selezionato!");
+//				System.out.println(libri.get(selezione-1).getNome() + " prenotato!");
 				return libri.get(selezione-1);
 			}
 			else
@@ -353,7 +348,7 @@ public class Libri implements Serializable
 	
 	
 	/** * * * * * * * * * * * * * * * * * * * * * * * *
-	 * MEDOTO PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI
+	 * METODI PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI
 	 * 
 	 *  filtraLibroPerTitolo  -> fltra in base al titolo parziale passato dall'utente
 	 *  filtraLibroPerData    -> filtra in base all'anno di pubblicazione immesso dall'utente
@@ -396,9 +391,9 @@ public class Libri implements Serializable
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		for(Libro libro : libri)
 		{
-			for(String s: libro.getAutori())
+			for(String s : libro.getAutori())
 			{
-			if(s.equals(autore))
+				if(s.equals(autore))
 				{
 					libriTrovati.add(libro);
 				}

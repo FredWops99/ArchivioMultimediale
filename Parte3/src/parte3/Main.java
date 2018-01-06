@@ -26,7 +26,7 @@ public class Main
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito",
-															"Visualizza prestiti in corso","Annulla prestito"};
+															"Visualizza prestiti in corso","Annulla prestiti"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
@@ -298,12 +298,35 @@ public class Main
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 				if(categoria == "Libri")
 				{
-					Libro libro = libri.scegliLibro();
-					if(libro != null)
+					if(prestiti.prestitiAttiviDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
 					{
-						prestiti.addPrestito(utenteLoggato, libro);	
+						System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
+								+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
 					}
+					else//può chiedere un altro prestito
+					{
+						Libro libro = libri.scegliLibro();
+						
+						if(libro != null)
+						{
+							if(prestiti.prestitoFattibile(utenteLoggato, libro))
+							{
+								prestiti.addPrestito(utenteLoggato, libro);
+								System.out.println(libro.getNome() + " prenotato con successo!");
+							}
+							else//!prestitoFattibile se l'utente ha già una copia in prestito
+							{
+								System.out.println("Prenotazione rifiutata: possiedi già questa risorsa in prestito");
+							}
+						}
+//						qui libro==null: vuol dire che l'utente non ha selezionato un libro (0: torna indietro)
+					}
+					
 				}
+//				else if(categoria == "Films")
+//				{
+//					...	
+//				}
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
@@ -320,19 +343,17 @@ public class Main
 			}
 			case 5: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.prestitiAttiviDi(utenteLoggato.getUser());
+				prestiti.stampaPrestitiAttiviDi(utenteLoggato.getUser());
 				
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 6://ANNULLA PRESTITO
+			case 6://ANNULLA PRESTITI
 			{
-				System.out.println("verranno eliminati i tuoi prestiti");
-				
 				prestiti.annullaPrestiti(utenteLoggato);
 				
-				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, true);
-				ServizioFile.salvaSingoloOggetto(fileLibri, libri, true);
+				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
 			}
 		}
 	}

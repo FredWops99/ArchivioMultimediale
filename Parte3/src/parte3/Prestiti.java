@@ -44,16 +44,26 @@ public class Prestiti implements Serializable
 	}
 	
 	public void annullaPrestiti(Fruitore utente) 
-	{
+	{		
+		int j = 0;
 //		dal fondo perchè se elimino dall'inizio si sballano le posizioni
 		for(int i = prestiti.size()-1; i >= 0; i--)
 		{
 			if(prestiti.get(i).getFruitore().getUser().equals(utente.getUser()))
 			{
+				if(j == 0)
+				{
+					System.out.println("prestiti eliminati: ");
+				}
 				prestiti.get(i).getRisorsa().stampaDati(true);
 				prestiti.get(i).getRisorsa().tornaDalPrestito();
 				prestiti.remove(i);
+				j++;
 			}
+		}
+		if(j == 0)
+		{
+			System.out.println("Al momento non hai prestiti attivi");
 		}
 	}	
 	
@@ -73,26 +83,61 @@ public class Prestiti implements Serializable
 		this.prestiti = prestiti;
 	}
 
-	public void prestitiAttiviDi(String username) 
+	/**
+	 * stampa tutti i prestiti attivi di un utente
+	 * @param username lo username dell'utente di cui stampare i prestiti
+	 * @return il numero di libri attualmente in prestito all'utente
+	 */
+	public void stampaPrestitiAttiviDi(String username) 
 	{		
-		int risultati = 0;
+		int totPrestiti = 0;
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(username))
+			if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
 			{
-				if(risultati == 0)//all'inizio
+				if(totPrestiti == 0)//all'inizio
 				{
-					System.out.println("Libri attualmente in prestito: ");
+					System.out.println("Prestiti in corso: ");
 				}
 				prestito.visualizzaPrestito();
 				System.out.println(BelleStringhe.CORNICE);
-				risultati++;
+				totPrestiti++;
 			}
 		}
-		if(risultati == 0)
+		if(totPrestiti == 0)
 		{
 			System.out.println("Al momento non ci sono prestiti attivi");
 		}
+	}
+	
+	public int prestitiAttiviDi(String username, String categoria)
+	{
+		int risorse = 0;
+		
+		if(categoria.equals("Libri"))
+		{
+			for(Prestito prestito : prestiti)
+			{
+				
+				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
+				{
+					risorse++;
+				}
+			}
+		}
+//		else if(categoria.equals("Films"))
+//		{
+//			for(Prestito prestito : prestiti)
+//			{
+//				
+//				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Film)
+//				{
+//					risorse++;
+//				}
+//			}
+//		}
+		
+		return risorse;
 	}
 
 	public void visualizzaTuttiPrestiti() 
@@ -109,5 +154,25 @@ public class Prestiti implements Serializable
 			}
 		}
 	}
+
+	/**
+	 * precondizione: libro è diverso da null
+	 * @param utenteLoggato
+	 * @param libro
+	 * @return
+	 */
+	public boolean prestitoFattibile(Fruitore utente, Libro libro) 
+	{
+		for(Prestito prestito : prestiti)
+		{
+			if(prestito.getRisorsa().getId()==libro.getId() && prestito.getFruitore().getUser().equals(utente.getUser()))
+			{
+				return false;
+			}
+		}
+//		se arriva qua l'utente non ha già la risorsa in prestito
+		return true;
+		}
+		
 	
 }
