@@ -10,6 +10,7 @@ package parte3;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 import myLib.BelleStringhe;
 import myLib.InputDati;
@@ -25,7 +26,7 @@ public class Main
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Proroga prestito",
+	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Rinnova prestito",
 															"Visualizza prestiti in corso","Annulla prestiti"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
@@ -77,8 +78,10 @@ public class Main
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
-//		elimino i fruitori con iscrizione scaduta
-		fruitori.controlloIscrizioni();	
+//		elimino i fruitori con iscrizione scaduta (controlloIscrizini)
+		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
+//		rimuovo i prestiti che avevano attivi
+		prestiti.annullaPrestiti(utentiScaduti);
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 		
 //		elimino i prestiti scaduti
@@ -180,7 +183,12 @@ public class Main
 			}
 			case 3://RIMUOVI LIBRO
 			{
-				libri.removeLibro();
+				System.out.println("ATTENZIONE! Se il libro che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
+				int idSelezionato = libri.removeLibro();
+				if(idSelezionato != -1)//removeLibro ritorna -1 se l'utente annulla la procedura
+				{
+					prestiti.annullaPrestitiConLibro(idSelezionato);
+				}
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
 				
 				continuaMenuOperatore=true;
@@ -296,7 +304,7 @@ public class Main
 			{
 				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-				if(categoria == "Libri")
+				if(categoria == CATEGORIE[0])// == "Libri"
 				{
 					if(prestiti.prestitiAttiviDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
 					{
@@ -323,7 +331,7 @@ public class Main
 					}
 					
 				}
-//				else if(categoria == "Films")
+//				else if(categoria == CATEGORIE[1])// == "Films"
 //				{
 //					...	
 //				}
@@ -335,9 +343,9 @@ public class Main
 				break;
 
 			}
-			case 4: //PROROGA PRESTITO
+			case 4: //RINNOVA PRESTITO
 			{
-				
+				prestiti.rinnovaPrestito(utenteLoggato);
 				continuaMenuPersonale = true;
 				break;
 			}
@@ -351,6 +359,7 @@ public class Main
 			case 6://ANNULLA PRESTITI
 			{
 				prestiti.annullaPrestiti(utenteLoggato);
+				System.out.println("i tuoi prestiti sono stati eliminati");
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);

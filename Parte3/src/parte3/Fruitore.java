@@ -2,6 +2,8 @@ package parte3;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+
+import myLib.BelleStringhe;
 import myLib.GestioneDate;
 
 /**
@@ -108,7 +110,7 @@ public class Fruitore implements Serializable
 	 */
 	public void stampaDati() 
 	{
-		System.out.println("----------------------------------------\n");
+		System.out.println(BelleStringhe.CORNICE);
 		System.out.println("Nome----------------------: " + nome);
 		System.out.println("Cognome-------------------: " + cognome);
 		System.out.println("Username------------------: " + username);
