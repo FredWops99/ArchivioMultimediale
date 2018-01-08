@@ -99,51 +99,65 @@ public class Libri implements Serializable
 
 	/**
 	 * procedura per rimuovere un libro dalla raccolta: viene chiesto il nome del libro e se ce ne sono più di uno viene chiesto all'utente quale eliminare
+	 * @return l'id del libro che l'utente ha deciso di rimuovere (0 se non viene rimosso nessun libro)
 	 */
-	public void removeLibro()
+	public int removeLibro()
 	{
+		int idSelezionato;
+		
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro da rimuovere: ");
 		
-		Vector<Integer> posizioni = new Vector<>();
+		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
 		for (int i = 0; i < libri.size(); i++) 
 		{
 			if(libri.get(i).getNome().equals(titolo))
 			{
-				posizioni.add(i);
+//				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
+				posizioniRicorrenze.add(i);
 			}
 		}
-		if(posizioni.size()==0)
+		if(posizioniRicorrenze.size()==0)
 		{
 			System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
+			idSelezionato = -1;
 		}
-		else if(posizioni.size()==1)
+//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
+		else if(posizioniRicorrenze.size()==1)
 		{
-			libri.remove((int)posizioni.get(0));
+			idSelezionato = libri.get((int)posizioniRicorrenze.get(0)).getId();
+			libri.remove((int)posizioniRicorrenze.get(0));
 			System.out.println("Rimozione avvenuta con successo!");
 		}
-		else//Più elementi con lo stesso nome
+//		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
+//		l'utente inserisce quale rimuovere -> prendo la posizione in libri di quell'elemento e lo rimuovo da libri
+		else
 		{
 			System.out.println("Sono presenti più libri dal titolo \"" + titolo + "\": ");
 			int pos = 0;
-			for(Integer i : posizioni)
+			for(Integer i : posizioniRicorrenze)
 			{
 				System.out.println("\nRicorrenza " + ++pos + ":");
+				System.out.println(BelleStringhe.CORNICE);
 				libri.elementAt((int)i).stampaDati(false);
+				System.out.println(BelleStringhe.CORNICE);
 			}
 			
-			int daRimuovere = InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioni.size());
+			int daRimuovere = InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioniRicorrenze.size());
 			if(daRimuovere > 0)
 			{
-				libri.remove(daRimuovere-1);
+				idSelezionato = libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
+				libri.remove((int)posizioniRicorrenze.get(daRimuovere-1));
 				System.out.println("Rimozione avvenuta con successo!");
 			}
-		}	
+			else//0: annulla
+			{
+				idSelezionato = -1;
+			}
+		}
+		return idSelezionato;
 	}
 	
-	/**
-	 * 
-	 */
 	public void dettagliLibro()
 	{
 		Vector<Libro> libriFiltrati = null;
@@ -157,22 +171,22 @@ public class Libri implements Serializable
 		{
 			case 1: 
 			{
-				titoloParziale = InputDati.leggiStringa("Inserisci il titolo del libro: \n");
-				libriFiltrati = filtraLibroPerTitolo(titoloParziale);
+				titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
+				libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
 			
 			case 2:
 			{
 				annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
-				libriFiltrati = filtraLibroPerData(annoPubblicazione);
+				libriFiltrati = filtraLibriPerData(annoPubblicazione);
 				break;
 			}
 			
 			case 3: 
 			{
 				nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
-				libriFiltrati = filtraLibroPerAutori(nomeAutore);
+				libriFiltrati = filtraLibriPerAutori(nomeAutore);
 				break;
 			}
 		}
@@ -193,10 +207,11 @@ public class Libri implements Serializable
 			return;
 		}
 		
-		for (int i=0;i <libriFiltrati.size();i++) 
+		for (int i=0; i <libriFiltrati.size(); i++) 
 		{
 			System.out.println();
 			libriFiltrati.get(i).stampaDati(false);
+			System.out.println(BelleStringhe.CORNICE);
 		}
 		/* codice modificato per la ricerca con diversi parametri**/
 		
@@ -249,11 +264,11 @@ public class Libri implements Serializable
 			
 			for(int j = 0; j < libriDaStampare.size(); j++)
 			{				
-				System.out.println("\n---------------------- ");
+				System.out.println("\n" + BelleStringhe.CORNICE);
 				if(! libriDaStampare.get(j).getGenere().equals("-"))
 				{
 					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
-							", genere: "  + libriDaStampare.get(j).getGenere() + "\n");
+							", genere: "  + libriDaStampare.get(j).getGenere() + "\n" + BelleStringhe.CORNICE);
 					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
 					
 					for (int i = j+1; i < libriDaStampare.size(); i++) 
@@ -270,7 +285,7 @@ public class Libri implements Serializable
 				}
 				else
 				{
-					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n");
+					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n" + BelleStringhe.CORNICE);
 					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
 					for (int i=j+1;i<libriDaStampare.size();i++) 
 					{
@@ -316,38 +331,119 @@ public class Libri implements Serializable
 
 	public Libro scegliLibro() 
 	{
-		int selezione;
-		
-		System.out.println("\nLibri in archivio: \n");
-		for(int i = 0; i < libri.size(); i++)
+		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare i risultati: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
+		int scelta = menuSceltaLibro.scegliBase();
+		switch(scelta)
 		{
-			System.out.println(i+1 + ")");
-			libri.get(i).stampaDati(true);
-			System.out.println(BelleStringhe.CORNICE+ "\n");		
-		}
-		
-		do
-		{
-			selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
-			if(selezione == 0)
+			case 0://INDIETRO
 			{
 				return null;
 			}
-			else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
+			case 1://FILTRA RICERCA
 			{
-//				System.out.println(libri.get(selezione-1).getNome() + " prenotato!");
-				return libri.get(selezione-1);
+				Vector<Libro> libriFiltrati = null;
+				String titoloParziale = null;
+				int annoPubblicazione = 0;
+				String nomeAutore = null;
+				
+				MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO); 
+				int scegli = menuFiltro.scegliBase();
+				switch(scegli)
+				{
+					case 1: //FILTRA PER TITOLO
+					{
+						titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
+						libriFiltrati = filtraLibriPerTitolo(titoloParziale);
+						break;
+					}
+					
+					case 2://FILTRA PER ANNO PUBBLICAZIONE
+					{
+						annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
+						libriFiltrati = filtraLibriPerData(annoPubblicazione);
+						break;
+					}
+					
+					case 3: //FILTRA PER AUTORE
+					{
+						nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
+						libriFiltrati = filtraLibriPerAutori(nomeAutore);
+						break;
+					}
+				}
+				
+				if(!libriFiltrati.isEmpty())
+				{
+					for(int i = 0; i < libriFiltrati.size(); i++)
+					{
+						System.out.println("\n" + (i+1) + ") ");
+						System.out.println(BelleStringhe.CORNICE);
+						libriFiltrati.get(i).stampaDati(true);
+						System.out.println(BelleStringhe.CORNICE);
+					}
+					
+					int selezione;
+					do
+					{
+						System.out.println("\n" + BelleStringhe.CORNICE);
+						selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
+						if(selezione == 0)
+						{
+							return null;
+						}
+						else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
+						{
+							return libri.get(selezione-1);
+						}
+						else
+						{
+							System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+						}
+					}
+					while(true);
+				}
+				else//nessuna corrispondenza: vettore vuoto
+				{
+					System.out.println("Nessun libro corrispondente al criterio di ricerca");
+					return null;
+				}
 			}
-			else
+			case 2://VISUALIZZA ARCHIVIO
 			{
-				System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+				System.out.println("\nLibri in archivio: \n");
+				for(int i = 0; i < libri.size(); i++)
+				{
+					System.out.println(i+1 + ")");
+					System.out.println(BelleStringhe.CORNICE);
+					libri.get(i).stampaDati(true);
+					System.out.println(BelleStringhe.CORNICE+ "\n");		
+				}
+				int selezione;
+				do
+				{
+					selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
+					if(selezione == 0)
+					{
+						return null;
+					}
+					else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
+					{
+						return libri.get(selezione-1);
+					}
+					else
+					{
+						System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+					}
+				}
+				while(true);
 			}
 		}
-		while(true);
+//		DEFAULT: qua non arriva mai
+		return null;
 	}
 	
 	
-	/** * * * * * * * * * * * * * * * * * * * * * * * *
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * METODI PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI
 	 * 
 	 *  filtraLibroPerTitolo  -> fltra in base al titolo parziale passato dall'utente
@@ -355,10 +451,10 @@ public class Libri implements Serializable
 	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore che gli viene passato dall'utente
 	 *  
 	 *  ogni metodo restituisce un vector di libri contenente i libri che rispondono a determinati parametri
-	 *  * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 */ 
 	
-	public Vector<Libro> filtraLibroPerTitolo(String titoloParziale)
+	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
@@ -372,7 +468,7 @@ public class Libri implements Serializable
 		return libriTrovati;
 	}
 	
-	public Vector<Libro> filtraLibroPerData(int annoPubblicazione)
+	public Vector<Libro> filtraLibriPerData(int annoPubblicazione)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
@@ -386,7 +482,7 @@ public class Libri implements Serializable
 		return libriTrovati;
 	}
 	
-	public Vector<Libro> filtraLibroPerAutori(String autore)
+	public Vector<Libro> filtraLibriPerAutori(String autore)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		for(Libro libro : libri)

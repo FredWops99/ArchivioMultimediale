@@ -129,19 +129,23 @@ public class Fruitori implements Serializable
 	/**
 	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati
 	 * i 5 anni elimina il fruitore dal vettore "fruitori"
+	 * @return un vettore contenente gli utenti eliminati
 	 */
-	public void controlloIscrizioni()
+	public Vector<Fruitore> controlloIscrizioni()
 	{
+		Vector<Fruitore>utenti = new Vector<>();
 		int rimossi = 0;
-		for (int i=0; i<fruitori.size(); i++) 
+		for (int i = 0; i < fruitori.size(); i++) 
 		{
 			if(fruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
 			{
+				utenti.add(fruitori.get(i));
 				fruitori.remove(i);
 				rimossi++;
 			}
 		}
 		System.out.println("\nIscrizioni scadute (utenti rimossi): " + rimossi);
+		return utenti;
 	}
 	
 	/**

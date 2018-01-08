@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Vector;
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
+import myLib.InputDati;
 
 public class Prestiti implements Serializable
 {
@@ -51,11 +52,11 @@ public class Prestiti implements Serializable
 		{
 			if(prestiti.get(i).getFruitore().getUser().equals(utente.getUser()))
 			{
-				if(j == 0)
-				{
-					System.out.println("prestiti eliminati: ");
-				}
-				prestiti.get(i).getRisorsa().stampaDati(true);
+//				if(j == 0)
+//				{
+//					System.out.println("prestiti eliminati: ");
+//				}
+//				prestiti.get(i).getRisorsa().stampaDati(true);
 				prestiti.get(i).getRisorsa().tornaDalPrestito();
 				prestiti.remove(i);
 				j++;
@@ -66,6 +67,25 @@ public class Prestiti implements Serializable
 			System.out.println("Al momento non hai prestiti attivi");
 		}
 	}	
+	
+	public void annullaPrestiti(Vector<Fruitore>utenti)
+	{
+		for(int i = 0; i < utenti.size(); i++)
+		{
+			annullaPrestiti(utenti.get(i));
+		}
+	}
+	
+	public void annullaPrestitiConLibro(int idLibro)
+	{
+		for(int i = 0; i < prestiti.size(); i++)
+		{
+			if(prestiti.get(i).getRisorsa() instanceof Libro && prestiti.get(i).getRisorsa().getId() == idLibro)
+			{
+				prestiti.remove(i);
+			}
+		}
+	}
 	
 	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
@@ -97,7 +117,8 @@ public class Prestiti implements Serializable
 			{
 				if(totPrestiti == 0)//all'inizio
 				{
-					System.out.println("Prestiti in corso: ");
+					System.out.println("\nPrestiti in corso: \n");
+					System.out.println(BelleStringhe.CORNICE);
 				}
 				prestito.visualizzaPrestito();
 				System.out.println(BelleStringhe.CORNICE);
@@ -150,6 +171,7 @@ public class Prestiti implements Serializable
 		{
 			for(Prestito prestito : prestiti)
 			{
+				System.out.println(BelleStringhe.CORNICE);
 				prestito.visualizzaPrestito();
 			}
 		}
@@ -173,6 +195,56 @@ public class Prestiti implements Serializable
 //		se arriva qua l'utente non ha già la risorsa in prestito
 		return true;
 		}
+
+	public void rinnovaPrestito(Fruitore utente) 
+	{
+		Vector<Prestito>prestitiUtente = new Vector<>();
+		for(Prestito prestito : prestiti)
+		{
+			if(prestito.getFruitore().getUser().equals(utente.getUser()))
+			{
+				prestitiUtente.add(prestito);
+			}
+		}
+		if(prestitiUtente.isEmpty())
+		{
+			System.out.println("Non hai prestiti attivi da rinnovare!");
+		}
+		else
+		{
+			System.out.println("Seleziona il prestito che vuoi rinnovare: ");
+			
+			for(int i = 0; i < prestitiUtente.size(); i++)
+			{
+				System.out.println("\n" + (i+1) + ") ");//stampo la posizione partendo da 1)
+				System.out.println(BelleStringhe.CORNICE);
+				prestitiUtente.get(i).visualizzaPrestito();
+				System.out.println(BelleStringhe.CORNICE);
+			}
+			
+			int selezione = InputDati.leggiIntero
+					("\nSeleziona il libro per il quale chiedere il rinnovo del prestito (0 per annullare): ", 0, prestitiUtente.size());
+			if(selezione != 0)
+			{
+				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
+				
+				if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataRichiestaProroga()))
+//				è necessariamente precedente alla data di scadenza prestito sennò sarebbe stato rimosso
+				{
+					prestitoSelezionato.setDataInizio(GestioneDate.DATA_CORRENTE);
+					prestitoSelezionato.setProrogato(true);
+				}
+				else//non si può ancora rinnovare prestito
+				{
+					System.out.println("Il tuo prestito non è ancora rinnovabile: ");
+					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataInizio()) + 
+																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
+				}
+			}
+			
+		}
+		
+	}
 		
 	
 }

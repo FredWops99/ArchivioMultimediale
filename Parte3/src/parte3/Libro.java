@@ -1,4 +1,5 @@
 package parte3;
+
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -31,7 +32,11 @@ public class Libro extends Risorsa implements Serializable
 	
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * ID univoco del libro
+	 */
 	private int id;
+	
 	/**
 	 * sottocategorie della categoria LIBRO: Romanzo, Fumetto, Poesia...
 	 */
@@ -82,7 +87,7 @@ public class Libro extends Risorsa implements Serializable
 	 */
 	public void stampaDati(boolean perPrestito)
 	{
-		System.out.println("------------------------------------------------");
+//		System.out.println(BelleStringhe.CORNICE);
 		System.out.println("Categoria-----------------: Libro");
 //		System.out.println("ID------------------------: " + id);
 //		System.out.println("Hashcode------------------: " + hashCode());
