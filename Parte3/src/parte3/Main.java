@@ -377,7 +377,7 @@ public class Main
 			case 7://ANNULLA PRESTITI
 			{
 				prestiti.annullaPrestitiDi(utenteLoggato);
-				System.out.println("i tuoi prestiti sono stati eliminati");
+				
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 				ServizioFile.salvaSingoloOggetto(fileLibri, libri, false);
