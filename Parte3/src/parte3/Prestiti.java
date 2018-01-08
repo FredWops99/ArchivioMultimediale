@@ -88,6 +88,10 @@ public class Prestiti implements Serializable
 		{
 			System.out.println("Al momento non hai prestiti attivi");
 		}
+		else
+		{
+			System.out.println("i tuoi prestiti sono stati eliminati");
+		}
 	}	
 	
 	public void annullaPrestitiDi(Vector<Fruitore>utenti)
