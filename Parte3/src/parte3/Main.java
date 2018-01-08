@@ -26,8 +26,8 @@ public class Main
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Richiedi prestito", "Rinnova prestito",
-															"Visualizza prestiti in corso","Annulla prestiti"};
+	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Cerca una risorsa",
+														"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Annulla prestiti"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
@@ -39,6 +39,8 @@ public class Main
 //	poi salverò solo archivio in "Archivio.dat", dentro al quale ci sarà Libri, Films, ecc
 	private static final String PATH_LIBRI = "Libri.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
+	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
+	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";
 	
 	private static boolean continuaMenuAccesso;
 	private static boolean continuaMenuFruitore;
@@ -81,7 +83,7 @@ public class Main
 //		elimino i fruitori con iscrizione scaduta (controlloIscrizini)
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che avevano attivi
-		prestiti.annullaPrestiti(utentiScaduti);
+		prestiti.annullaPrestitiDi(utentiScaduti);
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 		
 //		elimino i prestiti scaduti
@@ -109,7 +111,7 @@ public class Main
 		{
 			case 0://EXIT
 			{
-				System.out.println(BelleStringhe.incornicia("\nGrazie per aver usato ArchivioMultimediale!"));
+				System.out.println(BelleStringhe.incornicia(MESSAGGIO_ADDIO));
 				continuaMenuAccesso=false;
 				break;
 			}
@@ -128,7 +130,7 @@ public class Main
 			}
 			case 2://accesso OPERATORE
 			{
-				String passwordOperatore = InputDati.leggiStringaNonVuota("Inserire la password per accedere all'area riservata agli operatori: ");
+				String passwordOperatore = InputDati.leggiStringaNonVuota(MESSAGGIO_PASSWORD);
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
 					System.out.println("Accesso eseguito con successo!");
@@ -300,13 +302,29 @@ public class Main
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 3: //RICHIEDI PRESTITO
+			case 3://CERCA UNA RISORSA
+			{
+				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
+				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+				if(categoria == CATEGORIE[0])// == "Libri"
+				{
+					libri.dettagliLibro();
+				}
+//				else if(categoria == CATEGORIE[1])// == "Films"
+//				{
+//					...	
+//				}
+				
+				continuaMenuPersonale=true;
+				break;
+			}
+			case 4: //RICHIEDI PRESTITO
 			{
 				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 				if(categoria == CATEGORIE[0])// == "Libri"
 				{
-					if(prestiti.prestitiAttiviDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
+					if(prestiti.numPrestitiDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
 					{
 						System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 								+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -343,22 +361,22 @@ public class Main
 				break;
 
 			}
-			case 4: //RINNOVA PRESTITO
+			case 5: //RINNOVA PRESTITO
 			{
 				prestiti.rinnovaPrestito(utenteLoggato);
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 5: //VISUALIZZA PRESTITI IN CORSO
+			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.stampaPrestitiAttiviDi(utenteLoggato.getUser());
+				prestiti.stampaPrestitiDi(utenteLoggato.getUser());
 				
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 6://ANNULLA PRESTITI
+			case 7://ANNULLA PRESTITI
 			{
-				prestiti.annullaPrestiti(utenteLoggato);
+				prestiti.annullaPrestitiDi(utenteLoggato);
 				System.out.println("i tuoi prestiti sono stati eliminati");
 				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);

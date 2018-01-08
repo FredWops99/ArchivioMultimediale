@@ -33,7 +33,6 @@ public class Prestiti implements Serializable
 			}
 		}
 		System.out.println("Risorse tornate dal prestito: " + rimossi);
-
 	}
 	
 	public void stampaPrestiti()
@@ -44,7 +43,35 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	public void annullaPrestiti(Fruitore utente) 
+	/**
+	 * stampa tutti i prestiti attivi di un utente
+	 * @param username lo username dell'utente di cui stampare i prestiti
+	 * @return il numero di libri attualmente in prestito all'utente
+	 */
+	public void stampaPrestitiDi(String username) 
+	{		
+		int totPrestiti = 0;
+		for(Prestito prestito : prestiti)
+		{
+			if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
+			{
+				if(totPrestiti == 0)//all'inizio
+				{
+					System.out.println("\nPrestiti in corso: \n");
+					System.out.println(BelleStringhe.CORNICE);
+				}
+				prestito.visualizzaPrestito();
+				System.out.println(BelleStringhe.CORNICE);
+				totPrestiti++;
+			}
+		}
+		if(totPrestiti == 0)
+		{
+			System.out.println("Al momento non ci sono prestiti attivi");
+		}
+	}
+	
+	public void annullaPrestitiDi(Fruitore utente) 
 	{		
 		int j = 0;
 //		dal fondo perchè se elimino dall'inizio si sballano le posizioni
@@ -52,11 +79,6 @@ public class Prestiti implements Serializable
 		{
 			if(prestiti.get(i).getFruitore().getUser().equals(utente.getUser()))
 			{
-//				if(j == 0)
-//				{
-//					System.out.println("prestiti eliminati: ");
-//				}
-//				prestiti.get(i).getRisorsa().stampaDati(true);
 				prestiti.get(i).getRisorsa().tornaDalPrestito();
 				prestiti.remove(i);
 				j++;
@@ -68,11 +90,11 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
-	public void annullaPrestiti(Vector<Fruitore>utenti)
+	public void annullaPrestitiDi(Vector<Fruitore>utenti)
 	{
 		for(int i = 0; i < utenti.size(); i++)
 		{
-			annullaPrestiti(utenti.get(i));
+			annullaPrestitiDi(utenti.get(i));
 		}
 	}
 	
@@ -102,36 +124,8 @@ public class Prestiti implements Serializable
 	{
 		this.prestiti = prestiti;
 	}
-
-	/**
-	 * stampa tutti i prestiti attivi di un utente
-	 * @param username lo username dell'utente di cui stampare i prestiti
-	 * @return il numero di libri attualmente in prestito all'utente
-	 */
-	public void stampaPrestitiAttiviDi(String username) 
-	{		
-		int totPrestiti = 0;
-		for(Prestito prestito : prestiti)
-		{
-			if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
-			{
-				if(totPrestiti == 0)//all'inizio
-				{
-					System.out.println("\nPrestiti in corso: \n");
-					System.out.println(BelleStringhe.CORNICE);
-				}
-				prestito.visualizzaPrestito();
-				System.out.println(BelleStringhe.CORNICE);
-				totPrestiti++;
-			}
-		}
-		if(totPrestiti == 0)
-		{
-			System.out.println("Al momento non ci sono prestiti attivi");
-		}
-	}
 	
-	public int prestitiAttiviDi(String username, String categoria)
+	public int numPrestitiDi(String username, String categoria)
 	{
 		int risorse = 0;
 		
@@ -157,7 +151,6 @@ public class Prestiti implements Serializable
 //				}
 //			}
 //		}
-		
 		return risorse;
 	}
 
@@ -241,10 +234,6 @@ public class Prestiti implements Serializable
 																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
 				}
 			}
-			
 		}
-		
 	}
-		
-	
 }

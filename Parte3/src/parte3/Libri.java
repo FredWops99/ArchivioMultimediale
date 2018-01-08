@@ -210,8 +210,8 @@ public class Libri implements Serializable
 		for (int i=0; i <libriFiltrati.size(); i++) 
 		{
 			System.out.println();
-			libriFiltrati.get(i).stampaDati(false);
 			System.out.println(BelleStringhe.CORNICE);
+			libriFiltrati.get(i).stampaDati(false);
 		}
 		/* codice modificato per la ricerca con diversi parametri**/
 		
@@ -460,7 +460,7 @@ public class Libri implements Serializable
 		
 		for(Libro libro : libri)
 		{
-			if(libro.getNome().contains(titoloParziale))
+			if(libro.getNome().toLowerCase().contains(titoloParziale.toLowerCase()))
 			{
 				libriTrovati.add(libro);
 			}
@@ -489,7 +489,7 @@ public class Libri implements Serializable
 		{
 			for(String s : libro.getAutori())
 			{
-				if(s.equals(autore))
+				if(s.toLowerCase().equals(autore.toLowerCase()))
 				{
 					libriTrovati.add(libro);
 				}
