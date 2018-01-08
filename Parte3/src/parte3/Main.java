@@ -30,7 +30,7 @@ public class Main
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
-															"Visualizza dettagli libro", "Visualizza tutti i prestiti attivi"};
+															"Cerca un libro", "Visualizza tutti i prestiti attivi"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 
