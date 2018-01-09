@@ -31,7 +31,7 @@ public class Main
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_VOCI = {"Visualizza fruitori","Aggiungi un libro","Rimuovi un libro","Visualizza l'elenco dei libri",
-															"Cerca un libro", "Visualizza tutti i prestiti attivi"};
+															"Cerca una risorsa", "Visualizza tutti i prestiti attivi"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri"};//Films, ecc
 
@@ -205,9 +205,18 @@ public class Main
 			}
 			case 5://VISUALIZZA DETTAGLI LIBRO
 			{
-				libri.dettagliLibro();
+				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
+				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+				if(categoria == CATEGORIE[0])// == "Libri"
+				{
+					libri.cercaLibro();
+				}
+//				else if(categoria == CATEGORIE[1])// == "Films"
+//				{
+//					...	
+//				}
 				
-				continuaMenuOperatore=true;
+				continuaMenuPersonale=true;
 				break;
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
@@ -308,7 +317,7 @@ public class Main
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 				if(categoria == CATEGORIE[0])// == "Libri"
 				{
-					libri.dettagliLibro();
+					libri.cercaLibro();
 				}
 //				else if(categoria == CATEGORIE[1])// == "Films"
 //				{
