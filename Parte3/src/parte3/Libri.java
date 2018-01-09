@@ -158,7 +158,7 @@ public class Libri implements Serializable
 		return idSelezionato;
 	}
 	
-	public void dettagliLibro()
+	public void cercaLibro()
 	{
 		Vector<Libro> libriFiltrati = null;
 		String titoloParziale = null;
