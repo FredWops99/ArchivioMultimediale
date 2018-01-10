@@ -400,7 +400,7 @@ public class Main
 	 * in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
 	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
 	 */
-	public static void ricostruisciPrestiti()
+	private static void ricostruisciPrestiti()
 	{
 		for(Prestito prestito : prestiti.getPrestiti())
 		{

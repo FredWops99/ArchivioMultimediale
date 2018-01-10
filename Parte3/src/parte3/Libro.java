@@ -69,17 +69,17 @@ public class Libro extends Risorsa implements Serializable
 	public Libro(int id, String sottoCategoria, String nome, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
 			String lingua, String genere, int nLicenze) 
 	{
-		this.setId(id);
-		this.setSottoCategoria(sottoCategoria);
-		this.setNome(nome);
-		this.setAutori(autori);
-		this.setPagine(pagine);
-		this.setAnnoPubblicazione(annoPubblicazione);
-		this.setCasaEditrice(casaEditrice);
-		this.setLingua(lingua);
-		this.setGenere(genere);
-		this.setnLicenze(nLicenze);
-		this.setInPrestito(0);
+		this.id = id;
+		this.sottoCategoria = sottoCategoria;
+		this.nome = nome;
+		this.autori = autori;
+		this.pagine = pagine;
+		this.annoPubblicazione = annoPubblicazione;
+		this.casaEditrice = casaEditrice;
+		this.lingua = lingua;
+		this.genere = genere;
+		this.nLicenze = nLicenze;
+		this.inPrestito = 0;
 	}
 	
 	/**
@@ -126,91 +126,47 @@ public class Libro extends Risorsa implements Serializable
 	{
 		return id;
 	}
-	public void setId(int id) 
-	{
-		this.id = id;
-	}
 	public String getNome()
 	{
 		return nome;
-	}
-	public void setNome(String nome) 
-	{
-		this.nome = nome;
 	}
 	public Vector<String> getAutori() 
 	{
 		return autori;
 	}
-	public void setAutori(Vector<String> autori) 
-	{
-		this.autori = autori;
-	}
 	public int getPagine()
 	{
 		return pagine;
-	}
-	public void setPagine(int pagine) 
-	{
-		this.pagine = pagine;
 	}
 	public int getAnnoPubblicazione() 
 	{
 		return annoPubblicazione;
 	}
-	public void setAnnoPubblicazione(int annoPubblicazione) 
-	{
-		this.annoPubblicazione = annoPubblicazione;
-	}
 	public String getCasaEditrice() 
 	{
 		return casaEditrice;
-	}
-	public void setCasaEditrice(String casaEditrice) 
-	{
-		this.casaEditrice = casaEditrice;
 	}
 	public String getLingua() 
 	{
 		return lingua;
 	}
-	public void setLingua(String lingua) 
-	{
-		this.lingua = lingua;
-	}
 	public String getSottoCategoria() 
 	{
 		return sottoCategoria;
-	}
-	public void setSottoCategoria(String sottoCategoria) 
-	{
-		this.sottoCategoria = sottoCategoria;
 	}
 	public String getGenere() 
 	{
 		return genere;
 	}
-	public void setGenere(String sottoGenere) 
-	{
-		this.genere = sottoGenere;
-	}
 	public int getnLicenze() 
 	{
 		return nLicenze;
-	}
-	public void setnLicenze(int nLicenze) 
-	{
-		this.nLicenze = nLicenze;
 	}
 	public int getInPrestito() 
 	{
 		return inPrestito;
 	}
-	public void setInPrestito(int inPrestito)
-	{
-		this.inPrestito = inPrestito;
-	}
-
+	
 	/**
 	 * precondizione: ci sono copie del Libro disponibili per il prestito
 	 */
