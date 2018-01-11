@@ -1,4 +1,4 @@
-package parte3;
+package parte4;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class Archivio implements Serializable
 	public Archivio()
 	{
 		setLibri(new Libri());
-		films = new Films();
+		setFilms(new Films());
 	}
 
 	public Libri getLibri() 

@@ -1,4 +1,4 @@
-package parte3;
+package parte4;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -155,17 +155,17 @@ public class Prestiti implements Serializable
 				}
 			}
 		}
-//		else if(categoria.equals("Films"))
-//		{
-//			for(Prestito prestito : prestiti)
-//			{
-//				
-//				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Film)
-//				{
-//					risorse++;
-//				}
-//			}
-//		}
+		else if(categoria.equals("Films"))
+		{
+			for(Prestito prestito : prestiti)
+			{
+				
+				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Film)
+				{
+					risorse++;
+				}
+			}
+		}
 		return risorse;
 	}
 
@@ -244,7 +244,7 @@ public class Prestiti implements Serializable
 			}
 			
 			int selezione = InputDati.leggiIntero
-					("\nSeleziona il libro per il quale chiedere il rinnovo del prestito (0 per annullare): ", 0, prestitiUtente.size());
+					("\nSeleziona la risorsa per la quale chiedere il rinnovo del prestito (0 per annullare): ", 0, prestitiUtente.size());
 			if(selezione != 0)
 			{
 				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);

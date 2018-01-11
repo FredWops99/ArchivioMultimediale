@@ -13,7 +13,7 @@
  * massimo coincide con la somma dei numeri massimi relativi alle diverse categorie).
 **/
 
-package parte3;
+package parte4;
 
 import java.io.File;
 import java.io.IOException;
@@ -181,15 +181,15 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 2://AGGIUNGI LIBRO
+			case 2://AGGIUNGI RISORSA
 			{
 				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];
-				if(categoria == CATEGORIE[0])
+				if(categoria == CATEGORIE[0])//LIBRO
 				{
 					archivio.getLibri().addLibro();
 				}
-				if(categoria == CATEGORIE[1])
+				if(categoria == CATEGORIE[1])//FILM
 				{
 					archivio.getFilms().addFilm();
 				}
@@ -198,13 +198,13 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 3://RIMUOVI LIBRO
+			case 3://RIMUOVI RISORSA
 			{
 				System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
 				
 				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];
-				if(categoria == CATEGORIE[0])
+				if(categoria == CATEGORIE[0])//LIBRI
 				{
 					int idSelezionato = archivio.getLibri().removeLibro();
 					if(idSelezionato != -1)//removeLibro ritorna -1 se l'utente annulla la procedura
@@ -212,9 +212,9 @@ public class Main
 						prestiti.annullaPrestitiConLibro(idSelezionato);
 					}
 				}
-				if(categoria == CATEGORIE[1])
+				if(categoria == CATEGORIE[1])//FILMS
 				{
-					int idSelezionato = archivio.getFilms().removeLibro();
+					int idSelezionato = archivio.getFilms().removeFilm();
 					if(idSelezionato != -1)//removeLibro ritorna -1 se l'utente annulla la procedura
 					{
 						prestiti.annullaPrestitiConFilm(idSelezionato);
@@ -225,15 +225,15 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 4://VISUALIZZA ELENCO LIBRI
+			case 4://VISUALIZZA ELENCO RISORSE
 			{
 				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-				if(categoria == CATEGORIE[0])
+				if(categoria == CATEGORIE[0])//LIBRI
 				{
 					archivio.getLibri().stampaLibri();
 				}
-				if(categoria == CATEGORIE[1])
+				if(categoria == CATEGORIE[1])//FILMS
 				{
 					archivio.getFilms().stampaFilms();
 				}
@@ -241,7 +241,7 @@ public class Main
 				continuaMenuOperatore=true;
 				break;
 			}
-			case 5://VISUALIZZA DETTAGLI LIBRO
+			case 5://VISUALIZZA DETTAGLI RISORSA
 			{
 				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
 				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
@@ -341,7 +341,7 @@ public class Main
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 2:	//VISUALIZZA INFO
+			case 2:	//VISUALIZZA INFO PERSONALI
 			{
 				System.out.println("Informazioni personali:");
 				utenteLoggato.stampaDati();
@@ -475,7 +475,7 @@ public class Main
 					}
 				}
 			}
-//			PER LE PROSSIME CATEGORIE
+//		PER LE PROSSIME CATEGORIE
 		else if(prestito.getRisorsa() instanceof Film)
 			{
 				for(Film film : archivio.getFilms().getfilms())

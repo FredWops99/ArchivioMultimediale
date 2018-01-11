@@ -1,4 +1,4 @@
-package parte3;
+package parte4;
 
 import java.io.Serializable;
 
@@ -77,8 +77,8 @@ public class Film extends Risorsa implements Serializable
 //		System.out.println("Hashcode------------------: " + hashCode());
 		System.out.println("Sottocategoria------------: " + sottoCategoria);
 		System.out.println("Titolo--------------------: " + nome);
-		System.out.println("Numero pagine-------------: " + durata);
-		System.out.println("Anno di pubblicazione-----: " + annoDiUscita);
+		System.out.println("Durata--------------------: " + durata + "'");
+		System.out.println("Anno di uscita------------: " + annoDiUscita);
 		System.out.println("Lingua--------------------: " + lingua);
 		if(!perPrestito)
 		{

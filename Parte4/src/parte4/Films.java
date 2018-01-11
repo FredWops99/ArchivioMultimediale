@@ -1,4 +1,4 @@
-package parte3;
+package parte4;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -44,15 +44,36 @@ public class Films implements Serializable
 	{
 		String sottoCategoria = this.scegliSottoCategoria();//le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
-		int durata = InputDati.leggiInteroPositivo("Inserisci la durata del film: ");
+		int durata = InputDati.leggiInteroPositivo("Inserisci la durata del film (in minuti): ");
 		int annoDiUscita = InputDati.leggiInteroConMassimo("Inserisci l'anno di uscita: ", GestioneDate.ANNO_CORRENTE);
 		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del film: ");
 		String regista = InputDati.leggiStringaNonVuota("Inserisci il regista: ");	
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Film f = new Film(lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
+		addPerSottoCategorie(f);
 		
 		System.out.println("Film aggiunto con successo!");
+	}
+	
+	private void addPerSottoCategorie(Film f)
+	{
+		if(films.isEmpty())
+		{
+			films.add(f);
+		}
+		else
+		{
+			for(int i = 0; i < films.size(); i++)
+			{
+				if(films.get(i).getSottoCategoria().equals(f.getSottoCategoria()))
+				{
+					films.add(i+1, f);
+					return;
+				}
+			}
+			films.add(f);
+		}
 	}
 	
 	private String scegliSottoCategoria()
@@ -62,7 +83,7 @@ public class Films implements Serializable
 	}
 	
 	
-	public int removeLibro()
+	public int removeFilm()
 	{
 		int idSelezionato;
 		
@@ -202,29 +223,6 @@ public class Films implements Serializable
 			}
 		}
 	}
-		
-
-	
-	private void addPerSottoCategorie(Film l)
-	{
-		if(films.isEmpty())
-		{
-			films.add(l);
-		}
-		else
-		{
-			for(int i = 0; i < films.size(); i++)
-			{
-				if(films.get(i).getSottoCategoria().equals(l.getSottoCategoria()))
-				{
-					films.add(i+1, l);
-					return;
-				}
-			}
-			films.add(l);
-		}
-	}
-	
 	
 	public Film scegliFilm() 
 	{
