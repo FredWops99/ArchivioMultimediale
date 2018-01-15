@@ -39,7 +39,7 @@ public class Prestiti implements Serializable
 	{
 		for(int i = 0; i < prestiti.size(); i++)
 		{
-			System.out.println(prestiti.get(i).getRisorsa().getNome());
+			System.out.println(prestiti.get(i).getRisorsa().getTitolo());
 		}
 	}
 	
@@ -102,22 +102,15 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	public void annullaPrestitiConLibro(int idLibro)
+	/**
+	 * gli id tra libri e film sono diversi (Lxxx e Fxxx)
+	 * @param id
+	 */
+	public void annullaPrestitiConRisorsa(String id)
 	{
 		for(int i = 0; i < prestiti.size(); i++)
 		{
-			if(prestiti.get(i).getRisorsa() instanceof Libro && prestiti.get(i).getRisorsa().getId() == idLibro)
-			{
-				prestiti.remove(i);
-			}
-		}
-	}
-	
-	public void annullaPrestitiConFilm(int idFilm)
-	{
-		for(int i = 0; i < prestiti.size(); i++)
-		{
-			if(prestiti.get(i).getRisorsa() instanceof Film && prestiti.get(i).getRisorsa().getId() == idFilm)
+			if(prestiti.get(i).getRisorsa().getId().equals(id))
 			{
 				prestiti.remove(i);
 			}
@@ -140,6 +133,12 @@ public class Prestiti implements Serializable
 		this.prestiti = prestiti;
 	}
 	
+	/**
+	 * non conta quanti prestiti ha in totale ma quanti per categoria
+	 * @param username
+	 * @param categoria
+	 * @return
+	 */
 	public int numPrestitiDi(String username, String categoria)
 	{
 		int risorse = 0;
@@ -186,29 +185,16 @@ public class Prestiti implements Serializable
 	}
 
 	/**
-	 * precondizione: libro è diverso da null
-	 * @param utenteLoggato
-	 * @param libro
+	 * precondizione: fruitore != null & risorsa != null
+	 * @param fruitore
+	 * @param risorsa
 	 * @return
 	 */
-	public boolean prestitoFattibileLibri(Fruitore utente, Libro libro) 
+	public boolean prestitoFattibile(Fruitore fruitore, Risorsa risorsa) 
 	{
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getRisorsa().getId()==libro.getId() && prestito.getFruitore().getUser().equals(utente.getUser()))
-			{
-				return false;
-			}
-		}
-//		se arriva qua l'utente non ha già la risorsa in prestito
-		return true;
-		}
-	
-	public boolean prestitoFattibileFilm(Fruitore utente, Film film) 
-	{
-		for(Prestito prestito : prestiti)
-		{
-			if(prestito.getRisorsa().getId()==film.getId() && prestito.getFruitore().getUser().equals(utente.getUser()))
+			if(prestito.getRisorsa().getId()==risorsa.getId() && prestito.getFruitore().getUser().equals(fruitore.getUser()))
 			{
 				return false;
 			}

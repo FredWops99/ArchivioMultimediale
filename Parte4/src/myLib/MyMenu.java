@@ -49,8 +49,14 @@ public class MyMenu
   
   public int scegliBase()
   {
-	  stampaMenuBase();
-	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 1, voci.length);	 
+	  stampaMenuBase(true);
+	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
+  }
+  
+  public int scegliNoIndietro()
+  {
+	  stampaMenuBase(false);
+	  return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 1, voci.length);
   }
   
   public int scegliNoPrintMenu()
@@ -98,7 +104,8 @@ public class MyMenu
 	  System.out.println(VOCE_USCITA);
 	  System.out.println();
 	}
-  public void stampaMenuBase()
+  
+  public void stampaMenuBase(boolean conIndietro)
   {
 	  System.out.println(titolo);
 	  for (int i=0; i<voci.length; i++)
@@ -106,6 +113,19 @@ public class MyMenu
 		  System.out.println( (i+1) + ")\t" + voci[i]);
 	  }
 	  System.out.println();
+	  if(conIndietro)
+	  {
+		  if(indietro)
+			{
+				System.out.println("0)\tIndietro");
+			}
+			else
+			{
+				System.out.println("0)\tEsci");
+			}
+		    System.out.println();
+	  }
+	  
 	}
   
   public String toString()

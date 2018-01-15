@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class Archivio implements Serializable 
 {
-//	creo questa classe in modo da avere tutte le risorse insieme e anche per salvare solo questo oggetto in un file
-//	per questa versione non serve ancora
+//	creo questa classe in modo da avere tutte le risorse insieme e per salvare solo questo oggetto in un file
 	
 	private static final long serialVersionUID = 1L;
 	

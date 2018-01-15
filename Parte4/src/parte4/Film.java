@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Film extends Risorsa implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	/********************************************************************
 	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI: *
 	 ********************************************************************/
@@ -23,16 +25,15 @@ public class Film extends Risorsa implements Serializable
 	 * quanti Films possono essere in prestito contemporaneamente allo stesso fruitore
 	 */
 	public static final int PRESTITI_MAX = 3;
-	
-	private static final long serialVersionUID = 1L;
-	
 	/**
-	 * ID univoco del Film
+	 * ID univoco del Film: Fxxx
 	 */
-	private int id;
-	
-	private String sottoCategoria; //azione, avventura, horror ...
-	private String nome;
+	private String id;
+	/**
+	 * sottocategorie della categoria FILM: azione, avventura, horror ...
+	 */
+	private String sottoCategoria;
+	private String titolo;
 	private String regista;
 	private int durata;
 	private int annoDiUscita;
@@ -45,22 +46,20 @@ public class Film extends Risorsa implements Serializable
 	
 	/**
 	 * Costuttore della classe Film
-	 * @param id
-	 * @param sottoCategoria
-	 * @param nome
-	 * @param regista
-	 * @param durata
-	 * @param annoDiUscita
-	 * @param lingua
-	 * @param nLicenze
-	 * @param inPrestito
+	 * @param id l'id univoco del film
+	 * @param sottoCategoria la sottocategoria della categoria FILM (es. azione, avventura, horror ...)
+	 * @param titolo il titolo del film
+	 * @param regista il regista del film
+	 * @param durata la durata (in minuti) del film
+	 * @param annoDiUscita l'anno di uscita del film
+	 * @param lingua la lingua del film
+	 * @param nLicenze il numero di licenze possedute per il film
 	 */
-	public Film(int id, String sottoCategoria, String nome, String regista, int durata, int annoDiUscita, String lingua,
-			int nLicenze) 
+	public Film(String id, String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze) 
 	{
 		this.setId(id);
 		this.setSottoCategoria(sottoCategoria);
-		this.setNome(nome);
+		this.setTitolo(titolo);
 		this.setRegista(regista);
 		this.setDurata(durata);
 		this.setAnnoDiUscita(annoDiUscita);
@@ -76,22 +75,22 @@ public class Film extends Risorsa implements Serializable
 //		System.out.println("ID------------------------: " + id);
 //		System.out.println("Hashcode------------------: " + hashCode());
 		System.out.println("Sottocategoria------------: " + sottoCategoria);
-		System.out.println("Titolo--------------------: " + nome);
+		System.out.println("Titolo--------------------: " + titolo);
 		System.out.println("Durata--------------------: " + durata + "'");
 		System.out.println("Anno di uscita------------: " + annoDiUscita);
 		System.out.println("Lingua--------------------: " + lingua);
-		if(!perPrestito)
+		if(!perPrestito)//dati utili all'operatore
 		{
 			System.out.println("Numero licenze------------: " + nLicenze);
 			System.out.println("In prestito---------------: " + inPrestito);
 		}
-		else
+		else//dati utili al fruitore
 		{
 			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
 		}
 	}
 
-	public int getId() 
+	public String getId() 
 	{
 		return id;
 	}
@@ -99,9 +98,9 @@ public class Film extends Risorsa implements Serializable
 	{
 		return sottoCategoria;
 	}
-	public String getNome() 
+	public String getTitolo() 
 	{
-		return nome;
+		return titolo;
 	}
 	public String getRegista() 
 	{
@@ -127,7 +126,7 @@ public class Film extends Risorsa implements Serializable
 	{
 		return inPrestito;
 	}
-	public void setId(int id) 
+	public void setId(String id) 
 	{
 		this.id = id;
 	}
@@ -135,9 +134,9 @@ public class Film extends Risorsa implements Serializable
 	{
 		this.sottoCategoria = sottoCategoria;
 	}
-	public void setNome(String nome) 
+	public void setTitolo(String titolo) 
 	{
-		this.nome = nome;
+		this.titolo = titolo;
 	}
 	public void setRegista(String regista) 
 	{
@@ -171,30 +170,29 @@ public class Film extends Risorsa implements Serializable
 	{
 		inPrestito++;
 	}
+	/**
+	 * precondizione: ci sono copie del film attualmente in prestito
+	 */
 	public void tornaDalPrestito()
 	{
 		inPrestito--;
 	}
 
-	@Override
 	public int getGiorniDurataPrestito() 
 	{
 		return Libro.GIORNI_DURATA_PRESTITO;
 	}
 
-	@Override
 	public int getGiorniDurataProroga() 
 	{
 		return Libro.GIORNI_DURATA_PROROGA;
 	}
 
-	@Override
 	public int getGiorniPrimaPerProroga() 
 	{
 		return Libro.GIORNI_PRIMA_PER_PROROGA;
 	}
 
-	@Override
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;

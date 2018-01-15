@@ -42,7 +42,7 @@ public class Prestito implements Serializable
 	public void visualizzaPrestito()
 	{
 		System.out.println("Categoria-------------: " + risorsa.getClass().getSimpleName());
-		System.out.println("Titolo----------------: " + risorsa.getNome());
+		System.out.println("Titolo----------------: " + risorsa.getTitolo());
 		System.out.println("Fruitore--------------: " + fruitore.getUser());
 		System.out.println("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio));
 		System.out.println("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));

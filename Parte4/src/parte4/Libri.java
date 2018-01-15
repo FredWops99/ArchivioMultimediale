@@ -14,16 +14,15 @@ import myLib.MyMenu;
 public class Libri implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-//	a ogni libro viene assegnato un ID incrementale univoco
+	/**
+	 * id incrementale univoco per ogni libro
+	 */
 	private int lastId;
 	
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
-	
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {	"Filtra per titolo",
-																"Filtra per anno di pubblicazione",
-																"Filtra per autore"};
+	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
 	
 	private Vector<Libro> libri;
 	
@@ -50,7 +49,12 @@ public class Libri implements Serializable
 	 */
 	public void addLibro()
 	{
-		String sottoCategoria = this.scegliSottoCategoria();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
+		String sottoCategoria = scegliSottoCategoria();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
+//		se l'utente annulla la procedura
+		if(sottoCategoria == "annulla")
+		{
+			return;
+		}
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero di pagine: ");
 		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
@@ -66,10 +70,29 @@ public class Libri implements Serializable
 		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
-		Libro l = new Libro(lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		addPerSottoCategorie(l);
 		
 		System.out.println("Libro aggiunto con successo!");
+	}
+	
+	/**
+	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
+	 * @return la scelta dell'utente
+	 */
+	private String scegliSottoCategoria()
+	{
+		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE, true);
+		try
+		{
+			return SOTTOCATEGORIE[menu.scegliBase() - 1];
+
+		}
+//		se l'utente selezione 0: ANNULLA -> eccezione
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			return "annulla";
+		}
 	}
 	
 	/**
@@ -99,11 +122,11 @@ public class Libri implements Serializable
 
 	/**
 	 * procedura per rimuovere un libro dalla raccolta: viene chiesto il nome del libro e se ce ne sono più di uno viene chiesto all'utente quale eliminare
-	 * @return l'id del libro che l'utente ha deciso di rimuovere (0 se non viene rimosso nessun libro)
+	 * @return l'id del libro che l'utente ha deciso di rimuovere ("-1" se non viene rimosso nessun libro)
 	 */
-	public int removeLibro()
+	public String removeLibro()
 	{
-		int idSelezionato;
+		String idSelezionato;
 		
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro da rimuovere: ");
 		
@@ -111,7 +134,7 @@ public class Libri implements Serializable
 		
 		for (int i = 0; i < libri.size(); i++) 
 		{
-			if(libri.get(i).getNome().equals(titolo))
+			if(libri.get(i).getTitolo().equals(titolo))
 			{
 //				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -120,7 +143,7 @@ public class Libri implements Serializable
 		if(posizioniRicorrenze.size()==0)
 		{
 			System.out.println("Siamo spiacenti, il libro non è presente nell'archivio");
-			idSelezionato = -1;
+			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
 		else if(posizioniRicorrenze.size()==1)
@@ -152,12 +175,15 @@ public class Libri implements Serializable
 			}
 			else//0: annulla
 			{
-				idSelezionato = -1;
+				idSelezionato = "-1";
 			}
 		}
 		return idSelezionato;
 	}
 	
+	/**
+	 * stampa i dati dei libri corrispondenti ai parametri di ricerca specificati dall'utente
+	 */
 	public void cercaLibro()
 	{
 		Vector<Libro> libriFiltrati = null;
@@ -165,25 +191,29 @@ public class Libri implements Serializable
 		int annoPubblicazione = 0;
 		String nomeAutore = null;
 		
-		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO); 
+		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 		int scelta = menuFiltro.scegliBase();
 		switch(scelta) 
 		{
-			case 1: 
+			case 0:	//INDIETRO
+			{
+				return;
+			}
+			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
 				libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
 			
-			case 2:
+			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
-				annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
+				annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: \n", GestioneDate.ANNO_CORRENTE);
 				libriFiltrati = filtraLibriPerData(annoPubblicazione);
 				break;
 			}
 			
-			case 3: 
+			case 3: //FILTRA PER AUTORE
 			{
 				nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
 				libriFiltrati = filtraLibriPerAutori(nomeAutore);
@@ -213,25 +243,6 @@ public class Libri implements Serializable
 			System.out.println(BelleStringhe.CORNICE);
 			libriFiltrati.get(i).stampaDati(false);
 		}
-		/* codice modificato per la ricerca con diversi parametri**/
-		
-		/*String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
-		int numLibri = 0;
-		
-		for(Libro libro : libri)
-		{
-			if(libro.getNome().equals(titolo))
-			{
-				System.out.println();
-				libro.stampaDati(false);
-				numLibri++;
-			}
-		}
-		if(numLibri == 0)
-		{
-			System.out.println("In archivio non sono presenti libri il cui titolo è " + titolo);
-		}
-		*/
 	}
 	
 	/**
@@ -269,7 +280,7 @@ public class Libri implements Serializable
 				{
 					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
 							", genere: "  + libriDaStampare.get(j).getGenere() + "\n" + BelleStringhe.CORNICE);
-					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
+					System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
 					
 					for (int i = j+1; i < libriDaStampare.size(); i++) 
 					{
@@ -277,7 +288,7 @@ public class Libri implements Serializable
 						{
 							if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
 							{
-								System.out.println("titolo: " + libriDaStampare.get(i).getNome());
+								System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
 								libriDaStampare.remove(i);
 							}
 						}
@@ -286,28 +297,18 @@ public class Libri implements Serializable
 				else
 				{
 					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n" + BelleStringhe.CORNICE);
-					System.out.println("titolo: " + libriDaStampare.get(j).getNome());
+					System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
 					for (int i=j+1;i<libriDaStampare.size();i++) 
 					{
 						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
 						{
-								System.out.println("titolo: " + libriDaStampare.get(i).getNome());
+								System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
 								libriDaStampare.remove(i);
 						}
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
-	 * @return la scelta dell'utente
-	 */
-	private String scegliSottoCategoria()
-	{
-		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE);
-		return SOTTOCATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 	}
 	
 	/**
@@ -321,7 +322,7 @@ public class Libri implements Serializable
 		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
 		{
 			MyMenu menu = new MyMenu("scegli un genere: ", GENERI);
-			return GENERI[menu.scegliBase() - 1];	
+			return GENERI[menu.scegliNoIndietro() - 1];	
 		}
 		else
 		{
@@ -329,6 +330,10 @@ public class Libri implements Serializable
 		}
 	}
 
+	/**
+	 * Consente all'utente di selezionare un libro in base a dei criteri di ricerca
+	 * @return il libro corrispondente ali criteri inseriti dall'utente
+	 */
 	public Libro scegliLibro() 
 	{
 		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare i risultati: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
@@ -346,10 +351,14 @@ public class Libri implements Serializable
 				int annoPubblicazione = 0;
 				String nomeAutore = null;
 				
-				MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO); 
+				MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 				int scegli = menuFiltro.scegliBase();
 				switch(scegli)
 				{
+					case 0:
+					{
+						return null;
+					}
 					case 1: //FILTRA PER TITOLO
 					{
 						titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
@@ -397,7 +406,7 @@ public class Libri implements Serializable
 						}
 						else
 						{
-							System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+							System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getTitolo() + "\" sono in prestito!");
 						}
 					}
 					while(true);
@@ -432,7 +441,7 @@ public class Libri implements Serializable
 					}
 					else
 					{
-						System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getNome() + "\" sono in prestito!");
+						System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getTitolo() + "\" sono in prestito!");
 					}
 				}
 				while(true);
@@ -444,23 +453,27 @@ public class Libri implements Serializable
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * METODI PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI
-	 * 
-	 *  filtraLibroPerTitolo  -> fltra in base al titolo parziale passato dall'utente
-	 *  filtraLibroPerData    -> filtra in base all'anno di pubblicazione immesso dall'utente
-	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore che gli viene passato dall'utente
-	 *  
-	 *  ogni metodo restituisce un vector di libri contenente i libri che rispondono a determinati parametri
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 */ 
+	 * METODI PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI										 *
+	 * 																										 *
+	 *  filtraLibriPerTitolo  -> fltra in base al titolo parziale passato dall'utente						 *
+	 *  filtraLibriPerData    -> filtra in base all'anno di uscita immesso dall'utente						 *
+	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore passato dall'utente						 *
+	 *  																									 *
+	 *  ogni metodo restituisce un vector di libri contenente i libri che corrispondono ai parametri		 *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
+	/**
+	 * filtra tutti i libri in base al titolo
+	 * @param titoloParziale la parte di titolo usata come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
 	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
 		for(Libro libro : libri)
 		{
-			if(libro.getNome().toLowerCase().contains(titoloParziale.toLowerCase()))
+			if(libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
 			{
 				libriTrovati.add(libro);
 			}
@@ -468,6 +481,11 @@ public class Libri implements Serializable
 		return libriTrovati;
 	}
 	
+	/**
+	 * filtra tutti i libri in base all'anno di pubblicazione
+	 * @param annoPubblicazione l'anno da usare come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
 	public Vector<Libro> filtraLibriPerData(int annoPubblicazione)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
@@ -482,6 +500,11 @@ public class Libri implements Serializable
 		return libriTrovati;
 	}
 	
+	/**
+	 * filtra tutti i libri in base all'autore
+	 * @param autore il nome dell'autore da usare come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
 	public Vector<Libro> filtraLibriPerAutori(String autore)
 	{
 		Vector<Libro> libriTrovati = new Vector<>(); 
