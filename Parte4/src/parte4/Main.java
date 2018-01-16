@@ -19,9 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import myLib.MyMenu;
 import myLib.BelleStringhe;
 import myLib.InputDati;
-import myLib.MyMenu;
 import myLib.ServizioFile;
 
 /**
@@ -270,9 +270,10 @@ public class Main
 			case 5://CERCA RISORSA
 			{
 				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 				try
 				{
+					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+
 					if(categoria == CATEGORIE[0])// == "Libri"
 					{
 						archivio.getLibri().cercaLibro();
