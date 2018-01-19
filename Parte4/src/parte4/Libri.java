@@ -72,11 +72,35 @@ public class Libri implements Serializable
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
-		addPerSottoCategorie(l);
 		
-		System.out.println("Libro aggiunto con successo!");
+		if(!libroEsistente(l))
+		{
+			addPerSottoCategorie(l);
+			System.out.println("Libro aggiunto con successo!");
+		}
+		
+		else
+		{
+			System.out.println("Il libro è già presente in archivio");
+		}
+		
+		
 	}
 	
+	private boolean libroEsistente(Libro l) 
+	{
+		for(Libro libro : libri)
+		{
+			if(l.getTitolo().equals(libro.getTitolo()) && l.getAutori().equals(libro.getAutori()) && l.getAnnoPubblicazione()==libro.getAnnoPubblicazione()
+					&& l.getCasaEditrice().equals(libro.getCasaEditrice()) && l.getGenere().equals(libro.getGenere()) && l.getLingua().equals(libro.getLingua())
+					&& l.getSottoCategoria().equals(libro.getSottoCategoria()) && l.getPagine()==libro.getPagine())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
 	 * @return la scelta dell'utente

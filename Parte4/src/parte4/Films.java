@@ -63,11 +63,31 @@ public class Films implements Serializable
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Film f = new Film("F"+lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
-		addPerSottoCategorie(f);
 		
-		System.out.println("Film aggiunto con successo!");
+		if(!filmEsistente(f))
+		{
+			addPerSottoCategorie(f);
+			System.out.println("Film aggiunto con successo!");
+		}
+		else
+		{
+			System.out.println("Il film è già presente in archivio");
+		}
+		
 	}
 	
+	private boolean filmEsistente(Film f) 
+	{
+		for(Film film : films)
+		{
+			if(f.getTitolo().equals(film.getTitolo()) && f.getRegista().equals(film.getRegista()) && f.getSottoCategoria().equals(film.getSottoCategoria()) && f.getDurata()==film.getDurata()
+					&& f.getAnnoDiUscita()==film.getAnnoDiUscita() && f.getLingua().equals(film.getLingua()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Film tra quelle presenti in elenco
 	 * @return la scelta dell'utente
