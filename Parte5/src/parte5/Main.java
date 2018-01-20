@@ -13,7 +13,7 @@
  * massimo coincide con la somma dei numeri massimi relativi alle diverse categorie).
 **/
 
-package parte4;
+package parte5;
 
 import java.io.File;
 import java.io.IOException;
