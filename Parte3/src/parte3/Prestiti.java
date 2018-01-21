@@ -53,7 +53,7 @@ public class Prestiti implements Serializable
 		int totPrestiti = 0;
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
+			if(prestito.getFruitore().getUser().equals(username))
 			{
 				if(totPrestiti == 0)//all'inizio
 				{

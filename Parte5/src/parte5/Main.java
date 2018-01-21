@@ -18,7 +18,6 @@ package parte5;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
-
 import myLib.MyMenu;
 import myLib.BelleStringhe;
 import myLib.InputDati;
@@ -38,7 +37,7 @@ public class Main
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
-															"Cerca una risorsa", "Visualizza tutti i prestiti attivi"};
+															"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri","Film"};//Films, ecc
 
@@ -57,12 +56,12 @@ public class Main
 	private static File fileFruitori = new File(PATH_FRUITORI);
 	private static File fileArchivio = new File(PATH_ARCHIVIO);
 	private static File filePrestiti = new File(PATH_PRESTITI);
-	
+	private static File fileStorico = new File(PATH_STORICO);
 
 	private static Fruitori fruitori = new Fruitori();
 	private static Archivio archivio = new Archivio();
 	private static Prestiti prestiti = new Prestiti();
-
+	private static Storico storico = new Storico();
 	
 	private static Fruitore utenteLoggato = null;
 	
@@ -75,6 +74,8 @@ public class Main
 			ServizioFile.checkFile(fileFruitori, fruitori);
 			ServizioFile.checkFile(fileArchivio, archivio);
 			ServizioFile.checkFile(filePrestiti, prestiti);
+			ServizioFile.checkFile(fileStorico, storico);
+
 		}	
 		catch (IOException e) 
 		{
@@ -85,12 +86,12 @@ public class Main
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
 		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio);
 		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
-
+		storico = (Storico)ServizioFile.caricaSingoloOggetto(fileStorico);
 		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
-//		elimino i fruitori con iscrizione scaduta (controlloIscrizini)
+//		elimino i fruitori con iscrizione scaduta (controlloIscrizioni)
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.annullaPrestitiDi(utentiScaduti);
@@ -302,6 +303,13 @@ public class Main
 				continuaMenuOperatore = true;
 				break;
 			}
+			case 7://VISUALIZZA STORICO
+			{
+				storico.menuStorico();
+				
+				continuaMenuOperatore = true;
+				break;
+			}
 		}
 	}
 
@@ -322,7 +330,11 @@ public class Main
 			}
 			case 1:	//registrazione nuovo fruitore
 			{
-				fruitori.addFruitore();
+				Fruitore f = fruitori.addFruitore();
+				if(f != null)
+				{
+					storico.addFruitore(f);
+				}
 				
 				
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false); // salvo i fruitori nel file "fileFruitori"

@@ -5,7 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 import myLib.GestioneDate;
 import myLib.InputDati;
-import sun.swing.icon.SortArrowIcon;
 
 /**
  * Classe rappresentante tutti i fruitori che hanno accesso all'archivio multimediale
@@ -38,7 +37,7 @@ public class Fruitori implements Serializable
 	/**
 	 * Aggiunge un Fruitore nel vettore "fruitori"
 	 */
-	public void addFruitore()
+	public Fruitore addFruitore()
 	{
 		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
 		String cognome = InputDati.leggiStringaNonVuota("Inserisci il tuo cognome: ");
@@ -48,7 +47,7 @@ public class Fruitori implements Serializable
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
 		{
 			System.out.println("Ci dispiace, per accedere devi essere maggiorenne");
-			return;
+			return null;
 		}
 		
 		String user;
@@ -89,6 +88,8 @@ public class Fruitori implements Serializable
 		fruitori.add(f);
 		
 		System.out.println("Registrazione avvenuta con successo!");
+		
+		return f;
 	}
 	
 	/**

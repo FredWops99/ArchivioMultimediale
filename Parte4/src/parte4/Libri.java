@@ -361,7 +361,7 @@ public class Libri implements Serializable
 	 */
 	public Libro scegliLibro() 
 	{
-		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare i risultati: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
+		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
 		int scelta = menuSceltaLibro.scegliBase();
 		switch(scelta)
 		{
@@ -444,6 +444,11 @@ public class Libri implements Serializable
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
+				if(libri.isEmpty())
+				{
+					System.out.println("Non sono presenti libri in archivio");
+					return null;
+				}
 				System.out.println("\nLibri in archivio: \n");
 				for(int i = 0; i < libri.size(); i++)
 				{

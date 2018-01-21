@@ -298,7 +298,7 @@ public class Films implements Serializable
 	 */
 	public Film scegliFilm() 
 	{
-		MyMenu menuSceltaFilm = new MyMenu("\nScegli come visualizzare i risultati: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
+		MyMenu menuSceltaFilm = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
 		int scelta = menuSceltaFilm.scegliBase();
 		switch(scelta)
 		{
@@ -381,6 +381,11 @@ public class Films implements Serializable
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
+				if(films.isEmpty())
+				{
+					System.out.println("Non sono presenti film in archivio");
+					return null;
+				}
 				System.out.println("\nFilm in archivio: \n");
 				for(int i = 0; i < films.size(); i++)
 				{

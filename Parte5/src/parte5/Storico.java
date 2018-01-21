@@ -1,176 +1,213 @@
 package parte5;
 
 /**
- * Quest’ultima versione dell’applicazione deve supportare la conservazione in archivio di
-informazioni storiche relative a:
+	Quest’ultima versione dell’applicazione deve supportare la conservazione in archivio di
+	informazioni storiche relative a:
 	- fruitori, iscrizioni, rinnovi di iscrizione e decadenze;
 	- risorse (ad esempio, si deve tenere traccia di risorse che sono state prestabili in
 	  passato ma ora non lo sono più);
 	- prestiti e proroghe degli stessi.
 	
-	-----------------
-	
 	Inoltre questa versione deve fornire una risposta ad alcune semplici interrogazioni
-dell’archivio rivolte dall’operatore, quali
-- numero di prestiti per anno solare,
-- numero di proroghe per anno solare,
-- risorsa che è stata oggetto del maggior numero di prestiti per anno solare,
-- numero di prestiti per fruitore per anno solare.
+	dell’archivio rivolte dall’operatore, quali
+	- numero di prestiti per anno solare,
+	- numero di proroghe per anno solare,
+	- risorsa che è stata oggetto del maggior numero di prestiti per anno solare,
+	- numero di prestiti per fruitore per anno solare.
  */
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.Vector;
+
 import myLib.GestioneDate;
 import myLib.InputDati;
 import myLib.MyMenu;
 
 public class Storico implements Serializable
 {
-	private static final String[] VOCI_MENU_STORICO = {"Visualizza prestiti avvenuti in un anno solare",
-														"Visualizza proroghe avvenute in un anno solare",
-														"Visualizza la risorsa che è stata oggetto del maggior numero di prestiti in un anno solare",
-														"Visualizza il numero di prestiti per fruitore per un anno solare"};
+	private static final String[] VOCI_MENU_STORICO = {"Numero prestiti per anno solare",
+														"Numero proroghe per anno solare",
+														"Risorsa che è stata oggetto del maggior numero di prestiti per anno solare",
+														"Numero di prestiti per fruitore per anno solare"};
 	private static final long serialVersionUID = 1L;
 	
 	Vector<Fruitore> storicoFruitori;
 	Vector<Prestito> storicoPrestiti;
 	Vector<Risorsa> storicoRisorse;
 	
-	void Storico()
+	public Storico()
 	{
 		this.storicoFruitori = new Vector<Fruitore>();
 		this.storicoPrestiti = new Vector<Prestito>();
 		this.storicoRisorse = new Vector<Risorsa>();
 	}
 	
-	public int prestitiAnnoSolare()
+	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
+	{
+		Prestito prestito = new Prestito(fruitore, risorsa);
+		storicoPrestiti.add(prestito);
+	}
+	
+	public void addFruitore(Fruitore f)
+	{
+		storicoFruitori.add(f);
+	}
+	
+	private int prestitiAnnoSolare()
 	{
 		int contatorePrestiti = 0;
-		String annoSelezionato = InputDati.leggiStringaNonVuota("Inserisci l'anno: ");
-		for (int i=0; i<storicoPrestiti.size(); i++) 
+		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
+		for (int i = 0; i < storicoPrestiti.size(); i++) 
 		{
-			if(storicoPrestiti.get(i).getDataInizio().YEAR == Integer.parseInt(annoSelezionato)) 
+			if(storicoPrestiti.get(i).getDataInizio().get(GregorianCalendar.YEAR) == annoSelezionato)
 				contatorePrestiti++;
 		}
 		
 		return contatorePrestiti;
 	}
 	
-	public int prorogheAnnoSolare()
+	private int prorogheAnnoSolare()
 	{
 		int contatoreProroghe = 0;
-		String annoSelezionato = InputDati.leggiStringaNonVuota("Inserisci l'anno: ");
-		for (int i=0; i<storicoPrestiti.size(); i++) 
+		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno della proroga più vecchia
+		for (int i = 0; i < storicoPrestiti.size(); i++) 
 		{
-			if(storicoPrestiti.get(i).getDataRichiestaProroga().YEAR == Integer.parseInt(annoSelezionato)) 
+			if(storicoPrestiti.get(i).getDataRichiestaProroga().get(GregorianCalendar.YEAR) == annoSelezionato)
 				contatoreProroghe++;
 		}
 		
 		return contatoreProroghe;
 	}
 	
-	public void risorsaPiùInPrestito()
+	private void risorsaPiùInPrestito()
 	{
-		int max2 = 0;
-		String risorsaMax = "";
+		int maxGenerale = 0;
+		String titoloRisorsaMax = "";
 		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
-		String annoSelezionato = InputDati.leggiStringaNonVuota("Inserisci l'anno: ");
+		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
 		
 		//seleziono solo le risorse che sono state prenotate nell'anno corrente
-		for (int i=0; i<storicoPrestiti.size(); i++) 
+		for (Prestito prestito : storicoPrestiti) 
 		{
-			if(storicoPrestiti.get(i).getDataInizio().YEAR == Integer.parseInt(annoSelezionato))
+			if(prestito.getDataInizio().get(GregorianCalendar.YEAR) == annoSelezionato)
 			{
-				risorseAnnue.add(storicoPrestiti.get(i).getRisorsa());
+				risorseAnnue.add(prestito.getRisorsa());
 			}
 		}
 		
 		//da qui in giù avviene il conteggio
-		for(int i=0; i<risorseAnnue.size();i++)
+		for(Risorsa risorsa : risorseAnnue)
 		{
-			String titoloInConisderazione = risorseAnnue.get(i).getTitolo();
-			int max1 = 0;
-			for (int j=0; j<risorseAnnue.size();j++) 
+			String titoloInConisderazione = risorsa.getTitolo();
+			int maxRisorsa = 0;
+			for (int i = 0; i < risorseAnnue.size(); i++) 
 			{
-				if(titoloInConisderazione.equals(risorseAnnue.get(j).getTitolo()))
+				if(titoloInConisderazione.equals(risorseAnnue.get(i).getTitolo()))
 				{
-					max1++;
-					risorseAnnue.remove(j);
+					maxRisorsa++;
+					risorseAnnue.remove(i);
 				}
 			}
-			if(max1 > max2) 
+			if(maxRisorsa > maxGenerale) 
 			{
-				max2 = max1;
-				risorsaMax = risorseAnnue.get(i).getTitolo();
+				maxGenerale = maxRisorsa;
+				titoloRisorsaMax = risorsa.getTitolo();
 			}
 		}
 		
-		System.out.println("La risorsa che ha avuto più prenotazioni è: "+risorsaMax+ 
-							" con un totale di "+max2+" prestiti");
+		if(maxGenerale==0)
+		{
+			System.out.println("Non sono presenti prestiti relativi all'anno inserito");
+		}
+		else
+		{
+			System.out.println("La risorsa che ha avuto più prenotazioni è: " + titoloRisorsaMax + ", con un totale di " + maxGenerale + " prestiti");
+		}
 	}
-	public void prestitiPerFruitore()
+	private void prestitiPerFruitore()
 	{
 		Vector<Prestito> prestitiAnnui = new Vector<Prestito>();
-		String annoSelezionato = InputDati.leggiStringaNonVuota("Inserisci l'anno: ");
+		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
+		
+		if(storicoPrestiti.isEmpty())
+		{
+			System.out.println("Non sono presenti prestiti relativi all'anno inserito");
+			return;
+		}
 		
 		//seleziono solo i prestiti che sono stati effettuati nell'anno corrente
-		for (int i=0; i<storicoPrestiti.size(); i++) 
+		for (Prestito prestito : storicoPrestiti) 
 		{
-			if(storicoPrestiti.get(i).getDataInizio().YEAR == Integer.parseInt(annoSelezionato))
+			if(prestito.getDataInizio().get(GregorianCalendar.YEAR) == annoSelezionato)
 			{
-				prestitiAnnui.add(storicoPrestiti.get(i));
+				prestitiAnnui.add(prestito);
 			}
 		}
 		
 		//da qui in giù avviene il conteggio
-		for(int i=0;i<prestitiAnnui.size();i++)
+		for(Prestito prestito : storicoPrestiti)
 		{
 			int nPrestiti = 0;
-			Fruitore fruitoreInConsiderazione = storicoPrestiti.get(i).getFruitore();
-			for (int j=0;j<prestitiAnnui.size();j++) 
+			Fruitore fruitoreInConsiderazione = prestito.getFruitore();
+			for (int i = 0; i < prestitiAnnui.size(); i++) 
 			{
-				if(fruitoreInConsiderazione.equals(storicoPrestiti.get(j)))
+				if(fruitoreInConsiderazione.equals(storicoPrestiti.get(i).getFruitore()))
 				{
 					nPrestiti++;
-					prestitiAnnui.remove(j);
+					prestitiAnnui.remove(i);
 				}
 			}
 			
-			System.out.println("Il fruitore "+fruitoreInConsiderazione.getUser()+" ha effettuato "+
-									nPrestiti+ " nell' anno corrente");
-			
+			System.out.println("Il fruitore " + fruitoreInConsiderazione.getUser() + " ha effettuato " + nPrestiti + " prestiti nell' anno corrente");
 		}
 	}
 
 	public void menuStorico() 
 	{
-		MyMenu menuStorico = new MyMenu("Storico: ",VOCI_MENU_STORICO);
+		boolean continuaMenuStorico = true;
 		
-		switch (menuStorico.scegliBase()) 
+		do
 		{
-			case 0:
+			MyMenu menuStorico = new MyMenu("\nScegli cosa visualizzare: ",VOCI_MENU_STORICO, true);
+			
+			switch (menuStorico.scegliBase()) 
 			{
-				break;
-			}
-			case 1:
-			{
-				System.out.println("Ci sono stati nell'anno solare da te selezionato " + prestitiAnnoSolare() +" prestiti");
-				break;
-			}
-			case 2:
-			{
-				System.out.println("Ci sono state nell'anno solare da te selezionato " + prorogheAnnoSolare() +" proroghe");
-				break;
-			}
-			case 3:
-			{
-				risorsaPiùInPrestito();
-				break;
-			}
-			case 4:
-			{
-				prestitiPerFruitore();
-				break;
+				case 0:
+				{
+					continuaMenuStorico = false;
+					break;
+				}
+				case 1://Numero prestiti per anno solare
+				{
+					System.out.println("Nell'anno solare selezionato ci sono stati " + prestitiAnnoSolare() +" prestiti");
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 2://Numero proroghe per anno solare
+				{
+					System.out.println("Nell'anno solare selezionato sono stati prorogati " + prorogheAnnoSolare() +" prestiti");
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 3://Risorsa che è stata oggetto del maggior numero di prestiti per anno solare
+				{
+					risorsaPiùInPrestito();
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 4://Numero di prestiti per fruitore per anno solare
+				{
+					prestitiPerFruitore();
+					
+					continuaMenuStorico = true;
+					break;
+				}
 			}
 		}
+		while(continuaMenuStorico);
+		
 	}
 }
