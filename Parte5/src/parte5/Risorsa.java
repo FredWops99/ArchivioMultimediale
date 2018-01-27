@@ -6,6 +6,8 @@ public abstract class Risorsa
 	public abstract String getTitolo();
 	public abstract String getId();	
 	public abstract int getInPrestito();
+	public abstract boolean isPrestabile();
+	public abstract void setPrestabile(boolean prestabile);
 	public abstract int getGiorniDurataPrestito();
 	public abstract int getGiorniDurataProroga();
 	public abstract int getGiorniPrimaPerProroga();

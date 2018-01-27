@@ -39,6 +39,7 @@ public class Film extends Risorsa implements Serializable
 	private int annoDiUscita;
 	private String lingua;
 	private int nLicenze;
+	private boolean prestabile;
 	/**
 	 * quante copie di questo Film sono già in prestito (<= nLicenze)
 	 */
@@ -126,6 +127,11 @@ public class Film extends Risorsa implements Serializable
 	{
 		return inPrestito;
 	}
+	public boolean isPrestabile() 
+	{
+		return prestabile;
+	}
+
 	public void setId(String id) 
 	{
 		this.id = id;
@@ -161,6 +167,10 @@ public class Film extends Risorsa implements Serializable
 	public void setInPrestito(int inPrestito) 
 	{
 		this.inPrestito = inPrestito;
+	}
+	public void setPrestabile(boolean prestabile) 
+	{
+		this.prestabile = prestabile;
 	}
 	
 	/**

@@ -91,10 +91,10 @@ public class Main
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
+//		segna come "decadute" le iscrizioni in archivio che sono scadute
+		storico.controlloIscrizioni();
 //		elimino i fruitori con iscrizione scaduta (controlloIscrizioni)
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
-//		se un fruitore è decaduto lo segno nello storico
-		storico.controlloFruitoriStorico();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.annullaPrestitiDi(utentiScaduti);
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
@@ -190,121 +190,44 @@ public class Main
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				try
+				Risorsa r = archivio.aggiungiRisorsa(CATEGORIE);
+//				se utente annulla procedura ritorna null
+				if(r != null)
 				{
-					String categoria = CATEGORIE[menu.scegliBase()-1];
-					if(categoria == CATEGORIE[0])//LIBRO
-					{
-						Libro l = archivio.getLibri().addLibro();
-//						Aggiungo il libro in storico
-						if(l!=null)
-						{
-							storico.storicoRisorse.addElement(l);
-						}
-						
-					}
-					if(categoria == CATEGORIE[1])//FILM
-					{
-						Film f = archivio.getFilms().addFilm();
-//						Aggiungo il film in storico
-						if(f!=null)
-						{
-							storico.storicoRisorse.addElement(f);
-						}
-					}
+					storico.addRisorsa(r);
 				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				
+				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
-				
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				
-				try
+				String idRimosso = archivio.rimuoviRisorsa(CATEGORIE);
+//				se utente annulla procedura ritorna "-1"
+				if(!idRimosso.equals("-1"))
 				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];
-					if(categoria == CATEGORIE[0])//LIBRI
-					{
-						String idSelezionato = archivio.getLibri().removeLibro();
-						if(!idSelezionato.equals("-1"))//removeLibro ritorna -1 se l'utente annulla la procedura
-						{
-							prestiti.annullaPrestitiConRisorsa(idSelezionato);
-						}
-					}
-					if(categoria == CATEGORIE[1])//FILMS
-					{
-						String idSelezionato = archivio.getFilms().removeFilm();
-						if(idSelezionato.equals("-1"))//removeLibro ritorna -1 se l'utente annulla la procedura
-						{
-							prestiti.annullaPrestitiConRisorsa(idSelezionato);
-						}
-					}
-					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+					storico.risorsaNonPrestabile(idRimosso);
 				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				
+				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				
-				try
-				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-					if(categoria == CATEGORIE[0])//LIBRI
-					{
-						archivio.getLibri().stampaLibri();
-					}
-					if(categoria == CATEGORIE[1])//FILMS
-					{
-						archivio.getFilms().stampaFilms();
-					}
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				archivio.visualizzaRisorse(CATEGORIE);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 5://CERCA RISORSA
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				try
-				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-
-					if(categoria == CATEGORIE[0])// == "Libri"
-					{
-						archivio.getLibri().cercaLibro();
-					}
-					else if(categoria == CATEGORIE[1])// == "Films"
-					{
-						archivio.getFilms().cercaFilm();
-					}
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				archivio.cercaRisorsa(CATEGORIE);
 				
 				continuaMenuPersonale=true;
 				break;
@@ -349,8 +272,7 @@ public class Main
 					storico.addFruitore(f);
 				}
 				
-				
-				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false); // salvo i fruitori nel file "fileFruitori"
+				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 
 				continuaMenuFruitore=true;//torna al menu
@@ -404,7 +326,7 @@ public class Main
 			{
 				utenteLoggato.rinnovo();
 //				rinnovo anche l'iscrizione dell'utente nello storico
-				storico.rinnovaIscrizioneInStorico(utenteLoggato);
+				storico.rinnovaIscrizione(utenteLoggato);
 				
 				continuaMenuPersonale = true;
 				break;
@@ -442,8 +364,10 @@ public class Main
 				continuaMenuPersonale=true;
 				break;
 			}
-			case 4: //RICHIEDI PRESTITO
+			case 4: //RICHIEDI PRESTITO (non in prestiti perchè devo poter accedere alle risorse)
 			{
+				Prestito p = null;
+				
 				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
 				
 				try
@@ -464,7 +388,7 @@ public class Main
 							{
 								if(prestiti.prestitoFattibile(utenteLoggato, libro))
 								{
-									prestiti.addPrestito(utenteLoggato, libro);
+									p = prestiti.addPrestito(utenteLoggato, libro);
 								    
 									System.out.println(libro.getTitolo() + " prenotato con successo!");
 								}
@@ -475,11 +399,9 @@ public class Main
 							}
 //							qui libro==null: vuol dire che l'utente non ha selezionato un libro (0: torna indietro)
 						}
-						
 					}
 					else if(categoria == CATEGORIE[1])// == "Films"
 					{
-
 						if(prestiti.numPrestitiDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
@@ -493,7 +415,7 @@ public class Main
 							{
 								if(prestiti.prestitoFattibile(utenteLoggato, film))
 								{
-									prestiti.addPrestito(utenteLoggato, film);
+									p = prestiti.addPrestito(utenteLoggato, film);
 								
 									System.out.println(film.getTitolo() + " prenotato con successo!");
 								}
@@ -506,19 +428,24 @@ public class Main
 						}
 					}
 					
-					ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
-					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-					
+//					se il prestito p non è NULL (cioè l'utente non ha annullato la procedura) lo aggiungo allo storico e salvo tutto
+					if(p != null)
+					{
+						storico.aggiungiPrestito(p);
+						
+						ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
+						ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+						ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+					}				
 				}
 				catch(ArrayIndexOutOfBoundsException e)
 				{
 //					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
+//					corrisponde ad ANNULLA, non va fatto nulla
 				}
 				
 				continuaMenuPersonale = true;
 				break;
-
 			}
 			case 5: //RINNOVA PRESTITO
 			{

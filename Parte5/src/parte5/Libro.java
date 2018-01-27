@@ -47,6 +47,7 @@ public class Libro extends Risorsa implements Serializable
 	private String lingua;
 	private String genere;
 	private int nLicenze;
+	private boolean prestabile;
 	/**
 	 * quante copie di questo libro sono già in prestito (<= nLicenze)
 	 */
@@ -208,6 +209,16 @@ public class Libro extends Risorsa implements Serializable
 	public void setInPrestito(int inPrestito)
 	{
 		this.inPrestito = inPrestito;
+	}
+
+	public boolean isPrestabile() 
+	{
+		return prestabile;
+	}
+
+	public void setPrestabile(boolean prestabile) 
+	{
+		this.prestabile = prestabile;
 	}
 
 	/**

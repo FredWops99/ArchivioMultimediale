@@ -117,11 +117,13 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
+	public Prestito addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
 		Prestito prestito = new Prestito(fruitore, risorsa);
 		prestiti.add(prestito);
 		prestito.getRisorsa().mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
+		
+		return prestito;
 	}
 	
 	public Vector<Prestito> getPrestiti() 

@@ -2,6 +2,7 @@ package parte5;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
@@ -22,7 +23,8 @@ public class Fruitore implements Serializable
 	private GregorianCalendar dataInizioRinnovo; //la data dalla quale si può rinnovare l'iscrizione
 	private String username;
 	private String password;
-	public Boolean decaduto = false;
+	private Boolean decaduto = false;
+	private Vector<GregorianCalendar> rinnovi;
 	
 	/**
 	 * Costruttore della classe Fruitore
@@ -43,20 +45,21 @@ public class Fruitore implements Serializable
 		this.username = user;
 		this.password = password;
 //		calcolo scadenza e inizioRinnovo in base alla data di iscrizione
-		this.dataScadenza = calcolaScadenza();
-		this.dataInizioRinnovo = CalcolaInizioRinnovo();
-		
+		this.dataScadenza = calcolaScadenza(dataIscrizione);
+		this.dataInizioRinnovo = CalcolaInizioRinnovo(dataScadenza);
+		this.rinnovi = new Vector<>();
 	}
 	
 	/**
-	 * calcola la data in cui scade l'iscrizione, cioè 5 anni dopo essa
-	 * @return	la data di scadenza calcolata (5 anni dopo l'iscrizione)
+	 * calcola la data in cui scade l'iscrizione, cioè 5 anni dopo l'iscrizione o il rinnovo
+	 * @return	la data di scadenza dell'iscrizione
+	 * @param data la data di iscrizione o di rinnovo dell'iscrizione, da cui calcolare la data di scadenza
 	 */
-	private GregorianCalendar calcolaScadenza() 
+	private GregorianCalendar calcolaScadenza(GregorianCalendar data) 
 	{
 //		il metodo add tiene conto degli anni bisestili e della lunghezza dei mesi: se mi iscrivo il 29 febbraio e tra 5 anni non c'è il 29 febbraio, ritorna il 28.
 //		metto scadenza uguale a dataIscrizione e poi aggiungo 5 anni, non faccio scadenza = dataIscrizione sennò si modifica anche dataIscrizione
-		GregorianCalendar scadenza = new GregorianCalendar(dataIscrizione.get(GregorianCalendar.YEAR), dataIscrizione.get(GregorianCalendar.MONTH), dataIscrizione.get(GregorianCalendar.DAY_OF_MONTH));
+		GregorianCalendar scadenza = new GregorianCalendar(data.get(GregorianCalendar.YEAR), data.get(GregorianCalendar.MONTH), data.get(GregorianCalendar.DAY_OF_MONTH));
 		scadenza.add(GregorianCalendar.YEAR, 5);
 		return scadenza;
 	}
@@ -66,7 +69,7 @@ public class Fruitore implements Serializable
 	 * il metodo add(field, amount) tiene conto della lunghezza dei mesi e degli anni bisestili
 	 * @return la data dalla quale si può rinnovare l'iscrizione
 	 */
-	private GregorianCalendar CalcolaInizioRinnovo()
+	private GregorianCalendar CalcolaInizioRinnovo(GregorianCalendar dataScadenza)
 	{
 //		metto scadenza uguale a dataIscrizione e poi tolgo i 10 giorni, non faccio scadenza = dataIscrizione sennò si modifica anche data iscrizione
 		GregorianCalendar scadenza = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
@@ -79,7 +82,7 @@ public class Fruitore implements Serializable
 	 * non controllo che sia precedente alla data di scadenza perchè a inizio programma le iscrizioni scadute vengono rimosse
 	 * @return true se il fruitore può rinnovare l'iscrizione
 	 */
-	private boolean fruitoreRinnovabile()
+	public boolean fruitoreRinnovabile()
 	{
 //		compareTo ritorna 1 solo quando DATACORRENTE è successiva a dataInizioRinnovo
 		if(GestioneDate.DATA_CORRENTE.compareTo(dataInizioRinnovo) == 1)
@@ -95,9 +98,10 @@ public class Fruitore implements Serializable
 	public void rinnovo()
 	{  
 		if(fruitoreRinnovabile())
-		{
-//			potrebbe servire mantenere la vera data di iscrizione?
-			setDataIscrizione(GestioneDate.DATA_CORRENTE);
+		{			
+			rinnovi.addElement(GestioneDate.DATA_CORRENTE);
+			calcolaScadenza(GestioneDate.DATA_CORRENTE);
+			CalcolaInizioRinnovo(dataScadenza);
 			System.out.println("la tua iscrizione è stata rinnovata");
 		}
 		else
@@ -152,6 +156,11 @@ public class Fruitore implements Serializable
 		return dataScadenza;
 	}
 	
+	public Boolean getDecaduto() 
+	{
+		return decaduto;
+	}
+
 	// -- SETTER -- //
 	public void setNome(String nome) 
 	{
@@ -165,16 +174,9 @@ public class Fruitore implements Serializable
 	{
 		this.dataNascita = dataNascita;
 	}
-	
-	/**
-	 * quando viene modificata la data iscrizione (rinnovi) vengono ricalcolate modificate anche le date di scadenza e di inzio rinnovo
-	 * @param dataIscrizione la nuova data di iscrizione
-	 */
 	public void setDataIscrizione(GregorianCalendar dataIscrizione) 
 	{
 		this.dataIscrizione = dataIscrizione;
-		this.dataScadenza = calcolaScadenza();
-		this.dataInizioRinnovo = CalcolaInizioRinnovo();
 	}
 	public void setDataScadenza(GregorianCalendar dataScadenza) 
 	{
@@ -187,5 +189,10 @@ public class Fruitore implements Serializable
 	public void setPassword(String password) 
 	{
 		this.password = password;
+	}
+	
+	public void setDecaduto(Boolean decaduto) 
+	{
+		this.decaduto = decaduto;
 	}
 }

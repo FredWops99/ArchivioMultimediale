@@ -14,6 +14,11 @@ public class Prestito implements Serializable
 	private GregorianCalendar dataInizio;
 	private GregorianCalendar dataScadenza;
 	private GregorianCalendar dataRichiestaProroga;
+	/**
+	 * da settare quando il prestito termina: se scade sarà uguale alla dataScadenza, se il fruitore termina prima il prestito sarà quella data.
+	 * viene usata solo nello storico, in quanto nel main i prestiti scaduti vengono eliminati
+	 */
+	private GregorianCalendar dataRitorno;
 	private boolean prorogato;
 	
 	/**
@@ -103,5 +108,15 @@ public class Prestito implements Serializable
 	public void setProrogato(boolean prorogato) 
 	{
 		this.prorogato = prorogato;
+	}
+
+	public GregorianCalendar getDataRitorno() 
+	{
+		return dataRitorno;
+	}
+
+	public void setDataRitorno(GregorianCalendar dataRitorno) 
+	{
+		this.dataRitorno = dataRitorno;
 	}
 }

@@ -31,9 +31,9 @@ public class Storico implements Serializable
 														"Numero di prestiti per fruitore per anno solare"};
 	private static final long serialVersionUID = 1L;
 	
-	Vector<Fruitore> storicoFruitori;
-	Vector<Prestito> storicoPrestiti;
-	Vector<Risorsa> storicoRisorse;
+	private Vector<Fruitore> storicoFruitori;
+	private Vector<Prestito> storicoPrestiti;
+	private Vector<Risorsa> storicoRisorse;
 	
 	public Storico()
 	{
@@ -205,35 +205,99 @@ public class Storico implements Serializable
 					continuaMenuStorico = true;
 					break;
 				}
+				case 5://risorse prestabili in passato
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 6://iscrizioni decadute
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 7://iscrizioni rinnovate
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 8://prestiti prorogati
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 9://prestiti scaduti
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
+				case 10://prestiti terminati in anticipo
+				{
+					
+					continuaMenuStorico = true;
+					break;
+				}
 			}
 		}
 		while(continuaMenuStorico);
-		
 	}
 	
-//	controlla se i fruitori presenti nello storico sono decaduti ed eventualmente li segna come decaduti
-//	ricalca il metodo ControlloIscrizioni in Fruitori
-	
-	public void controlloFruitoriStorico()
+	/**
+	 * controlla se i fruitori presenti nello storico sono decaduti ed eventualmente li segna come decaduti,
+	 * diversamente dall'archivio, in cui vengono eliminati
+	 */
+	public void controlloIscrizioni()
 	{
-		for (int i = 0; i < storicoFruitori.size(); i++) 
+		for (Fruitore fruitore : storicoFruitori) 
 		{
-			if(storicoFruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)
+			if(fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)
 			{
-				storicoFruitori.get(i).decaduto = true;
+				fruitore.setDecaduto(true);
+//				setto i suoi prestiti come terminati (non devono essere rimossi, devono rimanere nello storico)
+				for(Prestito prestito : storicoPrestiti)
+				{
+					if(prestito.getFruitore().equals(fruitore))
+					{
+						prestito.setDataRitorno(GestioneDate.DATA_CORRENTE);
+					}
+				}
 			}
 		}
 	}
 
-	public void rinnovaIscrizioneInStorico(Fruitore f)
+	public void rinnovaIscrizione(Fruitore f)
 	{
-		for (int i = 0; i < storicoFruitori.size(); i++)
+		for (Fruitore fruitore : storicoFruitori)
 		{
-			if(f.getUser().equals(storicoFruitori.get(i).getUser()) 
-					&& storicoFruitori.get(i).decaduto == false)
+			if(f.getUser().equals(fruitore.getUser()) && fruitore.fruitoreRinnovabile())
 			{
-				storicoFruitori.get(i).setDataIscrizione(GestioneDate.DATA_CORRENTE);
+				fruitore.rinnovo();
 			}
 		}
+	}
+
+	public void addRisorsa(Risorsa r) 
+	{
+		storicoRisorse.addElement(r);
+	}
+
+	public void risorsaNonPrestabile(String id) 
+	{
+		for(Risorsa risorsa : storicoRisorse)
+		{
+			if(risorsa.getId().equals(id))
+			{
+				risorsa.setPrestabile(false);
+			}
+		}
+	}
+
+	public void aggiungiPrestito(Prestito p) 
+	{
+		storicoPrestiti.addElement(p);
 	}
 }
