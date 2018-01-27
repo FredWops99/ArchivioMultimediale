@@ -523,7 +523,7 @@ public class Main
 			{
 				for(Libro libro :archivio.getLibri().getLibri())
 				{
-					if(prestito.getRisorsa().getId() == (libro.getId()))
+					if(prestito.getRisorsa().getId().equals(libro.getId()))
 					{
 						prestito.setRisorsa(libro);
 					}
@@ -534,7 +534,7 @@ public class Main
 			{
 				for(Film film : archivio.getFilms().getfilms())
 				{
-					if(prestito.getRisorsa().getId() == (film.getId()))
+					if(prestito.getRisorsa().getId().equals(film.getId()))
 					{
 						prestito.setRisorsa(film);
 					}

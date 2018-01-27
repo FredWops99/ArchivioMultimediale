@@ -95,10 +95,10 @@ public class Main
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.annullaPrestitiDi(utentiScaduti);
+		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
+		
 //		elimino i prestiti scaduti
 		prestiti.controlloPrestiti();
-		
-		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 		
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
@@ -338,7 +338,8 @@ public class Main
 				
 				
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false); // salvo i fruitori nel file "fileFruitori"
-				
+				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
+
 				continuaMenuFruitore=true;//torna al menu
 				break;				
 			}
@@ -540,20 +541,25 @@ public class Main
 		{
 			if(prestito.getRisorsa() instanceof Libro)
 			{
-				for(Libro libro :archivio.getLibri().getLibri())
+//				for(int i = 0; i < archivio.getLibri().getLibri().size(); i++)
+//				{
+//					if(prestito.getRisorsa().getId() == )
+//				}
+//				
+				for(Libro libro : archivio.getLibri().getLibri())
 				{
-					if(prestito.getRisorsa().getId() == (libro.getId()))
+					if(prestito.getRisorsa().getId().equals(libro.getId()))
 					{
 						prestito.setRisorsa(libro);
 					}
 				}
 			}
-//		PER LE PROSSIME CATEGORIE
-		else if(prestito.getRisorsa() instanceof Film)
+//			PER LE PROSSIME CATEGORIE
+			else if(prestito.getRisorsa() instanceof Film)
 			{
 				for(Film film : archivio.getFilms().getfilms())
 				{
-					if(prestito.getRisorsa().getId() == (film.getId()))
+					if(prestito.getRisorsa().getId().equals(film.getId()))
 					{
 						prestito.setRisorsa(film);
 					}

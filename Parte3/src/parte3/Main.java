@@ -413,23 +413,7 @@ public class Main
 						prestito.setRisorsa(libro);
 					}
 				}
-			}
-//			PER LE PROSSIME CATEGORIE
-//			else if(prestito.getRisorsa() instanceof Film)
-//			{
-//				for(Film film : films.getFilms())
-//				{
-//					if(prestito.getRisorsa().getId() == (film.getId()))
-//					{
-//						prestito.setRisorsa(film);
-//					}
-//				}
-//			}
-//			else if(altra categoria)
-//			{
-//				...
-//			}
-			
+			}			
 		}
 	}
 }
