@@ -83,6 +83,18 @@ public class Libro extends Risorsa implements Serializable
 	}
 	
 	/**
+	 * Override del metodo equals() di object
+	 */
+	public boolean equals(Risorsa r)
+	{
+		if(this.id.equals(r.getId()))
+		{
+			return true;
+		}
+		else return false;
+	}
+	
+	/**
 	 * Stampa tutte le informazioni del libro
 	 */
 	public void stampaDati(boolean perPrestito)

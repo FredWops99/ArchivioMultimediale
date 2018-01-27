@@ -48,12 +48,12 @@ public class Prestiti implements Serializable
 	 * @param username lo username dell'utente di cui stampare i prestiti
 	 * @return il numero di libri attualmente in prestito all'utente
 	 */
-	public void stampaPrestitiDi(String username) 
+	public void stampaPrestitiDi(Fruitore fruitore) 
 	{		
 		int totPrestiti = 0;
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(username))
+			if(prestito.getFruitore().equals(fruitore))
 			{
 				if(totPrestiti == 0)//all'inizio
 				{
@@ -77,7 +77,7 @@ public class Prestiti implements Serializable
 //		dal fondo perchè se elimino dall'inizio si sballano le posizioni
 		for(int i = prestiti.size()-1; i >= 0; i--)
 		{
-			if(prestiti.get(i).getFruitore().getUser().equals(utente.getUser()))
+			if(prestiti.get(i).getFruitore().equals(utente))
 			{
 				prestiti.get(i).getRisorsa().tornaDalPrestito();
 				prestiti.remove(i);
@@ -141,7 +141,7 @@ public class Prestiti implements Serializable
 	 * @param categoria
 	 * @return
 	 */
-	public int numPrestitiDi(String username, String categoria)
+	public int numPrestitiDi(Fruitore fruitore, String categoria)
 	{
 		int risorse = 0;
 		
@@ -150,7 +150,7 @@ public class Prestiti implements Serializable
 			for(Prestito prestito : prestiti)
 			{
 				
-				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Libro)
+				if(prestito.getFruitore().equals(fruitore) && prestito.getRisorsa() instanceof Libro)
 				{
 					risorse++;
 				}
@@ -161,7 +161,7 @@ public class Prestiti implements Serializable
 			for(Prestito prestito : prestiti)
 			{
 				
-				if(prestito.getFruitore().getUser().equals(username) && prestito.getRisorsa() instanceof Film)
+				if(prestito.getFruitore().equals(fruitore) && prestito.getRisorsa() instanceof Film)
 				{
 					risorse++;
 				}
@@ -196,7 +196,7 @@ public class Prestiti implements Serializable
 	{
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getRisorsa().getId()==risorsa.getId() && prestito.getFruitore().getUser().equals(fruitore.getUser()))
+			if(prestito.getRisorsa().equals(risorsa) && prestito.getFruitore().equals(fruitore))
 			{
 				return false;
 			}
@@ -210,7 +210,7 @@ public class Prestiti implements Serializable
 		Vector<Prestito>prestitiUtente = new Vector<>();
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(utente.getUser()))
+			if(prestito.getFruitore().equals(utente))
 			{
 				prestitiUtente.add(prestito);
 			}

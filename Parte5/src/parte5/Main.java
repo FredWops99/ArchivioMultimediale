@@ -209,6 +209,7 @@ public class Main
 //				se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
+					prestiti.annullaPrestitiConRisorsa(idRimosso);
 					storico.risorsaNonPrestabile(idRimosso);
 				}
 				
@@ -375,7 +376,7 @@ public class Main
 					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 					if(categoria == CATEGORIE[0])// == "Libri"
 					{
-						if(prestiti.numPrestitiDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
+						if(prestiti.numPrestitiDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -402,7 +403,7 @@ public class Main
 					}
 					else if(categoria == CATEGORIE[1])// == "Films"
 					{
-						if(prestiti.numPrestitiDi(utenteLoggato.getUser(), categoria) == Libro.PRESTITI_MAX)
+						if(prestiti.numPrestitiDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -455,7 +456,7 @@ public class Main
 			}
 			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.stampaPrestitiDi(utenteLoggato.getUser());
+				prestiti.stampaPrestitiDi(utenteLoggato);
 				
 				continuaMenuPersonale = true;
 				break;
@@ -473,8 +474,8 @@ public class Main
 	
 	/**
 	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 
-	 * uguale prima del caricamento diventa diverso dopo il caricamento)
-	 * in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
+	 * uguale prima del caricamento diventa diverso dopo il caricamento): Libri e Prestiti vengono salvati in posti diversi e poi caricati come "diversi".
+	 * Per non dover salvare tutto in unico file, in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
 	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
 	 */
 	public static void ricostruisciPrestiti()
@@ -483,14 +484,9 @@ public class Main
 		{
 			if(prestito.getRisorsa() instanceof Libro)
 			{
-//				for(int i = 0; i < archivio.getLibri().getLibri().size(); i++)
-//				{
-//					if(prestito.getRisorsa().getId() == )
-//				}
-//				
 				for(Libro libro : archivio.getLibri().getLibri())
 				{
-					if(prestito.getRisorsa().getId().equals(libro.getId()))
+					if(prestito.getRisorsa().equals(libro))
 					{
 						prestito.setRisorsa(libro);
 					}
@@ -501,7 +497,7 @@ public class Main
 			{
 				for(Film film : archivio.getFilms().getfilms())
 				{
-					if(prestito.getRisorsa().getId().equals(film.getId()))
+					if(prestito.getRisorsa().equals(film))
 					{
 						prestito.setRisorsa(film);
 					}

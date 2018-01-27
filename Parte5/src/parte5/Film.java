@@ -69,6 +69,18 @@ public class Film extends Risorsa implements Serializable
 		this.setInPrestito(0);
 	}
 	
+	/**
+	 * Override del metodo equals() di object
+	 */
+	public boolean equals(Risorsa r)
+	{
+		if(this.id.equals(r.getId()))
+		{
+			return true;
+		}
+		else return false;
+	}
+	
 	public void stampaDati(boolean perPrestito)
 	{
 //		System.out.println(BelleStringhe.CORNICE);
@@ -206,6 +218,5 @@ public class Film extends Risorsa implements Serializable
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;
-	}
-	
+	}	
 }

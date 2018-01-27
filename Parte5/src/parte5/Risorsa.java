@@ -2,6 +2,13 @@ package parte5;
 
 public abstract class Risorsa 
 {
+	/**
+	 * Override del metodo equals di Object: in Object il metodo confronta gli oggetti tramite hashcode, ma salvando e caricando da file esso cambia e il programma
+	 * non li riconosce più come stesso oggetto (in prestiti).
+	 * @param r la risorsa con cui confrontare l'oggetto
+	 * @return true se le due risorse hanno lo stesso id
+	 */
+	public abstract boolean equals(Risorsa r);
 	public abstract void stampaDati(boolean perPrestito);
 	public abstract String getTitolo();
 	public abstract String getId();	

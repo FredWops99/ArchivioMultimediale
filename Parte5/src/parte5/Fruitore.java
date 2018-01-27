@@ -50,6 +50,15 @@ public class Fruitore implements Serializable
 		this.rinnovi = new Vector<>();
 	}
 	
+	public boolean equals(Fruitore f)
+	{
+		if(this.username.equals(f.getUser()))
+		{
+			return true;
+		}
+		else return false;
+	}
+	
 	/**
 	 * calcola la data in cui scade l'iscrizione, cioè 5 anni dopo l'iscrizione o il rinnovo
 	 * @return	la data di scadenza dell'iscrizione
