@@ -210,4 +210,30 @@ public class Storico implements Serializable
 		while(continuaMenuStorico);
 		
 	}
+	
+//	controlla se i fruitori presenti nello storico sono decaduti ed eventualmente li segna come decaduti
+//	ricalca il metodo ControlloIscrizioni in Fruitori
+	
+	public void controlloFruitoriStorico()
+	{
+		for (int i = 0; i < storicoFruitori.size(); i++) 
+		{
+			if(storicoFruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)
+			{
+				storicoFruitori.get(i).decaduto = true;
+			}
+		}
+	}
+
+	public void rinnovaIscrizioneInStorico(Fruitore f)
+	{
+		for (int i = 0; i < storicoFruitori.size(); i++)
+		{
+			if(f.getUser().equals(storicoFruitori.get(i).getUser()) 
+					&& storicoFruitori.get(i).decaduto == false)
+			{
+				storicoFruitori.get(i).setDataIscrizione(GestioneDate.DATA_CORRENTE);
+			}
+		}
+	}
 }

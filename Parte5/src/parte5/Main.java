@@ -93,6 +93,8 @@ public class Main
 		
 //		elimino i fruitori con iscrizione scaduta (controlloIscrizioni)
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
+//		se un fruitore è decaduto lo segno nello storico
+		storico.controlloFruitoriStorico();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.annullaPrestitiDi(utentiScaduti);
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
@@ -390,6 +392,8 @@ public class Main
 			case 1:	//RINNOVA ISCRIZIONE
 			{
 				utenteLoggato.rinnovo();
+//				rinnovo anche l'iscrizione dell'utente nello storico
+				storico.rinnovaIscrizioneInStorico(utenteLoggato);
 				
 				continuaMenuPersonale = true;
 				break;
