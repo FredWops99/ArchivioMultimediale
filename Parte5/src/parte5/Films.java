@@ -47,13 +47,13 @@ public class Films implements Serializable
 	/**
 	 * procedura per l'aggiunta di un film alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Film e lo aggiunge al vector
 	 */
-	public void addFilm()
+	public Film addFilm()
 	{
 		String sottoCategoria = this.scegliSottoCategoria();//la sottocategoria della categoria FILM ("Azione","Avventura","Fantascienza"...)
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
-			return;
+			return null;
 		}
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
 		int durata = InputDati.leggiInteroPositivo("Inserisci la durata del film (in minuti): ");
@@ -66,6 +66,7 @@ public class Films implements Serializable
 		addPerSottoCategorie(f);
 		
 		System.out.println("Film aggiunto con successo!");
+		return f;
 	}
 	
 	/**

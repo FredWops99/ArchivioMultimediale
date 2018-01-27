@@ -196,11 +196,22 @@ public class Main
 					String categoria = CATEGORIE[menu.scegliBase()-1];
 					if(categoria == CATEGORIE[0])//LIBRO
 					{
-						archivio.getLibri().addLibro();
+						Libro l = archivio.getLibri().addLibro();
+//						Aggiungo il libro in storico
+						if(l!=null)
+						{
+							storico.storicoRisorse.addElement(l);
+						}
+						
 					}
 					if(categoria == CATEGORIE[1])//FILM
 					{
-						archivio.getFilms().addFilm();
+						Film f = archivio.getFilms().addFilm();
+//						Aggiungo il film in storico
+						if(f!=null)
+						{
+							storico.storicoRisorse.addElement(f);
+						}
 					}
 				}
 				catch(ArrayIndexOutOfBoundsException e)
