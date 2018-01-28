@@ -35,27 +35,25 @@ public class Archivio implements Serializable
 		this.films = films;
 	}
 
-	public Risorsa aggiungiRisorsa(String[] CATEGORIE)
+	public void aggiungiRisorsa(String[] CATEGORIE)
 	{
-		Risorsa r = null;
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		try
 		{
 			String categoria = CATEGORIE[menu.scegliBase()-1];
 			if(categoria == CATEGORIE[0])//LIBRO
 			{
-				r = getLibri().addLibro();
+				getLibri().addLibro();
 			}
 			if(categoria == CATEGORIE[1])//FILM
 			{
-				r = getFilms().addFilm();
+				getFilms().addFilm();
 			}
-			
-			return r;
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
-			return null;
+//			se utente seleziona 0 per uscire viene lanciata eccezione: CATEGORIE[-1].
+//			non va fatto nulla, basta intercettarla
 		}
 	}
 
@@ -85,7 +83,7 @@ public class Archivio implements Serializable
 		}
 	}
 
-	public void visualizzaRisorse(String[] CATEGORIE) 
+	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		

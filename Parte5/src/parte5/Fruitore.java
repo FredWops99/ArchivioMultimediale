@@ -23,9 +23,12 @@ public class Fruitore implements Serializable
 	private GregorianCalendar dataInizioRinnovo; //la data dalla quale si può rinnovare l'iscrizione
 	private String username;
 	private String password;
-	private Boolean decaduto = false;
+	private Boolean decaduto;
 	private Vector<GregorianCalendar> rinnovi;
 	
+	
+	
+
 	/**
 	 * Costruttore della classe Fruitore
 	 * @param nome il nome del fruitore
@@ -47,6 +50,7 @@ public class Fruitore implements Serializable
 //		calcolo scadenza e inizioRinnovo in base alla data di iscrizione
 		this.dataScadenza = calcolaScadenza(dataIscrizione);
 		this.dataInizioRinnovo = CalcolaInizioRinnovo(dataScadenza);
+		this.decaduto = false;
 		this.rinnovi = new Vector<>();
 	}
 	
@@ -165,10 +169,15 @@ public class Fruitore implements Serializable
 		return dataScadenza;
 	}
 	
-	public Boolean getDecaduto() 
+	public Boolean isDecaduto() 
 	{
 		return decaduto;
 	}
+	public Vector<GregorianCalendar> getRinnovi() 
+	{
+		return rinnovi;
+	}
+
 
 	// -- SETTER -- //
 	public void setNome(String nome) 
@@ -203,5 +212,9 @@ public class Fruitore implements Serializable
 	public void setDecaduto(Boolean decaduto) 
 	{
 		this.decaduto = decaduto;
+	}
+	public void setRinnovi(Vector<GregorianCalendar> rinnovi) 
+	{
+		this.rinnovi = rinnovi;
 	}
 }

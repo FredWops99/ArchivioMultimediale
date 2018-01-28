@@ -67,6 +67,7 @@ public class Film extends Risorsa implements Serializable
 		this.setLingua(lingua);
 		this.setnLicenze(nLicenze);
 		this.setInPrestito(0);
+		this.prestabile = true;
 	}
 	
 	/**
@@ -143,7 +144,6 @@ public class Film extends Risorsa implements Serializable
 	{
 		return prestabile;
 	}
-
 	public void setId(String id) 
 	{
 		this.id = id;
@@ -184,7 +184,6 @@ public class Film extends Risorsa implements Serializable
 	{
 		this.prestabile = prestabile;
 	}
-	
 	/**
 	 * precondizione: ci sono copie del Film disponibili per il prestito
 	 */
@@ -199,7 +198,7 @@ public class Film extends Risorsa implements Serializable
 	{
 		inPrestito--;
 	}
-
+	
 	public int getGiorniDurataPrestito() 
 	{
 		return Libro.GIORNI_DURATA_PRESTITO;

@@ -127,7 +127,7 @@ public class Films implements Serializable
 		
 		for (int i = 0; i < films.size(); i++) 
 		{
-			if(films.get(i).getTitolo().equals(titolo))
+			if(films.get(i).isPrestabile() && films.get(i).getTitolo().equals(titolo))
 			{
 //				ogni volta che in films trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -142,7 +142,7 @@ public class Films implements Serializable
 		else if(posizioniRicorrenze.size()==1)
 		{
 			idSelezionato = films.get((int)posizioniRicorrenze.get(0)).getId();
-			films.remove((int)posizioniRicorrenze.get(0));
+			films.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);;
 			System.out.println("Rimozione avvenuta con successo!");
 		}
 //		se ci sono più elementi nel vettore (più films con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
@@ -163,7 +163,7 @@ public class Films implements Serializable
 			if(daRimuovere > 0)
 			{
 				idSelezionato = films.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-				films.remove((int)posizioniRicorrenze.get(daRimuovere-1));
+				films.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
 				System.out.println("Rimozione avvenuta con successo!");
 			}
 			else//0: annulla
@@ -243,32 +243,40 @@ public class Films implements Serializable
 	 */
 	public void stampaFilms()
 	{
-		if(films.isEmpty())
+		Vector<Film>filmDaStampare = new Vector<>();
+		for(Film film : films)
 		{
-			System.out.println("Nessun film presente");
+			if(film.isPrestabile())
+			{
+				filmDaStampare.add(film);
+			}
+		}
+		
+		if(filmDaStampare.isEmpty())
+		{
+			System.out.println("In archivio non sono presenti film disponibili");
 		}
 		else
 		{
-			if(films.size()==1)
+			if(filmDaStampare.size()==1)
 			{
-				System.out.println("\nE' presente " + films.size() + " film in archivio: ");
+				System.out.println("\nE' presente un film in archivio: ");
 			}
 			else
 			{
 				System.out.println("\nSono presenti " + films.size() + " films in archivio: ");
-
 			}
 			
-			for(int i = 0; i < films.size(); i++)
+			for(int i = 0; i < filmDaStampare.size(); i++)
 			{
 //				stampa la sottocategoria solo se è il primo elemento o se il sottogenere è cambiato (sono in ordine nel vettore)
-				if(i == 0 || films.get(i).getSottoCategoria() != films.get(i-1).getSottoCategoria())
+				if(i == 0 || filmDaStampare.get(i).getSottoCategoria() != filmDaStampare.get(i-1).getSottoCategoria())
 				{
 					System.out.println("\n" + BelleStringhe.CORNICE);	
-					System.out.println(films.get(i).getSottoCategoria());
+					System.out.println(filmDaStampare.get(i).getSottoCategoria());
 					System.out.println(BelleStringhe.CORNICE);
 				}
-				System.out.println("titolo: " + films.get(i).getTitolo());
+				System.out.println("titolo: " + filmDaStampare.get(i).getTitolo());
 			}
 		}
 	}
@@ -362,11 +370,20 @@ public class Films implements Serializable
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				if(films.isEmpty())
+				Vector<Film>filmPrestabili = new Vector<>();
+				for(Film film : films)
 				{
-					System.out.println("Non sono presenti film in archivio");
+					if(film.isPrestabile())
+					{
+						filmPrestabili.add(film);
+					}
+				}
+				if(filmPrestabili.isEmpty())
+				{
+					System.out.println("In archivio non sono presenti film disponibili");
 					return null;
 				}
+				
 				System.out.println("\nFilm in archivio: \n");
 				for(int i = 0; i < films.size(); i++)
 				{
@@ -421,7 +438,7 @@ public class Films implements Serializable
 		
 		for(Film film : films)
 		{
-			if(film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			if(film.isPrestabile() && film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
 			{
 				filmTrovati.add(film);
 			}
@@ -440,7 +457,7 @@ public class Films implements Serializable
 		
 		for(Film film : films)
 		{
-			if(film.getAnnoDiUscita() == annoUscita)
+			if(film.isPrestabile() && film.getAnnoDiUscita() == annoUscita)
 			{
 				filmTrovati.add(film);
 			}
@@ -458,10 +475,13 @@ public class Films implements Serializable
 		Vector<Film> filmTrovati = new Vector<>(); 
 		for(Film film : films)
 		{
+			if(film.isPrestabile())
+			{
 				if(regista.toLowerCase().equals(regista.toLowerCase()))
 				{
 					filmTrovati.add(film);
 				}
+			}
 		}
 		return filmTrovati;
 	}

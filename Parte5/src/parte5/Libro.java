@@ -80,6 +80,7 @@ public class Libro extends Risorsa implements Serializable
 		this.setGenere(genere);
 		this.setnLicenze(nLicenze);
 		this.setInPrestito(0);
+		this.prestabile = true;
 	}
 	
 	/**
@@ -222,12 +223,10 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.inPrestito = inPrestito;
 	}
-
 	public boolean isPrestabile() 
 	{
 		return prestabile;
 	}
-
 	public void setPrestabile(boolean prestabile) 
 	{
 		this.prestabile = prestabile;
