@@ -389,7 +389,7 @@ public class Films implements Serializable
 				{
 					System.out.println(i+1 + ")");
 					System.out.println(BelleStringhe.CORNICE);
-					films.get(i).stampaDati(true);
+					filmPrestabili.get(i).stampaDati(true);
 					System.out.println(BelleStringhe.CORNICE+ "\n");		
 				}
 				int selezione;
