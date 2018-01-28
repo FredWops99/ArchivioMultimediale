@@ -26,6 +26,9 @@ public class Fruitore implements Serializable
 	private Boolean decaduto;
 	private Vector<GregorianCalendar> rinnovi;
 	
+	
+	
+
 	/**
 	 * Costruttore della classe Fruitore
 	 * @param nome il nome del fruitore
@@ -170,6 +173,11 @@ public class Fruitore implements Serializable
 	{
 		return decaduto;
 	}
+	public Vector<GregorianCalendar> getRinnovi() 
+	{
+		return rinnovi;
+	}
+
 
 	// -- SETTER -- //
 	public void setNome(String nome) 
@@ -204,5 +212,9 @@ public class Fruitore implements Serializable
 	public void setDecaduto(Boolean decaduto) 
 	{
 		this.decaduto = decaduto;
+	}
+	public void setRinnovi(Vector<GregorianCalendar> rinnovi) 
+	{
+		this.rinnovi = rinnovi;
 	}
 }

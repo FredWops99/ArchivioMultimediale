@@ -219,7 +219,7 @@ public class Main
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				Storico.menuStorico(prestiti);
+				Storico.menuStorico(prestiti,archivio,fruitori);
 				
 				continuaMenuOperatore = true;
 				break;
