@@ -20,6 +20,7 @@ public class Prestito implements Serializable
 	 */
 	private GregorianCalendar dataRitorno;
 	private boolean prorogato;
+	private boolean terminato;
 	
 	/**
 	 * Creo l'oggetto Prestito che associa il fruitore alla risorsa in prestito: l'inizio del prestito è la data odierna, scadenza prestito e la data dalla quale
@@ -34,14 +35,12 @@ public class Prestito implements Serializable
 		this.risorsa = risorsa;
 		this.fruitore = fruitore;
 		this.dataInizio = GestioneDate.DATA_CORRENTE;
-//		non faccio "dataScadenza = dataInizio" sennò dopo si modifica anche dataInizio
-		dataScadenza = new GregorianCalendar(dataInizio.get(GregorianCalendar.YEAR), dataInizio.get(GregorianCalendar.MONTH), dataInizio.get(GregorianCalendar.DAY_OF_MONTH));
-//		aggiungo i giorni della durata del prestito della risorsa
-		dataScadenza.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniDurataPrestito());
+		this.dataScadenza = calcolaScadenza(dataInizio);
 //		non faccio "dataProroga = dataScadenza" sennò dopo si modifica anche dataScadenza
 		dataRichiestaProroga = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
 		dataRichiestaProroga.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniPrimaPerProroga());
-		prorogato = false;		
+		prorogato = false;	
+		terminato = false;
 	}
 	
 	public void visualizzaPrestito()
@@ -59,6 +58,37 @@ public class Prestito implements Serializable
 		{
 			System.out.println("Prestito non rinnovabile");
 		}
+	}
+	
+	public GregorianCalendar calcolaScadenza(GregorianCalendar data)
+	{
+//		non faccio "dataScadenza = dataInizio" sennò dopo si modifica anche dataInizio
+		dataScadenza = new GregorianCalendar(data.get(GregorianCalendar.YEAR), data.get(GregorianCalendar.MONTH), data.get(GregorianCalendar.DAY_OF_MONTH));
+//		aggiungo i giorni della durata del prestito della risorsa
+		dataScadenza.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniDurataPrestito());
+		return dataScadenza;
+	}
+	
+	/**
+	 * il prestito è rinnovabile solo se non è già stato prorogato una volta
+	 * @return true se il prestito è rinnovabile
+	 */
+	public boolean isRinnovabile()
+	{
+		return !prorogato;
+	}
+	
+	public void prorogaPrestito()
+	{
+		setProrogato(true);
+		setDataRichiestaProroga(GestioneDate.DATA_CORRENTE);
+		setDataScadenza(calcolaScadenza(GestioneDate.DATA_CORRENTE));
+	}
+	
+	public void ritornaPrestito()
+	{
+		setDataRitorno(GestioneDate.DATA_CORRENTE);
+		terminato=true;
 	}
 	
 	public Risorsa getRisorsa() 
@@ -109,14 +139,20 @@ public class Prestito implements Serializable
 	{
 		this.prorogato = prorogato;
 	}
-
 	public GregorianCalendar getDataRitorno() 
 	{
 		return dataRitorno;
 	}
-
 	public void setDataRitorno(GregorianCalendar dataRitorno) 
 	{
 		this.dataRitorno = dataRitorno;
+	}
+	public boolean isTerminato() 
+	{
+		return terminato;
+	}
+	public void setTerminato(boolean terminato) 
+	{
+		this.terminato = terminato;
 	}
 }

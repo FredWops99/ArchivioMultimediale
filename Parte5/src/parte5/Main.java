@@ -1,16 +1,11 @@
 /**
- * VERSIONE 4.0
- * 	Questa nuova versione aggiunge all’applicazione la gestione di un’ulteriore categoria di
- * risorse, i film. Pertanto si dovranno individuare dei campi significativi atti a descrivere
- * ciascun film e dei vincoli idonei al prestito di film. (In teoria, l’individuazione di tali
- * campi e vincoli spetterebbe a committente ed esperti di dominio ma in questo esercizio
- * la scelta – ponderata – sarà effettuata dagli analisti.)
- * Anche per la categoria “film” valgono i requisiti previsti dalle precedenti versioni 2 e 3.
- * Inoltre il fruitore può godere contemporaneamente del prestito di risorse afferenti a
- * categorie diverse, ad esempio può godere contemporaneamente del prestito di libri e
- * film. Si noti che non esiste un numero massimo complessivo di risorse che possono
- * essere contemporaneamente godute in prestito da un fruitore (o, meglio, tale numero
- * massimo coincide con la somma dei numeri massimi relativi alle diverse categorie).
+VERSIONE 5.0
+*Quest’ultima versione dell’applicazione deve supportare la conservazione in archivio di
+*informazioni storiche relative a:
+*fruitori, iscrizioni, rinnovi di iscrizione e decadenze;
+*risorse (ad esempio, si deve tenere traccia di risorse che sono state prestabili in
+*passato ma ora non lo sono più);
+*prestiti e proroghe degli stessi.
 **/
 
 package parte5;
@@ -40,11 +35,9 @@ public class Main
 															"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri","Film"};//Films, ecc
-
 	private static final String PATH_FRUITORI = "Fruitori.dat";
 	private static final String PATH_ARCHIVIO= "Archivio.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
-	private static final String PATH_STORICO = "Storico.dat";
  	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
 	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";
 	
@@ -56,12 +49,10 @@ public class Main
 	private static File fileFruitori = new File(PATH_FRUITORI);
 	private static File fileArchivio = new File(PATH_ARCHIVIO);
 	private static File filePrestiti = new File(PATH_PRESTITI);
-	private static File fileStorico = new File(PATH_STORICO);
 
 	private static Fruitori fruitori = new Fruitori();
 	private static Archivio archivio = new Archivio();
 	private static Prestiti prestiti = new Prestiti();
-	private static Storico storico = new Storico();
 	
 	private static Fruitore utenteLoggato = null;
 	
@@ -74,8 +65,6 @@ public class Main
 			ServizioFile.checkFile(fileFruitori, fruitori);
 			ServizioFile.checkFile(fileArchivio, archivio);
 			ServizioFile.checkFile(filePrestiti, prestiti);
-			ServizioFile.checkFile(fileStorico, storico);
-
 		}	
 		catch (IOException e) 
 		{
@@ -86,14 +75,11 @@ public class Main
 		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
 		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio);
 		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
-		storico = (Storico)ServizioFile.caricaSingoloOggetto(fileStorico);
 		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
 //		segna come "decadute" le iscrizioni in archivio che sono scadute
-		storico.controlloIscrizioni();
-//		elimino i fruitori con iscrizione scaduta (controlloIscrizioni)
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.annullaPrestitiDi(utentiScaduti);
@@ -183,22 +169,16 @@ public class Main
 			}
 			case 1://VISUALIZZA FRUITORI
 			{
-				fruitori.stampaFruitori();
+				fruitori.stampaFruitoriAttivi();
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-				Risorsa r = archivio.aggiungiRisorsa(CATEGORIE);
-//				se utente annulla procedura ritorna null
-				if(r != null)
-				{
-					storico.addRisorsa(r);
-				}
+				archivio.aggiungiRisorsa(CATEGORIE);
 				
 				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -210,18 +190,15 @@ public class Main
 				if(!idRimosso.equals("-1"))
 				{
 					prestiti.annullaPrestitiConRisorsa(idRimosso);
-					storico.risorsaNonPrestabile(idRimosso);
+					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
 				}
-				
-				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				archivio.visualizzaRisorse(CATEGORIE);
+				archivio.visualizzaRisorsePrestabili(CATEGORIE);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -230,19 +207,19 @@ public class Main
 			{
 				archivio.cercaRisorsa(CATEGORIE);
 				
-				continuaMenuPersonale=true;
+				continuaMenuOperatore=true;
 				break;
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
 			{
-				prestiti.visualizzaTuttiPrestiti();
+				prestiti.visualizzaTuttiPrestitiAttivi();
 				
 				continuaMenuOperatore = true;
 				break;
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				storico.menuStorico();
+				Storico.menuStorico(prestiti);
 				
 				continuaMenuOperatore = true;
 				break;
@@ -267,14 +244,8 @@ public class Main
 			}
 			case 1:	//registrazione nuovo fruitore
 			{
-				Fruitore f = fruitori.addFruitore();
-				if(f != null)
-				{
-					storico.addFruitore(f);
-				}
-				
+				fruitori.addFruitore();
 				ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
-				ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
 
 				continuaMenuFruitore=true;//torna al menu
 				break;				
@@ -326,8 +297,6 @@ public class Main
 			case 1:	//RINNOVA ISCRIZIONE
 			{
 				utenteLoggato.rinnovo();
-//				rinnovo anche l'iscrizione dell'utente nello storico
-				storico.rinnovaIscrizione(utenteLoggato);
 				
 				continuaMenuPersonale = true;
 				break;
@@ -342,33 +311,13 @@ public class Main
 			}
 			case 3://CERCA UNA RISORSA
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE);
-				
-				try
-				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-					if(categoria == CATEGORIE[0])// == "Libri"
-					{
-						archivio.getLibri().cercaLibro();
-					}
-					else if(categoria == CATEGORIE[1])// == "Films"
-					{
-						archivio.getFilms().cercaFilm();
-					}
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				archivio.cercaRisorsa(CATEGORIE);
 				
 				continuaMenuPersonale=true;
 				break;
 			}
 			case 4: //RICHIEDI PRESTITO (non in prestiti perchè devo poter accedere alle risorse)
 			{
-				Prestito p = null;
-				
 				MyMenu menu = new MyMenu("scegli la categoria di risorsa: ", CATEGORIE);
 				
 				try
@@ -376,7 +325,7 @@ public class Main
 					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 					if(categoria == CATEGORIE[0])// == "Libri"
 					{
-						if(prestiti.numPrestitiDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
+						if(prestiti.numPrestitiAttiviDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -389,7 +338,7 @@ public class Main
 							{
 								if(prestiti.prestitoFattibile(utenteLoggato, libro))
 								{
-									p = prestiti.addPrestito(utenteLoggato, libro);
+									prestiti.addPrestito(utenteLoggato, libro);
 								    
 									System.out.println(libro.getTitolo() + " prenotato con successo!");
 								}
@@ -403,7 +352,7 @@ public class Main
 					}
 					else if(categoria == CATEGORIE[1])// == "Films"
 					{
-						if(prestiti.numPrestitiDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
+						if(prestiti.numPrestitiAttiviDi(utenteLoggato, categoria) == Film.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -416,7 +365,7 @@ public class Main
 							{
 								if(prestiti.prestitoFattibile(utenteLoggato, film))
 								{
-									p = prestiti.addPrestito(utenteLoggato, film);
+									prestiti.addPrestito(utenteLoggato, film);
 								
 									System.out.println(film.getTitolo() + " prenotato con successo!");
 								}
@@ -425,19 +374,11 @@ public class Main
 									System.out.println("Prenotazione rifiutata: possiedi già questa risorsa in prestito");
 								}
 							}
-//							qui libro==null: vuol dire che l'utente non ha selezionato un libro (0: torna indietro)
+//							qui film==null: vuol dire che l'utente non ha selezionato un libro (ha selezionato 0: torna indietro)
 						}
 					}
-					
-//					se il prestito p non è NULL (cioè l'utente non ha annullato la procedura) lo aggiungo allo storico e salvo tutto
-					if(p != null)
-					{
-						storico.aggiungiPrestito(p);
-						
-						ServizioFile.salvaSingoloOggetto(fileStorico, storico, false);
-						ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
-						ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-					}				
+					ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);			
 				}
 				catch(ArrayIndexOutOfBoundsException e)
 				{
@@ -456,7 +397,7 @@ public class Main
 			}
 			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.stampaPrestitiDi(utenteLoggato);
+				prestiti.stampaPrestitiAttiviDi(utenteLoggato);
 				
 				continuaMenuPersonale = true;
 				break;
@@ -465,16 +406,19 @@ public class Main
 			{
 				prestiti.annullaPrestitiDi(utenteLoggato);
 				
-				
 				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
 				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+				
+				continuaMenuPersonale = true;
+				break;
 			}
 		}
 	}
 	
 	/**
 	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 
-	 * uguale prima del caricamento diventa diverso dopo il caricamento): Libri e Prestiti vengono salvati in posti diversi e poi caricati come "diversi".
+	 * uguale prima del caricamento diventa diverso dopo il caricamento): Risorse e Prestiti vengono salvati in posti diversi e poi caricati come "diversi".
+	 * Quando invece viene creato il prestito, la sua risorsa e quella in archivio sono lo stesso oggetto. Salvando e caricando in due posti diversi è come se "si sdoppiasse".
 	 * Per non dover salvare tutto in unico file, in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
 	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
 	 */
@@ -492,7 +436,6 @@ public class Main
 					}
 				}
 			}
-//			PER LE PROSSIME CATEGORIE
 			else if(prestito.getRisorsa() instanceof Film)
 			{
 				for(Film film : archivio.getFilms().getfilms())

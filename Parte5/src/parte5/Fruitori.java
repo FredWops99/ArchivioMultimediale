@@ -37,7 +37,7 @@ public class Fruitori implements Serializable
 	/**
 	 * Aggiunge un Fruitore nel vettore "fruitori"
 	 */
-	public Fruitore addFruitore()
+	public void addFruitore()
 	{
 		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
 		String cognome = InputDati.leggiStringaNonVuota("Inserisci il tuo cognome: ");
@@ -47,7 +47,7 @@ public class Fruitori implements Serializable
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
 		{
 			System.out.println("Ci dispiace, per accedere devi essere maggiorenne");
-			return null;
+			return;
 		}
 		
 		String user;
@@ -82,14 +82,12 @@ public class Fruitori implements Serializable
 		while(!corretta);
 		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
+		
 		//creo il nuovo fruitore
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 		//aggiungo al vector fruitori il nuovo fruitore
 		fruitori.add(f);
-		
 		System.out.println("Registrazione avvenuta con successo!");
-		
-		return f;
 	}
 	
 	/**
@@ -101,6 +99,7 @@ public class Fruitori implements Serializable
 	{
 		for(Fruitore fruitore : fruitori)
 		{
+//			lo username non può essere nemmeno quello di un fruitore decaduto (sennò confusione con lo storico dei prestiti, username uguali)
 			if(fruitore.getUser().equals(user))
 			{
 				return false;
@@ -120,30 +119,32 @@ public class Fruitori implements Serializable
 	 *	- Rinnovo iscrizione dal
 	 *	
 	 */
-	public void stampaFruitori()
+	public void stampaFruitoriAttivi()
 	{
 		System.out.println("Numero fruitori: " + fruitori.size());
-		for(int i = 0; i<fruitori.size(); i++)
+		for(Fruitore fruitore : fruitori)
 		{
-			fruitori.get(i).stampaDati();
+			if(!fruitore.isDecaduto())
+			{
+				fruitore.stampaDati();
+			}
 		}
 	}
 	
 	/**
-	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati
-	 * i 5 anni elimina il fruitore dal vettore "fruitori"
+	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni elimina il fruitore dal vettore "fruitori"
 	 * @return un vettore contenente gli utenti eliminati
 	 */
 	public Vector<Fruitore> controlloIscrizioni()
 	{
 		Vector<Fruitore>utenti = new Vector<>();
 		int rimossi = 0;
-		for (int i = 0; i < fruitori.size(); i++) 
+		for(Fruitore fruitore : fruitori) 
 		{
-			if(fruitori.get(i).getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
+			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
 			{
-				utenti.add(fruitori.get(i));
-				fruitori.remove(i);
+				fruitore.setDecaduto(true);
+				utenti.add(fruitore);
 				rimossi++;
 			}
 		}

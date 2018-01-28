@@ -122,10 +122,6 @@ public class Libri implements Serializable
 		}
 	}
 
-	/**
-	 * procedura per rimuovere un libro dalla raccolta: viene chiesto il nome del libro e se ce ne sono più di uno viene chiesto all'utente quale eliminare
-	 * @return l'id del libro che l'utente ha deciso di rimuovere ("-1" se non viene rimosso nessun libro)
-	 */
 	public String removeLibro()
 	{
 		String idSelezionato;
@@ -134,9 +130,9 @@ public class Libri implements Serializable
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
-		for (int i = 0; i < libri.size(); i++) 
+		for (int i = 0; i < libri.size(); i++)
 		{
-			if(libri.get(i).getTitolo().equals(titolo))
+			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().equals(titolo))
 			{
 //				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -151,11 +147,11 @@ public class Libri implements Serializable
 		else if(posizioniRicorrenze.size()==1)
 		{
 			idSelezionato = libri.get((int)posizioniRicorrenze.get(0)).getId();
-			libri.remove((int)posizioniRicorrenze.get(0));
-			System.out.println("Rimozione avvenuta con successo!");
+			libri.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+			System.out.println("La risorsa è stata eliminata dalle risorse prestabili (verrà conservata in archivio per motivi storici)");
 		}
 //		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
-//		l'utente inserisce quale rimuovere -> prendo la posizione in libri di quell'elemento e lo rimuovo da libri
+//		l'utente inserisce quello che vuole rimuovere
 		else
 		{
 			System.out.println("Sono presenti più libri dal titolo \"" + titolo + "\": ");
@@ -172,8 +168,8 @@ public class Libri implements Serializable
 			if(daRimuovere > 0)
 			{
 				idSelezionato = libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-				libri.remove((int)posizioniRicorrenze.get(daRimuovere-1));
-				System.out.println("Rimozione avvenuta con successo!");
+				libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				System.out.println("La risorsa è stata eliminata dalle risorse prestabili (verrà conservata in archivio per motivi storici)");
 			}
 			else//0: annulla
 			{
@@ -252,61 +248,63 @@ public class Libri implements Serializable
 	 */
 	public void stampaLibri()
 	{
-		if(libri.isEmpty())
+//		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
+		Vector<Libro> libriDaStampare = new Vector<>();
+		for(Libro libro : libri)
 		{
-			System.out.println("Nessun libro presente");
+			if(libro.isPrestabile())
+			{
+				libriDaStampare.add(libro);
+			}
 		}
-		else
+		if(libriDaStampare.size() == 0)
 		{
-			if(libri.size()==1)
-			{
-				System.out.println("\nE' presente " + libri.size() + " libro in archivio: ");
-			}
-			else//piu di un libro in archivio
-			{
-				System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
-
-			}
+			System.out.println("In archivio non sono presenti libri disponibili");
+			return;
+		}
+		
+		if(libriDaStampare.size() == 1)
+		{
+			System.out.println("\nE' presente un libro in archivio: ");
 			
-//			uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
-			Vector<Libro> libriDaStampare = new Vector<>();
-			for(int i = 0; i < libri.size(); i++)
+		}
+		else//piu di un libro prestabile in archivio
+		{
+			System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
+		}
+		
+		for(int j = 0; j < libriDaStampare.size(); j++)
+		{				
+			System.out.println("\n" + BelleStringhe.CORNICE);
+			if(!libriDaStampare.get(j).getGenere().equals("-"))
 			{
-				libriDaStampare.add(libri.get(i));
-			}
-			
-			for(int j = 0; j < libriDaStampare.size(); j++)
-			{				
-				System.out.println("\n" + BelleStringhe.CORNICE);
-				if(! libriDaStampare.get(j).getGenere().equals("-"))
+				System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
+						", genere: "  + libriDaStampare.get(j).getGenere() + "\n" + BelleStringhe.CORNICE);
+				System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
+//				conteggio al contrario così quando elimino un elemento non salto il successivo
+				for(int i = libriDaStampare.size()-1; i >= j+1; i--) 
 				{
-					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
-							", genere: "  + libriDaStampare.get(j).getGenere() + "\n" + BelleStringhe.CORNICE);
-					System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
-					
-					for (int i = j+1; i < libriDaStampare.size(); i++) 
-					{
-						if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
-						{
-							if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
-							{
-								System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
-								libriDaStampare.remove(i);
-							}
-						}
-					}
-				}
-				else
-				{
-					System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n" + BelleStringhe.CORNICE);
-					System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
-					for (int i=j+1;i<libriDaStampare.size();i++) 
+					if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
 					{
 						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
 						{
-								System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
-								libriDaStampare.remove(i);
+							System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
+							libriDaStampare.remove(i);
 						}
+					}
+				}
+			}
+			else
+			{
+				System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n" + BelleStringhe.CORNICE);
+				System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
+//				conteggio al contrario così quando elimino un elemento non salto il successivo
+				for(int i = libriDaStampare.size()-1; i >= j+1; i--)
+				{
+					if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
+					{
+						System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
+						libriDaStampare.remove(i);
 					}
 				}
 			}
@@ -421,34 +419,43 @@ public class Libri implements Serializable
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				if(libri.isEmpty())
+				Vector<Libro>libriPrestabili = new Vector<>();
+				for(Libro libro : libri)
 				{
-					System.out.println("Non sono presenti libri in archivio");
+					if(libro.isPrestabile())
+					{
+						libriPrestabili.add(libro);
+					}
+				}
+				if(libriPrestabili.isEmpty())
+				{
+					System.out.println("In archivio non sono presenti libri disponibili");
 					return null;
 				}
+				
 				System.out.println("\nLibri in archivio: \n");
-				for(int i = 0; i < libri.size(); i++)
+				for(int i = 0; i < libriPrestabili.size(); i++)
 				{
 					System.out.println(i+1 + ")");
 					System.out.println(BelleStringhe.CORNICE);
-					libri.get(i).stampaDati(true);
+					libriPrestabili.get(i).stampaDati(true);
 					System.out.println(BelleStringhe.CORNICE+ "\n");		
 				}
 				int selezione;
 				do
 				{
-					selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
+					selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libriPrestabili.size());
 					if(selezione == 0)
 					{
 						return null;
 					}
-					else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
+					else if(libriPrestabili.get(selezione-1).getInPrestito() < libriPrestabili.get(selezione-1).getnLicenze())
 					{
-						return libri.get(selezione-1);
+						return libriPrestabili.get(selezione-1);
 					}
 					else
 					{
-						System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getTitolo() + "\" sono in prestito!");
+						System.out.println("Tutte le copie di \"" + libriPrestabili.get(selezione-1).getTitolo() + "\" sono in prestito!");
 					}
 				}
 				while(true);
@@ -480,7 +487,7 @@ public class Libri implements Serializable
 		
 		for(Libro libro : libri)
 		{
-			if(libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			if(libro.isPrestabile() && libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
 			{
 				libriTrovati.add(libro);
 			}
@@ -499,7 +506,7 @@ public class Libri implements Serializable
 		
 		for(Libro libro : libri)
 		{
-			if(libro.getAnnoPubblicazione() == annoPubblicazione)
+			if(libro.isPrestabile() && libro.getAnnoPubblicazione() == annoPubblicazione)
 			{
 				libriTrovati.add(libro);
 			}
@@ -517,11 +524,14 @@ public class Libri implements Serializable
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		for(Libro libro : libri)
 		{
-			for(String s : libro.getAutori())
+			if(libro.isPrestabile())
 			{
-				if(s.toLowerCase().equals(autore.toLowerCase()))
+				for(String s : libro.getAutori())
 				{
-					libriTrovati.add(libro);
+					if(s.toLowerCase().equals(autore.toLowerCase()))
+					{
+						libriTrovati.add(libro);
+					}
 				}
 			}
 		}
