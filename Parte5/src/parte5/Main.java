@@ -28,16 +28,18 @@ public class Main
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Cerca una risorsa",
-														"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Termina prestiti"};
+																"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Termina prestiti"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
-															"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
+																"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
-	private static final String[] CATEGORIE = {"Libri","Film"};//Films, ecc
+	private static final String[] CATEGORIE = {"Libri","Film"};
+	
 	private static final String PATH_FRUITORI = "Fruitori.dat";
 	private static final String PATH_ARCHIVIO= "Archivio.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
+	
  	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
 	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";
 	
@@ -98,7 +100,6 @@ public class Main
 		while(continuaMenuAccesso);		
 	}
 	
-	
 	/**
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
 	 * @param scelta la scelta selezionata dall'utente
@@ -154,7 +155,6 @@ public class Main
 		}
 	}
 
-	
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
@@ -228,7 +228,6 @@ public class Main
 			}
 		}
 	}
-
 	
 	/**
 	 * menu che compare una volta che si esegue l'accesso come fruitore
@@ -282,7 +281,6 @@ public class Main
 		}	
 	}
 
-	
 	/**
 	 * menu che compare dopo che un fruitore esegue il login
 	 * @param scelta la scelta selezionata dall'utente
@@ -441,7 +439,6 @@ public class Main
 			}
 		}
 	}
-	
 	
 	/**
 	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 

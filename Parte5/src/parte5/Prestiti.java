@@ -23,7 +23,6 @@ public class Prestiti implements Serializable
 		prestiti = new Vector<>();
 	}
 	
-	
 	/**
 	 * controllo per tutti i prestiti presenti se sono scaduti (li rimuovo) oppure no
 	 */
@@ -68,7 +67,6 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * stampa tutti i prestiti attivi di un utente
 	 * @param fruitore lo username dell'utente di cui stampare i prestiti
@@ -95,7 +93,6 @@ public class Prestiti implements Serializable
 			System.out.println("Al momento non ci sono prestiti attivi");
 		}
 	}
-	
 	
 	/**
 	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare
@@ -138,7 +135,6 @@ public class Prestiti implements Serializable
 			}
 		}
 	}
-	
 	
 	/**
 	 * metodo che elimina tutti i prestiti di un determinato fruitore

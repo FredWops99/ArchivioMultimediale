@@ -125,7 +125,6 @@ public class Storico implements Serializable
 		}
 		while(continuaMenuStorico);
 	}
-
 	
 	/**
 	 * Metodo che conta i prestiti che sono avvenuti nell'anno solare inserito dall'utente
@@ -146,7 +145,6 @@ public class Storico implements Serializable
 		return contatorePrestiti;
 	}
 	
-	
 	/**
 	 * Metodo che conta tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
@@ -164,7 +162,6 @@ public class Storico implements Serializable
 		}
 		return contatoreProroghe;
 	}
-	
 	
 	/**
 	 * Metodo che individua la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
@@ -214,7 +211,6 @@ public class Storico implements Serializable
 			System.out.println("La risorsa che ha avuto più prenotazioni è: " + titoloRisorsaMax + ", con un totale di " + maxGenerale + " prestiti");
 		}
 	}
-	
 	
 	/**
 	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore

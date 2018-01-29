@@ -213,7 +213,6 @@ public class Libri implements Serializable
 		return idSelezionato;
 	}
 	
-	
 	/**
 	 * stampa i dati dei libri corrispondenti ai parametri di ricerca specificati dall'utente
 	 */
@@ -238,14 +237,12 @@ public class Libri implements Serializable
 				libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
-			
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
 				annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: \n", GestioneDate.ANNO_CORRENTE);
 				libriFiltrati = filtraLibriPerData(annoPubblicazione);
 				break;
 			}
-			
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
@@ -278,7 +275,6 @@ public class Libri implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * stampa tutti i libri raggruppandoli per sottocategoria e genere
 	 */
@@ -302,13 +298,11 @@ public class Libri implements Serializable
 		if(libriDaStampare.size() == 1)
 		{
 			System.out.println("\nE' presente un libro in archivio: ");
-			
 		}
 		else//piu di un libro prestabile in archivio
 		{
 			System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
 		}
-		
 		for(int j = 0; j < libriDaStampare.size(); j++)
 		{				
 			System.out.println("\n" + BelleStringhe.CORNICE);
@@ -346,7 +340,6 @@ public class Libri implements Serializable
 			}
 		}
 	}
-	
 	
 	/**
 	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
@@ -402,14 +395,12 @@ public class Libri implements Serializable
 						libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 						break;
 					}
-					
 					case 2://FILTRA PER ANNO PUBBLICAZIONE
 					{
 						annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
 						libriFiltrati = filtraLibriPerData(annoPubblicazione);
 						break;
 					}
-					
 					case 3: //FILTRA PER AUTORE
 					{
 						nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
@@ -502,7 +493,6 @@ public class Libri implements Serializable
 		return null;
 	}
 	
-	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * METODI PER LA RICERCA DI LIBRI IN BASE A DETERMINATI PARAMETRI										 *
 	 * 																										 *
@@ -531,7 +521,6 @@ public class Libri implements Serializable
 		return libriTrovati;
 	}
 	
-	
 	/**
 	 * filtra tutti i libri in base all'anno di pubblicazione
 	 * @param annoPubblicazione l'anno da usare come criterio
@@ -550,7 +539,6 @@ public class Libri implements Serializable
 		}
 		return libriTrovati;
 	}
-	
 	
 	/**
 	 * filtra tutti i libri in base all'autore
