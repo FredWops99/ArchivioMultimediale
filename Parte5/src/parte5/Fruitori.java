@@ -89,6 +89,7 @@ public class Fruitori implements Serializable
 	
 	/**
 	 * Controlla se lo username passato sia già in uso da un altro fruitore
+	 * (precondizione: user != null)
 	 * @param user lo username da verificare
 	 * @return true se non è utilizzato da nessun altro (quindi è disponibile)
 	 */
@@ -150,6 +151,7 @@ public class Fruitori implements Serializable
 	
 	/**
 	 * Restituisce un fruitore prendendo in ingresso uno username e una password
+	 * (precondizione: username != null && password)
 	 * @param username lo username inserito dall'utente
 	 * @param password la password inserita dall'utente
 	 * @return Fruitore il fruitore corrispondente ai dati passati (null se non presente)

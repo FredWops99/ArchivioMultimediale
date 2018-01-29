@@ -109,6 +109,7 @@ public class Libri implements Serializable
 	/**
 	 * inserisco i libri nel Vector in modo che siano ordinati per sottocategorie, così, quando vengono stampati, i generi sono in ordine
 	 * (il metodo stampaLibri li raccoglierà per generi)
+	 * (precondizione: l != null)
 	 * @param l il libro da inserire
 	 */
 	private void addPerSottoCategorie(Libro l)
@@ -133,6 +134,7 @@ public class Libri implements Serializable
 
 	/**
 	 * indica se il libro è già presente in archivio
+	 * (precondizione: l != null)
 	 * @param l il libro da cercare
 	 * @return true se il libro è presente in archivio
 	 */
@@ -344,6 +346,7 @@ public class Libri implements Serializable
 	/**
 	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
 	 * se la sottocategoria non ne prevede restituisce un simbolo di default
+	 * (precondizione: sottoCategoria != null)
 	 * @param sottoCategoria la sottocategoria di libro che l'utente sta inserendo
 	 * @return la scelta dell'utente o "-" se la sottocategoria non prevede generi
 	 */
@@ -501,9 +504,10 @@ public class Libri implements Serializable
 	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore passato dall'utente						 *
 	 *  																									 *
 	 *  ogni metodo restituisce un vector di libri contenente i libri che corrispondono ai parametri		 *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	 
-	 * filtra tutti i libri in base al titolo
+	 /** filtra tutti i libri in base al titolo
+	  * (precondizione: titoloParziale != null)
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
@@ -523,6 +527,7 @@ public class Libri implements Serializable
 	
 	/**
 	 * filtra tutti i libri in base all'anno di pubblicazione
+	 * (precondizione: annoPubblicazione != null)
 	 * @param annoPubblicazione l'anno da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
@@ -542,6 +547,7 @@ public class Libri implements Serializable
 	
 	/**
 	 * filtra tutti i libri in base all'autore
+	 * (precondizione: autore != null)
 	 * @param autore il nome dell'autore da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */

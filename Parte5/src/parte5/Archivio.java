@@ -7,7 +7,6 @@ import myLib.MyMenu;
  * Classe che raggruppa le varie tipologie di risorsa (Libri, Films,...) e opera su di esse.
  * @author Prandini Stefano
  * @author Landi Federico
- *
  */
 public class Archivio implements Serializable 
 {
@@ -46,6 +45,7 @@ public class Archivio implements Serializable
 
 	/**
 	 * permette di aggiungere un libro od un film all'archivio
+	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
 	public void aggiungiRisorsa(String[] CATEGORIE)
@@ -72,6 +72,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
+	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 * @return l'id della risorsa rimossa
 	 */
@@ -104,6 +105,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * mostra tute le risorse che sono in archivio e che possono essere prese in prestito
+	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
 	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
@@ -131,6 +133,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette la ricerca in archivio di un libro o di un film
+	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
 	public void cercaRisorsa(String[] CATEGORIE) 

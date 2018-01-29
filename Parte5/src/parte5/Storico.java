@@ -21,6 +21,7 @@ public class Storico implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * (precondizione: prestiti != null && archivio != null && fruitori != null)
 	 * menuStorico permette la consultazione dello storico. In particolare sono pesenti le seguenti opzioni:
 	 * - Numero prestiti per anno solare
 	 * - Numero proroghe per anno solare
@@ -127,6 +128,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che conta i prestiti che sono avvenuti nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 * @return il numero dei prestiti avvenuti durante l'anno inserito dall'utente
@@ -146,6 +148,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che conta tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 * @return il numero di proroghe avvenute durante l'anno inserito dall'utente
@@ -164,6 +167,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che individua la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
@@ -213,6 +217,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
@@ -253,6 +258,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: archivio != null)
 	 * Metodo che mostra tutte le risorse che erano prestabili e che ora non lo sono più, distinguendo 
 	 * tra film e libri
 	 * @param archivio tutte le risorse in archivio
@@ -294,6 +300,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitori != null)
 	 * Metodo che mostra tutti i fruitorori che non sono più iscritti al sistema multimediale
 	 * @param fruitori l'elenco di tutti i fruitori
 	 */
@@ -321,6 +328,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitori != null)
 	 * Metodo che mostra tutte le date nelle quali i fruitori hanno rinnovato la loro iscrizione
 	 * al sistema multimediale
 	 * @param fruitori l'elenco di tutti i fruitori
@@ -352,6 +360,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che mostra tutti i prestiti che sono stati soggetti a proroga
 	 * @param prestiti l'elenco di tutti i prestiti
 	 */
@@ -379,6 +388,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che mostra tutti i prestiti che sono terminati.
 	 * Viene mostrata la risorsa con il relativo fruitore che l'ha richiesta
 	 * e la data in cui è avvenuta la terminazione del prestito
@@ -410,6 +420,7 @@ public class Storico implements Serializable
 	}
 	
 	/**
+	 * (precondizione: prestiti != null)
 	 * Metodo che mostra tutti i prestiti che sono stati terminati in anticipo
 	 * rispetto alla data di terminazione del prestito
 	 * @param prestiti l'elenco di tutti i prestiti

@@ -69,6 +69,7 @@ public class Fruitore implements Serializable
 	
 	/**
 	 * calcola la data in cui scade l'iscrizione, cioè 5 anni dopo l'iscrizione o il rinnovo
+	 * (precondizione: data != null)
 	 * @return	la data di scadenza dell'iscrizione
 	 * @param data la data di iscrizione o di rinnovo dell'iscrizione, da cui calcolare la data di scadenza
 	 */
@@ -83,6 +84,7 @@ public class Fruitore implements Serializable
 	
 	/**
 	 * calcola la data dalla quale l'utente puà richiedere il rinnovo dell'iscrizione (10 giorni prima della scadenza)
+	 * (precondizione: dataScadenza != null)
 	 * il metodo add(field, amount) tiene conto della lunghezza dei mesi e degli anni bisestili
 	 * @return la data dalla quale si può rinnovare l'iscrizione
 	 */
@@ -173,7 +175,6 @@ public class Fruitore implements Serializable
 	{
 		return dataScadenza;
 	}
-	
 	public Boolean isDecaduto() 
 	{
 		return decaduto;

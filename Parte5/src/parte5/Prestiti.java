@@ -68,6 +68,7 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitore != null)
 	 * stampa tutti i prestiti attivi di un utente
 	 * @param fruitore lo username dell'utente di cui stampare i prestiti
 	 */
@@ -95,6 +96,7 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitore != null)
 	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare
 	 * @param fruitore il fruitore al quale chiedere quale prestito terminare
 	 */
@@ -137,6 +139,7 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitore != null)
 	 * metodo che elimina tutti i prestiti di un determinato fruitore
 	 * @param fruitore il fruitore del quale eliminare tutti i prestiti
 	 */
@@ -164,6 +167,7 @@ public class Prestiti implements Serializable
 	}	
 	
 	/**
+	 * (precondizione: utenti != null)
 	 * permette di terminare tutti i prestiti di vari fruitori.
 	 * Metodo utilizzato quando l'operatore decide che una risorsa non è più
 	 * disponibile per il prestito.
@@ -178,7 +182,8 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
-	 * rimuovi tutti i prestiti di una determinata risorsa
+	 * (precondizione: id != null)
+	 * rimuove tutti i prestiti di una determinata risorsa
 	 * (gli id dei libri sono diversi da quelli dei film (Lxxx e Fxxx)
 	 * @param id l'id della risorsa
 	 */
@@ -195,6 +200,7 @@ public class Prestiti implements Serializable
 	
 	/**
 	 * crea ed aggiunge un prestito all'elenco 
+	 * (precondizione: il fruitore non possiede già la risorsa in prestito & fruitore != null & risorsa != null)
 	 * @param fruitore fruitore che richiede il prestito
 	 * @param risorsa la risorsa che verrà presa in prestito dal fruitore 
 	 */
@@ -215,6 +221,7 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitore != null)
 	 * conta quanti prestiti ha il fruitore indicato, per la categoria selezionata
 	 * @param username lo username del fruitore
 	 * @param categoria la categoria nella quale cercare i prestiti 
@@ -249,7 +256,7 @@ public class Prestiti implements Serializable
 	}
 
 	/**
-	 * precondizione: fruitore != null & risorsa != null
+	 * (precondizione: fruitore != null & risorsa != null)
 	 * controlla che il fruitore non abbia già la risorsa in prestito 
 	 * @param fruitore il fruitore che richede il prestito
 	 * @param risorsa la risorsa oggetto del prestito
@@ -269,6 +276,7 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * (precondizione: fruitore != null)
 	 * metodo che esegue il rinnovo di un prestito
 	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
 	 */

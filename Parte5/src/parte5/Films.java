@@ -89,6 +89,7 @@ public class Films implements Serializable
 	/**
 	 * inserisco i films nel Vector in modo che siano ordinati per sottocategorie, così, quando vengono stampati, i generi sono in ordine
 	 * (il metodo stampaFilms li raccoglierà per generi)
+	 * (precondizione: f != null)
 	 * @param f il film da inserire
 	 */
 	private void addPerSottoCategorie(Film f)
@@ -424,6 +425,7 @@ public class Films implements Serializable
 	 
 	/**
 	 * filtra tutti i film in base al titolo
+	 * (precondizione: titoloParziale != null)
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
@@ -443,6 +445,7 @@ public class Films implements Serializable
 	
 	/**
 	 * filtra tutti i film in base all'anno di pubblicazione
+	 * (precondizione: annoUscita != null)
 	 * @param annoUscita l'anno da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
@@ -462,6 +465,7 @@ public class Films implements Serializable
 	
 	/**
 	 * filtra tutti i film in base al regista
+	 * (precondizione: regista != null)
 	 * @param regista il nome del regista da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */

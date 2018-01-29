@@ -31,7 +31,7 @@ public class Prestito implements Serializable
 	/**
 	 * Creo l'oggetto Prestito che associa il fruitore alla risorsa in prestito: l'inizio del prestito è la data odierna, scadenza prestito e la data dalla quale
 	 * si può richiedere una proroga vengono definite in base ai paramentri della risorsa in questione
-	 * Precondizione: il fruitore può richiedere il prestito di questa categoria di risorsa
+	 * Precondizione: il fruitore può richiedere il prestito di questa categoria di risorsa && fruitore != null && risorsa != null
 	 * 
 	 * @param fruitore il fruitore che richiede il prestito
 	 * @param risorsa la risorsa che il fruitore chiede in prestito
@@ -74,6 +74,7 @@ public class Prestito implements Serializable
 	
 	/**
 	 * calcola la data nella quale deve avvenire il reso della risorsa: a seconda della risorsa essa sarà X giorni dopo l'inizio/rinnovo del prestito 
+	 * (precondizione: data != null)
 	 * @param data la data di inizio o di rinnovo del prestito
 	 * @return la data di scadenza del prestito
 	 */
@@ -108,6 +109,7 @@ public class Prestito implements Serializable
 	
 	/**
 	 * metodo che calcola da che data sarà possibile rinnovare il prestito
+	 * (precondizione: data != null)
 	 * @param scadenza la data di scadenza del prestito
 	 * @return la data dalla quale sarà possibile rinnovare il prestito
 	 */
