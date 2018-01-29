@@ -117,7 +117,6 @@ public class Fruitori implements Serializable
 	 *	- Data di iscrizione
 	 *	- Data scadenza iscrizione
 	 *	- Rinnovo iscrizione dal
-	 *	
 	 */
 	public void stampaFruitoriAttivi()
 	{
@@ -132,7 +131,7 @@ public class Fruitori implements Serializable
 	}
 	
 	/**
-	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni elimina il fruitore dal vettore "fruitori"
+	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni assegna al fruitore lo status di "decaduto"
 	 * @return un vettore contenente gli utenti eliminati
 	 */
 	public Vector<Fruitore> controlloIscrizioni()
@@ -141,7 +140,7 @@ public class Fruitori implements Serializable
 		int rimossi = 0;
 		for(Fruitore fruitore : fruitori) 
 		{
-			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
+			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)//se dataScadenza è precedente a oggi ritorna -1
 			{
 				fruitore.setDecaduto(true);
 				utenti.add(fruitore);
@@ -153,7 +152,7 @@ public class Fruitori implements Serializable
 	}
 	
 	/**
-	 * Restituisce un fruitore prendendo in ingresso un username e una password
+	 * Restituisce un fruitore prendendo in ingresso uno username e una password
 	 * @param username lo username inserito dall'utente
 	 * @param password la password inserita dall'utente
 	 * @return Fruitore il fruitore corrispondente ai dati passati (null se non presente)

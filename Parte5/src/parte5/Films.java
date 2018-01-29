@@ -115,7 +115,7 @@ public class Films implements Serializable
 	
 	/**
 	 * procedura per rimuovere un film dalla raccolta: viene chiesto il nome del film e se ce ne sono più di uno viene chiesto all'utente quale eliminare
-	 * @return l'id del film che l'utente ha deciso di rimuovere (-1 se non viene rimosso nessun film)
+	 * @return l'id del film che l'utente ha deciso di rimuovere ("-1" se non viene rimosso nessun film)
 	 */
 	public String removeFilm()
 	{

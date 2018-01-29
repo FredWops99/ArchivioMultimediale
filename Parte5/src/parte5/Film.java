@@ -2,6 +2,11 @@ package parte5;
 
 import java.io.Serializable;
 
+/**
+ * Classe che rappresenta l'insieme dei film in archivio
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Film extends Risorsa implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -70,9 +75,6 @@ public class Film extends Risorsa implements Serializable
 		this.prestabile = true;
 	}
 	
-	/**
-	 * Override del metodo equals() di object
-	 */
 	public boolean equals(Risorsa r)
 	{
 		if(this.id.equals(r.getId()))
@@ -161,9 +163,7 @@ public class Film extends Risorsa implements Serializable
 	{
 		return Film.PRESTITI_MAX;
 	}	
-	
 	//SETTER//
-	
 	public void setId(String id) 
 	{
 		this.id = id;
@@ -204,25 +204,14 @@ public class Film extends Risorsa implements Serializable
 	{
 		this.prestabile = prestabile;
 	}
-	
-	
-	/**
-	 * precondizione: ci sono copie del Film disponibili per il prestito
-	 */
 	public void mandaInPrestito() 
 	{
 		inPrestito++;
 	}
-	/**
-	 * precondizione: ci sono copie del film attualmente in prestito
-	 */
 	public void tornaDalPrestito()
 	{
 		inPrestito--;
 	}
-	/**
-	 * mi dice se una risorsa può essere prestata 
-	 */
 	public boolean isPrestabile() 
 	{
 		return prestabile;

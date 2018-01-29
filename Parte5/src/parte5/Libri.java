@@ -107,7 +107,6 @@ public class Libri implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * inserisco i libri nel Vector in modo che siano ordinati per sottocategorie, così, quando vengono stampati, i generi sono in ordine
 	 * (il metodo stampaLibri li raccoglierà per generi)
@@ -154,8 +153,9 @@ public class Libri implements Serializable
 	}
 	
 	/**
-	 * permette la rimozione di un libro da parte dell'operatore
-	 * @return libro rimosso
+	 * permette la rimozione di un libro da parte dell'operatore: il libro selezionato verrà etichettato come "non Prestabile" ma rimarrà in archivio per 
+	 * motivi storici
+	 * @return l'id del libro rimosso
 	 */
 	public String removeLibro()
 	{

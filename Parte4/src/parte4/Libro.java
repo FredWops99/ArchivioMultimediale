@@ -81,9 +81,6 @@ public class Libro extends Risorsa implements Serializable
 		this.setInPrestito(0);
 	}
 	
-	/**
-	 * Stampa tutte le informazioni del libro
-	 */
 	public void stampaDati(boolean perPrestito)
 	{
 //		System.out.println(BelleStringhe.CORNICE);
@@ -210,36 +207,26 @@ public class Libro extends Risorsa implements Serializable
 		this.inPrestito = inPrestito;
 	}
 
-	/**
-	 * precondizione: ci sono copie del Libro disponibili per il prestito
-	 */
 	public void mandaInPrestito() 
 	{
 		inPrestito++;
 	}
-	/**
-	 * precondizione: ci sono copie del libro attualmente in prestito
-	 */
 	public void tornaDalPrestito()
 	{
 		inPrestito--;
 	}
-
 	public int getGiorniDurataPrestito() 
 	{
 		return Libro.GIORNI_DURATA_PRESTITO;
 	}
-
 	public int getGiorniDurataProroga() 
 	{
 		return Libro.GIORNI_DURATA_PROROGA;
 	}
-
 	public int getGiorniPrimaPerProroga() 
 	{
 		return Libro.GIORNI_PRIMA_PER_PROROGA;
 	}
-
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;

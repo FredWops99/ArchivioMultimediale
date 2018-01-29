@@ -6,6 +6,12 @@ import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
+/**
+ * Classe che racchiude l'elenco dei prestiti attivi degli utenti
+ * @author Prandini Stefano
+ * @author Landi Federico
+ *
+ */
 public class Prestiti implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -33,14 +39,6 @@ public class Prestiti implements Serializable
 			}
 		}
 		System.out.println("Risorse tornate dal prestito: " + rimossi);
-	}
-	
-	public void stampaPrestiti()
-	{
-		for(int i = 0; i < prestiti.size(); i++)
-		{
-			System.out.println(prestiti.get(i).getRisorsa().getTitolo());
-		}
 	}
 	
 	/**
@@ -71,6 +69,10 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	/**
+	 * annulla tutti i prestiti attivi di un utente
+	 * @param utente l'utente del quale eliminare tutti i prestiti
+	 */
 	public void annullaPrestitiDi(Fruitore utente) 
 	{		
 		int j = 0;
@@ -94,6 +96,10 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
+	/**
+	 * annulla tutti i prestiti di un insieme di utenti
+	 * @param utenti l'elenco degli utenti dei quali rimuovere tutti i prestiti
+	 */
 	public void annullaPrestitiDi(Vector<Fruitore>utenti)
 	{
 		for(int i = 0; i < utenti.size(); i++)
@@ -103,8 +109,9 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
+	 * annulla tutti i prestiti relativi ad una determinata risorsa. 
 	 * gli id tra libri e film sono diversi (Lxxx e Fxxx)
-	 * @param id
+	 * @param id l'id della risorsa da eliminare
 	 */
 	public void annullaPrestitiConRisorsa(String id)
 	{
@@ -117,6 +124,11 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	/**
+	 * crea e aggiunge un prestito all'elenco
+	 * @param fruitore il fruitore che richiede il prestito
+	 * @param risorsa la risorsa chiesta in prestito
+	 */
 	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
 		Prestito prestito = new Prestito(fruitore, risorsa);
@@ -134,10 +146,10 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
-	 * non conta quanti prestiti ha in totale ma quanti per categoria
-	 * @param username
-	 * @param categoria
-	 * @return
+	 * conta il numero di prestiti di un utente, relativi ad una categoria
+	 * @param username lo username del fruitore
+	 * @param categoria la categoria nella quale cercare i prestiti
+	 * @return il numero di prestiti dell'utente relativi alla categoria indicata
 	 */
 	public int numPrestitiDi(String username, String categoria)
 	{
@@ -168,6 +180,9 @@ public class Prestiti implements Serializable
 		return risorse;
 	}
 
+	/**
+	 * stampa l'elenco di tutti i prestiti attivi
+	 */
 	public void visualizzaTuttiPrestiti() 
 	{
 		if(prestiti.size()==0)
@@ -186,9 +201,10 @@ public class Prestiti implements Serializable
 
 	/**
 	 * precondizione: fruitore != null & risorsa != null
-	 * @param fruitore
-	 * @param risorsa
-	 * @return
+	 * controlla se il fruitore possiede già in prestito la risorsa richiesta
+	 * @param fruitore il fruitore che richiede il prestito
+	 * @param risorsa la risorsa richiesta
+	 * @return true se il prestito è fattibile (il fruitore non possiede già la risorsa in prestito)
 	 */
 	public boolean prestitoFattibile(Fruitore fruitore, Risorsa risorsa) 
 	{
@@ -203,12 +219,16 @@ public class Prestiti implements Serializable
 		return true;
 		}
 
-	public void rinnovaPrestito(Fruitore utente) 
+	/**
+	 * procedura per rinnovare un prestito
+	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
+	 */
+	public void rinnovaPrestito(Fruitore fruitore) 
 	{
 		Vector<Prestito>prestitiUtente = new Vector<>();
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(utente.getUser()))
+			if(prestito.getFruitore().getUser().equals(fruitore.getUser()))
 			{
 				prestitiUtente.add(prestito);
 			}
@@ -235,16 +255,19 @@ public class Prestiti implements Serializable
 			{
 				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
 				
-				if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataRichiestaProroga()))
-//				è necessariamente precedente alla data di scadenza prestito sennò sarebbe stato rimosso
+				if(!prestitoSelezionato.isRinnovabile())
 				{
-					prestitoSelezionato.setDataInizio(GestioneDate.DATA_CORRENTE);
-					prestitoSelezionato.setProrogato(true);
+					System.out.println("Hai già prorogato questo prestito: puoi eseguire questa azione solo una volta per ogni prestito");
+				}
+				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
+//				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
+				{
+					prestitoSelezionato.prorogaPrestito();
 				}
 				else//non si può ancora rinnovare prestito
 				{
 					System.out.println("Il tuo prestito non è ancora rinnovabile: ");
-					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataInizio()) + 
+					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataPerRichiestaProroga()) + 
 																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
 				}
 			}

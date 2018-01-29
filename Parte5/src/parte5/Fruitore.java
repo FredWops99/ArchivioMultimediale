@@ -175,8 +175,6 @@ public class Fruitore implements Serializable
 	{
 		return rinnovi;
 	}
-
-
 	// -- SETTER -- //
 	public void setNome(String nome) 
 	{
@@ -206,7 +204,6 @@ public class Fruitore implements Serializable
 	{
 		this.password = password;
 	}
-	
 	public void setDecaduto(Boolean decaduto) 
 	{
 		this.decaduto = decaduto;

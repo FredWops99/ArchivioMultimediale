@@ -470,7 +470,6 @@ public class Main
 					}
 				}
 			}
-//		PER LE PROSSIME CATEGORIE
 		else if(prestito.getRisorsa() instanceof Film)
 			{
 				for(Film film : archivio.getFilms().getfilms())

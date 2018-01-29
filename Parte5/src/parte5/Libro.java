@@ -83,9 +83,6 @@ public class Libro extends Risorsa implements Serializable
 		this.prestabile = true;
 	}
 	
-	/**
-	 * Override del metodo equals() di object
-	 */
 	public boolean equals(Risorsa r)
 	{
 		if(this.id.equals(r.getId()))
@@ -95,12 +92,8 @@ public class Libro extends Risorsa implements Serializable
 		else return false;
 	}
 	
-	/**
-	 * Stampa tutte le informazioni del libro
-	 */
 	public void stampaDati(boolean perPrestito)
 	{
-//		System.out.println(BelleStringhe.CORNICE);
 		System.out.println("Categoria-----------------: Libro");
 //		System.out.println("ID------------------------: " + id);
 //		System.out.println("Hashcode------------------: " + hashCode());
@@ -231,37 +224,26 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.prestabile = prestabile;
 	}
-
-	/**
-	 * precondizione: ci sono copie del Libro disponibili per il prestito
-	 */
 	public void mandaInPrestito() 
 	{
 		inPrestito++;
 	}
-	/**
-	 * precondizione: ci sono copie del libro attualmente in prestito
-	 */
-	public void tornaDalPrestito()
+		public void tornaDalPrestito()
 	{
 		inPrestito--;
 	}
-
 	public int getGiorniDurataPrestito() 
 	{
 		return Libro.GIORNI_DURATA_PRESTITO;
 	}
-
 	public int getGiorniDurataProroga() 
 	{
 		return Libro.GIORNI_DURATA_PROROGA;
 	}
-
 	public int getGiorniPrimaPerProroga() 
 	{
 		return Libro.GIORNI_PRIMA_PER_PROROGA;
 	}
-
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;

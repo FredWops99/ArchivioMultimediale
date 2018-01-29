@@ -31,7 +31,7 @@ public class Storico implements Serializable
 	 * - Iscrizioni rinnovate
 	 * - Prestiti prorogati
 	 * - Prestiti terminati
-	 * - Prestiti terminati in anticipo
+	 * - Prestiti terminati in anticipo.
 	 * Questo metodo viene chiamato in menuOperatore (nel main).
 	 * @param prestiti l'elenco dei prestiti che serve ai vari metodi all'intreno del menù
 	 * @param archivio l'elenco delle risorse in archivio che servono ai vari metodi presenti nel menù 
@@ -130,7 +130,7 @@ public class Storico implements Serializable
 	/**
 	 * Metodo che conta i prestiti che sono avvenuti nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
-	 * @return prestiti il numero dei prestiti avvenuti durante l'anno inserito dall'utente
+	 * @return il numero dei prestiti avvenuti durante l'anno inserito dall'utente
 	 */
 	private static int prestitiAnnoSolare(Prestiti prestiti)
 	{
@@ -168,7 +168,7 @@ public class Storico implements Serializable
 	
 	/**
 	 * Metodo che individua la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
-	 * @param prestiti
+	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
 	private static void risorsaPiùInPrestito(Prestiti prestiti)
 	{
@@ -256,7 +256,6 @@ public class Storico implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * Metodo che mostra tutte le risorse che erano prestabili e che ora non lo sono più, distinguendo 
 	 * tra film e libri
@@ -298,7 +297,6 @@ public class Storico implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * Metodo che mostra tutti i fruitorori che non sono più iscritti al sistema multimediale
 	 * @param fruitori l'elenco di tutti i fruitori
@@ -325,7 +323,6 @@ public class Storico implements Serializable
 			System.out.println("Nessuna iscrizione è ancora decaduta");
 		}
 	}
-	
 	
 	/**
 	 * Metodo che mostra tutte le date nelle quali i fruitori hanno rinnovato la loro iscrizione
@@ -358,7 +355,6 @@ public class Storico implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * Metodo che mostra tutti i prestiti che sono stati soggetti a proroga
 	 * @param prestiti l'elenco di tutti i prestiti
@@ -377,7 +373,7 @@ public class Storico implements Serializable
 				}
 				num++;
 				System.out.println("- "+ prestiti.getPrestiti().get(i).getRisorsa().getTitolo() 
-						+ " (il" + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRichiestaProroga()) + ")");
+						+ " (il" + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataPerRichiestaProroga()) + ")");
 			}
 		}
 		if(num == 0)
@@ -385,7 +381,6 @@ public class Storico implements Serializable
 			System.out.println("Nessun prestito è ancora stato rinnovato");
 		}
 	}
-	
 	
 	/**
 	 * Metodo che mostra tutti i prestiti che sono terminati.
@@ -417,7 +412,6 @@ public class Storico implements Serializable
 			System.out.println("Nessun prestito è ancora terminato");
 		}
 	}
-	
 	
 	/**
 	 * Metodo che mostra tutti i prestiti che sono stati terminati in anticipo

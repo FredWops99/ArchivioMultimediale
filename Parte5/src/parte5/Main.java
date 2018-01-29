@@ -56,8 +56,6 @@ public class Main
 	
 	private static Fruitore utenteLoggato = null;
 	
-	
-	
 	public static void main(String[] args)
 	{				
 		try 

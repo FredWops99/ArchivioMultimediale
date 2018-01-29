@@ -6,6 +6,12 @@ import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
+/**
+ * Classe che racchiude l'elenco dei prestiti attivi degli utenti
+ * @author Prandini Stefano
+ * @author Landi Federico
+ *
+ */
 public class Prestiti implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -41,9 +47,8 @@ public class Prestiti implements Serializable
 		System.out.println("Risorse tornate dal prestito: " + rimossi);
 	}
 	
-	
 	/**
-	 * Stampa tutti i prestiti che sono attivi
+	 * Stampa l'elenco di tutti i prestiti attivi
 	 */
 	public void stampaPrestitiAttivi() 
 	{
@@ -66,8 +71,7 @@ public class Prestiti implements Serializable
 	
 	/**
 	 * stampa tutti i prestiti attivi di un utente
-	 * @param username lo username dell'utente di cui stampare i prestiti
-	 * @return il numero di libri attualmente in prestito all'utente
+	 * @param fruitore lo username dell'utente di cui stampare i prestiti
 	 */
 	public void stampaPrestitiAttiviDi(Fruitore fruitore) 
 	{		
@@ -163,11 +167,10 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
-	
 	/**
-	 * permette di terminare tutti i prestiti di vari fruitori
+	 * permette di terminare tutti i prestiti di vari fruitori.
 	 * Metodo utilizzato quando l'operatore decide che una risorsa non è più
-	 * disponibile per il prestito
+	 * disponibile per il prestito.
 	 * @param utenti gli utenti a cui verranno terminati tutti i prestiti 
 	 */
 	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
@@ -177,7 +180,6 @@ public class Prestiti implements Serializable
 			terminaTuttiPrestitiDi(utenti.get(i));
 		}
 	}
-	
 	
 	/**
 	 * rimuovi tutti i prestiti di una determinata risorsa
@@ -195,10 +197,9 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	
 	/**
-	 * crea ed aggiunge un prestito 
-	 * @param fruitore fruitore che prende in prestito una risorsa
+	 * crea ed aggiunge un prestito all'elenco 
+	 * @param fruitore fruitore che richiede il prestito
 	 * @param risorsa la risorsa che verrà presa in prestito dal fruitore 
 	 */
 	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
@@ -270,7 +271,6 @@ public class Prestiti implements Serializable
 //		se arriva qua l'utente non ha già la risorsa in prestito
 		return true;
 	}
-
 	
 	/**
 	 * metodo che esegue il rinnovo di un prestito
@@ -312,7 +312,7 @@ public class Prestiti implements Serializable
 				{
 					System.out.println("Hai già prorogato questo prestito: puoi eseguire questa azione solo una volta per ogni prestito");
 				}
-				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataRichiestaProroga()))
+				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
 //				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
 				{
 					prestitoSelezionato.prorogaPrestito();
@@ -320,7 +320,7 @@ public class Prestiti implements Serializable
 				else//non si può ancora rinnovare prestito
 				{
 					System.out.println("Il tuo prestito non è ancora rinnovabile: ");
-					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataRichiestaProroga()) + 
+					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataPerRichiestaProroga()) + 
 																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
 				}
 			}

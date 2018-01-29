@@ -5,6 +5,11 @@ import java.util.GregorianCalendar;
 
 import myLib.GestioneDate;
 
+/**
+ * classe che rappresenta i prestiti di una risorsa multimediale ad un fruitore
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Prestito implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
@@ -16,7 +21,7 @@ public class Prestito implements Serializable
 	/**
 	 * la data dalla quale è possibile richiedere la proroga del prestito
 	 */
-	private GregorianCalendar dataRichiestaProroga;
+	private GregorianCalendar dataPerRichiestaProroga;
 	/**
 	 * da settare quando il prestito termina: se scade sarà uguale alla dataScadenza, se il fruitore termina prima il prestito sarà quella data.
 	 */
@@ -38,15 +43,13 @@ public class Prestito implements Serializable
 		this.fruitore = fruitore;
 		this.dataInizio = GestioneDate.DATA_CORRENTE;
 		this.dataScadenza = calcolaScadenza(dataInizio);
-//		non faccio "dataProroga = dataScadenza" sennò dopo si modifica anche dataScadenza
-		dataRichiestaProroga = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
-		dataRichiestaProroga.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniPrimaPerProroga());
+		dataPerRichiestaProroga = calcolaDataPerRichiestaProroga(dataScadenza);
 		prorogato = false;	
 		terminato = false;
 	}
 	
 	/**
-	 * visualizza un prestito. In particolare sono presenti i seguenti campi relativi al prestito
+	 * visualizza le informazioni relative ad un prestito. In particolare sono presenti i seguenti campi:
 	 * - Categoria della risorsa
 	 * - Titolo della risorsa
 	 * - Il fruitore che ha in prestito la risorsa
@@ -62,7 +65,7 @@ public class Prestito implements Serializable
 		System.out.println("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));
 		if(!prorogato)
 		{
-			System.out.println("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataRichiestaProroga));
+			System.out.println("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataPerRichiestaProroga));
 		}
 		else
 		{
@@ -70,10 +73,9 @@ public class Prestito implements Serializable
 		}
 	}
 	
-	
 	/**
-	 * calcola la data nella quale deve avvenire il reso della risorsa
-	 * @param data
+	 * calcola la data nella quale deve avvenire il reso della risorsa: a seconda della risorsa essa sarà X giorni dopo l'inizio/rinnovo del prestito 
+	 * @param data la data di inizio o di rinnovo del prestito
 	 * @return la data di scadenza del prestito
 	 */
 	public GregorianCalendar calcolaScadenza(GregorianCalendar data)
@@ -85,7 +87,6 @@ public class Prestito implements Serializable
 		return dataScadenza;
 	}
 	
-	
 	/**
 	 * il prestito è rinnovabile solo se non è già stato prorogato una volta
 	 * @return true se il prestito è rinnovabile
@@ -96,15 +97,28 @@ public class Prestito implements Serializable
 	}
 	
 	/**
+	 * precondizione: il prestito è rinnovabile
 	 * quando un prestito viene prorogato, viene etichettato come "prorogato" e vengono aggiornate le date di scadenza e di richiestaProroga
 	 */
 	public void prorogaPrestito()
 	{
 		setProrogato(true);
-		setDataRichiestaProroga(GestioneDate.DATA_CORRENTE);
 		setDataScadenza(calcolaScadenza(GestioneDate.DATA_CORRENTE));
+		setDataPerRichiestaProroga(calcolaDataPerRichiestaProroga(dataScadenza));
 	}
 	
+	/**
+	 * metodo che calcola da che data sarà possibile rinnovare il prestito
+	 * @param scadenza la data di scadenza del prestito
+	 * @return la data dalla quale sarà possibile rinnovare il prestito
+	 */
+	private GregorianCalendar calcolaDataPerRichiestaProroga(GregorianCalendar scadenza) 
+	{
+		GregorianCalendar data = new GregorianCalendar(scadenza.get(GregorianCalendar.YEAR), scadenza.get(GregorianCalendar.MONTH), scadenza.get(GregorianCalendar.DAY_OF_MONTH));
+		data.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniPrimaPerProroga());
+		return data;
+	}
+
 	/**
 	 * quando un prestito viene terminato, viene etichettato come "terminato" e viene aggiornata la data di ritorno del prestito
 	 */
@@ -114,9 +128,7 @@ public class Prestito implements Serializable
 		terminato=true;
 	}
 	
-	
 	//GETTER + SETTER//
-	
 	public Risorsa getRisorsa() 
 	{
 		return risorsa;
@@ -149,13 +161,13 @@ public class Prestito implements Serializable
 	{
 		this.dataScadenza = dataScadenza;
 	}
-	public GregorianCalendar getDataRichiestaProroga() 
+	public GregorianCalendar getDataPerRichiestaProroga() 
 	{
-		return dataRichiestaProroga;
+		return dataPerRichiestaProroga;
 	}
-	public void setDataRichiestaProroga(GregorianCalendar dataRichiestaProroga)
+	public void setDataPerRichiestaProroga(GregorianCalendar dataRichiestaProroga)
 	{
-		this.dataRichiestaProroga = dataRichiestaProroga;
+		this.dataPerRichiestaProroga = dataRichiestaProroga;
 	}
 	public void setProrogato(boolean prorogato) 
 	{

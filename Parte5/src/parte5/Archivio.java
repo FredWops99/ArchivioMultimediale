@@ -4,21 +4,22 @@ import java.io.Serializable;
 import myLib.MyMenu;
 
 /**
- * Classe che raggruppa le varie tipologie di risorsa (Libri, Films,...) e opera su di esse
+ * Classe che raggruppa le varie tipologie di risorsa (Libri, Films,...) e opera su di esse.
  * @author Prandini Stefano
  * @author Landi Federico
  *
  */
 public class Archivio implements Serializable 
 {
-//	creo questa classe in modo da avere tutte le risorse insieme e per salvare solo questo oggetto in un file
-	
 	private static final long serialVersionUID = 1L;
 	
 	private Libri libri;
 	private Films films;
 	
-	//archivio composto da Libri e Film
+
+	/**
+	 * costruttore: inizializza gli oggetti Libri e Films (invocando i loro costruttori)
+	 */
 	public Archivio()
 	{
 		setLibri(new Libri());
@@ -45,7 +46,6 @@ public class Archivio implements Serializable
 		this.films = films;
 	}
 
-	
 	/**
 	 * permette di aggiungere un libro od un film all'archivio
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
@@ -71,12 +71,11 @@ public class Archivio implements Serializable
 //			non va fatto nulla, basta intercettarla
 		}
 	}
-
 	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
-	 * @return la risorsa che si vuole rimuovere
+	 * @return l'id della risorsa rimossa
 	 */
 	public String rimuoviRisorsa(String[] CATEGORIE) 
 	{
@@ -104,7 +103,6 @@ public class Archivio implements Serializable
 			return "-1";
 		}
 	}
-
 	
 	/**
 	 * mostra tute le risorse che sono in archivio e che possono essere prese in prestito
@@ -132,11 +130,9 @@ public class Archivio implements Serializable
 //			corrisponde ad ANNULLA, non va fatto nulla
 		}
 	}
-
 	
 	/**
 	 * permette la ricerca in archivio di un libro o di un film
-	 * (usa i metodi .cercaLibro e .cercaFilm)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
 	public void cercaRisorsa(String[] CATEGORIE) 

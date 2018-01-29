@@ -6,7 +6,7 @@ public abstract class Risorsa
 {
 	
 	/**
-	 * stampa le informazioni relative al prestito
+	 * stampa le informazioni relative alla risorsa
 	 * @param perPrestito true se la visualizzazione serve nell'elenco dei prestiti
 	 */
 	public abstract void stampaDati(boolean perPrestito);
@@ -40,13 +40,13 @@ public abstract class Risorsa
 	public abstract int getPrestitiMax();
 //	specificano cosa succede quanto una risorsa viene mandata in prestito/torna dal prestito (es. modificare il numero di copie in prestito)
 	/**
-	 * precondizione: ci sono copie della risorsa disponibili per il prestito
-	 * aggiorna il numero di copie disponibili e in prestito della risorsa
+	 * precondizione: ci sono copie della risorsa disponibili per il prestito.
+	 * Aggiorna il numero di copie disponibili e in prestito della risorsa
 	 */
 	public abstract void mandaInPrestito();
 	/**
-	 * precondizione: ci sono copie della risorsa attualmente in prestito
-	 * aggiorna il numero di copie disponibili e in prestito della risorsa
+	 * precondizione: ci sono copie della risorsa attualmente in prestito.
+	 * Aggiorna il numero di copie disponibili e in prestito della risorsa
 	 */
 	public abstract void tornaDalPrestito();
 }
