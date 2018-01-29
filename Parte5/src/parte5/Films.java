@@ -425,9 +425,9 @@ public class Films implements Serializable
 	 *  filtraFilmPerRegista -> filtra in base al nome del regista passato dall'utente						 *
 	 *  																									 *
 	 *  ogni metodo restituisce un vector di film contenente i film che corrispondono ai parametri			 *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	/**
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 
+	 * 
 	 * filtra tutti i film in base al titolo
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio

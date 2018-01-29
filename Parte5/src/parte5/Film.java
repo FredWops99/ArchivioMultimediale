@@ -104,6 +104,8 @@ public class Film extends Risorsa implements Serializable
 		}
 	}
 
+	//GETTER//
+	
 	public String getId() 
 	{
 		return id;
@@ -140,10 +142,28 @@ public class Film extends Risorsa implements Serializable
 	{
 		return inPrestito;
 	}
-	public boolean isPrestabile() 
+	public int getGiorniDurataPrestito() 
 	{
-		return prestabile;
+		return Film.GIORNI_DURATA_PRESTITO;
 	}
+
+	public int getGiorniDurataProroga() 
+	{
+		return Film.GIORNI_DURATA_PROROGA;
+	}
+
+	public int getGiorniPrimaPerProroga() 
+	{
+		return Film.GIORNI_PRIMA_PER_PROROGA;
+	}
+
+	public int getPrestitiMax() 
+	{
+		return Film.PRESTITI_MAX;
+	}	
+	
+	//SETTeR//
+	
 	public void setId(String id) 
 	{
 		this.id = id;
@@ -184,6 +204,8 @@ public class Film extends Risorsa implements Serializable
 	{
 		this.prestabile = prestabile;
 	}
+	
+	
 	/**
 	 * precondizione: ci sono copie del Film disponibili per il prestito
 	 */
@@ -198,24 +220,11 @@ public class Film extends Risorsa implements Serializable
 	{
 		inPrestito--;
 	}
-	
-	public int getGiorniDurataPrestito() 
+	/**
+	 * mi dice se una risorsa può essere prestata 
+	 */
+	public boolean isPrestabile() 
 	{
-		return Film.GIORNI_DURATA_PRESTITO;
+		return prestabile;
 	}
-
-	public int getGiorniDurataProroga() 
-	{
-		return Film.GIORNI_DURATA_PROROGA;
-	}
-
-	public int getGiorniPrimaPerProroga() 
-	{
-		return Film.GIORNI_PRIMA_PER_PROROGA;
-	}
-
-	public int getPrestitiMax() 
-	{
-		return Film.PRESTITI_MAX;
-	}	
 }
