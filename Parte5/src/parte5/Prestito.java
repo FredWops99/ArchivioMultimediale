@@ -43,6 +43,14 @@ public class Prestito implements Serializable
 		terminato = false;
 	}
 	
+	/**
+	 * visualizza un prestito. In particolare sono presenti i seguenti campi relativi al prestito
+	 * - Categoria della risorsa
+	 * - Titolo della risorsa
+	 * - Il fruitore che ha in prestito la risorsa
+	 * - La data in cui è avvenuto il prestito
+	 * - La data di scadenza del prestito
+	 */
 	public void visualizzaPrestito()
 	{
 		System.out.println("Categoria-------------: " + risorsa.getClass().getSimpleName());
@@ -60,6 +68,12 @@ public class Prestito implements Serializable
 		}
 	}
 	
+	
+	/**
+	 * calcola la data nella quale deve avvenire il reso della risorsa
+	 * @param data
+	 * @return la data di scadenza del prestito
+	 */
 	public GregorianCalendar calcolaScadenza(GregorianCalendar data)
 	{
 //		non faccio "dataScadenza = dataInizio" sennò dopo si modifica anche dataInizio
@@ -68,6 +82,7 @@ public class Prestito implements Serializable
 		dataScadenza.add(GregorianCalendar.DAY_OF_MONTH, risorsa.getGiorniDurataPrestito());
 		return dataScadenza;
 	}
+	
 	
 	/**
 	 * il prestito è rinnovabile solo se non è già stato prorogato una volta
@@ -78,6 +93,10 @@ public class Prestito implements Serializable
 		return !prorogato;
 	}
 	
+	
+	/**
+	 * permetta la proroga del prestito
+	 */
 	public void prorogaPrestito()
 	{
 		setProrogato(true);
@@ -85,11 +104,17 @@ public class Prestito implements Serializable
 		setDataScadenza(calcolaScadenza(GestioneDate.DATA_CORRENTE));
 	}
 	
+	/**
+	 * permette di terminare un prestito settando la variabile "terminato" = true
+	 */
 	public void terminaPrestito()
 	{
 		setDataRitorno(GestioneDate.DATA_CORRENTE);
 		terminato=true;
 	}
+	
+	
+	//GETTER + SETTER//
 	
 	public Risorsa getRisorsa() 
 	{
@@ -131,10 +156,6 @@ public class Prestito implements Serializable
 	{
 		this.dataRichiestaProroga = dataRichiestaProroga;
 	}
-	public boolean isProrogato() 
-	{
-		return prorogato;
-	}
 	public void setProrogato(boolean prorogato) 
 	{
 		this.prorogato = prorogato;
@@ -154,5 +175,11 @@ public class Prestito implements Serializable
 	public void setTerminato(boolean terminato) 
 	{
 		this.terminato = terminato;
+	}
+	
+	//variabile che mi indica se il prestito è stato soggetto a proroga
+	public boolean isProrogato() 
+	{
+		return prorogato;
 	}
 }

@@ -56,6 +56,8 @@ public class Main
 	
 	private static Fruitore utenteLoggato = null;
 	
+	
+	
 	public static void main(String[] args)
 	{				
 		try 
@@ -97,6 +99,7 @@ public class Main
 		}
 		while(continuaMenuAccesso);		
 	}
+	
 	
 	/**
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
@@ -153,6 +156,7 @@ public class Main
 		}
 	}
 
+	
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
@@ -227,6 +231,7 @@ public class Main
 		}
 	}
 
+	
 	/**
 	 * menu che compare una volta che si esegue l'accesso come fruitore
 	 * @param scelta la scelta selezionata dall'utente
@@ -279,6 +284,7 @@ public class Main
 		}	
 	}
 
+	
 	/**
 	 * menu che compare dopo che un fruitore esegue il login
 	 * @param scelta la scelta selezionata dall'utente
@@ -437,6 +443,7 @@ public class Main
 			}
 		}
 	}
+	
 	
 	/**
 	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 

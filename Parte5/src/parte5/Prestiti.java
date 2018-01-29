@@ -17,6 +17,7 @@ public class Prestiti implements Serializable
 		prestiti = new Vector<>();
 	}
 	
+	
 	/**
 	 * controllo per tutti i prestiti presenti se sono scaduti (li rimuovo) oppure no
 	 */
@@ -40,6 +41,10 @@ public class Prestiti implements Serializable
 		System.out.println("Risorse tornate dal prestito: " + rimossi);
 	}
 	
+	
+	/**
+	 * Stampa tutti i prestiti che sono attivi
+	 */
 	public void stampaPrestitiAttivi() 
 	{
 		int i = 0;
@@ -87,6 +92,11 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	
+	/**
+	 * permette di terminare un solo un prestito
+	 * @param fruitore
+	 */
 	public void terminaPrestitoDi(Fruitore fruitore)
 	{
 		Vector<Prestito>prestitiUtente = new Vector<>();
@@ -125,6 +135,11 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	
+	/**
+	 * permette di terminare tutti i prestiti
+	 * @param fruitore
+	 */
 	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
 	{		
 		int j = 0;
@@ -148,6 +163,13 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
+	
+	/**
+	 * permette di terminare tutti i prestiti di vari fruitri
+	 * Metodo utilizzato quando l'operatore decide che una risorsa non è più
+	 * disponibile per il prestito
+	 * @param utenti
+	 */
 	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
 	{
 		for(int i = 0; i < utenti.size(); i++)
@@ -155,6 +177,7 @@ public class Prestiti implements Serializable
 			terminaTuttiPrestitiDi(utenti.get(i));
 		}
 	}
+	
 	
 	/**
 	 * gli id tra libri e film sono diversi (Lxxx e Fxxx)
@@ -171,6 +194,13 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	
+	/**
+	 * crea ed aggiunge un prestito 
+	 * @param fruitore
+	 * @param risorsa
+	 * @return prestito
+	 */
 	public Prestito addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
 		Prestito prestito = new Prestito(fruitore, risorsa);
@@ -240,8 +270,13 @@ public class Prestiti implements Serializable
 		}
 //		se arriva qua l'utente non ha già la risorsa in prestito
 		return true;
-		}
+	}
 
+	
+	/**
+	 * permette il rinnovo di un prestito
+	 * @param fruitore
+	 */
 	public void rinnovaPrestito(Fruitore fruitore) 
 	{
 		Vector<Prestito>prestitiUtente = new Vector<>();

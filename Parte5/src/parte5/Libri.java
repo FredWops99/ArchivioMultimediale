@@ -45,8 +45,10 @@ public class Libri implements Serializable
 		this.libri = libri;
 	}
 	
+	
 	/**
-	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
+	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire 
+	 * tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
 	 */
 	public Libro addLibro()
 	{
@@ -78,6 +80,7 @@ public class Libri implements Serializable
 		return l;
 	}
 	
+	
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
 	 * @return la scelta dell'utente
@@ -96,6 +99,7 @@ public class Libri implements Serializable
 			return "annulla";
 		}
 	}
+	
 	
 	/**
 	 * inserisco i libri nel Vector in modo che siano ordinati per sottocategorie, così, quando vengono stampati, i generi sono in ordine
@@ -122,6 +126,11 @@ public class Libri implements Serializable
 		}
 	}
 
+	
+	/**
+	 * permette la rimozione di un libro da parte dell'operatore
+	 * @return libro rimosso
+	 */
 	public String removeLibro()
 	{
 		String idSelezionato;
@@ -178,6 +187,7 @@ public class Libri implements Serializable
 		}
 		return idSelezionato;
 	}
+	
 	
 	/**
 	 * stampa i dati dei libri corrispondenti ai parametri di ricerca specificati dall'utente
@@ -242,6 +252,7 @@ public class Libri implements Serializable
 			libriFiltrati.get(i).stampaDati(false);
 		}
 	}
+	
 	
 	/**
 	 * stampa tutti i libri raggruppandoli per sottocategoria e genere
@@ -310,6 +321,7 @@ public class Libri implements Serializable
 			}
 		}
 	}
+	
 	
 	/**
 	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
@@ -474,9 +486,8 @@ public class Libri implements Serializable
 	 *  filtraLibroPerAutori  -> filtra in base al nome dell'autore passato dall'utente						 *
 	 *  																									 *
 	 *  ogni metodo restituisce un vector di libri contenente i libri che corrispondono ai parametri		 *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	/**
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 
 	 * filtra tutti i libri in base al titolo
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
@@ -494,6 +505,7 @@ public class Libri implements Serializable
 		}
 		return libriTrovati;
 	}
+	
 	
 	/**
 	 * filtra tutti i libri in base all'anno di pubblicazione
@@ -513,6 +525,7 @@ public class Libri implements Serializable
 		}
 		return libriTrovati;
 	}
+	
 	
 	/**
 	 * filtra tutti i libri in base all'autore

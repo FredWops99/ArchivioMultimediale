@@ -12,29 +12,38 @@ public class Archivio implements Serializable
 	private Libri libri;
 	private Films films;
 	
+	//archivio composto da Libri e Film
 	public Archivio()
 	{
 		setLibri(new Libri());
 		setFilms(new Films());
 	}
-
+	
+	//GETTER//
 	public Libri getLibri() 
 	{
 		return libri;
 	}
-	public void setLibri(Libri libri)
-	{
-		this.libri = libri;
-	}
 	public Films getFilms()
 	{
 		return films;
+	}
+	
+	//SETTER//
+	public void setLibri(Libri libri)
+	{
+		this.libri = libri;
 	}
 	public void setFilms(Films films)
 	{
 		this.films = films;
 	}
 
+	
+	/**
+	 * permette di aggiungere un libro od un film all'archivio
+	 * @param CATEGORIE
+	 */
 	public void aggiungiRisorsa(String[] CATEGORIE)
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
@@ -57,6 +66,12 @@ public class Archivio implements Serializable
 		}
 	}
 
+	
+	/**
+	 * permette la rimozione di un libro o di un film dall'archivio
+	 * @param CATEGORIE
+	 * @return la risorsa che si vuole rimuovere
+	 */
 	public String rimuoviRisorsa(String[] CATEGORIE) 
 	{
 //		se utente annulla procedura removelibro/removefilm ritornato -1
@@ -77,12 +92,18 @@ public class Archivio implements Serializable
 			}
 			return idRisorsa;
 		}
+//		se non sono presenti risorse ritorna -1
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 			return "-1";
 		}
 	}
 
+	
+	/**
+	 * mostra tute le risorse che sono in archivio e che possono essere prese in prestito
+	 * @param CATEGORIE
+	 */
 	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
@@ -106,6 +127,12 @@ public class Archivio implements Serializable
 		}
 	}
 
+	
+	/**
+	 * permette la ricerca in archivio di un libro o di un film
+	 * (usa i metodi .cercaLibro e .cercaFilm)
+	 * @param CATEGORIE
+	 */
 	public void cercaRisorsa(String[] CATEGORIE) 
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
@@ -128,5 +155,4 @@ public class Archivio implements Serializable
 //			corrisponde ad ANNULLA, non va fatto nulla
 		}
 	}
-
 }
