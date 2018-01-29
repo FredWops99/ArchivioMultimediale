@@ -40,16 +40,24 @@ public class Prestiti implements Serializable
 		System.out.println("Risorse tornate dal prestito: " + rimossi);
 	}
 	
-	public void stampaPrestitiAttivi()
+	public void stampaPrestitiAttivi() 
 	{
+		int i = 0;
 		for(Prestito prestito : prestiti)
 		{
 			if(!prestito.isTerminato())
 			{
-				System.out.println(prestito.getRisorsa().getTitolo());
-			}
+				System.out.println(BelleStringhe.CORNICE);
+				prestito.visualizzaPrestito();
+				i++;
+			}	
+		}
+		if(i == 0)
+		{
+			System.out.println("Al momento non sono presenti prestiti attivi");
 		}
 	}
+	
 	
 	/**
 	 * stampa tutti i prestiti attivi di un utente
@@ -175,24 +183,6 @@ public class Prestiti implements Serializable
 			}
 		}
 		return risorse;
-	}
-
-	public void visualizzaTuttiPrestitiAttivi() 
-	{
-		int i = 0;
-		for(Prestito prestito : prestiti)
-		{
-			if(!prestito.isTerminato())
-			{
-				System.out.println(BelleStringhe.CORNICE);
-				prestito.visualizzaPrestito();
-				i++;
-			}	
-		}
-		if(i == 0)
-		{
-			System.out.println("Al momento non sono presenti prestiti attivi");
-		}
 	}
 
 	/**

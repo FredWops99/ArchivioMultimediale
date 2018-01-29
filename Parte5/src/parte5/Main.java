@@ -212,7 +212,7 @@ public class Main
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
 			{
-				prestiti.visualizzaTuttiPrestitiAttivi();
+				prestiti.stampaPrestitiAttivi();
 				
 				continuaMenuOperatore = true;
 				break;
