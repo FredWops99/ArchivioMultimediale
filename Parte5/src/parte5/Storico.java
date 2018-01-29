@@ -139,9 +139,9 @@ public class Storico implements Serializable
 	{
 		int maxGenerale = 0;
 		String titoloRisorsaMax = "";
-		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
 		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
-		
+
+		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
 		//seleziono solo le risorse che sono state prenotate nell'anno corrente
 		for (Prestito prestito : prestiti.getPrestiti())
 		{
@@ -153,11 +153,11 @@ public class Storico implements Serializable
 		//da qui avviene il conteggio
 		for(int i = 0; i < risorseAnnue.size(); i++)
 		{
-			String titoloInConisderazione = risorseAnnue.get(i).getTitolo();
-			int maxRisorsa = 0;
-			for (int j = 0; j < risorseAnnue.size(); j++) 
+			int maxRisorsa = 1;
+			String idInConsiderazione = risorseAnnue.get(i).getId();
+			for (int j = risorseAnnue.size()-1; j > i; j--) 
 			{
-				if(titoloInConisderazione.equals(risorseAnnue.get(j).getTitolo()))
+				if(idInConsiderazione.equals(risorseAnnue.get(j).getId()))
 				{
 					maxRisorsa++;
 					risorseAnnue.remove(j);
