@@ -25,9 +25,6 @@ public class Fruitore implements Serializable
 	private String password;
 	private Boolean decaduto;
 	private Vector<GregorianCalendar> rinnovi;
-	
-	
-	
 
 	/**
 	 * Costruttore della classe Fruitore
@@ -120,7 +117,8 @@ public class Fruitore implements Serializable
 		else
 		{
 			System.out.println("Al momento la tua iscrizione non può essere rinnovata:");
-			System.out.println("Potrai effettuare il rinnovo tra il " + GestioneDate.visualizzaData(dataInizioRinnovo) + " e il " + GestioneDate.visualizzaData(dataScadenza));
+			System.out.println("Potrai effettuare il rinnovo tra il " + GestioneDate.visualizzaData(dataInizioRinnovo) + 
+					" e il " + GestioneDate.visualizzaData(dataScadenza));
 		}
 	}
 	

@@ -127,7 +127,7 @@ public class Films implements Serializable
 		
 		for (int i = 0; i < films.size(); i++) 
 		{
-			if(films.get(i).isPrestabile() && films.get(i).getTitolo().equals(titolo))
+			if(films.get(i).isPrestabile() && films.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
 			{
 //				ogni volta che in films trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -385,7 +385,7 @@ public class Films implements Serializable
 				}
 				
 				System.out.println("\nFilm in archivio: \n");
-				for(int i = 0; i < films.size(); i++)
+				for(int i = 0; i < filmPrestabili.size(); i++)
 				{
 					System.out.println(i+1 + ")");
 					System.out.println(BelleStringhe.CORNICE);
@@ -395,18 +395,18 @@ public class Films implements Serializable
 				int selezione;
 				do
 				{
-					selezione = InputDati.leggiIntero("Seleziona il film che vuoi ricevere in prestito (0 per annullare): ", 0, films.size());
+					selezione = InputDati.leggiIntero("Seleziona il film che vuoi ricevere in prestito (0 per annullare): ", 0, filmPrestabili.size());
 					if(selezione == 0)
 					{
 						return null;
 					}
-					else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getnLicenze())
+					else if(filmPrestabili.get(selezione-1).getInPrestito() < filmPrestabili.get(selezione-1).getnLicenze())
 					{
-						return films.get(selezione-1);
+						return filmPrestabili.get(selezione-1);
 					}
 					else
 					{
-						System.out.println("Tutte le copie di \"" + films.get(selezione-1).getTitolo() + "\" sono in prestito!");
+						System.out.println("Tutte le copie di \"" + filmPrestabili.get(selezione-1).getTitolo() + "\" sono in prestito!");
 					}
 				}
 				while(true);

@@ -258,7 +258,7 @@ public class Prestiti implements Serializable
 				else//non si può ancora rinnovare prestito
 				{
 					System.out.println("Il tuo prestito non è ancora rinnovabile: ");
-					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataInizio()) + 
+					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataRichiestaProroga()) + 
 																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
 				}
 			}

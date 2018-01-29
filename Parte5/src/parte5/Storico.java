@@ -66,36 +66,42 @@ public class Storico implements Serializable
 				case 5://risorse prestabili in passato
 				{
 					risorsePrestabili(archivio);
+					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 6://iscrizioni decadute
 				{
 					fruitoriDecaduti(fruitori);
+					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 7://iscrizioni rinnovate
 				{
 					fruitoriRinnovati(fruitori);
+					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 8://prestiti prorogati
 				{
 					prestitiProrogati(prestiti);
+					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 9://prestiti scaduti
 				{
 					prestitiTerminati(prestiti);
+					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 10://prestiti terminati in anticipo
 				{
-					System.out.println("questa opzione è disponibile solo nella versione a pagamento XD");
+					prestitiTerminatiInAnticipo(prestiti);
+					
 					continuaMenuStorico = true;
 					break;
 				}
@@ -103,7 +109,7 @@ public class Storico implements Serializable
 		}
 		while(continuaMenuStorico);
 	}
-	
+
 	private static int prestitiAnnoSolare(Prestiti prestiti)
 	{
 		int contatorePrestiti = 0;
@@ -123,7 +129,7 @@ public class Storico implements Serializable
 		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno della proroga più vecchia
 		for (Prestito prestito : prestiti.getPrestiti()) 
 		{
-			if(prestito.getDataRichiestaProroga().get(GregorianCalendar.YEAR) == annoSelezionato)
+			if(prestito.isProrogato() && prestito.getDataRitorno().get(GregorianCalendar.YEAR) == annoSelezionato)
 				contatoreProroghe++;
 		}
 		
@@ -146,28 +152,28 @@ public class Storico implements Serializable
 			}
 		}
 		//da qui avviene il conteggio
-		for(Risorsa risorsa : risorseAnnue)
+		for(int i = 0; i < risorseAnnue.size(); i++)
 		{
-			String titoloInConisderazione = risorsa.getTitolo();
+			String titoloInConisderazione = risorseAnnue.get(i).getTitolo();
 			int maxRisorsa = 0;
-			for (int i = 0; i < risorseAnnue.size(); i++) 
+			for (int j = 0; j < risorseAnnue.size(); j++) 
 			{
-				if(titoloInConisderazione.equals(risorseAnnue.get(i).getTitolo()))
+				if(titoloInConisderazione.equals(risorseAnnue.get(j).getTitolo()))
 				{
 					maxRisorsa++;
-					risorseAnnue.remove(i);
+					risorseAnnue.remove(j);
 				}
 			}
 			if(maxRisorsa > maxGenerale) 
 			{
 				maxGenerale = maxRisorsa;
-				titoloRisorsaMax = risorsa.getTitolo();
+				titoloRisorsaMax = risorseAnnue.get(i).getTitolo();
 			}
 		}
 		
 		if(maxGenerale==0)
 		{
-			System.out.println("Non sono presenti prestiti relativi all'anno inserito");
+			System.out.println("Nell'anno selezionato non sono stati richiesti prestiti");
 		}
 		else
 		{
@@ -186,27 +192,26 @@ public class Storico implements Serializable
 				prestitiAnnui.add(prestito);
 			}
 		}
-		//da qui avviene il conteggio
-		for(Prestito prestito : prestitiAnnui)
+		if(prestitiAnnui.isEmpty())
 		{
-			int nPrestiti = 0;
-			Fruitore fruitoreInConsiderazione = prestito.getFruitore();
-//			conteggio al contrario così quando elimino non salto elementi
-			for (int i = prestitiAnnui.size()-1; i >= 0; i--) 
+			System.out.println("Nell'anno selezionato non sono stati richiesti prestiti");
+		}
+		else
+		{
+			for(int j = 0; j < prestitiAnnui.size(); j++)
 			{
-				if(fruitoreInConsiderazione.equals(prestitiAnnui.get(i).getFruitore()))
+				int nPrestiti = 0;
+				Fruitore fruitoreInConsiderazione = prestiti.getPrestiti().get(j).getFruitore();
+//				conteggio al contrario così quando elimino non salto elementi
+				for (int i = prestitiAnnui.size()-1; i >= j; i--)
 				{
-					nPrestiti++;
-					prestitiAnnui.remove(i);
+					if(fruitoreInConsiderazione.equals(prestitiAnnui.get(i).getFruitore()))
+					{
+						nPrestiti++;
+						prestitiAnnui.remove(i);
+					}
 				}
-			}
-			if(nPrestiti == 0)
-			{
-				System.out.println("Il fruitore " + fruitoreInConsiderazione.getUser() + " non ha richiesto prestiti nell'anno selezionato");
-			}
-			else
-			{
-				System.out.println("Il fruitore " + fruitoreInConsiderazione.getUser() + " ha richiesto " + nPrestiti + " prestiti nell' anno selezionato");
+				System.out.println("L'utente " + fruitoreInConsiderazione.getUser() + " ha richiesto " + nPrestiti + " prestiti nell'anno selezionato");
 			}
 		}
 	}
@@ -216,81 +221,154 @@ public class Storico implements Serializable
 		Vector<Libro> libri = archivio.getLibri().getLibri();
 		Vector<Film>  films = archivio.getFilms().getfilms();
 		
-		System.out.println("Libri che erano disponibili al prestito e che ora non lo sono più");
-		for(int i=0;i<libri.size();i++)
+		System.out.println("Libri che erano disponibili al prestito e che ora non lo sono più: ");
+		int numL = 0;
+		for(int i = 0; i < libri.size(); i++)
 		{
-			if(libri.get(i).isPrestabile() == false)
+			if(!libri.get(i).isPrestabile())
 			{
 				System.out.println("- " + libri.get(i).getTitolo());
+				numL++;
 			}
 		}
-		System.out.println(""); //NEW LINE
-		
-		System.out.println("Film che erano disponibili al prestito e che ora non lo sono più");
-		for(int i=0;i<films.size();i++)
+		if(numL == 0)
 		{
-			if(films.get(i).isPrestabile() == false)
+			System.out.println("Nessuno");
+		}
+		System.out.println(); //NEW LINE
+		System.out.println("Film che erano disponibili al prestito e che ora non lo sono più: ");
+		int numF = 0;
+		for(int i = 0; i < films.size(); i++)
+		{
+			if(!films.get(i).isPrestabile())
 			{
 				System.out.println("- " + films.get(i).getTitolo());
+				numF++;
 			}
+		}
+		if(numF == 0)
+		{
+			System.out.println("Nessuno");
 		}
 	}
 	private static void fruitoriDecaduti(Fruitori fruitori)
 	{
-		System.out.println("Fruitori decaduti \n");
 		
-		for (int i=0;i<fruitori.getFruitori().size();i++) 
+		int num = 0;
+		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
 		{
-			if(fruitori.getFruitori().get(i).isDecaduto() == true)
+			if(fruitori.getFruitori().get(i).isDecaduto())
 			{
-				System.out.println("- " + fruitori.getFruitori().get(i).getNome() + " " + fruitori.getFruitori().get(i).getCognome());
+//				lo stampa solo al primo fruitori con iscrizione decaduta che trova
+				if(num == 0)
+				{
+					System.out.println("Fruitori decaduti: \n");
+				}
+				System.out.println("- " + fruitori.getFruitori().get(i).getNome() + " " + fruitori.getFruitori().get(i).getCognome()
+						+ " (il " + GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getDataScadenza()) + ")");
+				num++;
 			}
+		}
+		if(num == 0)
+		{
+			System.out.println("Nessuna iscrizione è ancora decaduta");
 		}
 	}
 	
 	private static void fruitoriRinnovati(Fruitori fruitori)
 	{
-		System.out.println("Rinnovi avvenuti: \n");
-		
-		for (int i=0; i<fruitori.getFruitori().size();i++) 
+		int num = 0;
+		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
 		{
 			if(!fruitori.getFruitori().get(i).getRinnovi().isEmpty())
 			{
-				System.out.println("Il fruitore " +fruitori.getFruitori().get(i).getUser()+"ha rinnovato la sua iscrizione nelle seguenti date:");
-				for (int j=0;i<fruitori.getFruitori().get(i).getRinnovi().size(); j++) 
+//				lo stampa solo al primo fruitori con rinnovi che trova
+				if(num == 0)
 				{
-					System.out.println("- "+fruitori.getFruitori().get(i).getRinnovi().get(j).DAY_OF_MONTH +"/"+
-											fruitori.getFruitori().get(i).getRinnovi().get(j).MONTH +"/"+
-											fruitori.getFruitori().get(i).getRinnovi().get(j).YEAR);
+					System.out.println("Iscrizioni rinnovate: \n");
+				}
+				num++;
+				System.out.println("Il fruitore " + fruitori.getFruitori().get(i).getUser() + " ha rinnovato la sua iscrizione nelle seguenti date:");
+				for (int j = 0; i < fruitori.getFruitori().get(i).getRinnovi().size(); j++) 
+				{
+					System.out.println("- "+ GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getRinnovi().get(j)));
 				}
 			}
+		}
+		if(num == 0)
+		{
+			System.out.println("Nessun fruitore ha ancora rinnovato la sua iscrizione");
 		}
 	}
 	
 	private static void prestitiProrogati(Prestiti prestiti)
 	{
-		System.out.println("Prestiti che sono stati rinnovati: \n");
-		for (int i=0;i<prestiti.getPrestiti().size();i++) 
+		int num = 0;
+		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
 		{
-			if(prestiti.getPrestiti().get(i).isProrogato() == true && 
-					prestiti.getPrestiti().get(i).isTerminato() == false)
+			if(prestiti.getPrestiti().get(i).isProrogato())
 			{
-				System.out.println("- "+prestiti.getPrestiti().get(i).getRisorsa().getTitolo());
+				if(num == 0)
+				{
+//					lo stampa solo al primo prestito rinnovato che trova
+					System.out.println("Prestiti che sono stati rinnovati: \n");
+				}
+				num++;
+				System.out.println("- "+ prestiti.getPrestiti().get(i).getRisorsa().getTitolo() 
+						+ " (il" + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRichiestaProroga()) + ")");
 			}
+		}
+		if(num == 0)
+		{
+			System.out.println("Nessun prestito è ancora stato rinnovato");
 		}
 	}
 	private static void prestitiTerminati(Prestiti prestiti)
 	{
-		System.out.println("Prestiti che sono terminati: \n");
-		
-		for (int i=0;i<prestiti.getPrestiti().size();i++) 
+		int num = 0;
+		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
 		{
-			if(prestiti.getPrestiti().get(i).isTerminato() == true)
+			if(prestiti.getPrestiti().get(i).isTerminato())
 			{
-				System.out.println("Risorsa "+prestiti.getPrestiti().get(i).getRisorsa().getTitolo()+
-									" Fruitore "+prestiti.getPrestiti().get(i).getFruitore().getUser());
+//				lo stampa solo al primo prestito terminato che trova
+				if(num == 0)
+				{
+					System.out.println("Prestiti che sono terminati: \n");
+				}
+				num++;
+				String risorsa = prestiti.getPrestiti().get(i).getRisorsa().getClass().getSimpleName();
+				System.out.println(risorsa + ": "+ prestiti.getPrestiti().get(i).getRisorsa().getTitolo() +
+									", Fruitore: " + prestiti.getPrestiti().get(i).getFruitore().getUser()
+									+ " (il " + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRitorno()) + ")");
 			}
-			
+		}
+		if(num == 0)
+		{
+			System.out.println("Nessun prestito è ancora terminato");
+		}
+	}
+	
+	private static void prestitiTerminatiInAnticipo(Prestiti prestiti) 
+	{
+		int num = 0;
+		for(Prestito prestito : prestiti.getPrestiti())
+		{
+			if(prestito.isTerminato() && prestito.getDataRitorno().before(prestito.getDataScadenza()))
+			{
+				if(num == 0)
+				{
+					System.out.println("Prestiti terminati prima della data di scandenza: ");
+				}
+				num++;
+				String risorsa = prestito.getRisorsa().getClass().getSimpleName();
+				System.out.println(risorsa + ": "+ prestito.getRisorsa().getTitolo() + ", Fruitore: " + prestito.getFruitore().getUser()
+									+ " (terminato il " + GestioneDate.visualizzaData(prestito.getDataRitorno()) + 
+									", scandenza il " + GestioneDate.visualizzaData(prestito.getDataScadenza()) + ")");
+			}
+		}
+		if(num == 0)
+		{
+			System.out.println("Nessun prestito è terminato prima della sua data di scandenza");
 		}
 	}
 }

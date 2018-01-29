@@ -132,7 +132,7 @@ public class Libri implements Serializable
 		
 		for (int i = 0; i < libri.size(); i++)
 		{
-			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().equals(titolo))
+			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
 			{
 //				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);

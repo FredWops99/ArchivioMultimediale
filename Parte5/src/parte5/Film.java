@@ -201,21 +201,21 @@ public class Film extends Risorsa implements Serializable
 	
 	public int getGiorniDurataPrestito() 
 	{
-		return Libro.GIORNI_DURATA_PRESTITO;
+		return Film.GIORNI_DURATA_PRESTITO;
 	}
 
 	public int getGiorniDurataProroga() 
 	{
-		return Libro.GIORNI_DURATA_PROROGA;
+		return Film.GIORNI_DURATA_PROROGA;
 	}
 
 	public int getGiorniPrimaPerProroga() 
 	{
-		return Libro.GIORNI_PRIMA_PER_PROROGA;
+		return Film.GIORNI_PRIMA_PER_PROROGA;
 	}
 
 	public int getPrestitiMax() 
 	{
-		return Libro.PRESTITI_MAX;
+		return Film.PRESTITI_MAX;
 	}	
 }
