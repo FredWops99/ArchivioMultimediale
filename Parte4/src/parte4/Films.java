@@ -76,6 +76,11 @@ public class Films implements Serializable
 		
 	}
 	
+	/**
+	 * indica se un film è già presente in archivio
+	 * @param f il film da cercare
+	 * @return true se il film esiste già
+	 */
 	private boolean filmEsistente(Film f) 
 	{
 		for(Film film : films)

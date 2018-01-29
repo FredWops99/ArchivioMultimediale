@@ -162,7 +162,7 @@ public class Film extends Risorsa implements Serializable
 		return Film.PRESTITI_MAX;
 	}	
 	
-	//SETTeR//
+	//SETTER//
 	
 	public void setId(String id) 
 	{

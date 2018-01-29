@@ -2,6 +2,11 @@ package parte4;
 
 import java.io.Serializable;
 
+/**
+ * Classe che rappresenta un film presente in archivio
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Film extends Risorsa implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -165,6 +170,7 @@ public class Film extends Risorsa implements Serializable
 	
 	/**
 	 * precondizione: ci sono copie del Film disponibili per il prestito
+	 * incrementa il numero di copie del film in prestito
 	 */
 	public void mandaInPrestito() 
 	{
@@ -172,30 +178,27 @@ public class Film extends Risorsa implements Serializable
 	}
 	/**
 	 * precondizione: ci sono copie del film attualmente in prestito
+	 * decrementa il numero di copie del film in prestito
 	 */
 	public void tornaDalPrestito()
 	{
 		inPrestito--;
 	}
-
 	public int getGiorniDurataPrestito() 
 	{
-		return Libro.GIORNI_DURATA_PRESTITO;
+		return Film.GIORNI_DURATA_PRESTITO;
 	}
-
 	public int getGiorniDurataProroga() 
 	{
-		return Libro.GIORNI_DURATA_PROROGA;
+		return Film.GIORNI_DURATA_PROROGA;
 	}
-
 	public int getGiorniPrimaPerProroga() 
 	{
-		return Libro.GIORNI_PRIMA_PER_PROROGA;
+		return Film.GIORNI_PRIMA_PER_PROROGA;
 	}
-
 	public int getPrestitiMax() 
 	{
-		return Libro.PRESTITI_MAX;
+		return Film.PRESTITI_MAX;
 	}
 	
 }

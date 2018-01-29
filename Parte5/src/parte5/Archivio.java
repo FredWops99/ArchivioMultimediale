@@ -3,6 +3,12 @@ package parte5;
 import java.io.Serializable;
 import myLib.MyMenu;
 
+/**
+ * Classe che raggruppa le varie tipologie di risorsa (Libri, Films,...) e opera su di esse
+ * @author Prandini Stefano
+ * @author Landi Federico
+ *
+ */
 public class Archivio implements Serializable 
 {
 //	creo questa classe in modo da avere tutte le risorse insieme e per salvare solo questo oggetto in un file
@@ -42,7 +48,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette di aggiungere un libro od un film all'archivio
-	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
+	 * @param CATEGORIE
 	 */
 	public void aggiungiRisorsa(String[] CATEGORIE)
 	{
@@ -69,14 +75,14 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
-	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
+	 * @param CATEGORIE
 	 * @return la risorsa che si vuole rimuovere
 	 */
 	public String rimuoviRisorsa(String[] CATEGORIE) 
 	{
 //		se utente annulla procedura removelibro/removefilm ritornato -1
 		String idRisorsa = "-1";
-		System.out.println("ATTENZIONE! E’ possibile che ci siano in prestito copie della risorsa che si vuole eliminare");
+		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
 		
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		try
@@ -102,7 +108,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * mostra tute le risorse che sono in archivio e che possono essere prese in prestito
-	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
+	 * @param CATEGORIE
 	 */
 	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
 	{
@@ -131,7 +137,7 @@ public class Archivio implements Serializable
 	/**
 	 * permette la ricerca in archivio di un libro o di un film
 	 * (usa i metodi .cercaLibro e .cercaFilm)
-	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
+	 * @param CATEGORIE
 	 */
 	public void cercaRisorsa(String[] CATEGORIE) 
 	{

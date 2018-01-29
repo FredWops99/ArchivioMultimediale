@@ -183,60 +183,19 @@ public class Main
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				try
-				{
-					String categoria = CATEGORIE[menu.scegliBase()-1];
-					if(categoria == CATEGORIE[0])//LIBRO
-					{
-						archivio.getLibri().addLibro();
-					}
-					if(categoria == CATEGORIE[1])//FILM
-					{
-						archivio.getFilms().addFilm();
-					}
-					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				archivio.aggiungiRisorsa(CATEGORIE);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
-				
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				
-				try
+				String idRimosso = archivio.rimuoviRisorsa(CATEGORIE);
+//				se utente annulla procedura ritorna "-1"
+				if(!idRimosso.equals("-1"))
 				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];
-					if(categoria == CATEGORIE[0])//LIBRI
-					{
-						String idSelezionato = archivio.getLibri().removeLibro();
-						if(!idSelezionato.equals("-1"))//removeLibro ritorna -1 se l'utente annulla la procedura
-						{
-							prestiti.annullaPrestitiConRisorsa(idSelezionato);
-						}
-					}
-					if(categoria == CATEGORIE[1])//FILMS
-					{
-						String idSelezionato = archivio.getFilms().removeFilm();
-						if(idSelezionato.equals("-1"))//removeLibro ritorna -1 se l'utente annulla la procedura
-						{
-							prestiti.annullaPrestitiConRisorsa(idSelezionato);
-						}
-					}
+					prestiti.annullaPrestitiConRisorsa(idRimosso);
 					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
 				}
 				
 				continuaMenuOperatore=true;
@@ -269,25 +228,7 @@ public class Main
 			}
 			case 5://CERCA RISORSA
 			{
-				MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
-				try
-				{
-					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-
-					if(categoria == CATEGORIE[0])// == "Libri"
-					{
-						archivio.getLibri().cercaLibro();
-					}
-					else if(categoria == CATEGORIE[1])// == "Films"
-					{
-						archivio.getFilms().cercaFilm();
-					}
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-//					se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//					è ANNULLA, non va fatto nulla
-				}
+				archivio.cercaRisorsa(CATEGORIE);
 				
 				continuaMenuPersonale=true;
 				break;

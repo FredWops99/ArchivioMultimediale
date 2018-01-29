@@ -165,7 +165,7 @@ public class Fruitore implements Serializable
 	}
 	
 	/**
-	 * quando viene modificata la data iscrizione (rinnovi) vengono ricalcolate modificate anche le date di scadenza e di inzio rinnovo
+	 * quando viene modificata la data iscrizione (rinnovi) vengono ricalcolate e modificate anche le date di scadenza e di inzio rinnovo
 	 * @param dataIscrizione la nuova data di iscrizione
 	 */
 	public void setDataIscrizione(GregorianCalendar dataIscrizione) 

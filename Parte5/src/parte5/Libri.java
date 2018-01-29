@@ -1,8 +1,8 @@
 package parte5;
 import java.io.Serializable;
 import java.util.Vector;
-
 import myLib.MyMenu;
+import parte5.Libro;
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
@@ -74,10 +74,19 @@ public class Libri implements Serializable
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
-		addPerSottoCategorie(l);
 		
-		System.out.println("Libro aggiunto con successo!");
-		return l;
+		if(!libroEsistente(l))
+		{
+			addPerSottoCategorie(l);
+			System.out.println("Libro aggiunto con successo!");
+			return l;
+		}
+		
+		else
+		{
+			System.out.println("Il libro è già presente in archivio");
+			return null;
+		}
 	}
 	
 	
@@ -126,6 +135,25 @@ public class Libri implements Serializable
 		}
 	}
 
+	/**
+	 * indica se il libro è già presente in archivio
+	 * @param l il libro da cercare
+	 * @return true se il libro è presente in archivio
+	 */
+	private boolean libroEsistente(Libro l) 
+	{
+		for(Libro libro : libri)
+		{
+			if(l.getTitolo().equals(libro.getTitolo()) && l.getAutori().equals(libro.getAutori()) && l.getAnnoPubblicazione()==libro.getAnnoPubblicazione()
+					&& l.getCasaEditrice().equals(libro.getCasaEditrice()) && l.getGenere().equals(libro.getGenere()) && l.getLingua().equals(libro.getLingua())
+					&& l.getSottoCategoria().equals(libro.getSottoCategoria()) && l.getPagine()==libro.getPagine()
+					&& libro.isPrestabile())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * permette la rimozione di un libro da parte dell'operatore

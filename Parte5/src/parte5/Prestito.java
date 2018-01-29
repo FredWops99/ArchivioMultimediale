@@ -13,10 +13,12 @@ public class Prestito implements Serializable
 	private Fruitore fruitore;
 	private GregorianCalendar dataInizio;
 	private GregorianCalendar dataScadenza;
+	/**
+	 * la data dalla quale è possibile richiedere la proroga del prestito
+	 */
 	private GregorianCalendar dataRichiestaProroga;
 	/**
 	 * da settare quando il prestito termina: se scade sarà uguale alla dataScadenza, se il fruitore termina prima il prestito sarà quella data.
-	 * viene usata solo nello storico, in quanto nel main i prestiti scaduti vengono eliminati
 	 */
 	private GregorianCalendar dataRitorno;
 	private boolean prorogato;
@@ -93,9 +95,8 @@ public class Prestito implements Serializable
 		return !prorogato;
 	}
 	
-	
 	/**
-	 * permetta la proroga del prestito
+	 * quando un prestito viene prorogato, viene etichettato come "prorogato" e vengono aggiornate le date di scadenza e di richiestaProroga
 	 */
 	public void prorogaPrestito()
 	{
@@ -105,7 +106,7 @@ public class Prestito implements Serializable
 	}
 	
 	/**
-	 * permette di terminare un prestito settando la variabile "terminato" = true
+	 * quando un prestito viene terminato, viene etichettato come "terminato" e viene aggiornata la data di ritorno del prestito
 	 */
 	public void terminaPrestito()
 	{
@@ -176,8 +177,6 @@ public class Prestito implements Serializable
 	{
 		this.terminato = terminato;
 	}
-	
-	//variabile che mi indica se il prestito è stato soggetto a proroga
 	public boolean isProrogato() 
 	{
 		return prorogato;

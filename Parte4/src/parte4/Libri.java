@@ -87,6 +87,11 @@ public class Libri implements Serializable
 		
 	}
 	
+	/**
+	 * indica se il libro è già presente in archivio
+	 * @param l il libro da cercare
+	 * @return true se il libro è presente in archivio
+	 */
 	private boolean libroEsistente(Libro l) 
 	{
 		for(Libro libro : libri)
