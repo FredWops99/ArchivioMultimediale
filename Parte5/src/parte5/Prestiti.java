@@ -223,7 +223,7 @@ public class Prestiti implements Serializable
 	/**
 	 * (precondizione: fruitore != null)
 	 * conta quanti prestiti ha il fruitore indicato, per la categoria selezionata
-	 * @param username lo username del fruitore
+	 * @param fruitore il fruitore del quale contare i prestiti
 	 * @param categoria la categoria nella quale cercare i prestiti 
 	 * @return il numero di prestiti attivi del fruitore, per la categoria selezionata
 	 */

@@ -7,7 +7,7 @@ import myLib.BelleStringhe;
 import myLib.GestioneDate;
 
 /**
- * Classe rappresentate un fruitore dell'archivio multimediale
+ * Classe rappresentante un fruitore dell'archivio multimediale
  * @author Prandini Stefano
  * @author Landi Federico
  */

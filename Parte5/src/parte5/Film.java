@@ -3,7 +3,7 @@ package parte5;
 import java.io.Serializable;
 
 /**
- * Classe che rappresenta l'insieme dei film in archivio
+ * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film
  * @author Prandini Stefano
  * @author Landi Federico
  */

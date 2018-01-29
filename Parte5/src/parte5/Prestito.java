@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 import myLib.GestioneDate;
 
 /**
- * classe che rappresenta i prestiti di una risorsa multimediale ad un fruitore
+ * classe che rappresenta un prestito di una risorsa multimediale ad un fruitore
  * @author Prandini Stefano
  * @author Landi Federico
  */
