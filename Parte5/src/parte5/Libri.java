@@ -50,13 +50,13 @@ public class Libri implements Serializable
 	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire 
 	 * tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
 	 */
-	public Libro addLibro()
+	public void addLibro()
 	{
 		String sottoCategoria = scegliSottoCategoria();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
-			return null;
+			return;
 		}
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero di pagine: ");
@@ -79,13 +79,11 @@ public class Libri implements Serializable
 		{
 			addPerSottoCategorie(l);
 			System.out.println("Libro aggiunto con successo!");
-			return l;
 		}
 		
 		else
 		{
 			System.out.println("Il libro è già presente in archivio");
-			return null;
 		}
 	}
 	

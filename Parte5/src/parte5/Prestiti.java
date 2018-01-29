@@ -94,8 +94,8 @@ public class Prestiti implements Serializable
 	
 	
 	/**
-	 * permette di terminare un solo un prestito
-	 * @param fruitore
+	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare
+	 * @param fruitore il fruitore al quale chiedere quale prestito terminare
 	 */
 	public void terminaPrestitoDi(Fruitore fruitore)
 	{
@@ -137,8 +137,8 @@ public class Prestiti implements Serializable
 	
 	
 	/**
-	 * permette di terminare tutti i prestiti
-	 * @param fruitore
+	 * metodo che elimina tutti i prestiti di un determinato fruitore
+	 * @param fruitore il fruitore del quale eliminare tutti i prestiti
 	 */
 	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
 	{		
@@ -165,10 +165,10 @@ public class Prestiti implements Serializable
 	
 	
 	/**
-	 * permette di terminare tutti i prestiti di vari fruitri
+	 * permette di terminare tutti i prestiti di vari fruitori
 	 * Metodo utilizzato quando l'operatore decide che una risorsa non è più
 	 * disponibile per il prestito
-	 * @param utenti
+	 * @param utenti gli utenti a cui verranno terminati tutti i prestiti 
 	 */
 	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
 	{
@@ -180,8 +180,9 @@ public class Prestiti implements Serializable
 	
 	
 	/**
-	 * gli id tra libri e film sono diversi (Lxxx e Fxxx)
-	 * @param id
+	 * rimuovi tutti i prestiti di una determinata risorsa
+	 * (gli id dei libri sono diversi da quelli dei film (Lxxx e Fxxx)
+	 * @param id l'id della risorsa
 	 */
 	public void annullaPrestitiConRisorsa(String id)
 	{
@@ -197,17 +198,14 @@ public class Prestiti implements Serializable
 	
 	/**
 	 * crea ed aggiunge un prestito 
-	 * @param fruitore
-	 * @param risorsa
-	 * @return prestito
+	 * @param fruitore fruitore che prende in prestito una risorsa
+	 * @param risorsa la risorsa che verrà presa in prestito dal fruitore 
 	 */
-	public Prestito addPrestito(Fruitore fruitore, Risorsa risorsa)
+	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
 		Prestito prestito = new Prestito(fruitore, risorsa);
 		prestiti.add(prestito);
 		prestito.getRisorsa().mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
-		
-		return prestito;
 	}
 	
 	public Vector<Prestito> getPrestiti() 
@@ -220,10 +218,10 @@ public class Prestiti implements Serializable
 	}
 	
 	/**
-	 * non conta quanti prestiti il fruitore ha in totale ma quanti per categoria
-	 * @param username
-	 * @param categoria
-	 * @return
+	 * conta quanti prestiti ha il fruitore indicato, per la categoria selezionata
+	 * @param username lo username del fruitore
+	 * @param categoria la categoria nella quale cercare i prestiti 
+	 * @return il numero di prestiti attivi del fruitore, per la categoria selezionata
 	 */
 	public int numPrestitiAttiviDi(Fruitore fruitore, String categoria)
 	{
@@ -255,9 +253,10 @@ public class Prestiti implements Serializable
 
 	/**
 	 * precondizione: fruitore != null & risorsa != null
-	 * @param fruitore
-	 * @param risorsa
-	 * @return
+	 * controlla che il fruitore non abbia già la risorsa in prestito 
+	 * @param fruitore il fruitore che richede il prestito
+	 * @param risorsa la risorsa oggetto del prestito
+	 * @return true se il fruitore non ha già la risorsa in prestito (quindi prestito fattibile)
 	 */
 	public boolean prestitoFattibile(Fruitore fruitore, Risorsa risorsa) 
 	{
@@ -274,8 +273,8 @@ public class Prestiti implements Serializable
 
 	
 	/**
-	 * permette il rinnovo di un prestito
-	 * @param fruitore
+	 * metodo che esegue il rinnovo di un prestito
+	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
 	 */
 	public void rinnovaPrestito(Fruitore fruitore) 
 	{

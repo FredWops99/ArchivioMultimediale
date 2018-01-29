@@ -33,9 +33,9 @@ public class Storico implements Serializable
 	 * - Prestiti terminati
 	 * - Prestiti terminati in anticipo
 	 * Questo metodo viene chiamato in menuOperatore (nel main).
-	 * @param prestiti
-	 * @param archivio
-	 * @param fruitori
+	 * @param prestiti l'elenco dei prestiti che serve ai vari metodi all'intreno del menù
+	 * @param archivio l'elenco delle risorse in archivio che servono ai vari metodi presenti nel menù 
+	 * @param fruitori l'elenco dei fruitori che è utilizzato dai vari metodi del menù
 	 */
 	public static void menuStorico(Prestiti prestiti, Archivio archivio, Fruitori fruitori) 
 	{
@@ -128,9 +128,9 @@ public class Storico implements Serializable
 
 	
 	/**
-	 * Mostra tutti i prestiti che sono avvenuti nell'anno solare inserito dall'utente
-	 * @param prestiti
-	 * @return prestiti avvenuti durante l'anno inserito dall'utente
+	 * Metodo che conta i prestiti che sono avvenuti nell'anno solare inserito dall'utente
+	 * @param prestiti l'elenco di tutti i prestiti in archivio
+	 * @return prestiti il numero dei prestiti avvenuti durante l'anno inserito dall'utente
 	 */
 	private static int prestitiAnnoSolare(Prestiti prestiti)
 	{
@@ -148,9 +148,9 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
-	 * @param prestiti
-	 * @return proroghe avvenuti durante l'anno inserito dall'utente
+	 * Metodo che conta tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
+	 * @param prestiti l'elenco di tutti i prestiti in archivio
+	 * @return il numero di proroghe avvenute durante l'anno inserito dall'utente
 	 */
 	private static int prorogheAnnoSolare(Prestiti prestiti)
 	{
@@ -167,7 +167,7 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
+	 * Metodo che individua la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
 	 * @param prestiti
 	 */
 	private static void risorsaPiùInPrestito(Prestiti prestiti)
@@ -217,8 +217,8 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutti i prestiti annui effettuati da ogni fruitore
-	 * @param prestiti
+	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore
+	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
 	private static void prestitiAnnuiPerFruitore(Prestiti prestiti)
 	{
@@ -258,9 +258,9 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutte quelle risorse che erano prestabili e che ora non lo sono più distinguendo 
-	 * le risorse tra film e libri
-	 * @param archivio
+	 * Metodo che mostra tutte le risorse che erano prestabili e che ora non lo sono più, distinguendo 
+	 * tra film e libri
+	 * @param archivio tutte le risorse in archivio
 	 */
 	private static void risorsePrestabili(Archivio archivio)
 	{
@@ -300,8 +300,8 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutti i fruitorori che non sono più iscritti nel sistema multimediale
-	 * @param fruitori
+	 * Metodo che mostra tutti i fruitorori che non sono più iscritti al sistema multimediale
+	 * @param fruitori l'elenco di tutti i fruitori
 	 */
 	private static void fruitoriDecaduti(Fruitori fruitori)
 	{
@@ -328,9 +328,9 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutte le date nelle quali i fruitori hanno rinnovato la loro iscrizione
-	 * nel sistema multimediale
-	 * @param fruitori
+	 * Metodo che mostra tutte le date nelle quali i fruitori hanno rinnovato la loro iscrizione
+	 * al sistema multimediale
+	 * @param fruitori l'elenco di tutti i fruitori
 	 */
 	private static void fruitoriRinnovati(Fruitori fruitori)
 	{
@@ -360,8 +360,8 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutti i prestiti che sono stati soggetti a proroga
-	 * @param prestiti
+	 * Metodo che mostra tutti i prestiti che sono stati soggetti a proroga
+	 * @param prestiti l'elenco di tutti i prestiti
 	 */
 	private static void prestitiProrogati(Prestiti prestiti)
 	{
@@ -388,10 +388,10 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutti i prestiti che sono terminati
-	 * Viene mostrata la risorsa con il relativo fruitore che ha richiesto la risorsa
+	 * Metodo che mostra tutti i prestiti che sono terminati.
+	 * Viene mostrata la risorsa con il relativo fruitore che l'ha richiesta
 	 * e la data in cui è avvenuta la terminazione del prestito
-	 * @param prestiti
+	 * @param prestiti l'elenco di tutti i prestiti
 	 */
 	private static void prestitiTerminati(Prestiti prestiti)
 	{
@@ -420,9 +420,9 @@ public class Storico implements Serializable
 	
 	
 	/**
-	 * Mostra tutti i prestiti che sono stati terminati in anticipo
-	 * rispetto alla data di terminazione dle prestito
-	 * @param prestiti
+	 * Metodo che mostra tutti i prestiti che sono stati terminati in anticipo
+	 * rispetto alla data di terminazione del prestito
+	 * @param prestiti l'elenco di tutti i prestiti
 	 */
 	private static void prestitiTerminatiInAnticipo(Prestiti prestiti) 
 	{
