@@ -42,7 +42,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette di aggiungere un libro od un film all'archivio
-	 * @param CATEGORIE
+	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
 	 */
 	public void aggiungiRisorsa(String[] CATEGORIE)
 	{
@@ -69,7 +69,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
-	 * @param CATEGORIE
+	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
 	 * @return la risorsa che si vuole rimuovere
 	 */
 	public String rimuoviRisorsa(String[] CATEGORIE) 
@@ -102,7 +102,7 @@ public class Archivio implements Serializable
 	
 	/**
 	 * mostra tute le risorse che sono in archivio e che possono essere prese in prestito
-	 * @param CATEGORIE
+	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
 	 */
 	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
 	{
@@ -131,7 +131,7 @@ public class Archivio implements Serializable
 	/**
 	 * permette la ricerca in archivio di un libro o di un film
 	 * (usa i metodi .cercaLibro e .cercaFilm)
-	 * @param CATEGORIE
+	 * @param CATEGORIE le categorie che sono disponibili nel sistema bibbliotecario (libri e film)
 	 */
 	public void cercaRisorsa(String[] CATEGORIE) 
 	{

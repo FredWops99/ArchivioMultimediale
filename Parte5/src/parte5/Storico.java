@@ -33,9 +33,9 @@ public class Storico implements Serializable
 	 * - Prestiti terminati
 	 * - Prestiti terminati in anticipo
 	 * Questo metodo viene implementato nel menuOperatore (nel main).
-	 * @param prestiti
-	 * @param archivio
-	 * @param fruitori
+	 * @param l'elenco dei prestiti che serve ai vari metodi all'intreno del menù
+	 * @param l'elenco delle risorse che sono presenti in archivio e che servono ai vari metodi presenti nel menù 
+	 * @param l'elenco dei fruitori che è utilizzato dai vari metodi del menù
 	 */
 	public static void menuStorico(Prestiti prestiti,Archivio archivio, Fruitori fruitori) 
 	{
@@ -129,7 +129,7 @@ public class Storico implements Serializable
 	
 	/**
 	 * Mostra tutti i prestiti che sono avvenuti nell'anno solare inserito dall'utente
-	 * @param prestiti
+	 * @param l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
 	 * @return prestiti avvenuti durante l'anno inserito dall'utente
 	 */
 	private static int prestitiAnnoSolare(Prestiti prestiti)
@@ -149,7 +149,7 @@ public class Storico implements Serializable
 	
 	/**
 	 * Mostra tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
-	 * @param prestiti
+	 * @param l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
 	 * @return proroghe avvenuti durante l'anno inserito dall'utente
 	 */
 	private static int prorogheAnnoSolare(Prestiti prestiti)
@@ -168,7 +168,7 @@ public class Storico implements Serializable
 	
 	/**
 	 * Mostra la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
-	 * @param prestiti
+	 * @param prestiti l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
 	 */
 	private static void risorsaPiùInPrestito(Prestiti prestiti)
 	{
@@ -218,7 +218,9 @@ public class Storico implements Serializable
 	
 	/**
 	 * Mostra tutti i prestiti annui effettuati da ogni fruitore
-	 * @param prestiti
+	 * @param prestiti l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
+	 * attraverso il metodo prestiti.getPrestiti().get(j).getFruitore() è possibile sapere quale fruitore ha
+	 * effettutato il prestito
 	 */
 	private static void prestitiAnnuiPerFruitore(Prestiti prestiti)
 	{
@@ -260,7 +262,7 @@ public class Storico implements Serializable
 	/**
 	 * Mostra tutte quelle risorse che erano prestabili e che ora non lo sono più distinguendo 
 	 * le risorse tra film e libri
-	 * @param archivio
+	 * @param archivio l'elenco delle risorse (libri e film) 
 	 */
 	private static void risorsePrestabili(Archivio archivio)
 	{
@@ -301,7 +303,7 @@ public class Storico implements Serializable
 	
 	/**
 	 * Mostra tutti i fruitorori che non sono più iscritti nel sistema multimediale
-	 * @param fruitori
+	 * @param fruitori l'elenco dei fruitori (contenente sia i fruitori deceduti che quelli ancora iscritti)
 	 */
 	private static void fruitoriDecaduti(Fruitori fruitori)
 	{
@@ -330,7 +332,7 @@ public class Storico implements Serializable
 	/**
 	 * Mostra tutte le date nelle quali i fruitori hanno rinnovato la loro iscrizione
 	 * nel sistema multimediale
-	 * @param fruitori
+	 * @param fruitori l'elenco dei fruitori (contenente sia i fruitori deceduti che quelli ancora iscritti)
 	 */
 	private static void fruitoriRinnovati(Fruitori fruitori)
 	{
@@ -391,7 +393,7 @@ public class Storico implements Serializable
 	 * Mostra tutti i prestiti che sono terminati
 	 * Viene mostrata la risorsa con il relativo fruitore che ha richiesto la risorsa
 	 * e la data in cui è avvenuta la terminazione del prestito
-	 * @param prestiti
+	 * @param prestiti l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
 	 */
 	private static void prestitiTerminati(Prestiti prestiti)
 	{
@@ -422,7 +424,7 @@ public class Storico implements Serializable
 	/**
 	 * Mostra tutti i prestiti che sono stati terminati in anticipo
 	 * rispetto alla data di terminazione dle prestito
-	 * @param prestiti
+	 * @param prestiti l'elenco dei prestiti (contiene tutti i prestiti che sono stati effettuati durante i vari anni)
 	 */
 	private static void prestitiTerminatiInAnticipo(Prestiti prestiti) 
 	{
