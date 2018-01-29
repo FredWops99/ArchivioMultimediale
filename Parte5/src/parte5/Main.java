@@ -17,6 +17,7 @@ import myLib.MyMenu;
 import myLib.BelleStringhe;
 import myLib.InputDati;
 import myLib.ServizioFile;
+import java.io.Console;
 
 /**
  * Classe main del programma Archivio Multimediale
@@ -105,7 +106,7 @@ public class Main
 	private static void gestisciMenuAccesso(int scelta) 
 	{
 		continuaMenuAccesso=true;
-		
+
 		switch(scelta)
 		{
 			case 0://EXIT

@@ -61,7 +61,7 @@ public class Archivio implements Serializable
 	{
 //		se utente annulla procedura removelibro/removefilm ritornato -1
 		String idRisorsa = "-1";
-		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");
+		System.out.println("ATTENZIONE! E’ possibile che ci siano in prestito copie della risorsa che si vuole eliminare");
 		
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		try
