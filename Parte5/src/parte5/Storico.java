@@ -3,7 +3,6 @@ package parte5;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import myLib.GestioneDate;
 import myLib.InputDati;
 import myLib.MyMenu;
@@ -18,10 +17,10 @@ public class Storico implements Serializable
 	private static final String[] VOCI_MENU_STORICO = {"Numero prestiti per anno solare", "Numero proroghe per anno solare",
 														"Risorsa che è stata oggetto del maggior numero di prestiti per anno solare",
 														"Numero di prestiti per fruitore per anno solare", "Risorse prestabili in passato", "Iscrizioni decadute",
-														"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti scaduti", "Prestiti terminati in anticipo"};
+														"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti terminati", "Prestiti terminati in anticipo"};
 	private static final long serialVersionUID = 1L;
 	
-	public static void menuStorico(Prestiti prestiti,Archivio archivio,Fruitori fruitori) 
+	public static void menuStorico(Prestiti prestiti,Archivio archivio, Fruitori fruitori) 
 	{
 		boolean continuaMenuStorico = true;
 		do

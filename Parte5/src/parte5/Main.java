@@ -28,7 +28,7 @@ public class Main
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 	private static final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Cerca una risorsa",
-														"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Annulla prestiti"};
+														"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Termina prestiti"};
 	private static final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
@@ -82,7 +82,7 @@ public class Main
 //		segna come "decadute" le iscrizioni in archivio che sono scadute
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
-		prestiti.annullaPrestitiDi(utentiScaduti);
+		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
 		
 //		elimino i prestiti scaduti
@@ -402,12 +402,35 @@ public class Main
 				continuaMenuPersonale = true;
 				break;
 			}
-			case 7://ANNULLA PRESTITI
+			case 7://TERMINA PRESTITI
 			{
-				prestiti.annullaPrestitiDi(utenteLoggato);
-				
-				ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
-				ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+				MyMenu menuPrestiti = new MyMenu("Vuoi eliminare tutti i prestiti o solo uno?", new String[] {"tutti","solo uno"}, true);
+					
+				switch (menuPrestiti.scegliBase()) 
+				{
+				case 0://indietro
+				{
+					break;
+				}
+				case 1://elimina tutti i prestiti
+				{
+					prestiti.terminaTuttiPrestitiDi(utenteLoggato);
+					
+					ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+					
+					break;
+				}
+				case 2://elimina un solo prestito (sceglie l'utente)
+				{
+					prestiti.terminaPrestitoDi(utenteLoggato);
+					
+					ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+					ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);
+					
+					break;
+				}
+				}
 				
 				continuaMenuPersonale = true;
 				break;

@@ -31,7 +31,7 @@ public class Prestiti implements Serializable
 				if(prestito.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
 				{
 					prestito.getRisorsa().tornaDalPrestito();
-					prestito.ritornaPrestito();
+					prestito.terminaPrestito();
 					rimossi++;				
 				}
 			}
@@ -87,7 +87,45 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	public void annullaPrestitiDi(Fruitore fruitore) 
+	public void terminaPrestitoDi(Fruitore fruitore)
+	{
+		Vector<Prestito>prestitiUtente = new Vector<>();
+		for(Prestito prestito : prestiti)
+		{
+			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
+			{
+				prestitiUtente.add(prestito);
+			}
+		}
+		if(prestitiUtente.isEmpty())
+		{
+			System.out.println("Non hai prestiti attivi!");
+		}
+		else
+		{
+			System.out.println("Seleziona il prestito che vuoi terminare: ");
+			
+			for(int i = 0; i < prestitiUtente.size(); i++)
+			{
+				System.out.println("\n" + (i+1) + ") ");//stampo la posizione partendo da 1)
+				System.out.println(BelleStringhe.CORNICE);
+				prestitiUtente.get(i).visualizzaPrestito();
+				System.out.println(BelleStringhe.CORNICE);
+			}
+			
+			int selezione = InputDati.leggiIntero
+					("\nSeleziona la risorsa della quale vuoi terminare il prestito (0 per annullare): ", 0, prestitiUtente.size());
+			if(selezione != 0)
+			{
+				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
+				
+				prestitoSelezionato.getRisorsa().tornaDalPrestito();
+				prestitoSelezionato.terminaPrestito();
+			}
+		}
+	}
+	
+	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
 	{		
 		int j = 0;
 //		dal fondo perchè se elimino dall'inizio si sballano le posizioni
@@ -96,7 +134,7 @@ public class Prestiti implements Serializable
 			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
 			{
 				prestito.getRisorsa().tornaDalPrestito();
-				prestito.ritornaPrestito();
+				prestito.terminaPrestito();
 				j++;
 			}
 		}
@@ -110,11 +148,11 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
-	public void annullaPrestitiDi(Vector<Fruitore>utenti)
+	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
 	{
 		for(int i = 0; i < utenti.size(); i++)
 		{
-			annullaPrestitiDi(utenti.get(i));
+			terminaTuttiPrestitiDi(utenti.get(i));
 		}
 	}
 	
@@ -128,7 +166,7 @@ public class Prestiti implements Serializable
 		{
 			if((!prestito.isTerminato()) && prestito.getRisorsa().getId().equals(id))
 			{
-				prestito.ritornaPrestito();
+				prestito.terminaPrestito();
 			}
 		}
 	}

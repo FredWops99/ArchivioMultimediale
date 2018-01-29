@@ -85,7 +85,7 @@ public class Prestito implements Serializable
 		setDataScadenza(calcolaScadenza(GestioneDate.DATA_CORRENTE));
 	}
 	
-	public void ritornaPrestito()
+	public void terminaPrestito()
 	{
 		setDataRitorno(GestioneDate.DATA_CORRENTE);
 		terminato=true;
