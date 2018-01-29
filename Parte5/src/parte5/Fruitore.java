@@ -3,7 +3,6 @@ package parte5;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 
@@ -46,11 +45,19 @@ public class Fruitore implements Serializable
 		this.password = password;
 //		calcolo scadenza e inizioRinnovo in base alla data di iscrizione
 		this.dataScadenza = calcolaScadenza(dataIscrizione);
+		/**
+		 * la data dalla quale è possibile richiedere il rinnovo dell'iscrizione
+		 */
 		this.dataInizioRinnovo = CalcolaInizioRinnovo(dataScadenza);
 		this.decaduto = false;
 		this.rinnovi = new Vector<>();
 	}
 	
+	/**
+	 * override del metodo equals di object
+	 * @param f il fruitore con il quale fare il confronto
+	 * @return true se i due fruitori hanno lo stesso username
+	 */
 	public boolean equals(Fruitore f)
 	{
 		if(this.username.equals(f.getUser()))

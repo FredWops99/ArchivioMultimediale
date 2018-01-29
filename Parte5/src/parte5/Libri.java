@@ -1,4 +1,5 @@
 package parte5;
+
 import java.io.Serializable;
 import java.util.Vector;
 import myLib.MyMenu;
@@ -45,7 +46,6 @@ public class Libri implements Serializable
 		this.libri = libri;
 	}
 	
-	
 	/**
 	 * procedura per l'aggiunta di un libro alla raccolta: chiede all'utente di inserire 
 	 * tutti i campi necessari, crea l'oggetto Libro e lo aggiunge al vector
@@ -86,7 +86,6 @@ public class Libri implements Serializable
 			System.out.println("Il libro è già presente in archivio");
 		}
 	}
-	
 	
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco

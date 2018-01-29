@@ -107,7 +107,6 @@ public class Film extends Risorsa implements Serializable
 	}
 
 	//GETTER//
-	
 	public String getId() 
 	{
 		return id;
@@ -148,17 +147,14 @@ public class Film extends Risorsa implements Serializable
 	{
 		return Film.GIORNI_DURATA_PRESTITO;
 	}
-
 	public int getGiorniDurataProroga() 
 	{
 		return Film.GIORNI_DURATA_PROROGA;
 	}
-
 	public int getGiorniPrimaPerProroga() 
 	{
 		return Film.GIORNI_PRIMA_PER_PROROGA;
 	}
-
 	public int getPrestitiMax() 
 	{
 		return Film.PRESTITI_MAX;

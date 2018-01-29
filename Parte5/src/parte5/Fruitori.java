@@ -10,7 +10,6 @@ import myLib.InputDati;
  * Classe rappresentante tutti i fruitori che hanno accesso all'archivio multimediale
  * @author Prandini Stefano
  * @author Landi Federico
- *
  */
 public class Fruitori implements Serializable
 {
@@ -35,7 +34,7 @@ public class Fruitori implements Serializable
 	}
 
 	/**
-	 * Aggiunge un Fruitore nel vettore "fruitori"
+	 * Crea e aggiunge un Fruitore, se maggiorenne al vettore "fruitori"
 	 */
 	public void addFruitore()
 	{
@@ -63,7 +62,6 @@ public class Fruitori implements Serializable
 				
 		String password1;
 		String password2;
-		//crea Passowrd + controllo password
 		boolean corretta = false;
 		do
 		{
@@ -82,10 +80,9 @@ public class Fruitori implements Serializable
 		while(!corretta);
 		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
-		
-		//creo il nuovo fruitore
+//		creo il nuovo fruitore
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
-		//aggiungo al vector fruitori il nuovo fruitore
+//		aggiungo al vector fruitori il nuovo fruitore
 		fruitori.add(f);
 		System.out.println("Registrazione avvenuta con successo!");
 	}

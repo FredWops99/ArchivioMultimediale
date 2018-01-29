@@ -16,7 +16,6 @@ public class Archivio implements Serializable
 	private Libri libri;
 	private Films films;
 	
-
 	/**
 	 * costruttore: inizializza gli oggetti Libri e Films (invocando i loro costruttori)
 	 */
@@ -35,7 +34,6 @@ public class Archivio implements Serializable
 	{
 		return films;
 	}
-	
 	//SETTER//
 	public void setLibri(Libri libri)
 	{

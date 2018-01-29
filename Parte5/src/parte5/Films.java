@@ -1,7 +1,7 @@
 package parte5;
+
 import java.io.Serializable;
 import java.util.Vector;
-
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
@@ -47,13 +47,13 @@ public class Films implements Serializable
 	/**
 	 * procedura per l'aggiunta di un film alla raccolta: chiede all'utente di inserire tutti i campi necessari, crea l'oggetto Film e lo aggiunge al vector
 	 */
-	public Film addFilm()
+	public void addFilm()
 	{
 		String sottoCategoria = this.scegliSottoCategoria();//la sottocategoria della categoria FILM ("Azione","Avventura","Fantascienza"...)
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
-			return null;
+			return;
 		}
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
 		int durata = InputDati.leggiInteroPositivo("Inserisci la durata del film (in minuti): ");
@@ -66,7 +66,6 @@ public class Films implements Serializable
 		addPerSottoCategorie(f);
 		
 		System.out.println("Film aggiunto con successo!");
-		return f;
 	}
 	
 	/**
@@ -79,7 +78,6 @@ public class Films implements Serializable
 		try
 		{
 			return SOTTOCATEGORIE[menu.scegliBase() - 1];
-
 		}
 //		se l'utente selezione 0: ANNULLA -> eccezione
 		catch(ArrayIndexOutOfBoundsException e)
@@ -306,7 +304,7 @@ public class Films implements Serializable
 				int scegli = menuFiltro.scegliBase();
 				switch(scegli)
 				{
-					case 0:
+					case 0://INDIETRO
 					{
 						return null;
 					}
@@ -316,14 +314,12 @@ public class Films implements Serializable
 						FilmsFiltrati = filtraFilmPerTitolo(titoloParziale);
 						break;
 					}
-					
 					case 2://FILTRA PER ANNO PUBBLICAZIONE
 					{
 						annoUscita = InputDati.leggiIntero("Inserisci l'anno di uscita: \n", ANNO_PRIMA_PELLICOLA, GestioneDate.ANNO_CORRENTE);
 						FilmsFiltrati = filtraFilmPerUscita(annoUscita);
 						break;
 					}
-					
 					case 3: //FILTRA PER AUTORE
 					{
 						nomeRegista = InputDati.leggiStringaNonVuota("Inserisci il nome del regista:  \n");
@@ -416,7 +412,6 @@ public class Films implements Serializable
 		return null;
 	}
 	
-	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * METODI PER LA RICERCA DI FILM IN BASE A DETERMINATI PARAMETRI										 *
 	 * 																										 *
@@ -425,9 +420,9 @@ public class Films implements Serializable
 	 *  filtraFilmPerRegista -> filtra in base al nome del regista passato dall'utente						 *
 	 *  																									 *
 	 *  ogni metodo restituisce un vector di film contenente i film che corrispondono ai parametri			 *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	 
-	 * 
+	/**
 	 * filtra tutti i film in base al titolo
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
