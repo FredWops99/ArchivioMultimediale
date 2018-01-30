@@ -134,6 +134,7 @@ public class Prestiti implements Serializable
 				
 				prestitoSelezionato.getRisorsa().tornaDalPrestito();
 				prestitoSelezionato.terminaPrestito();
+				System.out.println("Prestito terminato!");
 			}
 		}
 	}

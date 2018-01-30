@@ -6,6 +6,12 @@ import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
+/**
+ * Classe che racchiude l'elenco dei prestiti attivi degli utenti
+ * @author Prandini Stefano
+ * @author Landi Federico
+ *
+ */
 public class Prestiti implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +52,6 @@ public class Prestiti implements Serializable
 	/**
 	 * stampa tutti i prestiti attivi di un utente
 	 * @param username lo username dell'utente di cui stampare i prestiti
-	 * @return il numero di libri attualmente in prestito all'utente
 	 */
 	public void stampaPrestitiDi(String username) 
 	{		
@@ -71,6 +76,10 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	/**
+	 * annulla tutti i prestiti attivi di un utente
+	 * @param utente l'utente del quale eliminare tutti i prestiti
+	 */
 	public void annullaPrestitiDi(Fruitore utente) 
 	{		
 		int j = 0;
@@ -94,6 +103,10 @@ public class Prestiti implements Serializable
 		}
 	}	
 	
+	/**
+	 * annulla tutti i prestiti di un insieme di utenti
+	 * @param utenti l'elenco degli utenti dei quali rimuovere tutti i prestiti
+	 */
 	public void annullaPrestitiDi(Vector<Fruitore>utenti)
 	{
 		for(int i = 0; i < utenti.size(); i++)
@@ -102,6 +115,10 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	/**
+	 * annulla tutti i prestiti relativi ad un determinato libro.
+	 * @param idLibro l'id della risorsa da eliminare
+	 */
 	public void annullaPrestitiConLibro(int idLibro)
 	{
 		for(int i = 0; i < prestiti.size(); i++)
@@ -113,6 +130,11 @@ public class Prestiti implements Serializable
 		}
 	}
 	
+	/**
+	 * crea e aggiunge un prestito all'elenco
+	 * @param fruitore il fruitore che richiede il prestito
+	 * @param risorsa la risorsa chiesta in prestito
+	 */
 	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
 		Prestito prestito = new Prestito(fruitore, risorsa);
@@ -129,6 +151,12 @@ public class Prestiti implements Serializable
 		this.prestiti = prestiti;
 	}
 	
+	/**
+	 * conta il numero di prestiti di un utente, relativi ad una categoria
+	 * @param username lo username del fruitore
+	 * @param categoria la categoria nella quale cercare i prestiti
+	 * @return il numero di prestiti dell'utente relativi alla categoria indicata
+	 */
 	public int numPrestitiDi(String username, String categoria)
 	{
 		int risorse = 0;
@@ -158,6 +186,9 @@ public class Prestiti implements Serializable
 		return risorse;
 	}
 
+	/**
+	 * stampa l'elenco di tutti i prestiti attivi
+	 */
 	public void visualizzaTuttiPrestiti() 
 	{
 		if(prestiti.size()==0)
@@ -175,16 +206,17 @@ public class Prestiti implements Serializable
 	}
 
 	/**
-	 * precondizione: libro è diverso da null
-	 * @param utenteLoggato
-	 * @param libro
-	 * @return
+	 * precondizione: fruitore != null & risorsa != null
+	 * controlla se il fruitore possiede già in prestito la risorsa richiesta
+	 * @param fruitore il fruitore che richiede il prestito
+	 * @param libro la risorsa richiesta
+	 * @return true se il prestito è fattibile (il fruitore non possiede già la risorsa in prestito)
 	 */
-	public boolean prestitoFattibile(Fruitore utente, Libro libro) 
+	public boolean prestitoFattibile(Fruitore fruitore, Libro libro) 
 	{
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getRisorsa().getId()==libro.getId() && prestito.getFruitore().getUser().equals(utente.getUser()))
+			if(prestito.getRisorsa().getId()==libro.getId() && prestito.getFruitore().getUser().equals(fruitore.getUser()))
 			{
 				return false;
 			}
@@ -193,12 +225,16 @@ public class Prestiti implements Serializable
 		return true;
 		}
 
-	public void rinnovaPrestito(Fruitore utente) 
+	/**
+	 * procedura per rinnovare un prestito
+	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
+	 */
+	public void rinnovaPrestito(Fruitore fruitore) 
 	{
 		Vector<Prestito>prestitiUtente = new Vector<>();
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getFruitore().getUser().equals(utente.getUser()))
+			if(prestito.getFruitore().getUser().equals(fruitore.getUser()))
 			{
 				prestitiUtente.add(prestito);
 			}

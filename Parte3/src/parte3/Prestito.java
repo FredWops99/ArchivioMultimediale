@@ -5,6 +5,11 @@ import java.util.GregorianCalendar;
 
 import myLib.GestioneDate;
 
+/**
+ * classe che rappresenta i prestiti di una risorsa multimediale ad un fruitore
+ * @author Prandini Stefano
+ * @author Landi Federico
+ */
 public class Prestito implements Serializable 
 {
 	private static final long serialVersionUID = 1L;

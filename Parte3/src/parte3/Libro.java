@@ -56,6 +56,7 @@ public class Libro extends Risorsa implements Serializable
 	
 	/**
 	 * Costuttore della classe libro
+	 * @param id l'id univoco del libro
 	 * @param nome il titolo del libro
 	 * @param autori il vector degli autori del libro
 	 * @param pagine il numero di pagine

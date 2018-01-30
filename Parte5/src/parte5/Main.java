@@ -74,9 +74,9 @@ public class Main
 		}
 		
 //		avviato il programma carico i fruitori, i libri e i prestiti da file
-		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori);
-		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio);
-		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti);
+		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori, false);
+		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio, false);
+		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti, false);
 		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();

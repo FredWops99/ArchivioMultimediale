@@ -44,7 +44,6 @@ public class Prestiti implements Serializable
 	/**
 	 * stampa tutti i prestiti attivi di un utente
 	 * @param username lo username dell'utente di cui stampare i prestiti
-	 * @return il numero di libri attualmente in prestito all'utente
 	 */
 	public void stampaPrestitiDi(String username) 
 	{		

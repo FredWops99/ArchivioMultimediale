@@ -11,7 +11,7 @@ public class ServizioFile
 	private static final String MSG_SALVATO = "Salvataggio effettuato con successo!";
 	private static final String MSG_CARICATO = "Caricamento avvenuto con successo!";
   	
-	public static Object caricaSingoloOggetto (File f)
+	public static Object caricaSingoloOggetto(File f, boolean conConferma)
 	 {
 		 Object letto = null;
 		 ObjectInputStream ingresso = null;
@@ -21,9 +21,10 @@ public class ServizioFile
 			 ingresso = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
 				
 			 letto = ingresso.readObject();
-			 
-			 System.out.println(MSG_CARICATO);
-				
+			 if(conConferma)
+			 {
+				 System.out.println(MSG_CARICATO);
+			 }
 			}
 		 catch (FileNotFoundException excNotFound)
 			{
