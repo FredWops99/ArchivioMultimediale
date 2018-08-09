@@ -82,9 +82,17 @@ public class Fruitori implements Serializable
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
 //		creo il nuovo fruitore
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
-//		aggiungo al vector fruitori il nuovo fruitore
-		fruitori.add(f);
-		System.out.println("Registrazione avvenuta con successo!");
+		
+		if(InputDati.yesOrNo("Confermi l'iscrizione con questi dati?"))
+		{
+//			aggiungo al vector fruitori il nuovo fruitore
+			fruitori.add(f);
+			System.out.println("Registrazione avvenuta con successo!");
+		}
+		else
+		{
+			System.out.println("Non hai confermato l'iscrizione");
+		}
 	}
 	
 	/**

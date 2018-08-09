@@ -90,7 +90,7 @@ public class Fruitore implements Serializable
 	 */
 	private GregorianCalendar CalcolaInizioRinnovo(GregorianCalendar dataScadenza)
 	{
-//		metto scadenza uguale a dataIscrizione e poi tolgo i 10 giorni, non faccio scadenza = dataIscrizione sennò si modifica anche data iscrizione
+//		metto scadenza uguale a dataIscrizione e poi tolgo i 10 giorni, non faccio scadenza = dataScadenza sennò si modifica anche data iscrizione
 		GregorianCalendar scadenza = new GregorianCalendar(dataScadenza.get(GregorianCalendar.YEAR), dataScadenza.get(GregorianCalendar.MONTH), dataScadenza.get(GregorianCalendar.DAY_OF_MONTH));
 		scadenza.add(GregorianCalendar.DAY_OF_MONTH, -10);
 		return scadenza;

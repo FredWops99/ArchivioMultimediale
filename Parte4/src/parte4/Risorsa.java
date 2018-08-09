@@ -3,8 +3,7 @@ package parte4;
 import parte4.Risorsa;
 
 public abstract class Risorsa 
-{
-	
+{	
 	/**
 	 * stampa le informazioni relative alla risorsa
 	 * @param perPrestito true se la visualizzazione serve nell'elenco dei prestiti
