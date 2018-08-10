@@ -1,1 +1,0 @@
-java -jar parte5.jar
