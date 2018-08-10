@@ -110,6 +110,11 @@ public class ServizioFile
 	      }
 	}
 	
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> refs/remotes/origin/master
 	/**
 	 * passo anche un oggetto da salvare nel file quando non esiste e viene creato: utile quando il programma inizia con un caricamento da file: se l'oggetto viene creato vuoto si genera una eccezione
 	 * @param file il file del quale si controlla l'esistenza
