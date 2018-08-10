@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Parte1/src"/>
+	<classpathentry kind="src" path="Parte2/src"/>
+	<classpathentry kind="src" path="Parte3/src"/>
+	<classpathentry kind="src" path="Parte4/src"/>
+	<classpathentry kind="src" path="Parte5/src"/>
+	<classpathentry kind="lib" path="Parte1/runnable jar/parte1.jar"/>
+	<classpathentry kind="lib" path="Parte2/runnable jar/parte2.jar"/>
+	<classpathentry kind="lib" path="Parte3/runnable jar/parte3.jar"/>
+	<classpathentry kind="lib" path="Parte4/runnable jar/parte4.jar"/>
+	<classpathentry kind="lib" path="Parte5/runnable jar/parte5.jar"/>
+	<classpathentry kind="output" path="Parte1/bin"/>
+</classpath>
