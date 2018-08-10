@@ -86,10 +86,7 @@ public class Film extends Risorsa implements Serializable
 	
 	public void stampaDati(boolean perPrestito)
 	{
-//		System.out.println(BelleStringhe.CORNICE);
 		System.out.println("Categoria-----------------: Film");
-//		System.out.println("ID------------------------: " + id);
-//		System.out.println("Hashcode------------------: " + hashCode());
 		System.out.println("Sottocategoria------------: " + sottoCategoria);
 		System.out.println("Titolo--------------------: " + titolo);
 		System.out.println("Durata--------------------: " + durata + "'");

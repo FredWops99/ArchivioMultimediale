@@ -1,1 +1,8 @@
-separazione modello-vista
+SEPARAZIONE MODELLO-VISTA:
+MODEL gestisce i dati, VIEW li mostra.
+far diventare i metodi stampaDati (di Films ecc) metodi toString: ci penserà la view a richiamarli e stamparli. così non c'è view insieme ai dati
+metodi di interazione con l'utente invece devono stare in Controller? tipo cercaFilm, rimuoviFilm, ...
+nella view creo e mostro i MENU? non contengono dati, mostrano solo scritte
+
+
+cosa da rifattorizzare potrebbe essere ricostruisci prestiti: salvando nello stesso file? 
