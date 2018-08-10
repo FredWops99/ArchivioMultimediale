@@ -81,7 +81,7 @@ public class Main
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
-//		segna come "decadute" le iscrizioni in archivio che sono scadute
+//		segna come "decadute" le iscrizioni in archivio che sono scadute.
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
 //		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
