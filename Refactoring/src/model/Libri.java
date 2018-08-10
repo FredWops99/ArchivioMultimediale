@@ -1,9 +1,10 @@
-package parte5;
+package model;
 
 import java.io.Serializable;
 import java.util.Vector;
+
+import model.Libro;
 import myLib.MyMenu;
-import parte5.Libro;
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;

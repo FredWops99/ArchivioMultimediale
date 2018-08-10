@@ -1,29 +1,18 @@
-/**
-VERSIONE 5.0
-*Quest’ultima versione dell’applicazione deve supportare la conservazione in archivio di
-*informazioni storiche relative a:
-*fruitori, iscrizioni, rinnovi di iscrizione e decadenze;
-*risorse (ad esempio, si deve tenere traccia di risorse che sono state prestabili in
-*passato ma ora non lo sono più);
-*prestiti e proroghe degli stessi.
-**/
+package view;
 
-package parte5;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Vector;
-import myLib.MyMenu;
+import model.Archivio;
+import model.Film;
+import model.Fruitore;
+import model.Fruitori;
+import model.Libro;
+import model.Prestiti;
+import model.Storico;
 import myLib.BelleStringhe;
 import myLib.InputDati;
+import myLib.MyMenu;
 import myLib.ServizioFile;
 
-/**
- * Classe main del programma Archivio Multimediale
- * @author Prandini Stefano
- * @author Landi Federico
- */
-public class Main 
+public class ShowMenus 
 {
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 	private static final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
@@ -33,78 +22,36 @@ public class Main
 	private static final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
 	private static final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
 																"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
+	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
+	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";
+	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";
 	private static final String[] CATEGORIE = {"Libri","Film"};
-	
-	private static final String PATH_FRUITORI = "Fruitori.dat";
-	private static final String PATH_ARCHIVIO= "Archivio.dat";
-	private static final String PATH_PRESTITI = "Prestiti.dat";
-	
- 	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
-	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";
+	private static final String Fruitori = null;
 	
 	private static boolean continuaMenuAccesso;
 	private static boolean continuaMenuFruitore;
 	private static boolean continuaMenuOperatore;
 	private static boolean continuaMenuPersonale;
 	
-	private static File fileFruitori = new File(PATH_FRUITORI);
-	private static File fileArchivio = new File(PATH_ARCHIVIO);
-	private static File filePrestiti = new File(PATH_PRESTITI);
-
-	private static Fruitori fruitori = new Fruitori();
-	private static Archivio archivio = new Archivio();
-	private static Prestiti prestiti = new Prestiti();
-	
 	private static Fruitore utenteLoggato = null;
-	
-	public static void main(String[] args)
-	{				
-		try 
-		{
-//			se non c'è il file lo crea (vuoto) e salva all'interno l'oggetto corrispondente.
-//			così quando dopo si fa il caricamento non ci sono eccezioni
-			ServizioFile.checkFile(fileFruitori, fruitori);
-			ServizioFile.checkFile(fileArchivio, archivio);
-			ServizioFile.checkFile(filePrestiti, prestiti);
-		}	
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		
-//		avviato il programma carico i fruitori, i libri e i prestiti da file
-		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori, false);
-		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio, false);
-		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti, false);
-		
-//		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
-		ricostruisciPrestiti();
-		
-//		segna come "decadute" le iscrizioni in archivio che sono scadute.
-		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
-//		rimuovo i prestiti che gli utenti scaduti avevano attivi
-		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
-		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
-		
-//		elimino i prestiti scaduti
-		prestiti.controlloPrestiti();
-		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
-		
+
+	public static void showMenuAccesso(Fruitori fruitori, Archivio archivio, Prestiti prestiti)
+	{
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
 		do
 		{
-			gestisciMenuAccesso(menuAccesso.scegli());
+			gestisciMenuAccesso(menuAccesso.scegli(), fruitori);
 		}
-		while(continuaMenuAccesso);		
+		while(continuaMenuAccesso);	
 	}
 	
 	/**
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuAccesso(int scelta) 
+	private static void gestisciMenuAccesso(int scelta, Fruitori fruitori) 
 	{
 		continuaMenuAccesso=true;
 
@@ -140,7 +87,7 @@ public class Main
 					continuaMenuOperatore=true;
 					do
 					{
-						gestisciMenuOperatore(menuOperatore.scegli());
+						gestisciMenuOperatore(menuOperatore.scegli(), fruitori);
 					}
 					while(continuaMenuOperatore);
 				}
@@ -154,12 +101,12 @@ public class Main
 			}
 		}
 	}
-
+	
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta) 
+	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -171,7 +118,8 @@ public class Main
 			}
 			case 1://VISUALIZZA FRUITORI
 			{
-				fruitori.stampaFruitoriAttivi();
+				//fruitori.stampaFruitoriAttivi();
+				FruitoriView.stampaDati(fruitori.getFruitori());
 				
 				continuaMenuOperatore=true;
 				break;
@@ -437,45 +385,6 @@ public class Main
 				continuaMenuPersonale = true;
 				break;
 			}
-		}
-	}
-	
-	/**
-	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 
-	 * uguale prima del caricamento diventa diverso dopo il caricamento): Risorse e Prestiti vengono salvati in posti diversi e poi caricati come "diversi".
-	 * Quando invece viene creato il prestito, la sua risorsa e quella in archivio sono lo stesso oggetto. Salvando e caricando in due posti diversi è come se "si sdoppiasse".
-	 * Per non dover salvare tutto in unico file, in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
-	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
-	 */
-	public static void ricostruisciPrestiti()
-	{
-		for(Prestito prestito : prestiti.getPrestiti())
-		{
-			if(prestito.getRisorsa() instanceof Libro)
-			{
-				for(Libro libro : archivio.getLibri().getLibri())
-				{
-					if(prestito.getRisorsa().equals(libro))
-					{
-						prestito.setRisorsa(libro);
-					}
-				}
-			}
-			else if(prestito.getRisorsa() instanceof Film)
-			{
-				for(Film film : archivio.getFilms().getfilms())
-				{
-					if(prestito.getRisorsa().equals(film))
-					{
-						prestito.setRisorsa(film);
-					}
-				}
-			}
-//			else if(altra categoria)
-//			{
-//				...
-//			}
-			
 		}
 	}
 }

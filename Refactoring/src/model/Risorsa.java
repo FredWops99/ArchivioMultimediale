@@ -1,4 +1,4 @@
-package parte5;
+package model;
 
 /**
  * classe astratta che rappresenta una generica risorsa dell'archivio multimediale

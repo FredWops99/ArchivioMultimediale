@@ -1,4 +1,4 @@
-package parte5;
+package model;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
@@ -124,17 +124,17 @@ public class Fruitori implements Serializable
 	 *	- Data scadenza iscrizione
 	 *	- Rinnovo iscrizione dal
 	 */
-	public void stampaFruitoriAttivi()
-	{
-		System.out.println("Numero fruitori: " + fruitori.size());
-		for(Fruitore fruitore : fruitori)
-		{
-			if(!fruitore.isDecaduto())
-			{
-				fruitore.stampaDati();
-			}
-		}
-	}
+//	public void stampaFruitoriAttivi()
+//	{
+//		System.out.println("Numero fruitori: " + fruitori.size());
+//		for(Fruitore fruitore : fruitori)
+//		{
+//			if(!fruitore.isDecaduto())
+//			{
+//				fruitore.stampaDati();
+//			}
+//		}
+//	}
 	
 	/**
 	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni assegna al fruitore lo status di "decaduto"

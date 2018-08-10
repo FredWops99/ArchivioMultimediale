@@ -1,4 +1,4 @@
-package parte5;
+package model;
 
 import java.io.Serializable;
 
