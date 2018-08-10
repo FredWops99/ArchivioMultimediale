@@ -110,21 +110,6 @@ public class ServizioFile
 	      }
 	}
 	
-	public static void checkFile(File file) throws IOException 
-	{
-		if (file.exists())
-		{
-            System.out.println("Il file " + file.getPath() + " esiste");
-
-		}
-        else if (file.createNewFile())
-        {
-            System.out.println("Il file " + file.getPath() + " è stato creato");
-        }
-        else
-            System.out.println("Il file " + file.getPath() + " non può essere creato");
-	}
-	
 	/**
 	 * passo anche un oggetto da salvare nel file quando non esiste e viene creato: utile quando il programma inizia con un caricamento da file: se l'oggetto viene creato vuoto si genera una eccezione
 	 * @param file il file del quale si controlla l'esistenza
