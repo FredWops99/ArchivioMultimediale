@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 import myLib.GestioneDate;
-import myLib.InputDati;
+import view.FruitoriView;
 
 /**
  * Classe rappresentante tutti i fruitori che hanno accesso all'archivio multimediale
@@ -38,24 +38,24 @@ public class Fruitori implements Serializable
 	 */
 	public void addFruitore()
 	{
-		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
-		String cognome = InputDati.leggiStringaNonVuota("Inserisci il tuo cognome: ");
-		GregorianCalendar dataNascita = GestioneDate.creaDataGuidataPassata("inserisci la tua data di nascita: ", 1900);
+		String nome = FruitoriView.chiediNome();
+		String cognome = FruitoriView.chiediCognome();
+		GregorianCalendar dataNascita = FruitoriView.chiediDataNascita();
 		
 		//controllo che l'utente sia maggiorenne
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
 		{
-			System.out.println("Ci dispiace, per accedere devi essere maggiorenne");
+			FruitoriView.messaggioUtenteMinorenne();
 			return;
 		}
 		
 		String user;
 		do
 		{
-			user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
+			user = FruitoriView.chiediUsername();
 			if(!usernameDisponibile(user))
 			{
-				System.out.println("Nome utente non disponibile!");
+				FruitoriView.UsernameNonDisponibile();
 			}
 		}
 		while(!usernameDisponibile(user));
@@ -65,8 +65,8 @@ public class Fruitori implements Serializable
 		boolean corretta = false;
 		do
 		{
-			password1 = InputDati.leggiStringaNonVuota("Inserisci la password: ");
-			password2 = InputDati.leggiStringaNonVuota("Inserisci nuovamente la password: ");
+			password1 = FruitoriView.chiediPassword();
+			password2 = FruitoriView.confermaPassword();
 			
 			if(password1.equals(password2)) 
 			{
@@ -74,7 +74,7 @@ public class Fruitori implements Serializable
 			}
 			else
 			{
-				System.out.println("Le due password non coincidono, riprova");
+				FruitoriView.passwordNonCoincidono();
 			}
 		}
 		while(!corretta);
@@ -83,15 +83,15 @@ public class Fruitori implements Serializable
 //		creo il nuovo fruitore
 		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 		
-		if(InputDati.yesOrNo("Confermi l'iscrizione con questi dati?"))
+		if(FruitoriView.confermaDati())
 		{
 //			aggiungo al vector fruitori il nuovo fruitore
 			fruitori.add(f);
-			System.out.println("Registrazione avvenuta con successo!");
+			FruitoriView.confermaIscrizione();
 		}
 		else
 		{
-			System.out.println("Non hai confermato l'iscrizione");
+			FruitoriView.nonConfermaIscrizione();
 		}
 	}
 	
@@ -113,28 +113,6 @@ public class Fruitori implements Serializable
 		}
 		return true;
 	}
-
-	/**
-	 * Stampa per ogni fruitore:
-	 * 	- Nome
-	 *	- Cognome
-	 *	- Username
-	 *	- Data di nascita
-	 *	- Data di iscrizione
-	 *	- Data scadenza iscrizione
-	 *	- Rinnovo iscrizione dal
-	 */
-//	public void stampaFruitoriAttivi()
-//	{
-//		System.out.println("Numero fruitori: " + fruitori.size());
-//		for(Fruitore fruitore : fruitori)
-//		{
-//			if(!fruitore.isDecaduto())
-//			{
-//				fruitore.stampaDati();
-//			}
-//		}
-//	}
 	
 	/**
 	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni assegna al fruitore lo status di "decaduto"
@@ -153,7 +131,7 @@ public class Fruitori implements Serializable
 				rimossi++;
 			}
 		}
-		System.out.println("\nIscrizioni scadute (utenti rimossi): " + rimossi);
+		FruitoriView.utentiRimossi(rimossi);
 		return utenti;
 	}
 	

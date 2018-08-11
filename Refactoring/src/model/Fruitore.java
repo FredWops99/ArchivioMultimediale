@@ -3,8 +3,10 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
+import view.FruitoriView;
 
 /**
  * Classe rappresentante un fruitore dell'archivio multimediale
@@ -121,29 +123,27 @@ public class Fruitore implements Serializable
 			rinnovi.addElement(GestioneDate.DATA_CORRENTE);
 			calcolaScadenza(GestioneDate.DATA_CORRENTE);
 			CalcolaInizioRinnovo(dataScadenza);
-			System.out.println("la tua iscrizione è stata rinnovata");
+			FruitoriView.iscrizioneRinnovata();
 		}
 		else
 		{
-			System.out.println("Al momento la tua iscrizione non può essere rinnovata:");
-			System.out.println("Potrai effettuare il rinnovo tra il " + GestioneDate.visualizzaData(dataInizioRinnovo) + 
-					" e il " + GestioneDate.visualizzaData(dataScadenza));
+			FruitoriView.iscrizioneNonRinnovata(dataInizioRinnovo, dataScadenza);
 		}
 	}
 	
-	/**
-	 * stampa tutti i dati di un fruitore
-	 */
-	public void stampaDati() 
+	public String toString()
 	{
-		System.out.println(BelleStringhe.CORNICE);
-		System.out.println("Nome----------------------: " + nome);
-		System.out.println("Cognome-------------------: " + cognome);
-		System.out.println("Username------------------: " + username);
-		System.out.println("Data di nascita-----------: " + GestioneDate.visualizzaData(dataNascita));
-		System.out.println("Data di iscrizione--------: " + GestioneDate.visualizzaData(dataIscrizione));
-		System.out.println("Data scadenza iscrizione--: " + GestioneDate.visualizzaData(dataScadenza));
-		System.out.println("Rinnovo iscrizione dal----: " + GestioneDate.visualizzaData(dataInizioRinnovo));
+		StringBuilder sb = new StringBuilder();
+		sb.append(BelleStringhe.CORNICE + "\n");
+		sb.append("Nome----------------------: " + nome + "\n");
+		sb.append("Cognome-------------------: " + cognome + "\n");
+		sb.append("Username------------------: " + username + "\n");
+		sb.append("Data di nascita-----------: " + GestioneDate.visualizzaData(dataNascita) + "\n");
+		sb.append("Data di iscrizione--------: " + GestioneDate.visualizzaData(dataIscrizione) + "\n");
+		sb.append("Data scadenza iscrizione--: " + GestioneDate.visualizzaData(dataScadenza) + "\n");
+		sb.append("Rinnovo iscrizione dal----: " + GestioneDate.visualizzaData(dataInizioRinnovo) + "\n");
+		
+		return sb.toString();
 	}
 
 	// -- GETTER -- //
@@ -219,5 +219,8 @@ public class Fruitore implements Serializable
 	public void setRinnovi(Vector<GregorianCalendar> rinnovi) 
 	{
 		this.rinnovi = rinnovi;
+	}
+	public GregorianCalendar getDataInizioRinnovo() {
+		return dataInizioRinnovo;
 	}
 }

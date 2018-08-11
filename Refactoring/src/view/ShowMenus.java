@@ -119,7 +119,7 @@ public class ShowMenus
 			case 1://VISUALIZZA FRUITORI
 			{
 				//fruitori.stampaFruitoriAttivi();
-				FruitoriView.stampaDati(fruitori.getFruitori());
+				FruitoriView.stampaDatiFruitore(fruitori.getFruitori());
 				
 				continuaMenuOperatore=true;
 				break;
