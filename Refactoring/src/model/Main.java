@@ -11,8 +11,9 @@ VERSIONE 5.0
 package model;
 
 import java.util.Vector;
-import Menus.MenuAccesso;
-import Utility.GestoreSalvataggi;
+
+import menus.MenuAccesso;
+import utility.GestoreSalvataggi;
 
 /**
  * Classe main del programma Archivio Multimediale

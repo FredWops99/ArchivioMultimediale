@@ -1,4 +1,4 @@
-package Menus;
+package menus;
 
 import model.Archivio;
 import model.Fruitori;
