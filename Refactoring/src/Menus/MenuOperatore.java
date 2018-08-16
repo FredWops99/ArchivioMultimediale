@@ -6,8 +6,8 @@ import model.Fruitori;
 import model.Prestiti;
 import model.Storico;
 import myLib.MyMenu;
-import myLib.ServizioFile;
 import view.FruitoriView;
+import view.MessaggiSistemaView;
 
 public class MenuOperatore 
 {
@@ -16,10 +16,12 @@ public class MenuOperatore
 	private static final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
 			"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
 	private static final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
+	
+	private static boolean continuaMenuOperatore;
 
 	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti)
 	{
-		System.out.println("Accesso eseguito con successo!");
+		MessaggiSistemaView.accessoEseguito();
 		
 		MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
 		continuaMenuOperatore=true;

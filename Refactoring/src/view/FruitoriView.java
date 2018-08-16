@@ -131,5 +131,10 @@ public class FruitoriView
 				" e il " + GestioneDate.visualizzaData(dataScadenza));
 	}
 
+	public static void pswErrata() 
+	{
+		System.out.println("Password errata!");	
+	}
+
 	
 }

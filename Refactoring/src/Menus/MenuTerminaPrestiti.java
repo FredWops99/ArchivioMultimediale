@@ -6,7 +6,7 @@ import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
 
-public class MenuPrestiti 
+public class MenuTerminaPrestiti 
 {
 	static String[] scelte = new String[] {"tutti","solo uno"};
 	static String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
