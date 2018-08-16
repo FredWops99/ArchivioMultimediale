@@ -25,6 +25,8 @@ public class Main
 	private static Archivio archivio = new Archivio();
 	private static Prestiti prestiti = new Prestiti();
 	
+	private static Fruitore utenteLoggato;
+	
 	public static void main(String[] args)
 	{		
 		GestoreSalvataggi.checkFiles(fruitori, archivio, prestiti);
@@ -85,5 +87,15 @@ public class Main
 //			}
 			
 		}
+	}
+
+	public static Fruitore getUtenteLoggato() 
+	{
+		return utenteLoggato;
+	}
+
+	public static void setUtenteLoggato(Fruitore _utenteLoggato) 
+	{
+		utenteLoggato = _utenteLoggato;
 	}
 }

@@ -11,4 +11,4 @@ cosa da rifattorizzare potrebbe essere ricostruisci prestiti: salvando nello ste
 
 si potrebbe fare package "menu" che contiene una classe (singleton?) per ogni menu
 
-package Salvataggi, con classi Salva e Carica? c'è già C:
+package Salvataggi, con classi Salva e Carica? c'è già C: a chi assegnare responsabilità? Main?

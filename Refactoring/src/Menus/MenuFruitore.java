@@ -5,10 +5,12 @@ import model.Archivio;
 import model.Film;
 import model.Fruitori;
 import model.Libro;
+import model.Main;
 import model.Prestiti;
 import myLib.InputDati;
 import myLib.MyMenu;
 import myLib.ServizioFile;
+import view.FruitoriView;
 
 public class MenuFruitore 
 {
@@ -58,15 +60,15 @@ public class MenuFruitore
 				String user = InputDati.leggiStringaNonVuota("Inserisci il tuo username: ");
 				String password = InputDati.leggiStringaNonVuota("Inserisci la tua password: ");
 				
-				utenteLoggato = fruitori.trovaUtente(user, password);
+				Main.setUtenteLoggato(fruitori.trovaUtente(user, password));
 				
-				if(utenteLoggato==null)
+				if(Main.getUtenteLoggato()==null)
 				{
 					System.out.println("Utente non trovato! ");
 					return;
 				}
 //				-> utente trovato
-				System.out.println("Benvenuto " + utenteLoggato.getNome() + "!");
+				System.out.println("Benvenuto " + Main.getUtenteLoggato().getNome() + "!");
 				
 				MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
 				continuaMenuPersonale=true;
@@ -99,7 +101,7 @@ public class MenuFruitore
 			}
 			case 1:	//RINNOVA ISCRIZIONE
 			{
-				utenteLoggato.rinnovo();
+				Main.getUtenteLoggato().rinnovo();
 				
 				continuaMenuPersonale = true;
 				break;
@@ -107,7 +109,7 @@ public class MenuFruitore
 			case 2:	//VISUALIZZA INFO PERSONALI
 			{
 				System.out.println("Informazioni personali:");
-				utenteLoggato.stampaDati();
+				FruitoriView.stampaDatiFruitore(Main.getUtenteLoggato());
 				
 				continuaMenuPersonale = true;
 				break;
@@ -128,7 +130,7 @@ public class MenuFruitore
 					String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 					if(categoria == CATEGORIE[0])// == "Libri"
 					{
-						if(prestiti.numPrestitiAttiviDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
+						if(prestiti.numPrestitiAttiviDi(Main.getUtenteLoggato(), categoria) == Libro.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -139,9 +141,9 @@ public class MenuFruitore
 							
 							if(libro != null)
 							{
-								if(prestiti.prestitoFattibile(utenteLoggato, libro))
+								if(prestiti.prestitoFattibile(Main.getUtenteLoggato(), libro))
 								{
-									prestiti.addPrestito(utenteLoggato, libro);
+									prestiti.addPrestito(Main.getUtenteLoggato(), libro);
 								    
 									System.out.println(libro.getTitolo() + " prenotato con successo!");
 								}
@@ -155,7 +157,7 @@ public class MenuFruitore
 					}
 					else if(categoria == CATEGORIE[1])// == "Films"
 					{
-						if(prestiti.numPrestitiAttiviDi(utenteLoggato, categoria) == Film.PRESTITI_MAX)
+						if(prestiti.numPrestitiAttiviDi(Main.getUtenteLoggato(), categoria) == Film.PRESTITI_MAX)
 						{
 							System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 									+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
@@ -166,9 +168,9 @@ public class MenuFruitore
 							
 							if(film != null)
 							{
-								if(prestiti.prestitoFattibile(utenteLoggato, film))
+								if(prestiti.prestitoFattibile(Main.getUtenteLoggato(), film))
 								{
-									prestiti.addPrestito(utenteLoggato, film);
+									prestiti.addPrestito(Main.getUtenteLoggato(), film);
 								
 									System.out.println(film.getTitolo() + " prenotato con successo!");
 								}
@@ -194,13 +196,13 @@ public class MenuFruitore
 			}
 			case 5: //RINNOVA PRESTITO
 			{
-				prestiti.rinnovaPrestito(utenteLoggato);
+				prestiti.rinnovaPrestito(Main.getUtenteLoggato());
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.stampaPrestitiAttiviDi(utenteLoggato);
+				prestiti.stampaPrestitiAttiviDi(Main.getUtenteLoggato());
 				
 				continuaMenuPersonale = true;
 				break;

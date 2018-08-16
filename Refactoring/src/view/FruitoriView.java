@@ -11,7 +11,6 @@ import myLib.InputDati;
  * il model chiede a questa classe, che gli restituisce il risultato che gli serve e stampa anche all'utente.
  * se per esempio l'input-dati restasse nel model, il controller sarebbe assieme ad esso(?)
  * @author Stefano
- *
  */
 
 public class FruitoriView 

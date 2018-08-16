@@ -2,16 +2,19 @@ package Menus;
 
 import Utility.GestoreSalvataggi;
 import model.Archivio;
+import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
-import myLib.ServizioFile;
 
 public class MenuPrestiti 
 {
+	static String[] scelte = new String[] {"tutti","solo uno"};
+	static String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
 
+	
 	public static void show(Prestiti prestiti, Archivio archivio) 
 	{
-		MyMenu menuPrestiti = new MyMenu("Vuoi eliminare tutti i prestiti o solo uno?", new String[] {"tutti","solo uno"}, true);
+		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
 		
 		switch (menuPrestiti.scegliBase()) 
 		{
@@ -21,7 +24,7 @@ public class MenuPrestiti
 		}
 		case 1://elimina tutti i prestiti
 		{
-			prestiti.terminaTuttiPrestitiDi(utenteLoggato);
+			prestiti.terminaTuttiPrestitiDi(Main.getUtenteLoggato());
 			
 			GestoreSalvataggi.salvaPrestiti(prestiti);
 			GestoreSalvataggi.salvaArchivio(archivio);
@@ -30,7 +33,7 @@ public class MenuPrestiti
 		}
 		case 2://elimina un solo prestito (sceglie l'utente)
 		{
-			prestiti.terminaPrestitoDi(utenteLoggato);
+			prestiti.terminaPrestitoDi(Main.getUtenteLoggato());
 			
 			GestoreSalvataggi.salvaPrestiti(prestiti);
 			GestoreSalvataggi.salvaArchivio(archivio);
