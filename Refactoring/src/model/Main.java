@@ -10,11 +10,9 @@ VERSIONE 5.0
 
 package model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Vector;
-import myLib.ServizioFile;
-import view.ShowMenus;
+import Menus.MenuAccesso;
+import Utility.GestoreSalvataggi;
 
 /**
  * Classe main del programma Archivio Multimediale
@@ -23,60 +21,31 @@ import view.ShowMenus;
  */
 public class Main 
 {
-	
-	
-	
-	private static final String PATH_FRUITORI = "Fruitori.dat";
-	private static final String PATH_ARCHIVIO= "Archivio.dat";
-	private static final String PATH_PRESTITI = "Prestiti.dat";
-	
-	
-	
-	private static File fileFruitori = new File(PATH_FRUITORI);
-	private static File fileArchivio = new File(PATH_ARCHIVIO);
-	private static File filePrestiti = new File(PATH_PRESTITI);
-
 	private static Fruitori fruitori = new Fruitori();
 	private static Archivio archivio = new Archivio();
 	private static Prestiti prestiti = new Prestiti();
 	
-	
-	
 	public static void main(String[] args)
-	{				
-		try 
-		{
-//			se non c'è il file lo crea (vuoto) e salva all'interno l'oggetto corrispondente.
-//			così quando dopo si fa il caricamento non ci sono eccezioni
-			ServizioFile.checkFile(fileFruitori, fruitori);
-			ServizioFile.checkFile(fileArchivio, archivio);
-			ServizioFile.checkFile(filePrestiti, prestiti);
-		}	
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
+	{		
+		GestoreSalvataggi.checkFiles(fruitori, archivio, prestiti);
 		
 //		avviato il programma carico i fruitori, i libri e i prestiti da file
-		fruitori = (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori, false);
-		archivio = (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio, false);
-		prestiti = (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti, false);
+		fruitori = GestoreSalvataggi.caricaFruitori();
+		archivio = GestoreSalvataggi.caricaArchivio();
+		prestiti = GestoreSalvataggi.caricaPrestiti();
 		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
 //		segna come "decadute" le iscrizioni in archivio che sono scadute.
 		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
-//		rimuovo i prestiti che gli utenti scaduti avevano attivi
 		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
-		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);
+		prestiti.controlloPrestitiScaduti();
 		
-//		elimino i prestiti scaduti
-		prestiti.controlloPrestiti();
-		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);
+		GestoreSalvataggi.salvaFruitori(fruitori);
+		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		ShowMenus.showMenuAccesso(fruitori, archivio, prestiti);
-				
+		MenuAccesso.show(fruitori, archivio, prestiti);
 	}
 	
 	/**

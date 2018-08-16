@@ -7,3 +7,8 @@ nella view creo e mostro i MENU? non contengono dati, mostrano solo scritte
 
 
 cosa da rifattorizzare potrebbe essere ricostruisci prestiti: salvando nello stesso file? 
+
+
+si potrebbe fare package "menu" che contiene una classe (singleton?) per ogni menu
+
+package Salvataggi, con classi Salva e Carica? c'è già C:

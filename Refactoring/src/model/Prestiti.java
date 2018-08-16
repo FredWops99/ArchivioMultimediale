@@ -26,7 +26,7 @@ public class Prestiti implements Serializable
 	/**
 	 * controllo per tutti i prestiti presenti se sono scaduti (li rimuovo) oppure no
 	 */
-	public void controlloPrestiti() 
+	public void controlloPrestitiScaduti() 
 	{
 		int rimossi = 0;
 		for (Prestito prestito : prestiti) 
