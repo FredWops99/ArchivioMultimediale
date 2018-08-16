@@ -134,7 +134,6 @@ public class Fruitore implements Serializable
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Informazioni personali:");
 		sb.append(BelleStringhe.CORNICE + "\n");
 		sb.append("Nome----------------------: " + nome + "\n");
 		sb.append("Cognome-------------------: " + cognome + "\n");

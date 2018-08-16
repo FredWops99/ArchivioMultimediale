@@ -59,6 +59,7 @@ public class Libri implements Serializable
 		{
 			return;
 		}
+		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: ");
 		int pagine = InputDati.leggiInteroPositivo("Inserisci il numero di pagine: ");
 		int annoPubblicazione = InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
@@ -71,7 +72,6 @@ public class Libri implements Serializable
 			autori.add(autore);
 		} 
 		while(InputDati.yesOrNo("ci sono altri autori? "));
-		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
 		
 		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);

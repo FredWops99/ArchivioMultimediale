@@ -116,7 +116,7 @@ public class FruitoriView
 
 	public static void utentiRimossi(int rimossi) 
 	{
-		System.out.println("\nIscrizioni scadute (utenti rimossi): " + rimossi);		
+		System.out.println("Iscrizioni scadute (utenti rimossi): " + rimossi);		
 	}
 
 	public static void iscrizioneRinnovata() 
