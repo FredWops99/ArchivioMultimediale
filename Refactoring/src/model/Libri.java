@@ -238,26 +238,27 @@ public class Libri implements Serializable
 		}
 		if(libriDaStampare.size() == 0)
 		{
-			System.out.println("In archivio non sono presenti libri disponibili");
+			LibriView.zeroLibriInArchivio();
 			return;
 		}
 		
 		if(libriDaStampare.size() == 1)
 		{
-			System.out.println("\nE' presente un libro in archivio: ");
+			LibriView.unoLibriInArchivio();
 		}
 		else//piu di un libro prestabile in archivio
 		{
-			System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
+			LibriView.piùLibriInArchivio(libri);
 		}
 		for(int j = 0; j < libriDaStampare.size(); j++)
 		{				
-			System.out.println("\n" + BelleStringhe.CORNICE);
+			MessaggiSistemaView.cornice();
 			if(!libriDaStampare.get(j).getGenere().equals("-"))
 			{
-				System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + 
-						", genere: "  + libriDaStampare.get(j).getGenere() + "\n" + BelleStringhe.CORNICE);
-				System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
+				LibriView.sottocategoria(libriDaStampare.get(j));
+				LibriView.genere(libriDaStampare.get(j));
+				MessaggiSistemaView.cornice();
+				LibriView.titolo(libriDaStampare.get(j));
 //				conteggio al contrario così quando elimino un elemento non salto il successivo
 				for(int i = libriDaStampare.size()-1; i >= j+1; i--) 
 				{
@@ -265,7 +266,7 @@ public class Libri implements Serializable
 					{
 						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
 						{
-							System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
+							LibriView.titolo(libriDaStampare.get(j));
 							libriDaStampare.remove(i);
 						}
 					}
@@ -273,14 +274,15 @@ public class Libri implements Serializable
 			}
 			else
 			{
-				System.out.println("Sottocategoria: " + libriDaStampare.get(j).getSottoCategoria() + "\n" + BelleStringhe.CORNICE);
-				System.out.println("titolo: " + libriDaStampare.get(j).getTitolo());
+				LibriView.sottocategoria(libriDaStampare.get(j));
+				MessaggiSistemaView.cornice();
+				LibriView.titolo(libriDaStampare.get(j));
 //				conteggio al contrario così quando elimino un elemento non salto il successivo
 				for(int i = libriDaStampare.size()-1; i >= j+1; i--)
 				{
 					if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
 					{
-						System.out.println("titolo: " + libriDaStampare.get(i).getTitolo());
+						LibriView.titolo(libriDaStampare.get(j));
 						libriDaStampare.remove(i);
 					}
 				}
@@ -362,15 +364,15 @@ public class Libri implements Serializable
 					for(int i = 0; i < libriFiltrati.size(); i++)
 					{
 						System.out.println("\n" + (i+1) + ") ");
-						System.out.println(BelleStringhe.CORNICE);
+						MessaggiSistemaView.cornice();
 						libriFiltrati.get(i).stampaDati(true);
-						System.out.println(BelleStringhe.CORNICE);
+						MessaggiSistemaView.cornice();
 					}
 					
 					int selezione;
 					do
 					{
-						System.out.println("\n" + BelleStringhe.CORNICE);
+						MessaggiSistemaView.cornice();
 						selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
 						if(selezione == 0)
 						{
@@ -413,9 +415,9 @@ public class Libri implements Serializable
 				for(int i = 0; i < libriPrestabili.size(); i++)
 				{
 					System.out.println(i+1 + ")");
-					System.out.println(BelleStringhe.CORNICE);
+					MessaggiSistemaView.cornice();
 					libriPrestabili.get(i).stampaDati(true);
-					System.out.println(BelleStringhe.CORNICE+ "\n");		
+					MessaggiSistemaView.cornice();
 				}
 				int selezione;
 				do
