@@ -11,7 +11,6 @@ public class FilmsView
 	public static void stampaDati(Film film, boolean perPrestito) 
 	{
 		System.out.println(film.toString(perPrestito));
-		
 	}
 
 	public static String chiediTitolo() 
@@ -154,5 +153,25 @@ public class FilmsView
 	public static void filmInArchivio() 
 	{
 		System.out.println("\nFilm in archivio: \n");	
+	}
+
+	public static void unFilmInArchivio() 
+	{
+		System.out.println("\nE' presente un film in archivio: ");	
+	}
+
+	public static void numeroFilmInArchivio(Vector<Film> films) 
+	{
+		System.out.println("\nSono presenti " + films.size() + " films in archivio: ");	
+	}
+
+	public static void stampaCategoria(Film film) 
+	{
+		System.out.println(film.getSottoCategoria());
+	}
+
+	public static void stampaTitolo(Film film) 
+	{
+		System.out.println("titolo: " + film.getTitolo());
 	}
 }

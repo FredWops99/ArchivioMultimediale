@@ -15,8 +15,6 @@ import view.MessaggiSistemaView;
  */
 public class Films implements Serializable
 {	
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
 	private static final long serialVersionUID = 1L;
 	/**
 	 * id incrementale univoco per ogni film
@@ -191,17 +189,17 @@ public class Films implements Serializable
 		
 		if(filmDaStampare.isEmpty())
 		{
-			System.out.println("In archivio non sono presenti film disponibili");
+			FilmsView.noFilmsDisponibili();
 		}
 		else
 		{
 			if(filmDaStampare.size()==1)
 			{
-				System.out.println("\nE' presente un film in archivio: ");
+				FilmsView.unFilmInArchivio();
 			}
 			else
 			{
-				System.out.println("\nSono presenti " + films.size() + " films in archivio: ");
+				FilmsView.numeroFilmInArchivio(films);
 			}
 			
 			for(int i = 0; i < filmDaStampare.size(); i++)
@@ -210,10 +208,10 @@ public class Films implements Serializable
 				if(i == 0 || filmDaStampare.get(i).getSottoCategoria() != filmDaStampare.get(i-1).getSottoCategoria())
 				{
 					MessaggiSistemaView.cornice();
-					System.out.println(filmDaStampare.get(i).getSottoCategoria());
+					FilmsView.stampaCategoria(filmDaStampare.get(i));
 					MessaggiSistemaView.cornice();
 				}
-				System.out.println("titolo: " + filmDaStampare.get(i).getTitolo());
+				FilmsView.stampaTitolo(filmDaStampare.get(i));
 			}
 		}
 	}
