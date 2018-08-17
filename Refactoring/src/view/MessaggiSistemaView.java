@@ -22,4 +22,9 @@ public class MessaggiSistemaView
 	{
 		System.out.println("Accesso eseguito con successo!");		
 	}
+
+	public static void avvisoRimozioneRisorsa() 
+	{
+		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");		
+	}
 }

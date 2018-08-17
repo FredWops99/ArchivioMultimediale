@@ -145,6 +145,11 @@ public class Fruitore implements Serializable
 		
 		return sb.toString();
 	}
+	
+	public void stampaDati()
+	{
+		FruitoriView.stampaDati(this);
+	}
 
 	// -- GETTER -- //
 	public String getNome() 

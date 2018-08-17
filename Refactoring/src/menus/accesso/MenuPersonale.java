@@ -1,5 +1,6 @@
-package menus;
+package menus.accesso;
 
+import menus.MenuTerminaPrestiti;
 import model.Archivio;
 import model.Film;
 import model.Libro;
@@ -7,7 +8,6 @@ import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
 import utility.GestoreSalvataggi;
-import view.FruitoriView;
 import view.PrestitiView;
 
 public class MenuPersonale 
@@ -56,7 +56,7 @@ public class MenuPersonale
 			}
 			case 2:	//VISUALIZZA INFO PERSONALI
 			{
-				FruitoriView.stampaDatiFruitore(Main.getUtenteLoggato());
+				Main.getUtenteLoggato().stampaDati();
 				
 				continuaMenuPersonale = true;
 				break;

@@ -127,6 +127,24 @@ public class Libro extends Risorsa implements Serializable
 			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
 		}
 	}
+	
+	@Override
+	public String toString(boolean perPrestito) 
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Categoria-----------------: Libro");
+//		...
+//		appendere le altre stringhe che sono nel metodo stampaDati sopra
+//		...
+		
+		return sb.toString();
+	}
+
+	@Override
+	public void stampaDati() 
+	{
+//		LibriView.stampaDati(this);
+	}
 
 	public String getId() 
 	{

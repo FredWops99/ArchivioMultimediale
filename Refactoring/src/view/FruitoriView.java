@@ -25,7 +25,7 @@ public class FruitoriView
 	 *	- Data scadenza iscrizione
 	 *	- Rinnovo iscrizione dal
 	 */
-	public static void stampaDatiFruitore(Fruitore f) 
+	public static void stampaDati(Fruitore f) 
 	{
 		System.out.println(f.toString());
 	}
@@ -41,7 +41,7 @@ public class FruitoriView
 	 *	- Data scadenza iscrizione
 	 *	- Rinnovo iscrizione dal
 	 */
-	public static void stampaDatiFruitore(Vector<Fruitore> fruitori)
+	public static void stampaDati(Vector<Fruitore> fruitori)
 	{
 		
 		System.out.println("Numero fruitori: " + fruitori.size());
@@ -49,7 +49,7 @@ public class FruitoriView
 		{
 			if(!fruitore.isDecaduto())
 			{
-				stampaDatiFruitore(fruitore);
+				stampaDati(fruitore);
 			}
 		}
 	}

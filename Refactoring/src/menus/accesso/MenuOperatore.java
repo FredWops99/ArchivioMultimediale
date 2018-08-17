@@ -1,4 +1,4 @@
-package menus;
+package menus.accesso;
 
 import model.Archivio;
 import model.Fruitori;
@@ -6,7 +6,6 @@ import model.Prestiti;
 import model.Storico;
 import myLib.MyMenu;
 import utility.GestoreSalvataggi;
-import view.FruitoriView;
 import view.MessaggiSistemaView;
 
 public class MenuOperatore 
@@ -49,7 +48,7 @@ public class MenuOperatore
 			case 1://VISUALIZZA FRUITORI
 			{
 				//fruitori.stampaFruitoriAttivi();
-				FruitoriView.stampaDatiFruitore(fruitori.getFruitori());
+				fruitori.stampaDati();
 				
 				continuaMenuOperatore=true;
 				break;

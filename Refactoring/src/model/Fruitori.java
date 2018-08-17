@@ -153,4 +153,9 @@ public class Fruitori implements Serializable
 		}
 		return null;	//se non è presente
 	}	
+	
+	public void stampaDati()
+	{
+		FruitoriView.stampaDati(this.fruitori);
+	}
 }

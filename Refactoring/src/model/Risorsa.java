@@ -15,10 +15,15 @@ public abstract class Risorsa
 	 */
 	public abstract boolean equals(Risorsa r);
 	/**
-	 * stampa le informazioni relative alla risorsa
-	 * @param perPrestito true se la visualizzazione serve nell'elenco dei prestiti
+	 * restituisce una stringa contenente le informazioni riguardanti la risorsa
+	 * @param perPrestito indica se le informazioni vanno visualizzate nella schermata dei prestiti o no (vengono mostrate info diverse)
+	 * @return
 	 */
-	public abstract void stampaDati(boolean perPrestito);
+	public abstract String toString(boolean perPrestito);
+	/**
+	 * stampa le informazioni relative alla risorsa
+	 */
+	public abstract void stampaDati();
 	/**
 	 * @return il titolo della risorsa
 	 */

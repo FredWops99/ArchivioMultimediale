@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import view.FilmsView;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film
  * @author Prandini Stefano
@@ -84,23 +86,31 @@ public class Film extends Risorsa implements Serializable
 		else return false;
 	}
 	
-	public void stampaDati(boolean perPrestito)
+	public String toString(boolean perPrestito)
 	{
-		System.out.println("Categoria-----------------: Film");
-		System.out.println("Sottocategoria------------: " + sottoCategoria);
-		System.out.println("Titolo--------------------: " + titolo);
-		System.out.println("Durata--------------------: " + durata + "'");
-		System.out.println("Anno di uscita------------: " + annoDiUscita);
-		System.out.println("Lingua--------------------: " + lingua);
+		StringBuilder sb = new StringBuilder();
+		sb.append("Categoria-----------------: Film");
+		sb.append("Sottocategoria------------: " + sottoCategoria);
+		sb.append("Titolo--------------------: " + titolo);
+		sb.append("Durata--------------------: " + durata + "'");
+		sb.append("Anno di uscita------------: " + annoDiUscita);
+		sb.append("Lingua--------------------: " + lingua);
 		if(!perPrestito)//dati utili all'operatore
 		{
-			System.out.println("Numero licenze------------: " + nLicenze);
-			System.out.println("In prestito---------------: " + inPrestito);
+			sb.append("Numero licenze------------: " + nLicenze);
+			sb.append("In prestito---------------: " + inPrestito);
 		}
 		else//dati utili al fruitore
 		{
-			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
+			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito));
 		}
+		return sb.toString();
+	}
+	
+	@Override
+	public void stampaDati() 
+	{
+		FilmsView.stampaDati(this);
 	}
 
 	//GETTER//
