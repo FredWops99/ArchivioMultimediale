@@ -27,4 +27,33 @@ public class MessaggiSistemaView
 	{
 		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");		
 	}
+
+	public static void cornice() 
+	{
+		System.out.println(BelleStringhe.CORNICE);	
+	}
+	
+	public static void cornice(boolean spazioInizio, boolean spazioFine)
+	{
+		if(!spazioInizio && !spazioFine)
+		{
+			cornice();
+		}
+		else if(spazioInizio && !spazioFine)
+		{
+			System.out.println();
+			cornice();
+		}
+		else if(!spazioInizio && spazioFine)
+		{
+			cornice();
+			System.out.println();
+		}
+		else
+		{
+			System.out.println();
+			cornice();
+			System.out.println();
+		}
+	}
 }

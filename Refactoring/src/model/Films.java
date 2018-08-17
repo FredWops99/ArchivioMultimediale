@@ -2,10 +2,11 @@ package model;
 
 import java.io.Serializable;
 import java.util.Vector;
-import myLib.BelleStringhe;
-import myLib.GestioneDate;
-import myLib.InputDati;
-import myLib.MyMenu;
+import menus.risorse.films.MenuFiltroFilm;
+import menus.risorse.films.MenuScegliFilm;
+import menus.risorse.films.MenuSottoCategoriaFilm;
+import view.FilmsView;
+import view.MessaggiSistemaView;
 
 /**
  * Classe che rappresenta l'insieme dei film in archivio
@@ -13,18 +14,12 @@ import myLib.MyMenu;
  * @author Landi Federico
  */
 public class Films implements Serializable
-{
+{	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * id incrementale univoco per ogni film
 	 */
-	private int lastId;
-	
-	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
-	private static final int ANNO_PRIMA_PELLICOLA = 1885;
-	
+	private int lastId;	
 	private Vector<Film> films;
 	
 	/**
@@ -55,17 +50,18 @@ public class Films implements Serializable
 		{
 			return;
 		}
-		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
-		int durata = InputDati.leggiInteroPositivo("Inserisci la durata del film (in minuti): ");
-		int annoDiUscita = InputDati.leggiIntero("Inserisci l'anno di uscita: ", ANNO_PRIMA_PELLICOLA, GestioneDate.ANNO_CORRENTE);
-		String lingua = InputDati.leggiStringaNonVuota("Inserisci la lingua del film: ");
-		String regista = InputDati.leggiStringaNonVuota("Inserisci il regista: ");	
-		int nLicenze = InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
+		
+		String titolo = FilmsView.chiediTitolo();
+		int durata = FilmsView.chiediDurata();
+		int annoDiUscita = FilmsView.chiediAnnoUscita();
+		String lingua = FilmsView.chiediLingua();
+		String regista = FilmsView.chiediRegista();
+		int nLicenze = FilmsView.chiediNumeroLicenze();
 		
 		Film f = new Film("F"+lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		addPerSottoCategorie(f);
 		
-		System.out.println("Film aggiunto con successo!");
+		FilmsView.aggiuntaRiuscita();
 	}
 	
 	/**
@@ -74,16 +70,9 @@ public class Films implements Serializable
 	 */
 	private String scegliSottoCategoria()
 	{
-		MyMenu menu = new MyMenu("scegli la sottocategoria del film: ", SOTTOCATEGORIE, true);
-		try
-		{
-			return SOTTOCATEGORIE[menu.scegliBase() - 1];
-		}
-//		se l'utente selezione 0: ANNULLA -> eccezione
-		catch(ArrayIndexOutOfBoundsException e)
-		{
-			return "annulla";
-		}	
+		String sottocategoria = MenuSottoCategoriaFilm.show();
+		
+		return sottocategoria;
 	}
 	
 	/**
@@ -120,7 +109,7 @@ public class Films implements Serializable
 	{
 		String idSelezionato;
 		
-		String titolo = InputDati.leggiStringaNonVuota("Inserisci il titolo del film da rimuovere: ");
+		String titolo = FilmsView.chiediFilmDaRimuovere();
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -134,7 +123,7 @@ public class Films implements Serializable
 		}
 		if(posizioniRicorrenze.size()==0)
 		{
-			System.out.println("Siamo spiacenti, il film non è presente nell'archivio");
+			FilmsView.filmNonPresente();
 			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in films
@@ -142,28 +131,30 @@ public class Films implements Serializable
 		{
 			idSelezionato = films.get((int)posizioniRicorrenze.get(0)).getId();
 			films.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);;
-			System.out.println("Rimozione avvenuta con successo!");
+			FilmsView.rimozioneAvvenuta();
 		}
 //		se ci sono più elementi nel vettore (più films con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
 //		l'utente inserisce quale rimuovere -> prendo la posizione in films di quell'elemento e lo rimuovo da films
 		else
 		{
-			System.out.println("Sono presenti più films dal titolo \"" + titolo + "\": ");
+			FilmsView.piùFilmStessoTitolo(titolo);
+			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
 			{
-				System.out.println("\nRicorrenza " + ++pos + ":");
-				System.out.println(BelleStringhe.CORNICE);
+				FilmsView.numeroRicorrenza(pos);
+				MessaggiSistemaView.cornice();
 				films.elementAt((int)i).stampaDati(false);
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioniRicorrenze.size());
+			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+					
 			if(daRimuovere > 0)
 			{
 				idSelezionato = films.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
 				films.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				System.out.println("Rimozione avvenuta con successo!");
+				FilmsView.rimozioneAvvenuta();
 			}
 			else//0: annulla
 			{
@@ -178,63 +169,7 @@ public class Films implements Serializable
 	 */
 	public void cercaFilm()
 	{
-		Vector<Film> filmsFiltrati = null;
-		String titoloParziale = null;
-		int annoUscita = 0;
-		String nomeRegista = null;
-		
-		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-		int scelta = menuFiltro.scegliBase();
-		switch(scelta) 
-		{
-			case 0:	//INDIETRO
-			{
-				return;
-			}
-			case 1: //FILTRA PER TITOLO
-			{
-				titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del film: \n");
-				filmsFiltrati = filtraFilmPerTitolo(titoloParziale);
-				break;
-			}
-			
-			case 2:	//FILTRA PER ANNO PUBBLICAZIONE
-			{
-				annoUscita = InputDati.leggiIntero("Inserisci l'anno di uscita: \n", ANNO_PRIMA_PELLICOLA, GestioneDate.ANNO_CORRENTE);
-				filmsFiltrati = filtraFilmPerUscita(annoUscita);
-				break;
-			}
-			
-			case 3: //FILTRA PER AUTORE
-			{
-				nomeRegista = InputDati.leggiStringaNonVuota("Inserisci il nome del regista:  \n");
-				filmsFiltrati = filtraFilmPerRegista(nomeRegista);
-				break;
-			}
-		}
-		
-		if(scelta == 1 && filmsFiltrati.isEmpty()) 
-		{
-			System.out.println("In archivio non sono presenti film il cui titolo è " + titoloParziale);
-			return;
-		}
-		if(scelta == 2 && filmsFiltrati.isEmpty())
-		{
-			System.out.println("In archivio non sono presenti film il cui anno di uscita è " + annoUscita);
-			return;
-		}
-		if(scelta == 3 && filmsFiltrati.isEmpty())
-		{
-			System.out.println("In archivio non sono presenti film il cui regista è " + nomeRegista);
-			return;
-		}
-		
-		for (int i=0; i <filmsFiltrati.size(); i++) 
-		{
-			System.out.println();
-			System.out.println(BelleStringhe.CORNICE);
-			filmsFiltrati.get(i).stampaDati(false);
-		}
+		MenuFiltroFilm.show(films, false);	
 	}
 	
 	/**
@@ -250,34 +185,7 @@ public class Films implements Serializable
 				filmDaStampare.add(film);
 			}
 		}
-		
-		if(filmDaStampare.isEmpty())
-		{
-			System.out.println("In archivio non sono presenti film disponibili");
-		}
-		else
-		{
-			if(filmDaStampare.size()==1)
-			{
-				System.out.println("\nE' presente un film in archivio: ");
-			}
-			else
-			{
-				System.out.println("\nSono presenti " + films.size() + " films in archivio: ");
-			}
-			
-			for(int i = 0; i < filmDaStampare.size(); i++)
-			{
-//				stampa la sottocategoria solo se è il primo elemento o se il sottogenere è cambiato (sono in ordine nel vettore)
-				if(i == 0 || filmDaStampare.get(i).getSottoCategoria() != filmDaStampare.get(i-1).getSottoCategoria())
-				{
-					System.out.println("\n" + BelleStringhe.CORNICE);	
-					System.out.println(filmDaStampare.get(i).getSottoCategoria());
-					System.out.println(BelleStringhe.CORNICE);
-				}
-				System.out.println("titolo: " + filmDaStampare.get(i).getTitolo());
-			}
-		}
+		FilmsView.stampaDati(filmDaStampare);
 	}
 	
 	/**
@@ -286,202 +194,9 @@ public class Films implements Serializable
 	 */
 	public Film scegliFilm() 
 	{
-		MyMenu menuSceltaFilm = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
-		int scelta = menuSceltaFilm.scegliBase();
-		switch(scelta)
-		{
-			case 0://INDIETRO
-			{
-				return null;
-			}
-			case 1://FILTRA RICERCA
-			{
-				Vector<Film> FilmsFiltrati = null;
-				String titoloParziale = null;
-				int annoUscita = 0;
-				String nomeRegista = null;
-				
-				MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-				int scegli = menuFiltro.scegliBase();
-				switch(scegli)
-				{
-					case 0://INDIETRO
-					{
-						return null;
-					}
-					case 1: //FILTRA PER TITOLO
-					{
-						titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
-						FilmsFiltrati = filtraFilmPerTitolo(titoloParziale);
-						break;
-					}
-					case 2://FILTRA PER ANNO PUBBLICAZIONE
-					{
-						annoUscita = InputDati.leggiIntero("Inserisci l'anno di uscita: \n", ANNO_PRIMA_PELLICOLA, GestioneDate.ANNO_CORRENTE);
-						FilmsFiltrati = filtraFilmPerUscita(annoUscita);
-						break;
-					}
-					case 3: //FILTRA PER AUTORE
-					{
-						nomeRegista = InputDati.leggiStringaNonVuota("Inserisci il nome del regista:  \n");
-						FilmsFiltrati = filtraFilmPerRegista(nomeRegista);
-						break;
-					}
-				}
-				
-				if(!FilmsFiltrati.isEmpty())
-				{
-					for(int i = 0; i < FilmsFiltrati.size(); i++)
-					{
-						System.out.println("\n" + (i+1) + ") ");
-						System.out.println(BelleStringhe.CORNICE);
-						FilmsFiltrati.get(i).stampaDati(true);
-						System.out.println(BelleStringhe.CORNICE);
-					}
-					
-					int selezione;
-					do
-					{
-						System.out.println("\n" + BelleStringhe.CORNICE);
-						selezione = InputDati.leggiIntero("Seleziona il Film che vuoi ricevere in prestito (0 per annullare): ", 0, films.size());
-						if(selezione == 0)
-						{
-							return null;
-						}
-						else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getnLicenze())
-						{
-							return films.get(selezione-1);
-						}
-						else
-						{
-							System.out.println("Tutte le copie di \"" + films.get(selezione-1).getTitolo() + "\" sono in prestito!");
-						}
-					}
-					while(true);
-				}
-				else//nessuna corrispondenza: vettore vuoto
-				{
-					System.out.println("Nessun film corrispondente al criterio di ricerca");
-					return null;
-				}
-			}
-			case 2://VISUALIZZA ARCHIVIO
-			{
-				Vector<Film>filmPrestabili = new Vector<>();
-				for(Film film : films)
-				{
-					if(film.isPrestabile())
-					{
-						filmPrestabili.add(film);
-					}
-				}
-				if(filmPrestabili.isEmpty())
-				{
-					System.out.println("In archivio non sono presenti film disponibili");
-					return null;
-				}
-				
-				System.out.println("\nFilm in archivio: \n");
-				for(int i = 0; i < filmPrestabili.size(); i++)
-				{
-					System.out.println(i+1 + ")");
-					System.out.println(BelleStringhe.CORNICE);
-					filmPrestabili.get(i).stampaDati(true);
-					System.out.println(BelleStringhe.CORNICE+ "\n");		
-				}
-				int selezione;
-				do
-				{
-					selezione = InputDati.leggiIntero("Seleziona il film che vuoi ricevere in prestito (0 per annullare): ", 0, filmPrestabili.size());
-					if(selezione == 0)
-					{
-						return null;
-					}
-					else if(filmPrestabili.get(selezione-1).getInPrestito() < filmPrestabili.get(selezione-1).getnLicenze())
-					{
-						return filmPrestabili.get(selezione-1);
-					}
-					else
-					{
-						System.out.println("Tutte le copie di \"" + filmPrestabili.get(selezione-1).getTitolo() + "\" sono in prestito!");
-					}
-				}
-				while(true);
-			}
-		}
-//		DEFAULT: qua non arriva mai
-		return null;
+		Film filmSelezionato = MenuScegliFilm.show(films);
+		return filmSelezionato;
 	}
 	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * METODI PER LA RICERCA DI FILM IN BASE A DETERMINATI PARAMETRI										 *
-	 * 																										 *
-	 *  filtraFilmPerTitolo  -> fltra in base al titolo parziale passato dall'utente						 *
-	 *  filtraFilmPerUscita  -> filtra in base all'anno di uscita immesso dall'utente						 *
-	 *  filtraFilmPerRegista -> filtra in base al nome del regista passato dall'utente						 *
-	 *  																									 *
-	 *  ogni metodo restituisce un vector di film contenente i film che corrispondono ai parametri			 *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	 
-	/**
-	 * filtra tutti i film in base al titolo
-	 * (precondizione: titoloParziale != null)
-	 * @param titoloParziale la parte di titolo usata come criterio
-	 * @return un vector contenente i film corrispondenti al criterio
-	 */
-	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
-	{
-		Vector<Film> filmTrovati = new Vector<>(); 
-		
-		for(Film film : films)
-		{
-			if(film.isPrestabile() && film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
-			{
-				filmTrovati.add(film);
-			}
-		}
-		return filmTrovati;
-	}
-	
-	/**
-	 * filtra tutti i film in base all'anno di pubblicazione
-	 * (precondizione: annoUscita != null)
-	 * @param annoUscita l'anno da usare come criterio
-	 * @return un vector contenente i film corrispondenti al criterio
-	 */
-	public Vector<Film> filtraFilmPerUscita(int annoUscita)
-	{
-		Vector<Film> filmTrovati = new Vector<>(); 
-		
-		for(Film film : films)
-		{
-			if(film.isPrestabile() && film.getAnnoDiUscita() == annoUscita)
-			{
-				filmTrovati.add(film);
-			}
-		}
-		return filmTrovati;
-	}
-	
-	/**
-	 * filtra tutti i film in base al regista
-	 * (precondizione: regista != null)
-	 * @param regista il nome del regista da usare come criterio
-	 * @return un vector contenente i film corrispondenti al criterio
-	 */
-	public Vector<Film> filtraFilmPerRegista(String regista)
-	{
-		Vector<Film> filmTrovati = new Vector<>(); 
-		for(Film film : films)
-		{
-			if(film.isPrestabile())
-			{
-				if(regista.toLowerCase().equals(regista.toLowerCase()))
-				{
-					filmTrovati.add(film);
-				}
-			}
-		}
-		return filmTrovati;
-	}
+
 }

@@ -141,10 +141,10 @@ public class Libro extends Risorsa implements Serializable
 	}
 
 	@Override
-	public void stampaDati() 
-	{
-//		LibriView.stampaDati(this);
-	}
+//	public void stampaDati(boolean perPrestito) 
+//	{
+//		LibriView.stampaDati(this, perPrestito);
+//	}
 
 	public String getId() 
 	{
