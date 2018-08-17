@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
+import view.LibriView;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
  * @author Prandini Stefano
@@ -92,59 +94,51 @@ public class Libro extends Risorsa implements Serializable
 		else return false;
 	}
 	
-	public void stampaDati(boolean perPrestito)
-	{
-		System.out.println("Categoria-----------------: Libro");
-//		System.out.println("ID------------------------: " + id);
-//		System.out.println("Hashcode------------------: " + hashCode());
-		System.out.println("Sottocategoria------------: " + sottoCategoria);
-		System.out.println("Titolo--------------------: " + titolo);
-		System.out.print("Autori--------------------:");
-		for(int i = 0; i < autori.size(); i++)
-		{
-			System.out.print(" " + autori.elementAt(i));
-			if(i < autori.size()-1)
-			{
-				System.out.print(",");
-			}
-			else System.out.println();
-		}
-		if(!genere.equals("-"))
-		{
-			System.out.println("Genere--------------------: " + genere);
-		}
-		System.out.println("Numero pagine-------------: " + pagine);
-		System.out.println("Anno di pubblicazione-----: " + annoPubblicazione);
-		System.out.println("Casa editrice-------------: " + casaEditrice);
-		System.out.println("Lingua--------------------: " + lingua);
-		if(!perPrestito)//dati utili all'operatore
-		{
-			System.out.println("Numero licenze------------: " + nLicenze);
-			System.out.println("In prestito---------------: " + inPrestito);
-		}
-		else//dati utili al fruitore
-		{
-			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
-		}
-	}
 	
 	@Override
 	public String toString(boolean perPrestito) 
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("Categoria-----------------: Libro");
-//		...
-//		appendere le altre stringhe che sono nel metodo stampaDati sopra
-//		...
-		
+		sb.append("Sottocategoria------------: " + sottoCategoria);
+		sb.append("Titolo--------------------: " + titolo);
+		sb.append("Autori--------------------:");
+		for(int i = 0; i < autori.size(); i++)
+		{
+			sb.append(" " + autori.elementAt(i));
+			if(i < autori.size()-1)
+			{
+				sb.append(",");
+			}
+			else sb.append("");
+		}
+		if(!genere.equals("-"))
+		{
+			sb.append("Genere--------------------: " + genere);
+		}
+		sb.append("Numero pagine-------------: " + pagine);
+		sb.append("Anno di pubblicazione-----: " + annoPubblicazione);
+		sb.append("Casa editrice-------------: " + casaEditrice);
+		sb.append("Lingua--------------------: " + lingua);
+		if(!perPrestito)//dati utili all'operatore
+		{
+			sb.append("Numero licenze------------: " + nLicenze);
+			sb.append("In prestito---------------: " + inPrestito);
+		}
+		else//dati utili al fruitore
+		{
+			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito));
+		}
+
 		return sb.toString();
 	}
 
 	@Override
-//	public void stampaDati(boolean perPrestito) 
-//	{
-//		LibriView.stampaDati(this, perPrestito);
-//	}
+	public void stampaDati(boolean perPrestito)
+	{
+		LibriView.stampaDati(this, perPrestito);
+	}
+	
 
 	public String getId() 
 	{
