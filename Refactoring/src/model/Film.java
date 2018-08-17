@@ -12,6 +12,7 @@ import view.FilmsView;
 public class Film extends Risorsa implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	private static final int ANNO_PRIMA_PELLICOLA = 1885;
 
 	/********************************************************************
 	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI: *
@@ -108,9 +109,9 @@ public class Film extends Risorsa implements Serializable
 	}
 	
 	@Override
-	public void stampaDati() 
+	public void stampaDati(boolean perPrestito) 
 	{
-		FilmsView.stampaDati(this);
+		FilmsView.stampaDati(this, perPrestito);
 	}
 
 	//GETTER//
@@ -218,5 +219,9 @@ public class Film extends Risorsa implements Serializable
 	public boolean isPrestabile() 
 	{
 		return prestabile;
+	}
+
+	public static int getAnnoPrimaPellicola() {
+		return ANNO_PRIMA_PELLICOLA;
 	}
 }
