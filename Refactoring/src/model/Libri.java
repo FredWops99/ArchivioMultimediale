@@ -7,10 +7,8 @@ import menus.risorse.libri.MenuFiltroLibri;
 import menus.risorse.libri.MenuScegliGenere;
 import menus.risorse.libri.MenuScegliLibro;
 import model.Libro;
-import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
-import myLib.InputDati;
 
 /**
  * Classe che rappresenta l'insieme dei libri presenti in archivio
@@ -19,11 +17,6 @@ import myLib.InputDati;
  */
 public class Libri implements Serializable
 {
-	
-	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
-	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * id incrementale univoco per ogni libro
@@ -39,7 +32,6 @@ public class Libri implements Serializable
 		this.libri = new Vector<Libro>();
 		lastId = 0;
 	}
-	
 	public Vector<Libro> getLibri() 
 	{
 		return libri;
@@ -310,5 +302,4 @@ public class Libri implements Serializable
 		Libro libroSelezionato = MenuScegliLibro.show(libri);
 		return libroSelezionato;
 	}
-
 }
