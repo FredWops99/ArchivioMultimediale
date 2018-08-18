@@ -11,7 +11,7 @@ public class MenuFiltroLibri
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
 	
-	public static void show(Vector<Libro> libri) 
+	public static Vector<Libro> show(Vector<Libro> libri, boolean daPrenotare) 
 	{
 		Vector<Libro> libriFiltrati = null;
 		String titoloParziale = null;
@@ -24,7 +24,7 @@ public class MenuFiltroLibri
 		{
 			case 0:	//INDIETRO
 			{
-				return;
+				return null;
 			}
 			case 1: //FILTRA PER TITOLO
 			{
@@ -45,29 +45,39 @@ public class MenuFiltroLibri
 				break;
 			}
 		}
+		if (daPrenotare == false)
+		{
+			if(scelta == 1 && libriFiltrati.isEmpty()) 
+			{
+				LibriView.libroNonPresente(titoloParziale);
+				return null;
+			}
+			if(scelta == 2 && libriFiltrati.isEmpty())
+			{
+				LibriView.annoNonPresente(annoPubblicazione);
+				return null;
+			}
+			if(scelta == 3 && libriFiltrati.isEmpty())
+			{
+				LibriView.autoreNonPresente(nomeAutore);
+				return null;
+			}
+			
+			for (int i=0; i <libriFiltrati.size(); i++) 
+			{
+				MessaggiSistemaView.cornice(true,false);
+				libriFiltrati.get(i).stampaDati(false);
+			}
+			
+		}
 		
-		if(scelta == 1 && libriFiltrati.isEmpty()) 
+		else if (daPrenotare == true)
 		{
-			LibriView.libroNonPresente(titoloParziale);
-			return;
-		}
-		if(scelta == 2 && libriFiltrati.isEmpty())
-		{
-			LibriView.annoNonPresente(annoPubblicazione);
-			return;
-		}
-		if(scelta == 3 && libriFiltrati.isEmpty())
-		{
-			LibriView.autoreNonPresente(nomeAutore);
-			return;
+			return libriFiltrati;
 		}
 		
-		for (int i=0; i <libriFiltrati.size(); i++) 
-		{
-			System.out.println();
-			MessaggiSistemaView.cornice();
-			libriFiltrati.get(i).stampaDati(false);
-		}
+		//se non sono da prenotare (quindi solo da visualizzare) non deve ritornare nulla
+		return null;
 	
 	}
 	
