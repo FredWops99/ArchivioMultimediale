@@ -1,4 +1,4 @@
-package menus;
+package menus.prestiti;
 
 import model.Archivio;
 import model.Main;

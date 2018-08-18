@@ -11,8 +11,6 @@ public class MenuFiltroFilm
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
 	
-	
-
 	public static Vector<Film> show(Vector<Film> films, boolean daPrenotare) 
 	{
 		Vector<Film> filmsFiltrati = null;

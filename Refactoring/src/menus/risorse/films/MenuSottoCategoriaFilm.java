@@ -4,11 +4,12 @@ import myLib.MyMenu;
 
 public class MenuSottoCategoriaFilm 
 {
+	private static final String SCEGLI_CATEGORIA = "scegli la sottocategoria del film: ";
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 	
 	public static String show() 
 	{
-		MyMenu menu = new MyMenu("scegli la sottocategoria del film: ", SOTTOCATEGORIE, true);
+		MyMenu menu = new MyMenu(SCEGLI_CATEGORIA, SOTTOCATEGORIE, true);
 		try
 		{
 			return SOTTOCATEGORIE[menu.scegliBase() - 1];
@@ -19,5 +20,4 @@ public class MenuSottoCategoriaFilm
 			return "annulla";
 		}	
 	}
-	
 }

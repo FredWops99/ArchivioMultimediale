@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Vector;
 import menus.risorse.libri.MenuSottoCategoriaLibri;
 import menus.risorse.libri.MenuFiltroLibri;
+import menus.risorse.libri.MenuScegliGenere;
+import menus.risorse.libri.MenuScegliLibro;
 import model.Libro;
-import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
-import myLib.InputDati;
 
 /**
  * Classe che rappresenta l'insieme dei libri presenti in archivio
@@ -17,10 +17,6 @@ import myLib.InputDati;
  */
 public class Libri implements Serializable
 {
-	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
-	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * id incrementale univoco per ogni libro
@@ -36,7 +32,6 @@ public class Libri implements Serializable
 		this.libri = new Vector<Libro>();
 		lastId = 0;
 	}
-	
 	public Vector<Libro> getLibri() 
 	{
 		return libri;
@@ -216,7 +211,7 @@ public class Libri implements Serializable
 	 */
 	public void cercaLibro()
 	{
-		MenuFiltroLibri.show(libri);
+		MenuFiltroLibri.show(libri,true);
 	}
 	/**
 	 * stampa tutti i libri raggruppandoli per sottocategoria e genere
@@ -234,7 +229,7 @@ public class Libri implements Serializable
 		}
 		if(libriDaStampare.size() == 0)
 		{
-			LibriView.zeroLibriInArchivio();
+			LibriView.noLibriDisponibili();;
 			return;
 		}
 		
@@ -244,7 +239,7 @@ public class Libri implements Serializable
 		}
 		else//piu di un libro prestabile in archivio
 		{
-			LibriView.piùLibriInArchivio(libri);
+			LibriView.numeroLibriInArchivio(libri);
 		}
 		for(int j = 0; j < libriDaStampare.size(); j++)
 		{				
@@ -295,15 +290,7 @@ public class Libri implements Serializable
 	 */
 	private String scegliGenere(String sottoCategoria)
 	{
-		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
-		{
-			MyMenu menu = new MyMenu("scegli un genere: ", GENERI);
-			return GENERI[menu.scegliNoIndietro() - 1];	
-		}
-		else
-		{
-			return "-";
-		}
+		return MenuScegliGenere.show(sottoCategoria);
 	}
 
 	/**
@@ -312,131 +299,7 @@ public class Libri implements Serializable
 	 */
 	public Libro scegliLibro() 
 	{
-		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
-		int scelta = menuSceltaLibro.scegliBase();
-		switch(scelta)
-		{
-			case 0://INDIETRO
-			{
-				return null;
-			}
-			case 1://FILTRA RICERCA
-			{
-				Vector<Libro> libriFiltrati = null;
-				String titoloParziale = null;
-				int annoPubblicazione = 0;
-				String nomeAutore = null;
-				
-				MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-				int scegli = menuFiltro.scegliBase();
-				switch(scegli)
-				{
-					case 0:
-					{
-						return null;
-					}
-					case 1: //FILTRA PER TITOLO
-					{
-						titoloParziale = InputDati.leggiStringaNonVuota("Inserisci il titolo del libro: \n");
-						libriFiltrati = MenuFiltroLibri.filtraLibriPerTitolo(titoloParziale, libriFiltrati);
-						break;
-					}
-					case 2://FILTRA PER ANNO PUBBLICAZIONE
-					{
-						annoPubblicazione = InputDati.leggiIntero("Inserisci l'anno di pubblicazione: \n");
-						libriFiltrati = MenuFiltroLibri.filtraLibriPerData(annoPubblicazione, libriFiltrati);
-						break;
-					}
-					case 3: //FILTRA PER AUTORE
-					{
-						nomeAutore = InputDati.leggiStringaNonVuota("Inserisci il nome dell'autore:  \n");
-						libriFiltrati = MenuFiltroLibri.filtraLibriPerAutori(nomeAutore, libriFiltrati);
-						break;
-					}
-				}
-				
-				if(!libriFiltrati.isEmpty())
-				{
-					for(int i = 0; i < libriFiltrati.size(); i++)
-					{
-						System.out.println("\n" + (i+1) + ") ");
-						MessaggiSistemaView.cornice();
-						libriFiltrati.get(i).stampaDati(true);
-						MessaggiSistemaView.cornice();
-					}
-					
-					int selezione;
-					do
-					{
-						MessaggiSistemaView.cornice();
-						selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
-						if(selezione == 0)
-						{
-							return null;
-						}
-						else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
-						{
-							return libri.get(selezione-1);
-						}
-						else
-						{
-							System.out.println("Tutte le copie di \"" + libri.get(selezione-1).getTitolo() + "\" sono in prestito!");
-						}
-					}
-					while(true);
-				}
-				else//nessuna corrispondenza: vettore vuoto
-				{
-					System.out.println("Nessun libro corrispondente al criterio di ricerca");
-					return null;
-				}
-			}
-			case 2://VISUALIZZA ARCHIVIO
-			{
-				Vector<Libro>libriPrestabili = new Vector<>();
-				for(Libro libro : libri)
-				{
-					if(libro.isPrestabile())
-					{
-						libriPrestabili.add(libro);
-					}
-				}
-				if(libriPrestabili.isEmpty())
-				{
-					System.out.println("In archivio non sono presenti libri disponibili");
-					return null;
-				}
-				
-				System.out.println("\nLibri in archivio: \n");
-				for(int i = 0; i < libriPrestabili.size(); i++)
-				{
-					System.out.println(i+1 + ")");
-					MessaggiSistemaView.cornice();
-					libriPrestabili.get(i).stampaDati(true);
-					MessaggiSistemaView.cornice();
-				}
-				int selezione;
-				do
-				{
-					selezione = InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libriPrestabili.size());
-					if(selezione == 0)
-					{
-						return null;
-					}
-					else if(libriPrestabili.get(selezione-1).getInPrestito() < libriPrestabili.get(selezione-1).getnLicenze())
-					{
-						return libriPrestabili.get(selezione-1);
-					}
-					else
-					{
-						System.out.println("Tutte le copie di \"" + libriPrestabili.get(selezione-1).getTitolo() + "\" sono in prestito!");
-					}
-				}
-				while(true);
-			}
-		}
-//		DEFAULT: qua non arriva mai
-		return null;
+		Libro libroSelezionato = MenuScegliLibro.show(libri);
+		return libroSelezionato;
 	}
-
 }

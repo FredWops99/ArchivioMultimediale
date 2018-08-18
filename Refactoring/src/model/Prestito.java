@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import myLib.GestioneDate;
+import view.PrestitiView;
 
 /**
  * classe che rappresenta un prestito di una risorsa multimediale ad un fruitore
@@ -57,19 +58,26 @@ public class Prestito implements Serializable
 	 */
 	public void visualizzaPrestito()
 	{
-		System.out.println("Categoria-------------: " + risorsa.getClass().getSimpleName());
-		System.out.println("Titolo----------------: " + risorsa.getTitolo());
-		System.out.println("Fruitore--------------: " + fruitore.getUser());
-		System.out.println("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio));
-		System.out.println("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));
+		PrestitiView.visualizzaPrestito(this);
+	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Categoria-------------: " + risorsa.getClass().getSimpleName());		
+		sb.append("Titolo----------------: " + risorsa.getTitolo());
+		sb.append("Fruitore--------------: " + fruitore.getUser());
+		sb.append("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio));
+		sb.append("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));
 		if(!prorogato)
 		{
-			System.out.println("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataPerRichiestaProroga));
+			sb.append("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataPerRichiestaProroga));
 		}
 		else
 		{
-			System.out.println("Prestito non rinnovabile");
+			sb.append("Prestito non rinnovabile");
 		}
+		return sb.toString();
 	}
 	
 	/**

@@ -108,7 +108,7 @@ public class LibriView
 		System.out.println("In archivio non sono presenti libri il cui autore è " + nomeAutore);
 	}
 	
-	public static void zeroLibriInArchivio()
+	public static void noLibriDisponibili()
 	{
 		System.out.println("In archivio non sono presenti libri disponibili");
 	}
@@ -118,7 +118,7 @@ public class LibriView
 		System.out.println("\nE' presente un libro in archivio: ");
 	}
 	
-	public static void piùLibriInArchivio(Vector<Libro> libri)
+	public static void numeroLibriInArchivio(Vector<Libro> libri)
 	{
 		System.out.println("\nSono presenti " + libri.size() + " libri in archivio: ");
 	}
@@ -138,4 +138,30 @@ public class LibriView
 		
 		System.out.println("Titolo: " + l.getTitolo());
 	}
+	
+	public static void stampaPosizione(int i)
+	{
+		System.out.println("\n" + (i+1) + ") ");
+	}
+	
+	public static int selezionaPrestito(Vector<Libro> libri)
+	{
+		return InputDati.leggiIntero("Seleziona il libro che vuoi ricevere in prestito (0 per annullare): ", 0, libri.size());
+	}
+	
+	public static void copieTutteInPrestito(String titolo)
+	{
+		System.out.println("Tutte le copie di \"" + titolo + "\" sono in prestito!");	
+	}
+	
+	public static void nessunaCorrispondenza()
+	{
+		System.out.println("Nessun libro corrispondente al criterio di ricerca");
+	}
+	
+	public static void libriInArchivio()
+	{
+		System.out.println("\nLibri in archivio: \n");	
+	}
 }
+

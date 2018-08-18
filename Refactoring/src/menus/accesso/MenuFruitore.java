@@ -58,11 +58,11 @@ public class MenuFruitore
 				
 				if(Main.getUtenteLoggato()==null)
 				{
-					System.out.println("Utente non trovato! ");
+					FruitoriView.utenteNonTrovato();
 				}
 				else // -> utente trovato
 				{
-					System.out.println("Benvenuto " + Main.getUtenteLoggato().getNome() + "!");
+					FruitoriView.benvenuto(Main.getUtenteLoggato().getNome());
 					
 					MenuPersonale.show(archivio, prestiti);
 				}

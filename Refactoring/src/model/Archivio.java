@@ -25,25 +25,6 @@ public class Archivio implements Serializable
 		setLibri(new Libri());
 		setFilms(new Films());
 	}
-	
-	//GETTER//
-	public Libri getLibri() 
-	{
-		return libri;
-	}
-	public Films getFilms()
-	{
-		return films;
-	}
-	//SETTER//
-	public void setLibri(Libri libri)
-	{
-		this.libri = libri;
-	}
-	public void setFilms(Films films)
-	{
-		this.films = films;
-	}
 
 	/**
 	 * permette di aggiungere un libro od un film all'archivio
@@ -89,4 +70,23 @@ public class Archivio implements Serializable
 	{
 		MenuCercaRisorsa.show(CATEGORIE, libri, films);
 	}
+	
+	//GETTER//
+		public Libri getLibri() 
+		{
+			return libri;
+		}
+		public Films getFilms()
+		{
+			return films;
+		}
+		//SETTER//
+		public void setLibri(Libri libri)
+		{
+			this.libri = libri;
+		}
+		public void setFilms(Films films)
+		{
+			this.films = films;
+		}
 }

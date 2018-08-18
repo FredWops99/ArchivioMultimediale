@@ -5,6 +5,8 @@ import java.util.Vector;
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
 import myLib.InputDati;
+import view.MessaggiSistemaView;
+import view.PrestitiView;
 
 /**
  * Classe che racchiude l'elenco dei prestiti attivi degli utenti
@@ -43,7 +45,7 @@ public class Prestiti implements Serializable
 			}
 			
 		}
-		System.out.println("Risorse tornate dal prestito: " + rimossi);
+		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
 	}
 	
 	/**
@@ -56,14 +58,14 @@ public class Prestiti implements Serializable
 		{
 			if(!prestito.isTerminato())
 			{
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.cornice();
 				prestito.visualizzaPrestito();
 				i++;
 			}	
 		}
 		if(i == 0)
 		{
-			System.out.println("Al momento non sono presenti prestiti attivi");
+			PrestitiView.noPrestitiAttivi();
 		}
 	}
 	

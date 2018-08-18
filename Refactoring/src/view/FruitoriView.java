@@ -136,5 +136,17 @@ public class FruitoriView
 		System.out.println("Password errata!");	
 	}
 
+
+	public static void utenteNonTrovato() 
+	{
+		System.out.println("Utente non trovato! ");	
+	}
+
+
+	public static void benvenuto(String nome) 
+	{
+		System.out.println("Benvenuto " + nome + "!");
+	}
+
 	
 }

@@ -23,6 +23,7 @@ public class MessaggiSistemaView
 		System.out.println("Accesso eseguito con successo!");		
 	}
 
+//	va in RisorsaView?
 	public static void avvisoRimozioneRisorsa() 
 	{
 		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");		
@@ -33,6 +34,11 @@ public class MessaggiSistemaView
 		System.out.println(BelleStringhe.CORNICE);	
 	}
 	
+	/**
+	 * consente di stampare una cornice che abbia una riga vuota prima o dopo
+	 * @param spazioInizio true se si vuole una riga vuota prima della cornice
+	 * @param spazioFine true se si vuole una riga vuota dopo la cornice
+	 */
 	public static void cornice(boolean spazioInizio, boolean spazioFine)
 	{
 		if(!spazioInizio && !spazioFine)
