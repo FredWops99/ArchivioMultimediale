@@ -17,7 +17,6 @@ import myLib.InputDati;
  */
 public class Libri implements Serializable
 {
-	
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};

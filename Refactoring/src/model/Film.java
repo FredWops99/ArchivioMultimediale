@@ -221,7 +221,8 @@ public class Film extends Risorsa implements Serializable
 		return prestabile;
 	}
 
-	public static int getAnnoPrimaPellicola() {
+	public static int getAnnoPrimaPellicola() 
+	{
 		return ANNO_PRIMA_PELLICOLA;
 	}
 }
