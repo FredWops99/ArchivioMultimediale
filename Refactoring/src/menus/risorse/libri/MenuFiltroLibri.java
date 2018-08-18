@@ -1,6 +1,8 @@
 package menus.risorse.libri;
 
 import java.util.Vector;
+
+import model.Libri;
 import model.Libro;
 import myLib.MyMenu;
 import view.LibriView;
@@ -28,7 +30,7 @@ public class MenuFiltroLibri
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = LibriView.chiediTitolo();
+				titoloParziale = LibriView.chiediTitolo(Libro.class);
 				libriFiltrati = filtraLibriPerTitolo(titoloParziale, libri);
 				break;
 			}
@@ -49,7 +51,7 @@ public class MenuFiltroLibri
 		{
 			if(scelta == 1 && libriFiltrati.isEmpty()) 
 			{
-				LibriView.libroNonPresente(titoloParziale);
+				LibriView.risorsaNonPresente(Libri.class, titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && libriFiltrati.isEmpty())

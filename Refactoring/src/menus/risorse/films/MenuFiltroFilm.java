@@ -28,7 +28,7 @@ public class MenuFiltroFilm
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = FilmsView.chiediTitolo();
+				titoloParziale = FilmsView.chiediTitolo(Film.class);
 				filmsFiltrati = filtraFilmPerTitolo(titoloParziale, films);
 				break;
 			}
@@ -51,7 +51,7 @@ public class MenuFiltroFilm
 		{
 			if(scelta == 1 && filmsFiltrati.isEmpty()) 
 			{
-				FilmsView.filmNonPresente(titoloParziale);
+				FilmsView.risorsaNonPresente(Film.class, titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && filmsFiltrati.isEmpty())

@@ -57,7 +57,7 @@ public class MenuScegliFilm
 				}
 				else//nessuna corrispondenza: vettore vuoto
 				{
-					FilmsView.nessunaCorrispondenza();
+					FilmsView.nessunaCorrispondenza(Film.class);
 					return null;
 				}
 			}
@@ -73,7 +73,7 @@ public class MenuScegliFilm
 				}
 				if(filmPrestabili.isEmpty())
 				{
-					FilmsView.noFilmsDisponibili();
+					FilmsView.noRisorseDisponibili(Film.class);
 					return null;
 				}
 				

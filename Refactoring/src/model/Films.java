@@ -51,7 +51,7 @@ public class Films implements Serializable
 			return;
 		}
 		
-		String titolo = FilmsView.chiediTitolo();
+		String titolo = FilmsView.chiediTitolo(Film.class);
 		int durata = FilmsView.chiediDurata();
 		int annoDiUscita = FilmsView.chiediAnnoUscita();
 		String lingua = FilmsView.chiediLingua();
@@ -61,7 +61,7 @@ public class Films implements Serializable
 		Film f = new Film("F"+lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		addPerSottoCategorie(f);
 		
-		FilmsView.aggiuntaRiuscita();
+		FilmsView.aggiuntaRiuscita(Film.class);
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class Films implements Serializable
 	{
 		String idSelezionato;
 		
-		String titolo = FilmsView.chiediFilmDaRimuovere();
+		String titolo = FilmsView.chiediRisorsaDaRimuovere(Film.class);
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -123,7 +123,7 @@ public class Films implements Serializable
 		}
 		if(posizioniRicorrenze.size()==0)
 		{
-			FilmsView.filmNonPresente();
+			FilmsView.risorsaNonPresente(Film.class);
 			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in films
@@ -137,7 +137,7 @@ public class Films implements Serializable
 //		l'utente inserisce quale rimuovere -> prendo la posizione in films di quell'elemento e lo rimuovo da films
 		else
 		{
-			FilmsView.piùFilmStessoTitolo(titolo);
+			FilmsView.piùRisorseStessoTitolo(Film.class, titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
@@ -186,34 +186,6 @@ public class Films implements Serializable
 			}
 		}
 		FilmsView.stampaDati(filmDaStampare);
-		
-		if(filmDaStampare.isEmpty())
-		{
-			FilmsView.noFilmsDisponibili();
-		}
-		else
-		{
-			if(filmDaStampare.size()==1)
-			{
-				FilmsView.unFilmInArchivio();
-			}
-			else
-			{
-				FilmsView.numeroFilmInArchivio(films);
-			}
-			
-			for(int i = 0; i < filmDaStampare.size(); i++)
-			{
-//				stampa la sottocategoria solo se è il primo elemento o se il sottogenere è cambiato (sono in ordine nel vettore)
-				if(i == 0 || filmDaStampare.get(i).getSottoCategoria() != filmDaStampare.get(i-1).getSottoCategoria())
-				{
-					MessaggiSistemaView.cornice();
-					FilmsView.stampaCategoria(filmDaStampare.get(i));
-					MessaggiSistemaView.cornice();
-				}
-				FilmsView.stampaTitolo(filmDaStampare.get(i));
-			}
-		}
 	}
 	
 	/**

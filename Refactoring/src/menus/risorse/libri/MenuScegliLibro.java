@@ -2,18 +2,14 @@ package menus.risorse.libri;
 
 import java.util.Vector;
 
+import model.Libri;
 import model.Libro;
-import myLib.InputDati;
 import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
 
 public class MenuScegliLibro 
-{
-	
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
-	
+{	
 	public static Libro show(Vector<Libro> libri)
 	{
 		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
@@ -62,7 +58,7 @@ public class MenuScegliLibro
 				}
 				else//nessuna corrispondenza: vettore vuoto
 				{
-					LibriView.nessunaCorrispondenza();
+					LibriView.nessunaCorrispondenza(Libro.class);
 					return null;
 				}
 			}
@@ -78,7 +74,7 @@ public class MenuScegliLibro
 				}
 				if(libriPrestabili.isEmpty())
 				{
-					LibriView.noLibriDisponibili();
+					LibriView.noRisorseDisponibili(Libri.class);
 					return null;
 				}
 				

@@ -5,18 +5,17 @@ import model.Film;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
-public class FilmsView 
+public class FilmsView extends RisorseView
 {
-	
-	public static void stampaDati(Film film, boolean perPrestito) 
-	{
-		System.out.println(film.toString(perPrestito));
-	}
-
-	public static String chiediTitolo() 
-	{
-		return InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
-	}
+//	public static void stampaDati(Film film, boolean perPrestito) 
+//	{
+//		System.out.println(film.toString(perPrestito));
+//	}
+//
+//	public static String chiediTitolo() 
+//	{
+//		return InputDati.leggiStringaNonVuota("Inserisci il titolo del film: ");
+//	}
 
 	public static int chiediDurata() 
 	{
@@ -38,50 +37,50 @@ public class FilmsView
 		return InputDati.leggiStringaNonVuota("Inserisci il regista: ");	
 	}
 
-	public static int chiediNumeroLicenze() 
-	{
-		return InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
-	}
+//	public static int chiediNumeroLicenze() 
+//	{
+//		return InputDati.leggiInteroPositivo("Inserisci il numero di licenze disponibili: ");
+//	}
 
-	public static void aggiuntaRiuscita() 
-	{
-		System.out.println("Film aggiunto con successo!");	
-	}
+//	public static void aggiuntaRiuscita() 
+//	{
+//		System.out.println("Film aggiunto con successo!");	
+//	}
 
-	public static String chiediFilmDaRimuovere() 
-	{
-		return InputDati.leggiStringaNonVuota("Inserisci il titolo del film da rimuovere: ");
-	}
+//	public static String chiediFilmDaRimuovere() 
+//	{
+//		return InputDati.leggiStringaNonVuota("Inserisci il titolo del film da rimuovere: ");
+//	}
 
-	public static void filmNonPresente() 
-	{
-		System.out.println("Siamo spiacenti, il film non è presente nell'archivio");	
-	}
+//	public static void filmNonPresente() 
+//	{
+//		System.out.println("Siamo spiacenti, il film non è presente nell'archivio");	
+//	}
 
-	public static void filmNonPresente(String titolo) 
-	{
-		System.out.println("In archivio non sono presenti film il cui titolo è " + titolo);
-	}
+//	public static void filmNonPresente(String titolo) 
+//	{
+//		System.out.println("In archivio non sono presenti film il cui titolo è " + titolo);
+//	}
 	
-	public static void rimozioneAvvenuta() 
-	{
-		System.out.println("Rimozione avvenuta con successo!");	
-	}
+//	public static void rimozioneAvvenuta() 
+//	{
+//		System.out.println("Rimozione avvenuta con successo!");	
+//	}
 
-	public static void piùFilmStessoTitolo(String titolo) 
-	{
-		System.out.println("Sono presenti più films dal titolo \"" + titolo + "\": ");	
-	}
+//	public static void piùFilmStessoTitolo(String titolo) 
+//	{
+//		System.out.println("Sono presenti più films dal titolo \"" + titolo + "\": ");	
+//	}
 
-	public static void numeroRicorrenza(int pos) 
-	{
-		System.out.println("\nRicorrenza " + ++pos + ":");
-	}
+//	public static void numeroRicorrenza(int pos) 
+//	{
+//		System.out.println("\nRicorrenza " + ++pos + ":");
+//	}
 
-	public static int chiediRicorrenzaDaRimuovere(Vector<Integer> posizioniRicorrenze) 
-	{
-		return InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioniRicorrenze.size());
-	}
+//	public static int chiediRicorrenzaDaRimuovere(Vector<Integer> posizioniRicorrenze) 
+//	{
+//		return InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioniRicorrenze.size());
+//	}
 
 	public static void annoNonPresente(int annoUscita) 
 	{
@@ -97,13 +96,13 @@ public class FilmsView
 	{
 		if(filmDaStampare.isEmpty())
 		{
-			System.out.println("In archivio non sono presenti film disponibili");
+			noRisorseDisponibili(Film.class);
 		}
 		else
 		{
 			if(filmDaStampare.size()==1)
 			{
-				System.out.println("\nE' presente un film in archivio: ");
+				unaRisorsaInArchivio(Film.class);
 			}
 			else
 			{
@@ -140,15 +139,15 @@ public class FilmsView
 		System.out.println("Tutte le copie di \"" + titolo + "\" sono in prestito!");	
 	}
 
-	public static void nessunaCorrispondenza() 
-	{
-		System.out.println("Nessun film corrispondente al criterio di ricerca");	
-	}
+//	public static void nessunaCorrispondenza() 
+//	{
+//		System.out.println("Nessun film corrispondente al criterio di ricerca");	
+//	}
 
-	public static void noFilmsDisponibili() 
-	{
-		System.out.println("In archivio non sono presenti film disponibili");
-	}
+//	public static void noFilmsDisponibili() 
+//	{
+//		System.out.println("In archivio non sono presenti film disponibili");
+//	}
 
 	public static void filmInArchivio() 
 	{

@@ -55,7 +55,7 @@ public class Libri implements Serializable
 		}
 		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		
-		String titolo = LibriView.chiediTitolo();
+		String titolo = LibriView.chiediTitolo(Libro.class);
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
 		String casaEditrice = LibriView.chiediCasaEditrice();
@@ -75,7 +75,7 @@ public class Libri implements Serializable
 		if(!libroEsistente(l))
 		{
 			addPerSottoCategorie(l);
-			LibriView.aggiuntaRiuscita();
+			LibriView.aggiuntaRiuscita(Libro.class);
 		}
 		
 		else
@@ -151,7 +151,7 @@ public class Libri implements Serializable
 	{
 		String idSelezionato;
 		
-		String titolo = LibriView.chiediLibroDaRimuovere();
+		String titolo = LibriView.chiediRisorsaDaRimuovere(Libro.class);
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -165,7 +165,7 @@ public class Libri implements Serializable
 		}
 		if(posizioniRicorrenze.size()==0)
 		{
-			LibriView.libroNonPresente();
+			LibriView.risorsaNonPresente(Libro.class);
 			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
@@ -179,7 +179,7 @@ public class Libri implements Serializable
 //		l'utente inserisce quello che vuole rimuovere
 		else
 		{
-			LibriView.piùLibriStessoTitolo(titolo);
+			LibriView.piùRisorseStessoTitolo(Libri.class, titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
@@ -227,58 +227,9 @@ public class Libri implements Serializable
 				libriDaStampare.add(libro);
 			}
 		}
-		if(libriDaStampare.size() == 0)
-		{
-			LibriView.noLibriDisponibili();;
-			return;
-		}
+		LibriView.stampaDati(libriDaStampare);
 		
-		if(libriDaStampare.size() == 1)
-		{
-			LibriView.unoLibriInArchivio();
-		}
-		else//piu di un libro prestabile in archivio
-		{
-			LibriView.numeroLibriInArchivio(libri);
-		}
-		for(int j = 0; j < libriDaStampare.size(); j++)
-		{				
-			MessaggiSistemaView.cornice();
-			if(!libriDaStampare.get(j).getGenere().equals("-"))
-			{
-				LibriView.sottocategoria(libriDaStampare.get(j));
-				LibriView.genere(libriDaStampare.get(j));
-				MessaggiSistemaView.cornice();
-				LibriView.titolo(libriDaStampare.get(j));
-//				conteggio al contrario così quando elimino un elemento non salto il successivo
-				for(int i = libriDaStampare.size()-1; i >= j+1; i--) 
-				{
-					if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
-					{
-						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
-						{
-							LibriView.titolo(libriDaStampare.get(j));
-							libriDaStampare.remove(i);
-						}
-					}
-				}
-			}
-			else
-			{
-				LibriView.sottocategoria(libriDaStampare.get(j));
-				MessaggiSistemaView.cornice();
-				LibriView.titolo(libriDaStampare.get(j));
-//				conteggio al contrario così quando elimino un elemento non salto il successivo
-				for(int i = libriDaStampare.size()-1; i >= j+1; i--)
-				{
-					if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
-					{
-						LibriView.titolo(libriDaStampare.get(j));
-						libriDaStampare.remove(i);
-					}
-				}
-			}
-		}
+		
 	}
 	
 	/**
