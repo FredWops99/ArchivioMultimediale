@@ -1,11 +1,7 @@
 package menus.risorse.libri;
 
 import java.util.Vector;
-
 import model.Libro;
-import myLib.BelleStringhe;
-import myLib.GestioneDate;
-import myLib.InputDati;
 import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;

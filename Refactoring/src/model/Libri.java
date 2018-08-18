@@ -2,15 +2,12 @@ package model;
 
 import java.io.Serializable;
 import java.util.Vector;
-
 import menus.risorse.libri.MenuSottoCategoriaLibri;
 import menus.risorse.libri.MenuFiltroLibri;
 import model.Libro;
 import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
-import myLib.BelleStringhe;
-import myLib.GestioneDate;
 import myLib.InputDati;
 
 /**
