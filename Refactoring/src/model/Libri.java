@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Vector;
 import menus.risorse.libri.MenuSottoCategoriaLibri;
 import menus.risorse.libri.MenuFiltroLibri;
-import menus.risorse.libri.MenuScegliGenere;
+import menus.risorse.libri.MenuScegliGenereLibro;
 import menus.risorse.libri.MenuScegliLibro;
 import model.Libro;
 import view.LibriView;
@@ -53,8 +53,7 @@ public class Libri implements Serializable
 		{
 			return;
 		}
-		String genere = this.scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
-		
+		String genere = scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
 		String titolo = LibriView.chiediTitolo(Libro.class);
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
@@ -80,7 +79,7 @@ public class Libri implements Serializable
 		
 		else
 		{
-			LibriView.aggiuntaNonRiuscita();
+			LibriView.aggiuntaNonRiuscita(Libro.class);
 		}
 	}
 	
@@ -241,7 +240,7 @@ public class Libri implements Serializable
 	 */
 	private String scegliGenere(String sottoCategoria)
 	{
-		return MenuScegliGenere.show(sottoCategoria);
+		return MenuScegliGenereLibro.show(sottoCategoria);
 	}
 
 	/**

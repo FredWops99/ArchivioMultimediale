@@ -2,7 +2,7 @@ package menus.risorse.libri;
 
 import myLib.MyMenu;
 
-public class MenuScegliGenere 
+public class MenuScegliGenereLibro 
 {
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	

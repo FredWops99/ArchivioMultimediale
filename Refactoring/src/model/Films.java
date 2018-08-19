@@ -7,6 +7,7 @@ import menus.risorse.films.MenuScegliFilm;
 import menus.risorse.films.MenuSottoCategoriaFilm;
 import view.FilmsView;
 import view.MessaggiSistemaView;
+import view.RisorseView;
 
 /**
  * Classe che rappresenta l'insieme dei film in archivio
@@ -50,7 +51,6 @@ public class Films implements Serializable
 		{
 			return;
 		}
-		
 		String titolo = FilmsView.chiediTitolo(Film.class);
 		int durata = FilmsView.chiediDurata();
 		int annoDiUscita = FilmsView.chiediAnnoUscita();
@@ -59,11 +59,33 @@ public class Films implements Serializable
 		int nLicenze = FilmsView.chiediNumeroLicenze();
 		
 		Film f = new Film("F"+lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
-		addPerSottoCategorie(f);
 		
-		FilmsView.aggiuntaRiuscita(Film.class);
+		if(!filmEsistente(f))
+		{
+			addPerSottoCategorie(f);
+			FilmsView.aggiuntaRiuscita(Film.class);
+		}
+		else
+		{
+			RisorseView.aggiuntaNonRiuscita(Film.class);
+		}
+		
+		
 	}
 	
+	private boolean filmEsistente(Film f) 
+	{
+		for(Film film : films)
+		{			
+			if(f.getTitolo().equals(film.getTitolo()) && f.getRegista().equals(film.getRegista()) && f.getDurata() == film.getDurata() 
+				&& f.getAnnoDiUscita() == film.getAnnoDiUscita() && f.getLingua().equals(film.getLingua()) 
+				&& f.getSottoCategoria().equals(film.getSottoCategoria()) && f.isPrestabile() == film.isPrestabile())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Film tra quelle presenti in elenco
 	 * @return la scelta dell'utente

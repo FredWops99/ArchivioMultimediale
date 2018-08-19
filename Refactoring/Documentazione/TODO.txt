@@ -10,6 +10,8 @@ RisorseView?
 
 cosa da rifattorizzare potrebbe essere ricostruisci prestiti: salvando nello stesso file? 
 
+es. in MenuScegliGenereLibro c'è un IF con i generi all'interno: bisognerebbe usare qualche pattern!
+
 
 si potrebbe fare package "menu" che contiene una classe (singleton?) per ogni menu
 

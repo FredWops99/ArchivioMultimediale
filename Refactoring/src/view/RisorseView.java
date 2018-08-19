@@ -1,12 +1,11 @@
 package view;
 
 import java.util.Vector;
-
 import model.Risorsa;
 import myLib.InputDati;
 
-public class RisorseView 
-{
+public abstract class RisorseView 
+{	
 	public static void stampaDati(Risorsa risorsa, boolean perPrestito)
 	{
 		System.out.println(risorsa.toString(perPrestito));
@@ -25,6 +24,11 @@ public class RisorseView
 	public static void aggiuntaRiuscita(Class<?> c) 
 	{
 		System.out.println(c.getSimpleName() + " aggiunto con successo!");	
+	}
+	
+	public static void aggiuntaNonRiuscita(Class<?> c)
+	{
+		System.out.println("Il " + c.getSimpleName().toLowerCase() + " è già presente in archivio");
 	}
 	
 	public static String chiediRisorsaDaRimuovere(Class<?> c) 
@@ -75,5 +79,40 @@ public class RisorseView
 	public static void unaRisorsaInArchivio(Class<?> c)
 	{
 		System.out.println("\nE' presente un " + c.getSimpleName().toLowerCase() + " in archivio: ");
+	}
+	
+	public static void numeroRisorseInArchivio(int dim, Class<?> c)
+	{
+		System.out.println("\nSono presenti " + dim + " " + c.getSimpleName().toLowerCase() + " in archivio: ");
+	}
+	
+	public static void stampaTitolo(Risorsa risorsa) 
+	{
+		System.out.println("titolo: " + risorsa.getTitolo());
+	}
+	
+	public static void risorseInArchivio(Class<?> c) 
+	{
+		System.out.println("\n " + c.getSimpleName() + " in archivio: \n");	
+	}
+	
+	public static void stampaPosizione(int i) 
+	{
+		System.out.println("\n" + (i+1) + ") ");
+	}
+	
+	public static int selezionaPrestito(Vector<?> elenco, Class<?> c)
+	{
+		return InputDati.leggiIntero("Seleziona il " + c.getSimpleName().toLowerCase() + " che vuoi ricevere in prestito (0 per annullare): ", 0, elenco.size());
+	}
+	
+	public static void copieTutteInPrestito(String titolo) 
+	{
+		System.out.println("Tutte le copie di \"" + titolo + "\" sono in prestito!");	
+	}
+	
+	public static void stampaSottoCategoria(Risorsa risorsa)
+	{
+		System.out.println("Sottocategoria: " + risorsa.getSottoCategoria());
 	}
 }

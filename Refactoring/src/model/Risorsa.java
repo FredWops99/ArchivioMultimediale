@@ -30,6 +30,9 @@ public abstract class Risorsa
 	 * @return il titolo della risorsa
 	 */
 	public abstract String getTitolo();
+	
+	public abstract String getSottoCategoria();
+	
 	/**
 	 * @return l'id univoco della risorsa
 	 */

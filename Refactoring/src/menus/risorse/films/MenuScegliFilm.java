@@ -39,7 +39,7 @@ public class MenuScegliFilm
 					do
 					{
 						MessaggiSistemaView.cornice();
-						selezione = FilmsView.selezionaPrestito(films);
+						selezione = FilmsView.selezionaPrestito(films, Film.class);
 						if(selezione == 0)
 						{
 							return null;
@@ -77,10 +77,9 @@ public class MenuScegliFilm
 					return null;
 				}
 				
-				FilmsView.filmInArchivio();
+				FilmsView.risorseInArchivio(Film.class);
 				for(int i = 0; i < filmPrestabili.size(); i++)
 				{
-//					System.out.println(i+1 + ")");
 					FilmsView.stampaPosizione(i);
 					MessaggiSistemaView.cornice();
 					filmPrestabili.get(i).stampaDati(true);
@@ -89,7 +88,7 @@ public class MenuScegliFilm
 				int selezione;
 				do
 				{
-					selezione = FilmsView.selezionaPrestito(filmPrestabili);
+					selezione = FilmsView.selezionaPrestito(filmPrestabili, Film.class);
 					if(selezione == 0)
 					{
 						return null;

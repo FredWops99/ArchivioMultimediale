@@ -40,7 +40,7 @@ public class MenuScegliLibro
 					do
 					{
 						MessaggiSistemaView.cornice();
-						selezione = LibriView.selezionaPrestito(libri);
+						selezione = LibriView.selezionaPrestito(libri, Libro.class);
 						if(selezione == 0)
 						{
 							return null;
@@ -78,7 +78,7 @@ public class MenuScegliLibro
 					return null;
 				}
 				
-				LibriView.libriInArchivio();
+				LibriView.risorseInArchivio(Libri.class);;
 				for(int i = 0; i < libriPrestabili.size(); i++)
 				{
 					LibriView.stampaPosizione(i);
@@ -89,7 +89,7 @@ public class MenuScegliLibro
 				int selezione;
 				do
 				{
-					selezione = LibriView.selezionaPrestito(libriPrestabili);
+					selezione = LibriView.selezionaPrestito(libriPrestabili, Libro.class);
 					if(selezione == 0)
 					{
 						return null;
