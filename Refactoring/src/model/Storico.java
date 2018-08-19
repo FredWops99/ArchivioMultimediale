@@ -3,9 +3,10 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import menuStorico.MenuStorico;
 import myLib.GestioneDate;
-import myLib.InputDati;
-import myLib.MyMenu;
+import view.StoricoView;
 
 /**
  * Classe con metodi statici (non serve istanziare un oggetto Storico) che serve per gestire le informazioni storiche dell'archivio
@@ -14,118 +15,8 @@ import myLib.MyMenu;
  */
 public class Storico implements Serializable
 {
-	private static final String[] VOCI_MENU_STORICO = {"Numero prestiti per anno solare", "Numero proroghe per anno solare",
-														"Risorsa che è stata oggetto del maggior numero di prestiti per anno solare",
-														"Numero di prestiti per fruitore per anno solare", "Risorse prestabili in passato", "Iscrizioni decadute",
-														"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti terminati", "Prestiti terminati in anticipo"};
-	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * (precondizione: prestiti != null && archivio != null && fruitori != null)
-	 * menuStorico permette la consultazione dello storico. In particolare sono pesenti le seguenti opzioni:
-	 * - Numero prestiti per anno solare
-	 * - Numero proroghe per anno solare
-	 * - Risorsa che è stata oggetto del maggior numero di prestiti per anno solare
-	 * - Numero di prestiti per fruitore per anno solare
-	 * - Risorse prestabili in passato
-	 * - Iscrizioni decadute
-	 * - Iscrizioni rinnovate
-	 * - Prestiti prorogati
-	 * - Prestiti terminati
-	 * - Prestiti terminati in anticipo.
-	 * Questo metodo viene chiamato in menuOperatore (nel main).
-	 * @param prestiti l'elenco dei prestiti che serve ai vari metodi all'intreno del menù
-	 * @param archivio l'elenco delle risorse in archivio che servono ai vari metodi presenti nel menù 
-	 * @param fruitori l'elenco dei fruitori che è utilizzato dai vari metodi del menù
-	 */
-	public static void menuStorico(Prestiti prestiti, Archivio archivio, Fruitori fruitori) 
-	{
-		boolean continuaMenuStorico = true;
-		do
-		{
-			MyMenu menuStorico = new MyMenu("\nScegli cosa visualizzare: ",VOCI_MENU_STORICO, true);
-			
-			switch (menuStorico.scegliBase()) 
-			{
-				case 0:
-				{
-					continuaMenuStorico = false;
-					break;
-				}
-				case 1://visualizza numero prestiti per anno solare
-				{
-					System.out.println("Nell'anno solare selezionato ci sono stati " + prestitiAnnoSolare(prestiti) +" prestiti");
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 2://visualizza numero proroghe per anno solare
-				{
-					System.out.println("Nell'anno solare selezionato sono stati prorogati " + prorogheAnnoSolare(prestiti) +" prestiti");
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 3://visualizza la risorsa che è stata oggetto del maggior numero di prestiti per anno solare
-				{
-					risorsaPiùInPrestito(prestiti);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 4://visualizza numero di prestiti per fruitore per anno solare
-				{
-					prestitiAnnuiPerFruitore(prestiti);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 5://visualizza risorse prestabili in passato
-				{
-					risorsePrestabili(archivio);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 6://visualizza iscrizioni decadute
-				{
-					fruitoriDecaduti(fruitori);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 7://visualizza iscrizioni rinnovate
-				{
-					fruitoriRinnovati(fruitori);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 8://visualizza prestiti prorogati
-				{
-					prestitiProrogati(prestiti);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 9://visualizza prestiti scaduti
-				{
-					prestitiTerminati(prestiti);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-				case 10://visualizza prestiti terminati in anticipo
-				{
-					prestitiTerminatiInAnticipo(prestiti);
-					
-					continuaMenuStorico = true;
-					break;
-				}
-			}
-		}
-		while(continuaMenuStorico);
-	}
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * (precondizione: prestiti != null)
@@ -133,10 +24,10 @@ public class Storico implements Serializable
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 * @return il numero dei prestiti avvenuti durante l'anno inserito dall'utente
 	 */
-	private static int prestitiAnnoSolare(Prestiti prestiti)
+	public static int prestitiAnnoSolare(Prestiti prestiti)
 	{
 		int contatorePrestiti = 0;
-		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
+		int annoSelezionato = StoricoView.AnnoSelezionato();
 		
 		for (Prestito prestito : prestiti.getPrestiti()) 
 		{
@@ -146,17 +37,17 @@ public class Storico implements Serializable
 		
 		return contatorePrestiti;
 	}
-	
+
 	/**
 	 * (precondizione: prestiti != null)
 	 * Metodo che conta tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 * @return il numero di proroghe avvenute durante l'anno inserito dall'utente
 	 */
-	private static int prorogheAnnoSolare(Prestiti prestiti)
+	public static int prorogheAnnoSolare(Prestiti prestiti)
 	{
 		int contatoreProroghe = 0;
-		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno della proroga più vecchia
+		int annoSelezionato = StoricoView.AnnoSelezionato();
 		
 		for (Prestito prestito : prestiti.getPrestiti()) 
 		{
@@ -171,11 +62,11 @@ public class Storico implements Serializable
 	 * Metodo che individua la risorsa che ha avuto più prestiti nell'anno solare inserito dall'utente
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
-	private static void risorsaPiùInPrestito(Prestiti prestiti)
+	public static void risorsaPiùInPrestito(Prestiti prestiti)
 	{
 		int maxGenerale = 0;
 		String titoloRisorsaMax = "";
-		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
+		int annoSelezionato = StoricoView.AnnoSelezionato();
 
 		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
 		//seleziono solo le risorse che sono state prenotate nell'anno corrente
@@ -208,11 +99,11 @@ public class Storico implements Serializable
 		//qui avviene la stampa
 		if(maxGenerale==0)
 		{
-			System.out.println("Nell'anno selezionato non sono stati richiesti prestiti");
+			StoricoView.noPrestitiInAnnoSelezionato();
 		}
 		else
 		{
-			System.out.println("La risorsa che ha avuto più prenotazioni è: " + titoloRisorsaMax + ", con un totale di " + maxGenerale + " prestiti");
+			StoricoView.risorsaConPiùPrenotazioniInAnnoSelezionato(titoloRisorsaMax, maxGenerale);
 		}
 	}
 	
@@ -221,10 +112,10 @@ public class Storico implements Serializable
 	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
 	 */
-	private static void prestitiAnnuiPerFruitore(Prestiti prestiti)
+	public static void prestitiAnnuiPerFruitore(Prestiti prestiti)
 	{
 		Vector<Prestito> prestitiAnnui = new Vector<Prestito>();
-		int annoSelezionato = InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio		
+		int annoSelezionato = StoricoView.AnnoSelezionato();
 		//seleziono solo i prestiti che sono stati effettuati nell'anno indicato
 		for (Prestito prestito : prestiti.getPrestiti()) 
 		{
@@ -235,7 +126,7 @@ public class Storico implements Serializable
 		}
 		if(prestitiAnnui.isEmpty())
 		{
-			System.out.println("Nell'anno selezionato non sono stati richiesti prestiti");
+			StoricoView.noPrestitiInAnnoSelezionato();
 		}
 		else
 		{
@@ -252,7 +143,7 @@ public class Storico implements Serializable
 						prestitiAnnui.remove(i);
 					}
 				}
-				System.out.println("L'utente " + fruitoreInConsiderazione.getUser() + " ha richiesto " + nPrestiti + " prestiti nell'anno selezionato");
+				StoricoView.numeroPrestitiPerUtente(fruitoreInConsiderazione.getNome(), nPrestiti);
 			}
 		}
 	}
@@ -263,39 +154,39 @@ public class Storico implements Serializable
 	 * tra film e libri
 	 * @param archivio tutte le risorse in archivio
 	 */
-	private static void risorsePrestabili(Archivio archivio)
+	public static void risorsePrestabili(Archivio archivio)
 	{
 		Vector<Libro> libri = archivio.getLibri().getLibri();
 		Vector<Film>  films = archivio.getFilms().getfilms();
 		
-		System.out.println("Libri che erano disponibili al prestito e che ora non lo sono più: ");
+		StoricoView.libriPrestabiliInPassato();
 		int numL = 0;
 		for(int i = 0; i < libri.size(); i++)
 		{
 			if(!libri.get(i).isPrestabile())
 			{
-				System.out.println("- " + libri.get(i).getTitolo());
+				StoricoView.libroPrestabileInPassato(libri.get(i).getTitolo());
 				numL++;
 			}
 		}
 		if(numL == 0)
 		{
-			System.out.println("Nessuno");
+			StoricoView.nessuno();
 		}
-		System.out.println(); //NEW LINE
-		System.out.println("Film che erano disponibili al prestito e che ora non lo sono più: ");
+		StoricoView.newLine();
+		StoricoView.filmsPrestabiliInPassato();
 		int numF = 0;
 		for(int i = 0; i < films.size(); i++)
 		{
 			if(!films.get(i).isPrestabile())
 			{
-				System.out.println("- " + films.get(i).getTitolo());
+				StoricoView.filmPrestabileInPassato(films.get(i).getTitolo());
 				numF++;
 			}
 		}
 		if(numF == 0)
 		{
-			System.out.println("Nessuno");
+			StoricoView.nessuno();
 		}
 	}
 	
@@ -304,7 +195,7 @@ public class Storico implements Serializable
 	 * Metodo che mostra tutti i fruitorori che non sono più iscritti al sistema multimediale
 	 * @param fruitori l'elenco di tutti i fruitori
 	 */
-	private static void fruitoriDecaduti(Fruitori fruitori)
+	public static void fruitoriDecaduti(Fruitori fruitori)
 	{
 		int num = 0;
 		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
@@ -314,16 +205,17 @@ public class Storico implements Serializable
 				//lo stampa solo al primo fruitori con iscrizione decaduta che trova
 				if(num == 0)
 				{
-					System.out.println("Fruitori decaduti: \n");
+					StoricoView.fruitoriDecaduti();
 				}
-				System.out.println("- " + fruitori.getFruitori().get(i).getNome() + " " + fruitori.getFruitori().get(i).getCognome()
-						+ " (il " + GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getDataScadenza()) + ")");
+				StoricoView.fruitoreDecaduto(fruitori.getFruitori().get(i).getNome(), 
+											 fruitori.getFruitori().get(i).getCognome(), 
+											 GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getDataScadenza()));
 				num++;
 			}
 		}
 		if(num == 0)
 		{
-			System.out.println("Nessuna iscrizione è ancora decaduta");
+			StoricoView.noIscrizioniDecadute();
 		}
 	}
 	
@@ -333,7 +225,7 @@ public class Storico implements Serializable
 	 * al sistema multimediale
 	 * @param fruitori l'elenco di tutti i fruitori
 	 */
-	private static void fruitoriRinnovati(Fruitori fruitori)
+	public static void fruitoriRinnovati(Fruitori fruitori)
 	{
 		int num = 0;
 		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
@@ -343,19 +235,19 @@ public class Storico implements Serializable
 				//lo stampa solo al primo fruitori con rinnovi che trova
 				if(num == 0)
 				{
-					System.out.println("Iscrizioni rinnovate: \n");
+					StoricoView.iscrizioniRinnovate();
 				}
 				num++;
-				System.out.println("Il fruitore " + fruitori.getFruitori().get(i).getUser() + " ha rinnovato la sua iscrizione nelle seguenti date:");
+				
 				for (int j = 0; i < fruitori.getFruitori().get(i).getRinnovi().size(); j++) 
 				{
-					System.out.println("- "+ GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getRinnovi().get(j)));
+					StoricoView.dateRinnovo(GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getRinnovi().get(j)));
 				}
 			}
 		}
 		if(num == 0)
 		{
-			System.out.println("Nessun fruitore ha ancora rinnovato la sua iscrizione");
+			StoricoView.nessunFruitoreHaRinnovato();
 		}
 	}
 	
@@ -364,7 +256,7 @@ public class Storico implements Serializable
 	 * Metodo che mostra tutti i prestiti che sono stati soggetti a proroga
 	 * @param prestiti l'elenco di tutti i prestiti
 	 */
-	private static void prestitiProrogati(Prestiti prestiti)
+	public static void prestitiProrogati(Prestiti prestiti)
 	{
 		int num = 0;
 		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
@@ -374,16 +266,16 @@ public class Storico implements Serializable
 				if(num == 0)
 				{
 					//lo stampa solo al primo prestito rinnovato che trova
-					System.out.println("Prestiti che sono stati rinnovati: \n");
+					StoricoView.prestitiProrogati();
 				}
 				num++;
-				System.out.println("- "+ prestiti.getPrestiti().get(i).getRisorsa().getTitolo() 
-						+ " (il" + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataPerRichiestaProroga()) + ")");
+				StoricoView.prestitoProrogato(prestiti.getPrestiti().get(i).getRisorsa().getTitolo(),
+												GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataPerRichiestaProroga()));  
 			}
 		}
 		if(num == 0)
 		{
-			System.out.println("Nessun prestito è ancora stato rinnovato");
+			StoricoView.noPrestitiRinnovvati();
 		}
 	}
 	
@@ -394,7 +286,7 @@ public class Storico implements Serializable
 	 * e la data in cui è avvenuta la terminazione del prestito
 	 * @param prestiti l'elenco di tutti i prestiti
 	 */
-	private static void prestitiTerminati(Prestiti prestiti)
+	public static void prestitiTerminati(Prestiti prestiti)
 	{
 		int num = 0;
 		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
@@ -404,18 +296,19 @@ public class Storico implements Serializable
 //				lo stampa solo al primo prestito terminato che trova
 				if(num == 0)
 				{
-					System.out.println("Prestiti che sono terminati: \n");
+					StoricoView.prestitiTerminati();
+					
 				}
 				num++;
 				String risorsa = prestiti.getPrestiti().get(i).getRisorsa().getClass().getSimpleName();
-				System.out.println(risorsa + ": "+ prestiti.getPrestiti().get(i).getRisorsa().getTitolo() +
-									", Fruitore: " + prestiti.getPrestiti().get(i).getFruitore().getUser()
-									+ " (il " + GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRitorno()) + ")");
+				StoricoView.prestitoTerminato(risorsa,prestiti.getPrestiti().get(i).getRisorsa().getTitolo(),
+												prestiti.getPrestiti().get(i).getFruitore().getUser(),
+												GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRitorno()));
 			}
 		}
 		if(num == 0)
 		{
-			System.out.println("Nessun prestito è ancora terminato");
+			StoricoView.noPrestitiTerminati();
 		}
 	}
 	
@@ -425,7 +318,7 @@ public class Storico implements Serializable
 	 * rispetto alla data di terminazione del prestito
 	 * @param prestiti l'elenco di tutti i prestiti
 	 */
-	private static void prestitiTerminatiInAnticipo(Prestiti prestiti) 
+	public static void prestitiTerminatiInAnticipo(Prestiti prestiti) 
 	{
 		int num = 0;
 		for(Prestito prestito : prestiti.getPrestiti())
@@ -434,18 +327,20 @@ public class Storico implements Serializable
 			{
 				if(num == 0)
 				{
-					System.out.println("Prestiti terminati prima della data di scandenza: ");
+					StoricoView.prestitiTerminatiInAnticipo();
 				}
 				num++;
 				String risorsa = prestito.getRisorsa().getClass().getSimpleName();
-				System.out.println(risorsa + ": "+ prestito.getRisorsa().getTitolo() + ", Fruitore: " + prestito.getFruitore().getUser()
-									+ " (terminato il " + GestioneDate.visualizzaData(prestito.getDataRitorno()) + 
-									", scandenza il " + GestioneDate.visualizzaData(prestito.getDataScadenza()) + ")");
+				StoricoView.prestitoTerminatoInAnticipo(risorsa, 
+														prestito.getRisorsa().getTitolo(), 
+														prestito.getFruitore().getUser(),
+														GestioneDate.visualizzaData(prestito.getDataRitorno()),
+														GestioneDate.visualizzaData(prestito.getDataScadenza()));
 			}
 		}
 		if(num == 0)
 		{
-			System.out.println("Nessun prestito è terminato prima della sua data di scandenza");
+			StoricoView.noPrestitiTerminatiInAnticipo();
 		}
 	}
 }

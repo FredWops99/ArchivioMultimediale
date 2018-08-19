@@ -1,5 +1,6 @@
 package menus.accesso;
 
+import menuStorico.MenuStorico;
 import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
@@ -98,7 +99,7 @@ public class MenuOperatore
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				Storico.menuStorico(prestiti,archivio,fruitori);
+				MenuStorico.show(prestiti,archivio,fruitori);
 				
 				continuaMenuOperatore = true;
 				break;
