@@ -1,6 +1,7 @@
 package view;
 
-import model.Prestiti;
+import model.Fruitore;
+import model.Prestito;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
@@ -51,13 +52,9 @@ public class StoricoView
 		System.out.println("Nessuno");
 	}
 	
-	public static void newLine()
-	{
-		System.out.println(); //NEW LINE
-	}
-	
 	public static void filmsPrestabiliInPassato()
 	{
+		System.out.println(); //NEW LINE
 		System.out.println("Film che erano disponibili al prestito e che ora non lo sono più: ");
 	}
 	
@@ -69,12 +66,6 @@ public class StoricoView
 	public static void fruitoriDecaduti()
 	{
 		System.out.println("Fruitori decaduti: \n");
-	}
-	
-	public static void fruitoreDecaduto(String nomeFruitore, String cognome, String dataDcesso)
-	{
-		System.out.println("- " + nomeFruitore + " " + cognome
-				+ " (il " + dataDcesso + ")");
 	}
 	
 	public static void noIscrizioniDecadute()
@@ -107,11 +98,6 @@ public class StoricoView
 		System.out.println("Prestiti che sono stati rinnovati: \n");
 	}
 	
-	public static void prestitoProrogato(String risorsaProrogata, String dataProroga)
-	{
-		System.out.println("- "+ risorsaProrogata + " (il " + dataProroga);
-	}
-	
 	public static void noPrestitiRinnovvati()
 	{
 		System.out.println("Nessun prestito è ancora stato rinnovato");
@@ -120,11 +106,6 @@ public class StoricoView
 	public static void prestitiTerminati()
 	{
 		System.out.println("Prestiti che sono terminati: \n");
-	}
-	
-	public static void prestitoTerminato(String risorsa,String titoloRisorsa,String fruitore,String dataTermine)
-	{
-		System.out.println(risorsa + ": "+ titoloRisorsa + ", Fruitore: " + fruitore + " il " + dataTermine + ")");
 	}
 	
 	public static void noPrestitiTerminati()
@@ -137,13 +118,43 @@ public class StoricoView
 		System.out.println("Prestiti terminati prima della data di scandenza: ");
 	}
 	
-	public static void prestitoTerminatoInAnticipo(String risorsa,String titolo,String fruitore,String dataTermine,String dataScadenza) 
-	{
-		System.out.println(risorsa + ": "+ titolo + ", Fruitore: " + fruitore + " (terminato il " + dataTermine +", scandenza il " + dataScadenza + ")");
-	}
-	
 	public static void noPrestitiTerminatiInAnticipo()
 	{
 		System.out.println("Nessun prestito è terminato prima della sua data di scandenza");
+	}
+
+	public static void fruitoreDecaduto(Fruitore fruitore) 
+	{
+		System.out.println("- " + fruitore.getNome() + " " + fruitore.getCognome() + " (il " + 
+				GestioneDate.visualizzaData(fruitore.getDataScadenza()) + ")");
+	}
+
+	public static void prestitoProrogato(Prestito prestito) 
+	{
+		System.out.println("- "+ prestito.getRisorsa() + " (il " + prestito.getDataPerRichiestaProroga());
+
+	}
+
+	public static void prestitoTerminato(Prestito prestito) 
+	{
+		String risorsa = prestito.getRisorsa().getClass().getSimpleName();
+		String titoloRisorsa = prestito.getRisorsa().getTitolo();
+		String fruitore = prestito.getFruitore().getUser();
+		String dataTermine = GestioneDate.visualizzaData(prestito.getDataRitorno());
+		
+		System.out.println(risorsa + ": "+ titoloRisorsa + ", Fruitore: " + fruitore + " (il " + dataTermine + ")");
+	}
+
+	public static void prestitoTerminatoInAnticipo(Prestito prestito) 
+	{
+		String risorsa = prestito.getRisorsa().getClass().getSimpleName();
+		String titoloRisorsa = prestito.getRisorsa().getTitolo();
+		String fruitore = prestito.getFruitore().getUser();
+		String dataTermine = GestioneDate.visualizzaData(prestito.getDataRitorno());
+		String dataScadenza = GestioneDate.visualizzaData(prestito.getDataScadenza());
+
+		System.out.println(risorsa + ": "+ titoloRisorsa + ", Fruitore: " + fruitore + " (terminato il " + dataTermine + 
+				", scandenza il " + dataScadenza + ")");
+
 	}
 }

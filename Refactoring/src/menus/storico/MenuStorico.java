@@ -1,6 +1,4 @@
-package menuStorico;
-
-import java.io.Serializable;
+package menus.storico;
 
 import model.Archivio;
 import model.Fruitori;
@@ -9,12 +7,13 @@ import model.Storico;
 import myLib.MyMenu;
 import view.StoricoView;
 
-public class MenuStorico implements Serializable
+public class MenuStorico
 {
 	public static final String[] VOCI_MENU_STORICO = {"Numero prestiti per anno solare", "Numero proroghe per anno solare",
 			"Risorsa che è stata oggetto del maggior numero di prestiti per anno solare",
 			"Numero di prestiti per fruitore per anno solare", "Risorse prestabili in passato", "Iscrizioni decadute",
 			"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti terminati", "Prestiti terminati in anticipo"};
+	private static final String INTESTAZIONE = "\nScegli cosa visualizzare: ";
 	
 
 	/**
@@ -41,7 +40,7 @@ public class MenuStorico implements Serializable
 		boolean continuaMenuStorico = true;
 		do
 		{
-			MyMenu menuStorico = new MyMenu("\nScegli cosa visualizzare: ",VOCI_MENU_STORICO, true);
+			MyMenu menuStorico = new MyMenu(INTESTAZIONE, VOCI_MENU_STORICO, true);
 			
 			switch (menuStorico.scegliBase()) 
 			{

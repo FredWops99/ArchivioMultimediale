@@ -16,3 +16,5 @@ es. in MenuScegliGenereLibro c'è un IF con i generi all'interno: bisognerebbe us
 si potrebbe fare package "menu" che contiene una classe (singleton?) per ogni menu
 
 package Salvataggi, con classi Salva e Carica? c'è già C: a chi assegnare responsabilità? Main? -> GestoreSalvataggi
+
+sistemare metodi con catena di chiamate troppo lunga (metodo.metodo.metodo ...): è un pattern

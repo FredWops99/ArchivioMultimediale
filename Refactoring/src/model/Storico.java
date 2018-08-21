@@ -3,8 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
-import menuStorico.MenuStorico;
 import myLib.GestioneDate;
 import view.StoricoView;
 
@@ -143,7 +141,7 @@ public class Storico implements Serializable
 						prestitiAnnui.remove(i);
 					}
 				}
-				StoricoView.numeroPrestitiPerUtente(fruitoreInConsiderazione.getNome(), nPrestiti);
+				StoricoView.numeroPrestitiPerUtente(fruitoreInConsiderazione.getUser(), nPrestiti);
 			}
 		}
 	}
@@ -160,31 +158,30 @@ public class Storico implements Serializable
 		Vector<Film>  films = archivio.getFilms().getfilms();
 		
 		StoricoView.libriPrestabiliInPassato();
-		int numL = 0;
+		int libriPrestabiliInPassato = 0;
 		for(int i = 0; i < libri.size(); i++)
 		{
 			if(!libri.get(i).isPrestabile())
 			{
 				StoricoView.libroPrestabileInPassato(libri.get(i).getTitolo());
-				numL++;
+				libriPrestabiliInPassato++;
 			}
 		}
-		if(numL == 0)
+		if(libriPrestabiliInPassato == 0)
 		{
 			StoricoView.nessuno();
 		}
-		StoricoView.newLine();
 		StoricoView.filmsPrestabiliInPassato();
-		int numF = 0;
+		int filmPrestabiliInPassato = 0;
 		for(int i = 0; i < films.size(); i++)
 		{
 			if(!films.get(i).isPrestabile())
 			{
 				StoricoView.filmPrestabileInPassato(films.get(i).getTitolo());
-				numF++;
+				filmPrestabiliInPassato++;
 			}
 		}
-		if(numF == 0)
+		if(filmPrestabiliInPassato == 0)
 		{
 			StoricoView.nessuno();
 		}
@@ -207,9 +204,7 @@ public class Storico implements Serializable
 				{
 					StoricoView.fruitoriDecaduti();
 				}
-				StoricoView.fruitoreDecaduto(fruitori.getFruitori().get(i).getNome(), 
-											 fruitori.getFruitori().get(i).getCognome(), 
-											 GestioneDate.visualizzaData(fruitori.getFruitori().get(i).getDataScadenza()));
+				StoricoView.fruitoreDecaduto(fruitori.getFruitori().get(i));
 				num++;
 			}
 		}
@@ -269,8 +264,7 @@ public class Storico implements Serializable
 					StoricoView.prestitiProrogati();
 				}
 				num++;
-				StoricoView.prestitoProrogato(prestiti.getPrestiti().get(i).getRisorsa().getTitolo(),
-												GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataPerRichiestaProroga()));  
+				StoricoView.prestitoProrogato(prestiti.getPrestiti().get(i));
 			}
 		}
 		if(num == 0)
@@ -300,10 +294,7 @@ public class Storico implements Serializable
 					
 				}
 				num++;
-				String risorsa = prestiti.getPrestiti().get(i).getRisorsa().getClass().getSimpleName();
-				StoricoView.prestitoTerminato(risorsa,prestiti.getPrestiti().get(i).getRisorsa().getTitolo(),
-												prestiti.getPrestiti().get(i).getFruitore().getUser(),
-												GestioneDate.visualizzaData(prestiti.getPrestiti().get(i).getDataRitorno()));
+				StoricoView.prestitoTerminato(prestiti.getPrestiti().get(i));
 			}
 		}
 		if(num == 0)
@@ -330,12 +321,7 @@ public class Storico implements Serializable
 					StoricoView.prestitiTerminatiInAnticipo();
 				}
 				num++;
-				String risorsa = prestito.getRisorsa().getClass().getSimpleName();
-				StoricoView.prestitoTerminatoInAnticipo(risorsa, 
-														prestito.getRisorsa().getTitolo(), 
-														prestito.getFruitore().getUser(),
-														GestioneDate.visualizzaData(prestito.getDataRitorno()),
-														GestioneDate.visualizzaData(prestito.getDataScadenza()));
+				StoricoView.prestitoTerminatoInAnticipo(prestito);
 			}
 		}
 		if(num == 0)
