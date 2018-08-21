@@ -51,6 +51,7 @@ public class Films implements Serializable
 		{
 			return;
 		}
+		//QUA films (MODEL) contatta la VIEW: non va bene?
 		String titolo = FilmsView.chiediTitolo(Film.class);
 		int durata = FilmsView.chiediDurata();
 		int annoDiUscita = FilmsView.chiediAnnoUscita();

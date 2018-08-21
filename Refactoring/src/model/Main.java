@@ -1,19 +1,7 @@
-/**
-VERSIONE 5.0
-*Quest’ultima versione dell’applicazione deve supportare la conservazione in archivio di
-*informazioni storiche relative a:
-*fruitori, iscrizioni, rinnovi di iscrizione e decadenze;
-*risorse (ad esempio, si deve tenere traccia di risorse che sono state prestabili in
-*passato ma ora non lo sono più);
-*prestiti e proroghe degli stessi.
-**/
-
 package model;
 
 import java.util.Vector;
-
 import menus.accesso.MenuAccesso;
-import utility.GestoreSalvataggi;
 
 /**
  * Classe main del programma Archivio Multimediale

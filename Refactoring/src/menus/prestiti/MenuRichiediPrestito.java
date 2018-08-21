@@ -6,7 +6,7 @@ import model.Libro;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
-import utility.GestoreSalvataggi;
+import model.GestoreSalvataggi;
 import view.PrestitiView;
 
 public class MenuRichiediPrestito 

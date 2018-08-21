@@ -4,7 +4,7 @@ import model.Archivio;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
-import utility.GestoreSalvataggi;
+import model.GestoreSalvataggi;
 
 public class MenuTerminaPrestiti 
 {

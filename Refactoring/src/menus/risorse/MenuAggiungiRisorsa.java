@@ -6,9 +6,11 @@ import myLib.MyMenu;
 
 public class MenuAggiungiRisorsa 
 {
+	private static final String INTESTAZIONE = "scegli la categoria: ";
+
 	public static void show(String[] CATEGORIE, Libri libri, Films films)
 	{
-		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		try
 		{
 			String categoria = CATEGORIE[menu.scegliBase()-1];

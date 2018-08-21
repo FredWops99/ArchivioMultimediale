@@ -5,7 +5,7 @@ import model.Fruitori;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
-import utility.GestoreSalvataggi;
+import model.GestoreSalvataggi;
 import view.FruitoriView;
 
 public class MenuFruitore 
