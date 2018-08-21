@@ -60,15 +60,14 @@ public class MenuOperatore
 //				archivio.getLibri diventerà libriController?
 				MenuAggiungiRisorsa.show(CATEGORIE, archivio.getLibri(), filmController);
 				
-//				il salvataggio viene fatto in filmController
-//				GestoreSalvataggi.salvaArchivio(archivio);
+				GestoreSalvataggi.salvaArchivio(archivio);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				String idRimosso = archivio.rimuoviRisorsa(CATEGORIE);
+				String idRimosso = archivio.rimuoviRisorsa(CATEGORIE, filmController);
 //				se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
@@ -81,14 +80,14 @@ public class MenuOperatore
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				archivio.visualizzaRisorsePrestabili(CATEGORIE);
+				archivio.visualizzaRisorsePrestabili(CATEGORIE, filmController);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 5://CERCA RISORSA
 			{
-				archivio.cercaRisorsa(CATEGORIE);
+				archivio.cercaRisorsa(CATEGORIE, filmController);
 				
 				continuaMenuOperatore=true;
 				break;

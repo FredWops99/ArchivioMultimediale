@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+
+import controller.FilmController;
 import menus.risorse.*;
 import view.MessaggiSistemaView;
 
@@ -31,12 +33,12 @@ public class Archivio implements Serializable
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 * @return l'id della risorsa rimossa
 	 */
-	public String rimuoviRisorsa(String[] CATEGORIE) 
+	public String rimuoviRisorsa(String[] CATEGORIE, FilmController filmController) 
 	{
 		MessaggiSistemaView.avvisoRimozioneRisorsa();
 		
 //		se utente annulla procedura removelibro/removefilm ritornato -1
-		String idRimosso = MenuRimuoviRisorsa.showAndReturnID(CATEGORIE, libri, films);
+		String idRimosso = MenuRimuoviRisorsa.showAndReturnID(CATEGORIE, libri, filmController);
 		return idRimosso;
 	}
 	
@@ -45,9 +47,9 @@ public class Archivio implements Serializable
 	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
-	public void visualizzaRisorsePrestabili(String[] CATEGORIE) 
+	public void visualizzaRisorsePrestabili(String[] CATEGORIE, FilmController filmController) 
 	{
-		MenuRisorsePrestabili.show(CATEGORIE, libri, films);
+		MenuRisorsePrestabili.show(CATEGORIE, libri, filmController);
 	}
 	
 	/**
@@ -55,9 +57,10 @@ public class Archivio implements Serializable
 	 * (precondizione: CATEGORIE != null)
 	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 */
-	public void cercaRisorsa(String[] CATEGORIE) 
+	public void cercaRisorsa(String[] CATEGORIE, FilmController filmController) 
 	{
-		MenuCercaRisorsa.show(CATEGORIE, libri, films);
+//		non va qua: non ha senso che in archivio si usi il controller e non i dati dell'archivio stesso
+		MenuCercaRisorsa.show(CATEGORIE, libri, filmController);
 	}
 	
 	//GETTER//

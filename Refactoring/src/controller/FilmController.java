@@ -1,11 +1,16 @@
 package controller;
 
 import java.util.Vector;
+
+import menus.risorse.films.MenuFiltroFilm;
+import menus.risorse.films.MenuScegliFilm;
 import menus.risorse.films.MenuSottoCategoriaFilm;
 import model.Archivio;
 import model.Film;
-import model.GestoreSalvataggi;
+import model.Films;
+import model.Main;
 import view.FilmsView;
+import view.MessaggiSistemaView;
 
 public class FilmController 
 {
@@ -43,7 +48,9 @@ public class FilmController
 		{
 			FilmsView.aggiuntaRiuscita(Film.class);
 			
-			GestoreSalvataggi.salvaArchivio(model);
+//			controller aggiorna anche l'archivio del main, così da rimanere aggiornato tra i vari controller
+//			poi il main salva su file quell'archivio, nella classe MenuOperatore
+			Main.setArchivio(model);
 		}
 		else
 		{
@@ -55,6 +62,8 @@ public class FilmController
 //	deve restituire al main l'id della risorsa da eliminare (far diventare non prestabile)
 	public String removeFilm()
 	{
+		Vector<Film> films = model.getFilms().getFilms();
+		
 		String idSelezionato;
 		
 		String titolo = FilmsView.chiediRisorsaDaRimuovere(Film.class);
@@ -92,7 +101,7 @@ public class FilmController
 			{
 				FilmsView.numeroRicorrenza(pos);
 				MessaggiSistemaView.cornice();
-				films.elementAt((int)i).stampaDati(false);
+				stampaDati(films.elementAt((int)i), false);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -109,9 +118,29 @@ public class FilmController
 				idSelezionato = "-1";
 			}
 		}
+		Main.setArchivio(model);
+		
 		return idSelezionato;
 	}
 	
+	public void stampaDati(Film elementAt, boolean perPrestito) 
+	{
+		FilmsView.stampaDati(elementAt, perPrestito);
+	}
+	
+	public void stampaDati() 
+	{
+		Vector<Film>filmDaStampare = new Vector<>();
+		for(Film film : model.getFilms().getFilms())
+		{
+			if(film.isPrestabile())
+			{
+				filmDaStampare.add(film);
+			}
+		}
+		FilmsView.stampaDati(filmDaStampare);
+	}
+
 	private String scegliSottoCategoria()
 	{
 		String sottocategoria = MenuSottoCategoriaFilm.show();
@@ -130,4 +159,24 @@ public class FilmController
 			FilmsView.aggiuntaNonRiuscita(Film.class);
 		}
 	}
+	
+	public Films getFilms()
+	{
+		return this.getFilms();
+	}
+
+	public void cercaFilm() 
+	{
+			MenuFiltroFilm.show(false, this);			
+	}
+	
+	/**
+	 * Consente all'utente di selezionare un film in base a dei criteri di ricerca
+	 * @return il film corrispondente ai criteri inseriti dall'utente
+	 */
+	public Film scegliFilm() 
+	{
+		Film filmSelezionato = MenuScegliFilm.show(this);
+		return filmSelezionato;
+	}	
 }

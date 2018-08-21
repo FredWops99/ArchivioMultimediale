@@ -155,7 +155,7 @@ public class Storico implements Serializable
 	public static void risorsePrestabili(Archivio archivio)
 	{
 		Vector<Libro> libri = archivio.getLibri().getLibri();
-		Vector<Film>  films = archivio.getFilms().getfilms();
+		Vector<Film>  films = archivio.getFilms().getFilms();
 		
 		StoricoView.libriPrestabiliInPassato();
 		int libriPrestabiliInPassato = 0;

@@ -67,7 +67,7 @@ public class Main
 			}
 			else if(prestito.getRisorsa() instanceof Film)
 			{
-				for(Film film : archivio.getFilms().getfilms())
+				for(Film film : archivio.getFilms().getFilms())
 				{
 					if(prestito.getRisorsa().equals(film))
 					{
@@ -91,5 +91,11 @@ public class Main
 	public static void setUtenteLoggato(Fruitore _utenteLoggato) 
 	{
 		utenteLoggato = _utenteLoggato;
+	}
+	
+	public static void setArchivio(Archivio _archivio)
+	{
+		archivio = _archivio;
+	
 	}
 }

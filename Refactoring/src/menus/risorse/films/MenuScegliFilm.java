@@ -1,6 +1,8 @@
 package menus.risorse.films;
 
 import java.util.Vector;
+
+import controller.FilmController;
 import model.Film;
 import myLib.MyMenu;
 import view.FilmsView;
@@ -11,8 +13,10 @@ public class MenuScegliFilm
 	private static final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
 	private static final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
 
-	public static Film show(Vector<Film> films) 
+	public static Film show(FilmController filmController) 
 	{
+		Vector<Film> films = filmController.getFilms().getFilms();
+
 		MyMenu menuSceltaFilm = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaFilm.scegliBase();
 		switch(scelta)
@@ -23,7 +27,7 @@ public class MenuScegliFilm
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Film> filmsFiltrati = MenuFiltroFilm.show(films, true);
+				Vector<Film> filmsFiltrati = MenuFiltroFilm.show(true, filmController);
 				
 				if(!filmsFiltrati.isEmpty())
 				{
@@ -31,11 +35,12 @@ public class MenuScegliFilm
 					{
 						FilmsView.stampaPosizione(i);
 						MessaggiSistemaView.cornice();
-						filmsFiltrati.get(i).stampaDati(true);
+						filmController.stampaDati(filmsFiltrati.get(i), true);
 						MessaggiSistemaView.cornice();
 					}
 					
 					int selezione;
+					
 					do
 					{
 						MessaggiSistemaView.cornice();
@@ -82,7 +87,7 @@ public class MenuScegliFilm
 				{
 					FilmsView.stampaPosizione(i);
 					MessaggiSistemaView.cornice();
-					filmPrestabili.get(i).stampaDati(true);
+					filmController.stampaDati(filmPrestabili.get(i), true);
 					MessaggiSistemaView.cornice();
 				}
 				int selezione;

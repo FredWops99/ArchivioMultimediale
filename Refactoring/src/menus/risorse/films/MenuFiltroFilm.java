@@ -1,6 +1,8 @@
 package menus.risorse.films;
 
 import java.util.Vector;
+
+import controller.FilmController;
 import model.Film;
 import myLib.MyMenu;
 import view.FilmsView;
@@ -11,7 +13,7 @@ public class MenuFiltroFilm
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
 	
-	public static Vector<Film> show(Vector<Film> films, boolean daPrenotare) 
+	public static Vector<Film> show(boolean daPrenotare, FilmController filmController) 
 	{
 		Vector<Film> filmsFiltrati = null;
 		String titoloParziale = null;
@@ -29,21 +31,21 @@ public class MenuFiltroFilm
 			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = FilmsView.chiediTitolo(Film.class);
-				filmsFiltrati = filtraFilmPerTitolo(titoloParziale, films);
+				filmsFiltrati = filtraFilmPerTitolo(titoloParziale, filmController);
 				break;
 			}
 			
 			case 2:	//FILTRA PER ANNO PUBBLICAZIONE
 			{
 				annoUscita = FilmsView.chiediAnnoUscita();
-				filmsFiltrati = filtraFilmPerUscita(annoUscita, films);
+				filmsFiltrati = filtraFilmPerUscita(annoUscita, filmController);
 				break;
 			}
 			
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeRegista = FilmsView.chiediRegista();
-				filmsFiltrati = filtraFilmPerRegista(nomeRegista, films);
+				filmsFiltrati = filtraFilmPerRegista(nomeRegista, filmController);
 				break;
 			}
 		}
@@ -68,7 +70,8 @@ public class MenuFiltroFilm
 			for (int i=0; i <filmsFiltrati.size(); i++) 
 			{
 				MessaggiSistemaView.cornice(true, false);
-				filmsFiltrati.get(i).stampaDati(false);
+				filmController.stampaDati(filmsFiltrati.get(i), false);
+//				filmsFiltrati.get(i).stampaDati(false);
 			}	
 		}
 		
@@ -96,8 +99,10 @@ public class MenuFiltroFilm
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerTitolo(String titoloParziale, Vector<Film> films)
+	public static Vector<Film> filtraFilmPerTitolo(String titoloParziale, FilmController filmController)
 	{
+		Vector<Film> films = filmController.getFilms().getFilms();
+		
 		Vector<Film> filmTrovati = new Vector<>(); 
 		
 		for(Film film : films)
@@ -116,8 +121,10 @@ public class MenuFiltroFilm
 	 * @param annoUscita l'anno da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerUscita(int annoUscita, Vector<Film> films)
+	public static Vector<Film> filtraFilmPerUscita(int annoUscita, FilmController filmController)
 	{
+		Vector<Film> films = filmController.getFilms().getFilms();
+
 		Vector<Film> filmTrovati = new Vector<>(); 
 		
 		for(Film film : films)
@@ -136,8 +143,10 @@ public class MenuFiltroFilm
 	 * @param regista il nome del regista da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerRegista(String regista, Vector<Film> films)
+	public static Vector<Film> filtraFilmPerRegista(String regista, FilmController filmController)
 	{
+		Vector<Film> films = filmController.getFilms().getFilms();
+
 		Vector<Film> filmTrovati = new Vector<>(); 
 		for(Film film : films)
 		{

@@ -3,14 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
-import controller.FilmController;
-import menus.risorse.films.MenuFiltroFilm;
-import menus.risorse.films.MenuScegliFilm;
-import menus.risorse.films.MenuSottoCategoriaFilm;
-//import view.FilmsView;
-//import view.MessaggiSistemaView;
-//import view.RisorseView;
-
 /**
  * Classe che rappresenta l'insieme dei film in archivio
  * @author Prandini Stefano
@@ -33,11 +25,11 @@ public class Films implements Serializable
 		this.films = new Vector<Film>();
 //		lastId = 0;
 	}
-	public Vector<Film> getfilms() 
+	public Vector<Film> getFilms() 
 	{
 		return films;
 	}
-	public void setfilms(Vector<Film> films) 
+	public void setFilms(Vector<Film> films) 
 	{
 		this.films = films;
 	}
@@ -122,34 +114,34 @@ public class Films implements Serializable
 	/**
 	 * stampa i dati dei film corrispondenti ai parametri di ricerca specificati dall'utente
 	 */
-	public void cercaFilm()
-	{
-		MenuFiltroFilm.show(films, false);	
-	}
+//	public void cercaFilm()
+//	{
+//		MenuFiltroFilm.show(films, false, filmController);	
+//	}
 	
 	/**
 	 * stampa tutti i films raggruppandoli per sottocategoria
 	 */
-	public void stampaFilms()
-	{
-		Vector<Film>filmDaStampare = new Vector<>();
-		for(Film film : films)
-		{
-			if(film.isPrestabile())
-			{
-				filmDaStampare.add(film);
-			}
-		}
-		FilmsView.stampaDati(filmDaStampare);
-	}
+//	public void stampaFilms()
+//	{
+//		Vector<Film>filmDaStampare = new Vector<>();
+//		for(Film film : films)
+//		{
+//			if(film.isPrestabile())
+//			{
+//				filmDaStampare.add(film);
+//			}
+//		}
+//		FilmsView.stampaDati(filmDaStampare);
+//	}
 	
-	/**
-	 * Consente all'utente di selezionare un film in base a dei criteri di ricerca
-	 * @return il film corrispondente ai criteri inseriti dall'utente
-	 */
-	public Film scegliFilm() 
-	{
-		Film filmSelezionato = MenuScegliFilm.show(films);
-		return filmSelezionato;
-	}	
+//	/**
+//	 * Consente all'utente di selezionare un film in base a dei criteri di ricerca
+//	 * @return il film corrispondente ai criteri inseriti dall'utente
+//	 */
+//	public Film scegliFilm() 
+//	{
+//		Film filmSelezionato = MenuScegliFilm.show();
+//		return filmSelezionato;
+//	}	
 }

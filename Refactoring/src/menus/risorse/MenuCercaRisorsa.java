@@ -1,12 +1,12 @@
 package menus.risorse;
 
-import model.Films;
+import controller.FilmController;
 import model.Libri;
 import myLib.MyMenu;
 
 public class MenuCercaRisorsa 
 {
-	public static void show(String[] CATEGORIE, Libri libri, Films films)
+	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		try
@@ -19,7 +19,8 @@ public class MenuCercaRisorsa
 			}
 			else if(categoria == CATEGORIE[1])//"Films"
 			{
-				films.cercaFilm();
+				filmController.cercaFilm();
+//				films.cercaFilm();
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)

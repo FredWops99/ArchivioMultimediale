@@ -1,12 +1,12 @@
 package menus.risorse;
 
-import model.Films;
+import controller.FilmController;
 import model.Libri;
 import myLib.MyMenu;
 
 public class MenuRisorsePrestabili 
 {
-	public static void show(String[] CATEGORIE, Libri libri, Films films)
+	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		
@@ -19,7 +19,8 @@ public class MenuRisorsePrestabili
 			}
 			if(categoria == CATEGORIE[1])//FILMS
 			{
-				films.stampaFilms();
+				filmController.stampaDati();
+//				films.stampaFilms();
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)

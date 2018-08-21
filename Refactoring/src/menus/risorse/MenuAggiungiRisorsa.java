@@ -1,8 +1,6 @@
 package menus.risorse;
 
 import controller.FilmController;
-import model.Film;
-import model.Films;
 import model.Libri;
 import myLib.MyMenu;
 

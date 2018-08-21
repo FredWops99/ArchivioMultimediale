@@ -25,7 +25,7 @@ public abstract class Risorsa
 	 * 
 	 * @param perPrestito indica se le informazioni vanno visualizzate nella schermata dei prestiti o no (vengono mostrate info diverse)
 	 */
-	public abstract void stampaDati(boolean perPrestito);
+//	public abstract void stampaDati(boolean perPrestito);
 	/**
 	 * @return il titolo della risorsa
 	 */

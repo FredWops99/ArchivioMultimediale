@@ -1,5 +1,6 @@
 package menus.prestiti;
 
+import controller.FilmController;
 import model.Archivio;
 import model.Film;
 import model.Libro;
@@ -14,7 +15,7 @@ public class MenuRichiediPrestito
 	private static final String[] CATEGORIE = {"Libri","Film"};
 	private static final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
 	
-	public static void show(Prestiti prestiti, Archivio archivio) 
+	public static void show(Prestiti prestiti, Archivio archivio, FilmController filmController) 
 	{
 		MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
 		
@@ -55,7 +56,7 @@ public class MenuRichiediPrestito
 				}
 				else//può chiedere un altro prestito
 				{
-					Film film = archivio.getFilms().scegliFilm();
+					Film film = filmController.scegliFilm();
 					
 					if(film != null)
 					{

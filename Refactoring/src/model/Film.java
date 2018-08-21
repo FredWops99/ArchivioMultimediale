@@ -107,11 +107,12 @@ public class Film extends Risorsa implements Serializable
 		return sb.toString();
 	}
 	
-	@Override
-	public void stampaDati(boolean perPrestito) 
-	{
-		FilmsView.stampaDati(this, perPrestito);
-	}
+//	@Override
+//	public void stampaDati(boolean perPrestito) 
+//	{
+//		
+//		FilmsView.stampaDati(this, perPrestito);
+//	}
 
 	//GETTER//
 	public String getId() 

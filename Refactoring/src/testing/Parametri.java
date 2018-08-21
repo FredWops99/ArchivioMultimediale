@@ -1,24 +1,19 @@
 package testing;
 
-import model.Fruitori;
+import controller.FilmController;
+import model.Archivio;
 
 public class Parametri {
 
 	public static void main(String[] args) {
 
-		Fruitori fruitori = new Fruitori();
-		fruitori.addFruitore();
-		fruitori.stampaDati();
+		Archivio archivio = new Archivio();
+		FilmController fc = new FilmController(archivio);
+		fc.addFilm();
+		FilmController fc2 = new FilmController(archivio);
+		fc2.addFilm();
 		
-		rimuoviFruitori(fruitori);
-		
-		fruitori.stampaDati();
-	}
-
-	private static void rimuoviFruitori(Fruitori fruitori) 
-	{
-		int size = fruitori.getFruitori().size();
-		fruitori.getFruitori().remove(size - 1);
+		System.out.println(archivio.getFilms().getFilms().size());
 	}
 
 }

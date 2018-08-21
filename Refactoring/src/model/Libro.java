@@ -133,6 +133,7 @@ public class Libro extends Risorsa implements Serializable
 		return sb.toString();
 	}
 
+//	va messo nel suo controller
 	@Override
 	public void stampaDati(boolean perPrestito)
 	{
