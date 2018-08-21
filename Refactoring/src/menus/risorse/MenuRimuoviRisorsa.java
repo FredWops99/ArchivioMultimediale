@@ -20,6 +20,7 @@ public class MenuRimuoviRisorsa
 			}
 			if(categoria == CATEGORIE[1])//FILMS
 			{
+				idRisorsa = filmController.removeRisorsa(film);
 				idRisorsa = films.removeFilm();
 			}
 			return idRisorsa;

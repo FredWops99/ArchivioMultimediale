@@ -1,8 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
-import view.FilmsView;
+//import view.FilmsView;
 
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film

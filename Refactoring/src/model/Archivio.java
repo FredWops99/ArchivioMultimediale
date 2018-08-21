@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-
 import menus.risorse.*;
 import view.MessaggiSistemaView;
 
@@ -24,16 +23,6 @@ public class Archivio implements Serializable
 	{
 		setLibri(new Libri());
 		setFilms(new Films());
-	}
-
-	/**
-	 * permette di aggiungere un libro od un film all'archivio
-	 * (precondizione: CATEGORIE != null)
-	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
-	 */
-	public void aggiungiRisorsa(String[] CATEGORIE)
-	{
-		MenuAggiungiRisorsa.show(CATEGORIE, libri, films);
 	}
 	
 	/**

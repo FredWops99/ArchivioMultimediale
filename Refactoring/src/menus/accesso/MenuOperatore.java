@@ -1,5 +1,7 @@
 package menus.accesso;
 
+import controller.FilmController;
+import menus.risorse.MenuAggiungiRisorsa;
 import menus.storico.MenuStorico;
 import model.Archivio;
 import model.Fruitori;
@@ -18,7 +20,7 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti)
+	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController)
 	{
 		MessaggiSistemaView.accessoEseguito();
 		
@@ -26,7 +28,7 @@ public class MenuOperatore
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), fruitori, archivio, prestiti);
+			gestisciMenuOperatore(menuOperatore.scegli(), fruitori, archivio, prestiti, filmController);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -35,7 +37,7 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori, Archivio archivio, Prestiti prestiti) 
+	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -55,9 +57,11 @@ public class MenuOperatore
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-				archivio.aggiungiRisorsa(CATEGORIE);
+//				archivio.getLibri diventerà libriController?
+				MenuAggiungiRisorsa.show(CATEGORIE, archivio.getLibri(), filmController);
 				
-				GestoreSalvataggi.salvaArchivio(archivio);
+//				il salvataggio viene fatto in filmController
+//				GestoreSalvataggi.salvaArchivio(archivio);
 				
 				continuaMenuOperatore=true;
 				break;

@@ -1,14 +1,16 @@
 package menus.risorse;
 
+import controller.FilmController;
+import model.Film;
 import model.Films;
 import model.Libri;
 import myLib.MyMenu;
 
 public class MenuAggiungiRisorsa 
-{
+{	
 	private static final String INTESTAZIONE = "scegli la categoria: ";
 
-	public static void show(String[] CATEGORIE, Libri libri, Films films)
+	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
 	{
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		try
@@ -20,7 +22,9 @@ public class MenuAggiungiRisorsa
 			}
 			if(categoria == CATEGORIE[1])//FILM
 			{
-				films.addFilm();
+//				controller interagisce con view per creare il film
+				filmController.addFilm();
+				
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)

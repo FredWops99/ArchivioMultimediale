@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Vector;
+
+import controller.FilmController;
 import menus.accesso.MenuAccesso;
 
 /**
@@ -36,7 +38,10 @@ public class Main
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		MenuAccesso.show(fruitori, archivio, prestiti);
+//		controller per interazione utente/vista/model. gli passo archivio appena caricato.
+		FilmController filmController = new FilmController(archivio);
+		
+		MenuAccesso.show(fruitori, archivio, prestiti, filmController);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package menus.accesso;
 
+import controller.FilmController;
 import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
@@ -15,13 +16,13 @@ public class MenuAccesso
 	
 	private static boolean continuaMenuAccesso;
 
-	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti)
+	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController)
 	{
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
 		do
 		{
-			gestisciMenuAccesso(menuAccesso.scegli(), fruitori, archivio, prestiti);
+			gestisciMenuAccesso(menuAccesso.scegli(), fruitori, archivio, prestiti, filmController);
 		}
 		while(continuaMenuAccesso);	
 	}
@@ -30,7 +31,7 @@ public class MenuAccesso
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuAccesso(int scelta, Fruitori fruitori, Archivio archivio, Prestiti prestiti) 
+	private static void gestisciMenuAccesso(int scelta, Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController) 
 	{
 		continuaMenuAccesso=true;
 
@@ -54,7 +55,7 @@ public class MenuAccesso
 				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
-					MenuOperatore.show(fruitori, archivio, prestiti);
+					MenuOperatore.show(fruitori, archivio, prestiti, filmController);
 				}
 				else
 				{
