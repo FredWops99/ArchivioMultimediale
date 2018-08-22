@@ -15,7 +15,7 @@ public class MenuScegliFilm
 
 	public static Film show(FilmController filmController) 
 	{
-		Vector<Film> films = filmController.getFilms().getFilms();
+		Vector<Film> films = filmController.getModel().getFilms();
 
 		MyMenu menuSceltaFilm = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaFilm.scegliBase();

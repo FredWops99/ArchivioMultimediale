@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Vector;
 import menus.risorse.films.*;
-import model.Archivio;
 import model.Film;
 import model.Films;
 import view.FilmsView;
@@ -10,13 +9,13 @@ import view.MessaggiSistemaView;
 
 public class FilmController 
 {
-	private Archivio model;
+	private Films model;
 	private int lastId;	
 	
-	public FilmController(Archivio archivio) 
+	public FilmController(Films films) 
 	{
-		this.model = archivio;
-		this.lastId = model.getFilms().getLastId();
+		this.model = films;
+		this.lastId = films.getLastId();
 	}
 
 	public void addFilm()
@@ -38,7 +37,7 @@ public class FilmController
 		Film f = new Film("F"+ lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
-		boolean aggiuntaRiuscita = model.getFilms().addFilm(f);
+		boolean aggiuntaRiuscita = model.addFilm(f);
 		
 		if(aggiuntaRiuscita)
 		{
@@ -58,7 +57,7 @@ public class FilmController
 //	deve restituire al main l'id della risorsa da eliminare (far diventare non prestabile)
 	public String removeFilm()
 	{
-		Vector<Film> films = model.getFilms().getFilms();
+		Vector<Film> films = model.getFilms();
 		
 		String idSelezionato;
 		
@@ -129,7 +128,7 @@ public class FilmController
 	public void stampaDati() 
 	{
 		Vector<Film>filmDaStampare = new Vector<>();
-		for(Film film : model.getFilms().getFilms())
+		for(Film film : model.getFilms())
 		{
 			if(film.isPrestabile())
 			{
@@ -158,9 +157,9 @@ public class FilmController
 		}
 	}
 	
-	public Films getFilms()
+	public Films getModel()
 	{
-		return model.getFilms();
+		return model;
 	}
 
 	public void cercaFilm() 

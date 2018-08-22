@@ -5,7 +5,6 @@ import menus.risorse.libri.MenuFiltroLibri;
 import menus.risorse.libri.MenuScegliGenereLibro;
 import menus.risorse.libri.MenuScegliLibro;
 import menus.risorse.libri.MenuSottoCategoriaLibri;
-import model.Archivio;
 import model.Libri;
 import model.Libro;
 import view.LibriView;
@@ -18,13 +17,18 @@ import view.MessaggiSistemaView;
  */
 public class LibriController 
 {
-	private Archivio model;
+	private Libri model;
 	private int lastId;	
 	
-	public LibriController(Archivio archivio)
+	public LibriController(Libri libri)
 	{
-		model = archivio;
-		this.lastId = archivio.getLibri().getLastId();
+		model = libri;
+		this.lastId = libri.getLastId();
+	}
+	
+	public Libri getModel() 
+	{
+		return model;
 	}
 	
 	public void addLibro()
@@ -53,7 +57,7 @@ public class LibriController
 		
 		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
-		boolean aggiuntaRiuscita = model.getLibri().addLibro(l);
+		boolean aggiuntaRiuscita = model.addLibro(l);
 		
 		if(aggiuntaRiuscita)
 		{
@@ -76,7 +80,7 @@ public class LibriController
 	 */
 	public String removeLibro()
 	{
-		Vector<Libro> libri = model.getLibri().getLibri();
+		Vector<Libro> libri = model.getLibri();
 
 		
 		String idSelezionato;
@@ -153,7 +157,7 @@ public class LibriController
 	{
 //		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
 		Vector<Libro> libriDaStampare = new Vector<>();
-		for(Libro libro : model.getLibri().getLibri())
+		for(Libro libro : model.getLibri())
 		{
 			if(libro.isPrestabile())
 			{
@@ -184,11 +188,6 @@ public class LibriController
 	private String scegliGenere(String sottoCategoria)
 	{
 		return MenuScegliGenereLibro.show(sottoCategoria);
-	}
-	
-	public Libri getLibri()
-	{
-		return model.getLibri();
 	}
 	
 	/**

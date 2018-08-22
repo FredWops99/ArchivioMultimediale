@@ -12,8 +12,8 @@ public class ArchivioController
 	
 	public ArchivioController(Archivio archivio)
 	{
-		filmController = new FilmController(archivio);
-		libriController = new LibriController(archivio);
+		filmController = new FilmController(archivio.getFilms());
+		libriController = new LibriController(archivio.getLibri());
 	}
 	
 	public FilmController getFilmController() 

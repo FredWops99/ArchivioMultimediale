@@ -101,7 +101,7 @@ public class MenuFiltroLibri
 	 */
 	public static Vector<Libro> filtraLibriPerTitolo(String titoloParziale, LibriController libriController)
 	{
-		Vector<Libro> libri = libriController.getLibri().getLibri();
+		Vector<Libro> libri = libriController.getModel().getLibri();
 
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
@@ -123,7 +123,7 @@ public class MenuFiltroLibri
 	 */
 	public static Vector<Libro> filtraLibriPerData(int annoPubblicazione, LibriController libriController)
 	{
-		Vector<Libro> libri = libriController.getLibri().getLibri();
+		Vector<Libro> libri = libriController.getModel().getLibri();
 
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
@@ -145,7 +145,7 @@ public class MenuFiltroLibri
 	 */
 	public static Vector<Libro> filtraLibriPerAutori(String autore, LibriController libriController)
 	{
-		Vector<Libro> libri = libriController.getLibri().getLibri();
+		Vector<Libro> libri = libriController.getModel().getLibri();
 
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		for(Libro libro : libri)

@@ -15,7 +15,7 @@ public class MenuScegliLibro
 
 	public static Libro show(LibriController libriController)
 	{
-		Vector<Libro> libri = libriController.getLibri().getLibri();
+		Vector<Libro> libri = libriController.getModel().getLibri();
 
 		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaLibro.scegliBase();

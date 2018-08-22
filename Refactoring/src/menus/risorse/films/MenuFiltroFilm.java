@@ -101,7 +101,7 @@ public class MenuFiltroFilm
 	 */
 	public static Vector<Film> filtraFilmPerTitolo(String titoloParziale, FilmController filmController)
 	{
-		Vector<Film> films = filmController.getFilms().getFilms();
+		Vector<Film> films = filmController.getModel().getFilms();
 		
 		Vector<Film> filmTrovati = new Vector<>(); 
 		
@@ -123,7 +123,7 @@ public class MenuFiltroFilm
 	 */
 	public static Vector<Film> filtraFilmPerUscita(int annoUscita, FilmController filmController)
 	{
-		Vector<Film> films = filmController.getFilms().getFilms();
+		Vector<Film> films = filmController.getModel().getFilms();
 
 		Vector<Film> filmTrovati = new Vector<>(); 
 		
@@ -145,7 +145,7 @@ public class MenuFiltroFilm
 	 */
 	public static Vector<Film> filtraFilmPerRegista(String regista, FilmController filmController)
 	{
-		Vector<Film> films = filmController.getFilms().getFilms();
+		Vector<Film> films = filmController.getModel().getFilms();
 
 		Vector<Film> filmTrovati = new Vector<>(); 
 		for(Film film : films)
