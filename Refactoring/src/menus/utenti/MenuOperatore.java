@@ -1,13 +1,14 @@
-package menus.accesso;
+package menus.utenti;
 
-import controller.FilmController;
+import controller.ArchivioController;
 import menus.risorse.MenuAggiungiRisorsa;
+import menus.risorse.MenuCercaRisorsa;
+import menus.risorse.MenuElencoRisorse;
 import menus.storico.MenuStorico;
-import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
 import myLib.MyMenu;
-import model.GestoreSalvataggi;
+import model.Main;
 import view.MessaggiSistemaView;
 
 public class MenuOperatore 
@@ -20,7 +21,7 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController)
+	public static void show(Fruitori fruitori, Prestiti prestiti, ArchivioController archivioController)
 	{
 		MessaggiSistemaView.accessoEseguito();
 		
@@ -28,7 +29,7 @@ public class MenuOperatore
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), fruitori, archivio, prestiti, filmController);
+			gestisciMenuOperatore(menuOperatore.scegli(), fruitori, prestiti, archivioController);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -37,7 +38,7 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori, Archivio archivio, Prestiti prestiti, FilmController filmController) 
+	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori, Prestiti prestiti, ArchivioController archivioController) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -58,21 +59,23 @@ public class MenuOperatore
 			case 2://AGGIUNGI RISORSA
 			{
 //				archivio.getLibri diventerà libriController?
-				MenuAggiungiRisorsa.show(CATEGORIE, archivio.getLibri(), filmController);
+				MenuAggiungiRisorsa.show(CATEGORIE, archivioController);
 				
-				GestoreSalvataggi.salvaArchivio(archivio);
+				Main.salvaArchivio();
+//				GestoreSalvataggi.salvaArchivio(archivio);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				String idRimosso = archivio.rimuoviRisorsa(CATEGORIE, filmController);
+				String idRimosso = archivioController.rimuoviRisorsa(CATEGORIE);
 //				se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
 					prestiti.annullaPrestitiConRisorsa(idRimosso);
-					GestoreSalvataggi.salvaArchivio(archivio);
+					Main.salvaArchivio();
+//					GestoreSalvataggi.salvaArchivio(archivio);
 				}
 				
 				continuaMenuOperatore=true;
@@ -80,14 +83,14 @@ public class MenuOperatore
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				archivio.visualizzaRisorsePrestabili(CATEGORIE, filmController);
+				MenuElencoRisorse.show(CATEGORIE, archivioController);
 				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 5://CERCA RISORSA
 			{
-				archivio.cercaRisorsa(CATEGORIE, filmController);
+				MenuCercaRisorsa.show(CATEGORIE, archivioController);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -101,7 +104,7 @@ public class MenuOperatore
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				MenuStorico.show(prestiti,archivio,fruitori);
+				MenuStorico.show(prestiti, archivioController, fruitori);
 				
 				continuaMenuOperatore = true;
 				break;

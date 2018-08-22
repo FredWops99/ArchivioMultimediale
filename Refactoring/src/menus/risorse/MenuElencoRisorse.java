@@ -1,12 +1,11 @@
 package menus.risorse;
 
-import controller.FilmController;
-import model.Libri;
+import controller.ArchivioController;
 import myLib.MyMenu;
 
-public class MenuRisorsePrestabili 
+public class MenuElencoRisorse 
 {
-	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
+	public static void show(String[] CATEGORIE, ArchivioController archivioController)
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		
@@ -15,12 +14,11 @@ public class MenuRisorsePrestabili
 			String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 			if(categoria == CATEGORIE[0])//LIBRI
 			{
-				libri.stampaLibri();
+				archivioController.getLibriController().stampaDatiLibriPrestabili();
 			}
 			if(categoria == CATEGORIE[1])//FILMS
 			{
-				filmController.stampaDati();
-//				films.stampaFilms();
+				archivioController.getFilmController().stampaDati();
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)

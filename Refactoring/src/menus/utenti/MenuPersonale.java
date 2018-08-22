@@ -1,8 +1,9 @@
-package menus.accesso;
+package menus.utenti;
 
+import controller.ArchivioController;
 import menus.prestiti.MenuRichiediPrestito;
 import menus.prestiti.MenuTerminaPrestiti;
-import model.Archivio;
+import menus.risorse.MenuCercaRisorsa;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
@@ -17,13 +18,13 @@ public class MenuPersonale
 	private static boolean continuaMenuPersonale;
 
 	
-	public static void show(Archivio archivio, Prestiti prestiti)
+	public static void show(ArchivioController archivioController, Prestiti prestiti)
 	{
 		MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
 		continuaMenuPersonale=true;
 		do
 		{
-			gestisciMenuPersonale(menuPersonale.scegli(), archivio, prestiti);
+			gestisciMenuPersonale(menuPersonale.scegli(), archivioController, prestiti);
 		}
 		while(continuaMenuPersonale);
 	}
@@ -32,7 +33,7 @@ public class MenuPersonale
 	 * menu che compare dopo che un fruitore esegue il login
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuPersonale(int scelta, Archivio archivio, Prestiti prestiti) 
+	private static void gestisciMenuPersonale(int scelta, ArchivioController archivioController, Prestiti prestiti) 
 	{
 		continuaMenuPersonale=true;
 		
@@ -59,14 +60,13 @@ public class MenuPersonale
 			}
 			case 3://CERCA UNA RISORSA
 			{
-				archivio.cercaRisorsa(CATEGORIE);
-				
+				MenuCercaRisorsa.show(CATEGORIE, archivioController);				
 				continuaMenuPersonale=true;
 				break;
 			}
 			case 4: //RICHIEDI PRESTITO (non in prestiti perchè devo poter accedere alle risorse)
 			{
-				MenuRichiediPrestito.show(prestiti, archivio);
+				MenuRichiediPrestito.show(prestiti, archivioController);
 				
 				continuaMenuPersonale = true;
 				break;
@@ -87,7 +87,7 @@ public class MenuPersonale
 			}
 			case 7://TERMINA PRESTITI
 			{
-				MenuTerminaPrestiti.show(prestiti, archivio);
+				MenuTerminaPrestiti.show(prestiti, archivioController);
 				
 				continuaMenuPersonale = true;
 				break;

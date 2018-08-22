@@ -1,14 +1,10 @@
 package controller;
 
 import java.util.Vector;
-
-import menus.risorse.films.MenuFiltroFilm;
-import menus.risorse.films.MenuScegliFilm;
-import menus.risorse.films.MenuSottoCategoriaFilm;
+import menus.risorse.films.*;
 import model.Archivio;
 import model.Film;
 import model.Films;
-import model.Main;
 import view.FilmsView;
 import view.MessaggiSistemaView;
 
@@ -48,9 +44,9 @@ public class FilmController
 		{
 			FilmsView.aggiuntaRiuscita(Film.class);
 			
-//			controller aggiorna anche l'archivio del main, così da rimanere aggiornato tra i vari controller
-//			poi il main salva su file quell'archivio, nella classe MenuOperatore
-			Main.setArchivio(model);
+//			il main salva su file quell'archivio, nella classe MenuOperatore
+//			non c'è bisogno di settare l'archivio del main perchè è lo stesso riferimento
+//			Main.setArchivio(model);
 		}
 		else
 		{
@@ -118,16 +114,18 @@ public class FilmController
 				idSelezionato = "-1";
 			}
 		}
-		Main.setArchivio(model);
+//		non c'è bisogno di settare l'archivio nel main perchè si sta lavorando sullo stesso oggetto
+//		Main.setArchivio(model);
 		
 		return idSelezionato;
 	}
 	
-	public void stampaDati(Film elementAt, boolean perPrestito) 
+	public void stampaDati(Film film, boolean perPrestito) 
 	{
-		FilmsView.stampaDati(elementAt, perPrestito);
+		FilmsView.stampaDati(film, perPrestito);
 	}
 	
+//	main contatta il controller che si occupa dell'interazione con la view
 	public void stampaDati() 
 	{
 		Vector<Film>filmDaStampare = new Vector<>();
@@ -162,12 +160,12 @@ public class FilmController
 	
 	public Films getFilms()
 	{
-		return this.getFilms();
+		return model.getFilms();
 	}
 
 	public void cercaFilm() 
 	{
-			MenuFiltroFilm.show(false, this);			
+		MenuFiltroFilm.show(false, this);			
 	}
 	
 	/**

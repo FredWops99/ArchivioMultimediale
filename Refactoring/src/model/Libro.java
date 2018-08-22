@@ -3,8 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
-import view.LibriView;
-
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
  * @author Prandini Stefano
@@ -99,9 +97,9 @@ public class Libro extends Risorsa implements Serializable
 	public String toString(boolean perPrestito) 
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Categoria-----------------: Libro");
-		sb.append("Sottocategoria------------: " + sottoCategoria);
-		sb.append("Titolo--------------------: " + titolo);
+		sb.append("Categoria-----------------: Libro\n");
+		sb.append("Sottocategoria------------: " + sottoCategoria + "\n");
+		sb.append("Titolo--------------------: " + titolo + "\n");
 		sb.append("Autori--------------------:");
 		for(int i = 0; i < autori.size(); i++)
 		{
@@ -110,35 +108,34 @@ public class Libro extends Risorsa implements Serializable
 			{
 				sb.append(",");
 			}
-			else sb.append("");
+			else sb.append("\n");
 		}
 		if(!genere.equals("-"))
 		{
-			sb.append("Genere--------------------: " + genere);
+			sb.append("Genere--------------------: " + genere + "\n");
 		}
-		sb.append("Numero pagine-------------: " + pagine);
-		sb.append("Anno di pubblicazione-----: " + annoPubblicazione);
-		sb.append("Casa editrice-------------: " + casaEditrice);
-		sb.append("Lingua--------------------: " + lingua);
+		sb.append("Numero pagine-------------: " + pagine + "\n");
+		sb.append("Anno di pubblicazione-----: " + annoPubblicazione + "\n");
+		sb.append("Casa editrice-------------: " + casaEditrice + "\n");
+		sb.append("Lingua--------------------: " + lingua + "\n");
 		if(!perPrestito)//dati utili all'operatore
 		{
-			sb.append("Numero licenze------------: " + nLicenze);
-			sb.append("In prestito---------------: " + inPrestito);
+			sb.append("Numero licenze------------: " + nLicenze + "\n");
+			sb.append("In prestito---------------: " + inPrestito + "\n");
 		}
 		else//dati utili al fruitore
 		{
-			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito));
+			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito) + "\n");
 		}
 
 		return sb.toString();
 	}
 
 //	va messo nel suo controller
-	@Override
-	public void stampaDati(boolean perPrestito)
-	{
-		LibriView.stampaDati(this, perPrestito);
-	}
+//	public void stampaDati(boolean perPrestito)
+//	{
+//		LibriView.stampaDati(this, perPrestito);
+//	}
 	
 
 	public String getId() 

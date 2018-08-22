@@ -62,4 +62,9 @@ public class MessaggiSistemaView
 			System.out.println();
 		}
 	}
+	
+	public static void stampaPosizione(int i) 
+	{
+		System.out.println("\n" + (i+1) + ") ");
+	}
 }

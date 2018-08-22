@@ -1,7 +1,7 @@
 package menus.risorse.libri;
 
 import java.util.Vector;
-
+import controller.LibriController;
 import model.Libri;
 import model.Libro;
 import myLib.MyMenu;
@@ -10,9 +10,14 @@ import view.MessaggiSistemaView;
 
 public class MenuScegliLibro 
 {	
-	public static Libro show(Vector<Libro> libri)
+	private static final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
+	private static final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
+
+	public static Libro show(LibriController libriController)
 	{
-		MyMenu menuSceltaLibro = new MyMenu("\nScegli come visualizzare le risorse: ", new String[] {"Filtra ricerca", "Visualizza archivio"}, true); 
+		Vector<Libro> libri = libriController.getLibri().getLibri();
+
+		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaLibro.scegliBase();
 		switch(scelta)
 		{
@@ -22,17 +27,15 @@ public class MenuScegliLibro
 			}
 			case 1://FILTRA RICERCA
 			{
-				
-				
-				Vector<Libro> libriFiltrati = MenuFiltroLibri.show(libri,true);
+				Vector<Libro> libriFiltrati = MenuFiltroLibri.show(true, libriController);
 				
 				if(!libriFiltrati.isEmpty())
 				{
 					for(int i = 0; i < libriFiltrati.size(); i++)
 					{
-						LibriView.stampaPosizione(i);
+						MessaggiSistemaView.stampaPosizione(i);
 						MessaggiSistemaView.cornice();
-						libriFiltrati.get(i).stampaDati(true);
+						libriController.stampaDatiLibro(libriFiltrati.get(i), true);
 						MessaggiSistemaView.cornice();
 					}
 					
@@ -78,14 +81,15 @@ public class MenuScegliLibro
 					return null;
 				}
 				
-				LibriView.risorseInArchivio(Libri.class);;
+				LibriView.risorseInArchivio(Libri.class);
 				for(int i = 0; i < libriPrestabili.size(); i++)
 				{
-					LibriView.stampaPosizione(i);
+					MessaggiSistemaView.stampaPosizione(i);
 					MessaggiSistemaView.cornice();
-					libriPrestabili.get(i).stampaDati(true);
+					libriController.stampaDatiLibro(libriPrestabili.get(i), true);
 					MessaggiSistemaView.cornice();
 				}
+				
 				int selezione;
 				do
 				{

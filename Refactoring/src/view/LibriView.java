@@ -53,7 +53,11 @@ public class LibriView extends RisorseView
 		System.out.println("Genere: " + libro.getGenere());	
 	}
 
-	public static void stampaDati(Vector<Libro> libriDaStampare) 
+	/**
+	 * stampa i libri raggruppandoli per sottocategorie
+	 * @param libriDaStampare
+	 */
+	public static void stampaDatiPerCategorie(Vector<Libro> libriDaStampare) 
 	{
 		if(libriDaStampare.isEmpty())
 		{
@@ -82,7 +86,7 @@ public class LibriView extends RisorseView
 					RisorseView.stampaTitolo(libriDaStampare.get(j));
 //					conteggio al contrario così quando elimino un elemento non salto il successivo
 //					diverso da Films perchè i libri vengono ordinati anche per Genere (che Film non ha)
-					for(int i = libriDaStampare.size()-1; i >= j+1; i--) 
+					for(int i = libriDaStampare.size() - 1; i >= j + 1; i--) 
 					{
 						if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
 						{

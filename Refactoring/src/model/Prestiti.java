@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Vector;
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
-import myLib.InputDati;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
 
@@ -93,7 +92,7 @@ public class Prestiti implements Serializable
 		}
 		if(totPrestiti == 0)
 		{
-			System.out.println("Al momento non ci sono prestiti attivi");
+			PrestitiView.noPrestitiAttivi();
 		}
 	}
 	
@@ -114,29 +113,29 @@ public class Prestiti implements Serializable
 		}
 		if(prestitiUtente.isEmpty())
 		{
-			System.out.println("Non hai prestiti attivi!");
+			PrestitiView.noPrestiti();
 		}
 		else
 		{
-			System.out.println("Seleziona il prestito che vuoi terminare: ");
+			PrestitiView.prestitoDaTerminare();
 			
 			for(int i = 0; i < prestitiUtente.size(); i++)
 			{
-				System.out.println("\n" + (i+1) + ") ");//stampo la posizione partendo da 1)
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
 				prestitiUtente.get(i).visualizzaPrestito();
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.cornice();
 			}
 			
-			int selezione = InputDati.leggiIntero
-					("\nSeleziona la risorsa della quale vuoi terminare il prestito (0 per annullare): ", 0, prestitiUtente.size());
+			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiUtente.size());
+
 			if(selezione != 0)
 			{
 				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
 				
 				prestitoSelezionato.getRisorsa().tornaDalPrestito();
 				prestitoSelezionato.terminaPrestito();
-				System.out.println("Prestito terminato!");
+				PrestitiView.prestitoTerminato();
 			}
 		}
 	}
@@ -161,11 +160,11 @@ public class Prestiti implements Serializable
 		}
 		if(j == 0)
 		{
-			System.out.println("Al momento non hai prestiti attivi");
+			PrestitiView.noPrestiti();
 		}
 		else
 		{
-			System.out.println("i tuoi prestiti sono stati eliminati");
+			PrestitiView.prestitiEliminati();
 		}
 	}	
 	
@@ -295,29 +294,28 @@ public class Prestiti implements Serializable
 		}
 		if(prestitiUtente.isEmpty())
 		{
-			System.out.println("Non hai prestiti attivi da rinnovare!");
+			PrestitiView.noRinnovi();
 		}
 		else
 		{
-			System.out.println("Seleziona il prestito che vuoi rinnovare: ");
-			
+			PrestitiView.selezionaRinnovo();
 			for(int i = 0; i < prestitiUtente.size(); i++)
 			{
-				System.out.println("\n" + (i+1) + ") ");//stampo la posizione partendo da 1)
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.stampaPosizione(i);				
+				MessaggiSistemaView.cornice();
 				prestitiUtente.get(i).visualizzaPrestito();
-				System.out.println(BelleStringhe.CORNICE);
+				MessaggiSistemaView.cornice();
 			}
 			
-			int selezione = InputDati.leggiIntero
-					("\nSeleziona la risorsa per la quale chiedere il rinnovo del prestito (0 per annullare): ", 0, prestitiUtente.size());
+			int selezione = PrestitiView.chiediRisorsaDaRinnovare(prestitiUtente.size());
+
 			if(selezione != 0)
 			{
 				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
 				
 				if(!prestitoSelezionato.isRinnovabile())
 				{
-					System.out.println("Hai già prorogato questo prestito: puoi eseguire questa azione solo una volta per ogni prestito");
+					PrestitiView.prestitoGiàProrogato();
 				}
 				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
 //				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
@@ -326,9 +324,7 @@ public class Prestiti implements Serializable
 				}
 				else//non si può ancora rinnovare prestito
 				{
-					System.out.println("Il tuo prestito non è ancora rinnovabile: ");
-					System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataPerRichiestaProroga()) + 
-																			" e il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataScadenza()));
+					PrestitiView.prestitoNonRinnovabile(prestitoSelezionato);
 				}
 			}
 		}

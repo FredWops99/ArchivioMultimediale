@@ -1,7 +1,7 @@
 package menus.risorse.libri;
 
 import java.util.Vector;
-
+import controller.LibriController;
 import model.Libri;
 import model.Libro;
 import myLib.MyMenu;
@@ -13,7 +13,7 @@ public class MenuFiltroLibri
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
 	
-	public static Vector<Libro> show(Vector<Libro> libri, boolean daPrenotare) 
+	public static Vector<Libro> show(boolean daPrenotare, LibriController libriController) 
 	{
 		Vector<Libro> libriFiltrati = null;
 		String titoloParziale = null;
@@ -31,19 +31,19 @@ public class MenuFiltroLibri
 			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = LibriView.chiediTitolo(Libro.class);
-				libriFiltrati = filtraLibriPerTitolo(titoloParziale, libri);
+				libriFiltrati = filtraLibriPerTitolo(titoloParziale, libriController);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
 				annoPubblicazione = LibriView.chiediAnnoPubblicazione();
-				libriFiltrati = filtraLibriPerData(annoPubblicazione, libri);
+				libriFiltrati = filtraLibriPerData(annoPubblicazione, libriController);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeAutore = LibriView.chiediAutore();
-				libriFiltrati = filtraLibriPerAutori(nomeAutore, libri);
+				libriFiltrati = filtraLibriPerAutori(nomeAutore, libriController);
 				break;
 			}
 		}
@@ -68,7 +68,7 @@ public class MenuFiltroLibri
 			for (int i=0; i <libriFiltrati.size(); i++) 
 			{
 				MessaggiSistemaView.cornice(true,false);
-				libriFiltrati.get(i).stampaDati(false);
+				libriController.stampaDatiLibro(libriFiltrati.get(i), false);
 			}
 			
 		}
@@ -99,8 +99,10 @@ public class MenuFiltroLibri
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public static Vector<Libro> filtraLibriPerTitolo(String titoloParziale, Vector<Libro> libri)
+	public static Vector<Libro> filtraLibriPerTitolo(String titoloParziale, LibriController libriController)
 	{
+		Vector<Libro> libri = libriController.getLibri().getLibri();
+
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
 		for(Libro libro : libri)
@@ -119,8 +121,10 @@ public class MenuFiltroLibri
 	 * @param annoPubblicazione l'anno da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public static Vector<Libro> filtraLibriPerData(int annoPubblicazione, Vector<Libro> libri)
+	public static Vector<Libro> filtraLibriPerData(int annoPubblicazione, LibriController libriController)
 	{
+		Vector<Libro> libri = libriController.getLibri().getLibri();
+
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		
 		for(Libro libro : libri)
@@ -139,8 +143,10 @@ public class MenuFiltroLibri
 	 * @param autore il nome dell'autore da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public static Vector<Libro> filtraLibriPerAutori(String autore, Vector<Libro> libri)
+	public static Vector<Libro> filtraLibriPerAutori(String autore, LibriController libriController)
 	{
+		Vector<Libro> libri = libriController.getLibri().getLibri();
+
 		Vector<Libro> libriTrovati = new Vector<>(); 
 		for(Libro libro : libri)
 		{

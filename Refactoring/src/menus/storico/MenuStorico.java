@@ -1,6 +1,6 @@
 package menus.storico;
 
-import model.Archivio;
+import controller.ArchivioController;
 import model.Fruitori;
 import model.Prestiti;
 import model.Storico;
@@ -35,7 +35,7 @@ public class MenuStorico
 	 * @param fruitori l'elenco dei fruitori che è utilizzato dai vari metodi del menù
 	 */
 	
-	public static void show(Prestiti prestiti,Archivio archivio,Fruitori fruitori)
+	public static void show(Prestiti prestiti, ArchivioController archivioController, Fruitori fruitori)
 	{
 		boolean continuaMenuStorico = true;
 		do
@@ -79,7 +79,7 @@ public class MenuStorico
 				}
 				case 5://visualizza risorse prestabili in passato
 				{
-					Storico.risorsePrestabili(archivio);
+					Storico.risorsePrestabili(archivioController);
 					
 					continuaMenuStorico = true;
 					break;

@@ -96,11 +96,6 @@ public abstract class RisorseView
 		System.out.println("\n " + c.getSimpleName() + " in archivio: \n");	
 	}
 	
-	public static void stampaPosizione(int i) 
-	{
-		System.out.println("\n" + (i+1) + ") ");
-	}
-	
 	public static int selezionaPrestito(Vector<?> elenco, Class<?> c)
 	{
 		return InputDati.leggiIntero("Seleziona il " + c.getSimpleName().toLowerCase() + " che vuoi ricevere in prestito (0 per annullare): ", 0, elenco.size());

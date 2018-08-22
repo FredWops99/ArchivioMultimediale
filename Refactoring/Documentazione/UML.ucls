@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="menus.accesso.MenuAccesso" project="Refactoring" 
-    file="/Refactoring/src/menus/accesso/MenuAccesso.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="menus.utenti.MenuAccesso" project="Refactoring" 
+    file="/Refactoring/src/menus/utenti/MenuAccesso.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="687" y="179"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

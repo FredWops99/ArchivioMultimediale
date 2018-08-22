@@ -1,12 +1,11 @@
 package menus.risorse;
 
-import controller.FilmController;
-import model.Libri;
+import controller.ArchivioController;
 import myLib.MyMenu;
 
 public class MenuRimuoviRisorsa 
 {
-	public static String showAndReturnID(String[] CATEGORIE, Libri libri, FilmController filmController)
+	public static String showAndReturnID(String[] CATEGORIE, ArchivioController archivioController)
 	{
 		String idRisorsa = "-1";
 
@@ -16,11 +15,11 @@ public class MenuRimuoviRisorsa
 			String categoria = CATEGORIE[menu.scegliBase() - 1];
 			if(categoria == CATEGORIE[0])//LIBRI
 			{
-				idRisorsa = libri.removeLibro();
+				idRisorsa = archivioController.getLibriController().removeLibro();
 			}
 			if(categoria == CATEGORIE[1])//FILMS
 			{
-				idRisorsa = filmController.removeFilm();
+				idRisorsa = archivioController.getFilmController().removeFilm();
 			}
 			return idRisorsa;
 		}

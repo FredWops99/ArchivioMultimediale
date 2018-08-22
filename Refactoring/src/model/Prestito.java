@@ -64,18 +64,18 @@ public class Prestito implements Serializable
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Categoria-------------: " + risorsa.getClass().getSimpleName());		
-		sb.append("Titolo----------------: " + risorsa.getTitolo());
-		sb.append("Fruitore--------------: " + fruitore.getUser());
-		sb.append("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio));
-		sb.append("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza));
+		sb.append("Categoria-------------: " + risorsa.getClass().getSimpleName() + "\n");		
+		sb.append("Titolo----------------: " + risorsa.getTitolo() + "\n");
+		sb.append("Fruitore--------------: " + fruitore.getUser() + "\n");
+		sb.append("Data prestito---------: " + GestioneDate.visualizzaData(dataInizio) + "\n");
+		sb.append("Data scadenza---------: " + GestioneDate.visualizzaData(dataScadenza) + "\n");
 		if(!prorogato)
 		{
-			sb.append("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataPerRichiestaProroga));
+			sb.append("Rinnovabile dal-------: " + GestioneDate.visualizzaData(dataPerRichiestaProroga) + "\n");
 		}
 		else
 		{
-			sb.append("Prestito non rinnovabile");
+			sb.append("Prestito non rinnovabile\n");
 		}
 		return sb.toString();
 	}

@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import controller.ArchivioController;
 import myLib.GestioneDate;
 import view.StoricoView;
 
@@ -152,10 +154,10 @@ public class Storico implements Serializable
 	 * tra film e libri
 	 * @param archivio tutte le risorse in archivio
 	 */
-	public static void risorsePrestabili(Archivio archivio)
+	public static void risorsePrestabili(ArchivioController archivioController)
 	{
-		Vector<Libro> libri = archivio.getLibri().getLibri();
-		Vector<Film>  films = archivio.getFilms().getFilms();
+		Vector<Libro> libri = archivioController.getLibriController().getLibri().getLibri();
+		Vector<Film>  films = archivioController.getFilmController().getFilms().getFilms();
 		
 		StoricoView.libriPrestabiliInPassato();
 		int libriPrestabiliInPassato = 0;

@@ -1,12 +1,11 @@
 package menus.risorse;
 
-import controller.FilmController;
-import model.Libri;
+import controller.ArchivioController;
 import myLib.MyMenu;
 
 public class MenuCercaRisorsa 
 {
-	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
+	public static void show(String[] CATEGORIE, ArchivioController archivioController)
 	{
 		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
 		try
@@ -15,12 +14,11 @@ public class MenuCercaRisorsa
 
 			if(categoria == CATEGORIE[0])//"Libri"
 			{
-				libri.cercaLibro();
+				archivioController.getLibriController().cercaLibro();
 			}
 			else if(categoria == CATEGORIE[1])//"Films"
 			{
-				filmController.cercaFilm();
-//				films.cercaFilm();
+				archivioController.getFilmController().cercaFilm();
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e)

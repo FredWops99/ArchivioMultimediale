@@ -1,9 +1,8 @@
 package model;
 
 import java.util.Vector;
-
-import controller.FilmController;
-import menus.accesso.MenuAccesso;
+import controller.ArchivioController;
+import menus.utenti.MenuAccesso;
 
 /**
  * Classe main del programma Archivio Multimediale
@@ -38,10 +37,10 @@ public class Main
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-//		controller per interazione utente/vista/model. gli passo archivio appena caricato.
-		FilmController filmController = new FilmController(archivio);
+//		controller per interazione utente/vista/model. gli passo archivio appena caricato. associa model e view.
+		ArchivioController mainController = new ArchivioController(archivio);
 		
-		MenuAccesso.show(fruitori, archivio, prestiti, filmController);
+		MenuAccesso.show(fruitori, prestiti, mainController);
 	}
 	
 	/**
@@ -91,11 +90,10 @@ public class Main
 	public static void setUtenteLoggato(Fruitore _utenteLoggato) 
 	{
 		utenteLoggato = _utenteLoggato;
-	}
+	}	
 	
-	public static void setArchivio(Archivio _archivio)
+	public static void salvaArchivio()
 	{
-		archivio = _archivio;
-	
+		GestoreSalvataggi.salvaArchivio(archivio);
 	}
 }

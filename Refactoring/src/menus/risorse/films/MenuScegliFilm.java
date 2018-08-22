@@ -33,7 +33,7 @@ public class MenuScegliFilm
 				{
 					for(int i = 0; i < filmsFiltrati.size(); i++)
 					{
-						FilmsView.stampaPosizione(i);
+						MessaggiSistemaView.stampaPosizione(i);
 						MessaggiSistemaView.cornice();
 						filmController.stampaDati(filmsFiltrati.get(i), true);
 						MessaggiSistemaView.cornice();
@@ -85,7 +85,7 @@ public class MenuScegliFilm
 				FilmsView.risorseInArchivio(Film.class);
 				for(int i = 0; i < filmPrestabili.size(); i++)
 				{
-					FilmsView.stampaPosizione(i);
+					MessaggiSistemaView.stampaPosizione(i);
 					MessaggiSistemaView.cornice();
 					filmController.stampaDati(filmPrestabili.get(i), true);
 					MessaggiSistemaView.cornice();

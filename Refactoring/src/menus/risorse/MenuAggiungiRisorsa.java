@@ -1,14 +1,13 @@
 package menus.risorse;
 
-import controller.FilmController;
-import model.Libri;
+import controller.ArchivioController;
 import myLib.MyMenu;
 
 public class MenuAggiungiRisorsa 
 {	
 	private static final String INTESTAZIONE = "scegli la categoria: ";
 
-	public static void show(String[] CATEGORIE, Libri libri, FilmController filmController)
+	public static void show(String[] CATEGORIE, ArchivioController archivioController)
 	{
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		try
@@ -16,12 +15,12 @@ public class MenuAggiungiRisorsa
 			String categoria = CATEGORIE[menu.scegliBase()-1];
 			if(categoria == CATEGORIE[0])//LIBRO
 			{
-				libri.addLibro();
+				archivioController.getLibriController().addLibro();
 			}
 			if(categoria == CATEGORIE[1])//FILM
 			{
 //				controller interagisce con view per creare il film
-				filmController.addFilm();
+				archivioController.getFilmController().addFilm();
 				
 			}
 		}

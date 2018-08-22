@@ -1,7 +1,6 @@
 package menus.prestiti;
 
-import controller.FilmController;
-import model.Archivio;
+import controller.ArchivioController;
 import model.Film;
 import model.Libro;
 import model.Main;
@@ -15,7 +14,7 @@ public class MenuRichiediPrestito
 	private static final String[] CATEGORIE = {"Libri","Film"};
 	private static final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
 	
-	public static void show(Prestiti prestiti, Archivio archivio, FilmController filmController) 
+	public static void show(Prestiti prestiti, ArchivioController archivioController) 
 	{
 		MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
 		
@@ -30,7 +29,7 @@ public class MenuRichiediPrestito
 				}
 				else//può chiedere un altro prestito
 				{
-					Libro libro = archivio.getLibri().scegliLibro();
+					Libro libro = archivioController.getLibriController().scegliLibro();
 					
 					if(libro != null)
 					{
@@ -56,7 +55,7 @@ public class MenuRichiediPrestito
 				}
 				else//può chiedere un altro prestito
 				{
-					Film film = filmController.scegliFilm();
+					Film film = archivioController.getFilmController().scegliFilm();
 					
 					if(film != null)
 					{
@@ -75,7 +74,8 @@ public class MenuRichiediPrestito
 				}
 			}
 			GestoreSalvataggi.salvaPrestiti(prestiti);
-			GestoreSalvataggi.salvaArchivio(archivio);	
+			Main.salvaArchivio();
+//			GestoreSalvataggi.salvaArchivio(archivio);	
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
