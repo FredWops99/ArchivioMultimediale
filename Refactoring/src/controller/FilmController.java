@@ -56,7 +56,17 @@ public class FilmController
 		{
 			FilmsView.aggiuntaNonRiuscita(Film.class);
 		}
+	}
+	
+	/**
+ 	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
+	 */
+	public void addFilm(String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze)
+	{
+		Film f = new Film("F"+ lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
+//		aggiunge il film al model del controller (se non è già esistente)
+		model.addFilm(f);
 	}
 	
 //	deve restituire al main l'id della risorsa da eliminare (far diventare non prestabile)
@@ -122,6 +132,54 @@ public class FilmController
 //		Main.setArchivio(model);
 		
 		return idSelezionato;
+	}
+	
+	public void removeFilm(String titolo)
+	{
+		Vector<Film> films = model.getFilms();
+				
+		Vector<Integer> posizioniRicorrenze = new Vector<>();
+		
+		for (int i = 0; i < films.size(); i++) 
+		{
+			if(films.get(i).isPrestabile() && films.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+			{
+//				ogni volta che in films trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
+				posizioniRicorrenze.add(i);
+			}
+		}
+		if(posizioniRicorrenze.size()==0)
+		{
+			FilmsView.risorsaNonPresente(Film.class);
+		}
+//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in films
+		else if(posizioniRicorrenze.size()==1)
+		{
+			films.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+		}
+//		se ci sono più elementi nel vettore (più films con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
+//		l'utente inserisce quale rimuovere -> prendo la posizione in films di quell'elemento e lo rimuovo da films
+		else
+		{
+			FilmsView.piùRisorseStessoTitolo(Film.class, titolo);
+			
+			int pos = 0;
+			for(Integer i : posizioniRicorrenze)
+			{
+				FilmsView.numeroRicorrenza(pos);
+				MessaggiSistemaView.cornice();
+				stampaDatiFilm(films.elementAt((int)i), false);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+					
+			if(daRimuovere > 0)
+			{
+				films.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				FilmsView.rimozioneAvvenuta();
+			}
+		}
 	}
 	
 	public void stampaDatiFilm(Film film, boolean perPrestito) 

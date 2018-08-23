@@ -76,7 +76,9 @@ public class TestLibri
 	@Test
 	public void creaEAggiungiLibro()
 	{
-		libriController.addLibro();
+		Vector<String>autori = new Vector<>();
+		autori.add("autore");
+		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
 		
 		assertEquals(1, libri.getLibri().size());
 	}
@@ -85,16 +87,18 @@ public class TestLibri
 	public void rimuoviLibro()
 	{
 		libri.addLibro(creaLibro("titolo", "Romanzo"));
-		libriController.removeLibro();
-		assertEquals(false, libri.getLibri().get(0).isPrestabile());
+		libriController.removeLibro("titolo");
 		
+		assertEquals(false, libri.getLibri().get(0).isPrestabile());
 	}
 	
 	@Test
 	public void lastId()
 	{
-		libriController.addLibro();
-		libriController.addLibro();
+		Vector<String>autori = new Vector<>();
+		autori.add("autore");
+		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
+		libriController.addLibro("Fumetto", "fumetto", autori, 10, 200, "casa", "italiano", "avventura", 10);
 
 		assertEquals(libri.getLibri().get(0).getId(), "L0");
 		assertEquals(libri.getLibri().get(1).getId(), "L1");

@@ -79,6 +79,17 @@ public class LibriController
 	}
 	
 	/**
+	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
+	 */
+	public void addLibro(String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione,
+			String casaEditrice, String lingua, String genere, int nLicenze)
+	{
+		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		
+		model.addLibro(l);
+	}
+	
+	/**
 	 * permette la rimozione di un libro da parte dell'operatore: il libro selezionato verrà etichettato come "non Prestabile" ma rimarrà in archivio per 
 	 * motivi storici
 	 * @return l'id del libro rimosso
@@ -87,7 +98,6 @@ public class LibriController
 	{
 		Vector<Libro> libri = model.getLibri();
 
-		
 		String idSelezionato;
 		
 		String titolo = LibriView.chiediRisorsaDaRimuovere(Libro.class);
@@ -143,6 +153,57 @@ public class LibriController
 			}
 		}
 		return idSelezionato;
+	}
+	
+	/**
+	 * metodo di Test, per non dover chiedere all'utente l'input per il titolo della risorsa da eliminare
+	 */
+	public void removeLibro(String titolo)
+	{
+		Vector<Libro> libri = model.getLibri();
+		
+		Vector<Integer> posizioniRicorrenze = new Vector<>();
+		
+		for (int i = 0; i < libri.size(); i++)
+		{
+			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+			{
+//				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
+				posizioniRicorrenze.add(i);
+			}
+		}
+		if(posizioniRicorrenze.size()==0)
+		{
+			LibriView.risorsaNonPresente(Libro.class);
+		}
+//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
+		else if(posizioniRicorrenze.size()==1)
+		{
+			libri.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+		}
+//		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
+//		l'utente inserisce quello che vuole rimuovere
+		else
+		{
+			LibriView.piùRisorseStessoTitolo(Libri.class, titolo);
+			
+			int pos = 0;
+			for(Integer i : posizioniRicorrenze)
+			{
+				LibriView.numeroRicorrenza(pos);
+				MessaggiSistemaView.cornice();
+				stampaDatiLibro(libri.elementAt((int)i), false);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+			
+			if(daRimuovere > 0)
+			{
+				libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				LibriView.rimozioneAvvenuta();
+			}
+		}
 	}
 	
 	/**

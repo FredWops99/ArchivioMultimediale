@@ -75,16 +75,25 @@ public class TestFilm
 	@Test
 	public void creaEAggiungiFilm()
 	{
-		filmsController.addFilm();
+		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
 		
 		assertEquals(1, films.getFilms().size());
 	}
 	
 	@Test
+	public void rimuoviFilm()
+	{
+		films.addFilm(creaFilm("titolo", "Fantasy"));
+		filmsController.removeFilm("titolo");
+		
+		assertEquals(false, films.getFilms().get(0).isPrestabile());
+	}
+	
+	@Test
 	public void lastId()
 	{
-		filmsController.addFilm();
-		filmsController.addFilm();
+		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
+		filmsController.addFilm("Fantasy", "titolo", "regista", 100, 2000, "italiano", 20);
 
 		assertEquals(films.getFilms().get(0).getId(), "F0");
 		assertEquals(films.getFilms().get(1).getId(), "F1");
