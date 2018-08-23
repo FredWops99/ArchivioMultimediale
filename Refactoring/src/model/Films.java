@@ -52,7 +52,7 @@ public class Films implements Serializable
 		}		
 	}
 	
-	private boolean filmEsistente(Film f) 
+	public boolean filmEsistente(Film f) 
 	{
 		for(Film film : films)
 		{			

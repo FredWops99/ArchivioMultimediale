@@ -35,7 +35,7 @@ public class MenuScegliFilm
 					{
 						MessaggiSistemaView.stampaPosizione(i);
 						MessaggiSistemaView.cornice();
-						filmController.stampaDati(filmsFiltrati.get(i), true);
+						filmController.stampaDatiFilm(filmsFiltrati.get(i), true);
 						MessaggiSistemaView.cornice();
 					}
 					
@@ -87,7 +87,7 @@ public class MenuScegliFilm
 				{
 					MessaggiSistemaView.stampaPosizione(i);
 					MessaggiSistemaView.cornice();
-					filmController.stampaDati(filmPrestabili.get(i), true);
+					filmController.stampaDatiFilm(filmPrestabili.get(i), true);
 					MessaggiSistemaView.cornice();
 				}
 				int selezione;

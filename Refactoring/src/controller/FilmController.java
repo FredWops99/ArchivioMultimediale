@@ -17,6 +17,11 @@ public class FilmController
 		this.model = films;
 		this.lastId = films.getLastId();
 	}
+	
+	public int getLastId() 
+	{
+		return lastId;
+	}
 
 	public void addFilm()
 	{
@@ -96,7 +101,7 @@ public class FilmController
 			{
 				FilmsView.numeroRicorrenza(pos);
 				MessaggiSistemaView.cornice();
-				stampaDati(films.elementAt((int)i), false);
+				stampaDatiFilm(films.elementAt((int)i), false);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -119,7 +124,7 @@ public class FilmController
 		return idSelezionato;
 	}
 	
-	public void stampaDati(Film film, boolean perPrestito) 
+	public void stampaDatiFilm(Film film, boolean perPrestito) 
 	{
 		FilmsView.stampaDati(film, perPrestito);
 	}
@@ -175,5 +180,7 @@ public class FilmController
 	{
 		Film filmSelezionato = MenuScegliFilm.show(this);
 		return filmSelezionato;
-	}	
+	}
+
+		
 }

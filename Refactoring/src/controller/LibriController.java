@@ -25,10 +25,15 @@ public class LibriController
 		model = libri;
 		this.lastId = libri.getLastId();
 	}
-	
+
 	public Libri getModel() 
 	{
 		return model;
+	}
+	
+	public int getLastId() 
+	{
+		return lastId;
 	}
 	
 	public void addLibro()

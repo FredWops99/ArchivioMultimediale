@@ -139,7 +139,7 @@ public class Libri implements Serializable
 	 * @param l il libro da cercare
 	 * @return true se il libro è presente in archivio
 	 */
-	private boolean libroEsistente(Libro l) 
+	public boolean libroEsistente(Libro l) 
 	{
 		for(Libro libro : libri)
 		{

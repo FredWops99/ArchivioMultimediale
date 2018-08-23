@@ -70,7 +70,7 @@ public class MenuFiltroFilm
 			for (int i=0; i <filmsFiltrati.size(); i++) 
 			{
 				MessaggiSistemaView.cornice(true, false);
-				filmController.stampaDati(filmsFiltrati.get(i), false);
+				filmController.stampaDatiFilm(filmsFiltrati.get(i), false);
 //				filmsFiltrati.get(i).stampaDati(false);
 			}	
 		}
