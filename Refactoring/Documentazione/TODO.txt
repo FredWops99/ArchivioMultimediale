@@ -19,3 +19,5 @@ package Salvataggi, con classi Salva e Carica? c'è già C: a chi assegnare respon
 informazioni dell'archivio, che vengono aggiornate man mano dai controller.
 
 sistemare metodi con catena di chiamate troppo lunga (metodo.metodo.metodo ...): è un pattern
+
+ADDFILM ADDLIBBRO nei controller potrebbero andare direttamente nella view: chiediDatiFilm/Libro()
