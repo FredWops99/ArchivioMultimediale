@@ -23,7 +23,6 @@ public class ArchivioController
 		libriController = new LibriController(archivio.getLibri());
 	}
 	
-//	da usare in storico (Controller ?)
 	public Vector<Libro> getVectorLibri()
 	{
 		return libriController.getModel().getLibri();

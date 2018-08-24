@@ -17,7 +17,7 @@ public class StoricoView
 		System.out.println("Nell'anno solare selezionato sono stati prorogati " + prorogheAnnoSolare +" prestiti");
 	}
 	
-	public static int AnnoSelezionato()
+	public static int selezionaAnno()
 	{
 		return InputDati.leggiIntero("Inserisci l'anno: ", 1980, GestioneDate.ANNO_CORRENTE);//si potrà mettere l'anno del prestito più vecchio
 	}

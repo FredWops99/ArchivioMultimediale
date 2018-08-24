@@ -27,6 +27,7 @@ public class Main
 		fruitori = GestoreSalvataggi.caricaFruitori();
 		archivio = GestoreSalvataggi.caricaArchivio();
 		prestiti = GestoreSalvataggi.caricaPrestiti();
+		Storico storico = new Storico(prestiti, fruitori, archivio);
 		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
@@ -36,7 +37,7 @@ public class Main
 //		si potrà creare un unico gestore dei controller?
 		ArchivioController archivioController = new ArchivioController(archivio);
 		FruitoriController fruitoriController = new FruitoriController(fruitori);
-		StoricoController storicoController = new StoricoController(prestiti, fruitori);
+		StoricoController storicoController = new StoricoController(storico);
 
 		
 //		segna come "decadute" le iscrizioni dei fruitori in archivio che sono scadute.

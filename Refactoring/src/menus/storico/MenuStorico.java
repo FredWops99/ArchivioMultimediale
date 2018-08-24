@@ -1,10 +1,6 @@
 package menus.storico;
 
-import controller.ArchivioController;
-import controller.FruitoriController;
 import controller.StoricoController;
-import model.Prestiti;
-import model.Storico;
 import myLib.MyMenu;
 import view.StoricoView;
 
@@ -31,12 +27,8 @@ public class MenuStorico
 	 * - Prestiti terminati
 	 * - Prestiti terminati in anticipo.
 	 * Questo metodo viene chiamato in menuOperatore (nel main).
-	 * @param prestiti l'elenco dei prestiti che serve ai vari metodi all'intreno del menù
-	 * @param archivio l'elenco delle risorse in archivio che servono ai vari metodi presenti nel menù 
-	 * @param fruitori l'elenco dei fruitori che è utilizzato dai vari metodi del menù
 	 */
-	
-	public static void show(StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController)
+	public static void show(StoricoController storicoController)
 	{
 		boolean continuaMenuStorico = true;
 		do
@@ -66,7 +58,7 @@ public class MenuStorico
 				}
 				case 3://visualizza la risorsa che è stata oggetto del maggior numero di prestiti per anno solare
 				{
-					Storico.risorsaPiùInPrestito(prestiti);
+					storicoController.risorsaPiùInPrestito();
 					
 					continuaMenuStorico = true;
 					break;
@@ -80,7 +72,7 @@ public class MenuStorico
 				}
 				case 5://visualizza risorse prestabili in passato
 				{
-					storicoController.risorsePrestabili(archivioController);
+					storicoController.risorsePrestabiliInPassato();
 					
 					continuaMenuStorico = true;
 					break;
@@ -94,28 +86,28 @@ public class MenuStorico
 				}
 				case 7://visualizza iscrizioni rinnovate
 				{
-					Storico.fruitoriRinnovati(fruitoriController.getModel());
+					storicoController.fruitoriRinnovati();
 					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 8://visualizza prestiti prorogati
 				{
-					Storico.prestitiProrogati(prestiti);
+					storicoController.prestitiProrogati();
 					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 9://visualizza prestiti scaduti
 				{
-					Storico.prestitiTerminati(prestiti);
+					storicoController.prestitiTerminati();
 					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 10://visualizza prestiti terminati in anticipo
 				{
-					Storico.prestitiTerminatiInAnticipo(prestiti);
+					storicoController.prestitiTerminatiInAnticipo();
 					
 					continuaMenuStorico = true;
 					break;

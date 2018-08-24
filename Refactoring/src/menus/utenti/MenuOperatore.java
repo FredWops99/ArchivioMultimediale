@@ -105,7 +105,7 @@ public class MenuOperatore
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				MenuStorico.show(storicoController, prestiti, archivioController, fruitoriController);
+				MenuStorico.show(storicoController);
 				
 				continuaMenuOperatore = true;
 				break;

@@ -25,3 +25,5 @@ ADDFILM ADDLIBBRO nei controller potrebbero andare direttamente nella view: chie
 CATEGORIE[] nelle varie classi non va troppo bene
 
 si potrebbe fare un FACADE per i salvataggi? si contatta lui, che "copre" la complessità dei vari salvataggi (anche caricamenti?)
+
+anche storico potrebbe diventare un singleton, così non sono tutti metodi statici

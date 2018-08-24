@@ -28,16 +28,16 @@ public class MenuRichiediPrestito
 				if(prestiti.numPrestitiAttiviDi(Main.getUtenteLoggato(), categoria) == Libro.PRESTITI_MAX)
 				{
 					PrestitiView.raggiunteRisorseMassime(categoria);
+					return;
 				}
-				return;
 			}
 			else if(categoria == CATEGORIE[1])// == "Films"
 			{
 				if(prestiti.numPrestitiAttiviDi(Main.getUtenteLoggato(), categoria) == Film.PRESTITI_MAX)
 				{
 					PrestitiView.raggiunteRisorseMassime(categoria);
+					return;
 				}
-				return;
 			}
 			
 			Risorsa risorsa = archivioController.scegliRisorsa(categoria);

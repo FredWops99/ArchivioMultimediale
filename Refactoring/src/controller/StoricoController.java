@@ -1,81 +1,118 @@
 package controller;
 
+import java.util.GregorianCalendar;
 import java.util.Vector;
-
-import model.Film;
 import model.Fruitore;
-import model.Fruitori;
-import model.Libro;
-import model.Prestiti;
 import model.Prestito;
+import model.Risorsa;
 import model.Storico;
 import view.StoricoView;
 
 public class StoricoController 
 {
-	Prestiti modelPrestiti;
-	Fruitori modelFruitori;
+	Storico model;
 
-	public StoricoController(Prestiti prestiti,Fruitori fruitori) 
+	public StoricoController(Storico storico) 
 	{
-		this.modelPrestiti = prestiti;
-		this.modelFruitori = fruitori;
+		model = storico;
 	}
 	
 	public int prestitiAnnoSolare()
 	{
 		
-		int annoSelezionato = StoricoView.AnnoSelezionato();
-		return Storico.prestitiAnnoSolare(annoSelezionato, modelPrestiti);
+		int annoSelezionato = StoricoView.selezionaAnno();
+		return model.prestitiAnnoSolare(annoSelezionato);
 	}
 	
 	public int prorogheAnnoSolare() 
 	{
-		int annoSelezionate = StoricoView.AnnoSelezionato();
-		return Storico.prorogheAnnoSolare(annoSelezionate, modelPrestiti);
+		int annoSelezionate = StoricoView.selezionaAnno();
+		return model.prorogheAnnoSolare(annoSelezionate);
 	}
 	
 	public void risorsaPiùInPrestito()
 	{
-		
-	}
-	
-	public void prestitiAnnuiPerFruitore()
-	{
-		Fruitore fruitoreInConsiderazione = null;
-		int nPrestiti = 0;
-		int annoSelezionato = StoricoView.AnnoSelezionato();
-		Vector<Prestito> prestitiAnnui = Storico.prestitiAnnui(annoSelezionato, modelPrestiti);
-		if(prestitiAnnui == null)
+		int maxGenerale = 0;
+		String titoloRisorsaMax = "";
+		int annoSelezionato = StoricoView.selezionaAnno();
+
+		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
+		//seleziono solo le risorse che sono state prenotate nell'anno corrente
+		for (Prestito prestito : model.getPrestiti().getPrestiti())
+		{
+			if(prestito.getDataInizio().get(GregorianCalendar.YEAR) == annoSelezionato)
+			{
+				risorseAnnue.add(prestito.getRisorsa());
+			}
+		}
+		//da qui avviene il conteggio
+		for(int i = 0; i < risorseAnnue.size(); i++)
+		{
+			int maxRisorsa = 1;
+			String idInConsiderazione = risorseAnnue.get(i).getId();
+			for (int j = risorseAnnue.size()-1; j > i; j--) 
+			{
+				if(idInConsiderazione.equals(risorseAnnue.get(j).getId()))
+				{
+					maxRisorsa++;
+					risorseAnnue.remove(j);
+				}
+			}
+			if(maxRisorsa > maxGenerale) 
+			{
+				maxGenerale = maxRisorsa;
+				titoloRisorsaMax = risorseAnnue.get(i).getTitolo();
+			}
+		}
+		//qui avviene la stampa
+		if(maxGenerale==0)
 		{
 			StoricoView.noPrestitiInAnnoSelezionato();
 		}
 		else
 		{
-			for(int j = 0; j < prestitiAnnui.size(); j++)
-			{
-			
-				fruitoreInConsiderazione = modelPrestiti.getPrestiti().get(j).getFruitore();
-				
-				nPrestiti = Storico.prestitiAnnuiPerFruitore(prestitiAnnui, fruitoreInConsiderazione, j);
-			
-			}
-			StoricoView.numeroPrestitiPerUtente(fruitoreInConsiderazione.getUser(), nPrestiti);
+			StoricoView.risorsaConPiùPrenotazioniInAnnoSelezionato(titoloRisorsaMax, maxGenerale);
 		}
 	}
 	
-	public void risorsePrestabili(ArchivioController archivioController)
+	public void prestitiAnnuiPerFruitore()
+	{
+		int annoSelezionato = StoricoView.selezionaAnno();
+		Vector<Prestito> prestitiAnnui = model.prestitiAnnui(annoSelezionato);
+		if(prestitiAnnui == null)
+		{
+			StoricoView.noPrestitiInAnnoSelezionato();
+		}
+		else//ci sono prestiti nell'anno selezionato
+		{
+			Vector<String>fruitoriDellAnno = new Vector<>();
+			for(Prestito prestito : prestitiAnnui)
+			{
+				if(!fruitoriDellAnno.contains(prestito.getFruitore().getUser()))
+				{
+					fruitoriDellAnno.add(prestito.getFruitore().getUser());
+				}
+			}
+//			una volta per ogni fruitore che ha avuto un prestito nell'anno selezionato
+			for(String user : fruitoriDellAnno)
+			{
+				StoricoView.numeroPrestitiPerUtente(user, model.prestitiPerFruitore(prestitiAnnui, user));
+			}
+		}
+	}
+	
+	public void risorsePrestabiliInPassato()
 	{
 		StoricoView.libriPrestabiliInPassato();
 		
-		Vector<Libro> libriPrestabili = Storico.risorePrestabiliLibri(archivioController);
-		if(libriPrestabili==null)
+		Vector<Risorsa> libriPrestabili = model.risorsePrestabiliInPassato("Libri");
+		if(libriPrestabili == null)
 		{
 			StoricoView.nessuno();
 		}
 		else
 		{
-			for(int i = 0;i<libriPrestabili.size();i++)
+			for(int i = 0; i < libriPrestabili.size(); i++)
 			{
 				StoricoView.libroPrestabileInPassato(libriPrestabili.get(i).getTitolo());
 			}
@@ -83,7 +120,7 @@ public class StoricoController
 		
 		StoricoView.filmsPrestabiliInPassato();
 		
-		Vector<Film> filmsPrestabili = Storico.risorsePrestabiliFilms(archivioController);
+		Vector<Risorsa> filmsPrestabili = model.risorsePrestabiliInPassato("Films");
 		if(filmsPrestabili==null)
 		{
 			StoricoView.nessuno();
@@ -100,7 +137,7 @@ public class StoricoController
 	public void fruitoriDecaduti()
 	{
 		StoricoView.fruitoriDecaduti();
-		Vector<Fruitore> fruitoriDecaduti = Storico.fruitoriDecaduti(modelFruitori);
+		Vector<Fruitore> fruitoriDecaduti = model.fruitoriDecaduti();
 		if(fruitoriDecaduti == null)
 		{
 			StoricoView.noIscrizioniDecadute();
@@ -117,7 +154,7 @@ public class StoricoController
 	public void fruitoriRinnovati()
 	{
 		StoricoView.iscrizioniRinnovate();
-		Vector<String> dateRinnovi = Storico.fruitoriRinnovati(modelFruitori);
+		Vector<String> dateRinnovi = model.fruitoriRinnovati();
 		if(dateRinnovi==null)
 		{
 			StoricoView.nessunFruitoreHaRinnovato();
@@ -134,7 +171,7 @@ public class StoricoController
 	public void prestitiProrogati()
 	{
 		StoricoView.prestitiProrogati();
-		Vector<Prestito> prestitiProrogati = Storico.prestitiProrogati(modelPrestiti);
+		Vector<Prestito> prestitiProrogati = model.prestitiProrogati();
 		if(prestitiProrogati==null)
 		{
 			StoricoView.noPrestitiRinnovvati();
@@ -150,7 +187,7 @@ public class StoricoController
 	public void prestitiTerminati()
 	{
 		StoricoView.prestitiTerminati();
-		Vector<Prestito> prestitiTerminati = Storico.prestitiTerminati(modelPrestiti);
+		Vector<Prestito> prestitiTerminati = model.prestitiTerminati();
 		if(prestitiTerminati==null)
 		{
 			StoricoView.noPrestitiTerminati();
@@ -167,7 +204,7 @@ public class StoricoController
 	public void prestitiTerminatiInAnticipo()
 	{
 		StoricoView.prestitiTerminatiInAnticipo();
-		Vector<Prestito> prestitiTerminatiInAnticipo = Storico.prestitiTerminatiInAnticipo(modelPrestiti);
+		Vector<Prestito> prestitiTerminatiInAnticipo = model.prestitiTerminatiInAnticipo();
 		if(prestitiTerminatiInAnticipo==null)
 		{
 			StoricoView.noPrestitiTerminatiInAnticipo();
