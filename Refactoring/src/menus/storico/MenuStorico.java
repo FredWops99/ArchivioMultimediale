@@ -1,6 +1,7 @@
 package menus.storico;
 
 import controller.ArchivioController;
+import controller.StoricoController;
 import model.Fruitori;
 import model.Prestiti;
 import model.Storico;
@@ -15,7 +16,7 @@ public class MenuStorico
 			"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti terminati", "Prestiti terminati in anticipo"};
 	private static final String INTESTAZIONE = "\nScegli cosa visualizzare: ";
 	
-
+	
 	/**
 	 * (precondizione: prestiti != null && archivio != null && fruitori != null)
 	 * menuStorico permette la consultazione dello storico. In particolare sono pesenti le seguenti opzioni:
@@ -37,6 +38,7 @@ public class MenuStorico
 	
 	public static void show(Prestiti prestiti, ArchivioController archivioController, Fruitori fruitori)
 	{
+		StoricoController storicoController = new StoricoController(prestiti, fruitori);
 		boolean continuaMenuStorico = true;
 		do
 		{
@@ -52,14 +54,14 @@ public class MenuStorico
 				case 1://visualizza numero prestiti per anno solare
 				{
 					
-					StoricoView.prestitiPerAnnoSolare(Storico.prestitiAnnoSolare(prestiti));
+					StoricoView.prestitiPerAnnoSolare(storicoController.prestitiAnnoSolare());
 					continuaMenuStorico = true;
 					break;
 				}
 				case 2://visualizza numero proroghe per anno solare
 				{
 					
-					StoricoView.proroghePerAnnoSolare(Storico.prorogheAnnoSolare(prestiti));
+					StoricoView.proroghePerAnnoSolare(storicoController.prorogheAnnoSolare());
 					continuaMenuStorico = true;
 					break;
 				}
@@ -72,21 +74,21 @@ public class MenuStorico
 				}
 				case 4://visualizza numero di prestiti per fruitore per anno solare
 				{
-					Storico.prestitiAnnuiPerFruitore(prestiti);
+					storicoController.prestitiAnnuiPerFruitore();
 					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 5://visualizza risorse prestabili in passato
 				{
-					Storico.risorsePrestabili(archivioController);
+					storicoController.risorsePrestabili(archivioController);
 					
 					continuaMenuStorico = true;
 					break;
 				}
 				case 6://visualizza iscrizioni decadute
 				{
-					Storico.fruitoriDecaduti(fruitori);
+					storicoController.fruitoriDecaduti();
 					
 					continuaMenuStorico = true;
 					break;
