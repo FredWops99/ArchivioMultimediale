@@ -22,7 +22,7 @@ public class LibriController
 	
 	public LibriController(Libri libri)
 	{
-		model = libri;
+		this.model = libri;
 		this.lastId = libri.getLastId();
 	}
 
