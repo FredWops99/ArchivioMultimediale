@@ -21,3 +21,7 @@ informazioni dell'archivio, che vengono aggiornate man mano dai controller.
 sistemare metodi con catena di chiamate troppo lunga (metodo.metodo.metodo ...): è un pattern
 
 ADDFILM ADDLIBBRO nei controller potrebbero andare direttamente nella view: chiediDatiFilm/Libro()
+
+CATEGORIE[] nelle varie classi non va troppo bene
+
+si potrebbe fare un FACADE per i salvataggi? si contatta lui, che "copre" la complessità dei vari salvataggi (anche caricamenti?)

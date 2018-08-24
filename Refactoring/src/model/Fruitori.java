@@ -1,10 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 import java.util.Vector;
-import myLib.GestioneDate;
-import view.FruitoriView;
 
 /**
  * Classe rappresentante tutti i fruitori che hanno accesso all'archivio multimediale
@@ -32,68 +29,11 @@ public class Fruitori implements Serializable
 	{
 		this.fruitori = fruitori;
 	}
-
-	/**
-	 * Crea e aggiunge un Fruitore, se maggiorenne al vettore "fruitori"
-	 */
-	public void addFruitore()
+	
+	public void addFruitore(Fruitore f)
 	{
-		String nome = FruitoriView.chiediNome();
-		String cognome = FruitoriView.chiediCognome();
-		GregorianCalendar dataNascita = FruitoriView.chiediDataNascita();
-		
-		//controllo che l'utente sia maggiorenne
-		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
-		{
-			FruitoriView.messaggioUtenteMinorenne();
-			return;
-		}
-		
-		String user;
-		do
-		{
-			user = FruitoriView.chiediUsername();
-			if(!usernameDisponibile(user))
-			{
-				FruitoriView.UsernameNonDisponibile();
-			}
-		}
-		while(!usernameDisponibile(user));
-				
-		String password1;
-		String password2;
-		boolean corretta = false;
-		do
-		{
-			password1 = FruitoriView.chiediPassword();
-			password2 = FruitoriView.confermaPassword();
-			
-			if(password1.equals(password2)) 
-			{
-				corretta = true;
-			}
-			else
-			{
-				FruitoriView.passwordNonCoincidono();
-			}
-		}
-		while(!corretta);
-		
-		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
-//		creo il nuovo fruitore
-		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
-		
-		if(FruitoriView.confermaDati())
-		{
-//			aggiungo al vector fruitori il nuovo fruitore
-			fruitori.add(f);
-			FruitoriView.confermaIscrizione();
-		}
-		else
-		{
-			FruitoriView.nonConfermaIscrizione();
-		}
-	}
+		fruitori.add(f);
+	}	
 	
 	/**
 	 * Controlla se lo username passato sia già in uso da un altro fruitore
@@ -101,7 +41,7 @@ public class Fruitori implements Serializable
 	 * @param user lo username da verificare
 	 * @return true se non è utilizzato da nessun altro (quindi è disponibile)
 	 */
-	private boolean usernameDisponibile(String user) 
+	public boolean usernameDisponibile(String user) 
 	{
 		for(Fruitore fruitore : fruitori)
 		{
@@ -112,27 +52,6 @@ public class Fruitori implements Serializable
 			}
 		}
 		return true;
-	}
-	
-	/**
-	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni assegna al fruitore lo status di "decaduto"
-	 * @return un vettore contenente gli utenti eliminati
-	 */
-	public Vector<Fruitore> controlloIscrizioni()
-	{
-		Vector<Fruitore>utenti = new Vector<>();
-		int rimossi = 0;
-		for(Fruitore fruitore : fruitori) 
-		{
-			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)//se dataScadenza è precedente a oggi ritorna -1
-			{
-				fruitore.setDecaduto(true);
-				utenti.add(fruitore);
-				rimossi++;
-			}
-		}
-		FruitoriView.utentiRimossi(rimossi);
-		return utenti;
 	}
 	
 	/**
@@ -153,9 +72,4 @@ public class Fruitori implements Serializable
 		}
 		return null;	//se non è presente
 	}	
-	
-	public void stampaDati()
-	{
-		FruitoriView.stampaDati(this.fruitori);
-	}
 }

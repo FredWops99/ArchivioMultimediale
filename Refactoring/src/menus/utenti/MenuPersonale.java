@@ -1,6 +1,7 @@
 package menus.utenti;
 
 import controller.ArchivioController;
+import controller.FruitoriController;
 import menus.prestiti.MenuRichiediPrestito;
 import menus.prestiti.MenuTerminaPrestiti;
 import menus.risorse.MenuCercaRisorsa;
@@ -18,13 +19,13 @@ public class MenuPersonale
 	private static boolean continuaMenuPersonale;
 
 	
-	public static void show(ArchivioController archivioController, Prestiti prestiti)
+	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
 	{
 		MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
 		continuaMenuPersonale=true;
 		do
 		{
-			gestisciMenuPersonale(menuPersonale.scegli(), archivioController, prestiti);
+			gestisciMenuPersonale(menuPersonale.scegli(), archivioController, fruitoriController, prestiti);
 		}
 		while(continuaMenuPersonale);
 	}
@@ -33,7 +34,7 @@ public class MenuPersonale
 	 * menu che compare dopo che un fruitore esegue il login
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuPersonale(int scelta, ArchivioController archivioController, Prestiti prestiti) 
+	private static void gestisciMenuPersonale(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti) 
 	{
 		continuaMenuPersonale=true;
 		
@@ -46,14 +47,15 @@ public class MenuPersonale
 			}
 			case 1:	//RINNOVA ISCRIZIONE
 			{
-				Main.getUtenteLoggato().rinnovo();
+				fruitoriController.rinnovo(Main.getUtenteLoggato());
+//				Main.getUtenteLoggato().rinnovo();
 				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 2:	//VISUALIZZA INFO PERSONALI
 			{
-				Main.getUtenteLoggato().stampaDati();
+				fruitoriController.stampaDatiFruitore(Main.getUtenteLoggato());
 				
 				continuaMenuPersonale = true;
 				break;

@@ -1,0 +1,154 @@
+package controller;
+
+import java.util.GregorianCalendar;
+import java.util.Vector;
+
+import model.Fruitore;
+import model.Fruitori;
+import model.Main;
+import myLib.GestioneDate;
+import view.FruitoriView;
+
+public class FruitoriController 
+{
+	private Fruitori model;
+	
+	public FruitoriController(Fruitori fruitori)
+	{
+		model = fruitori;
+	}
+	
+	/**
+	 * Crea e aggiunge un Fruitore, se maggiorenne al vettore "fruitori"
+	 */
+	public void addFruitore()
+	{
+		String nome = FruitoriView.chiediNome();
+		String cognome = FruitoriView.chiediCognome();
+		GregorianCalendar dataNascita = FruitoriView.chiediDataNascita();
+		
+		//controllo che l'utente sia maggiorenne
+		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
+		{
+			FruitoriView.messaggioUtenteMinorenne();
+			return;
+		}
+		
+		String user;
+		do
+		{
+			user = FruitoriView.chiediUsername();
+			if(!model.usernameDisponibile(user))
+			{
+				FruitoriView.UsernameNonDisponibile();
+			}
+		}
+		while(!model.usernameDisponibile(user));
+				
+		String password1;
+		String password2;
+		boolean corretta = false;
+		do
+		{
+			password1 = FruitoriView.chiediPassword();
+			password2 = FruitoriView.confermaPassword();
+			
+			if(password1.equals(password2)) 
+			{
+				corretta = true;
+			}
+			else
+			{
+				FruitoriView.passwordNonCoincidono();
+			}
+		}
+		while(!corretta);
+		
+		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
+//		creo il nuovo fruitore
+		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
+		
+		if(FruitoriView.confermaDati())
+		{
+//			aggiungo al vector fruitori il nuovo fruitore
+			model.addFruitore(f);
+			FruitoriView.confermaIscrizione();
+		}
+		else
+		{
+			FruitoriView.nonConfermaIscrizione();
+		}
+	}
+	
+	/**
+	 * Controllo se sono passati 5 anni dala data di iscrizione. Se sono passati i 5 anni assegna al fruitore lo status di "decaduto"
+	 * @return un vettore contenente gli utenti eliminati: verrà poi utilizzato per rimuovere i prestiti di questi utenti decaduti
+	 */
+	public Vector<Fruitore> controlloIscrizioni()
+	{
+		Vector<Fruitore>utentiRimossi = new Vector<>();
+		int rimossi = 0;
+		for(Fruitore fruitore : model.getFruitori()) 
+		{
+			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)//se dataScadenza è precedente a oggi ritorna -1
+			{
+				fruitore.setDecaduto(true);
+				utentiRimossi.add(fruitore);
+				rimossi++;
+			}
+		}
+		FruitoriView.utentiRimossi(rimossi);
+		return utentiRimossi;
+	}
+	
+	public void stampaDatiFruitori()
+	{
+		FruitoriView.stampaDati(model.getFruitori());
+	}
+	
+	public void stampaDatiFruitore(Fruitore f)
+	{
+		FruitoriView.stampaDati(f);
+	}
+	
+	public void rinnovo(Fruitore fruitore)
+	{
+		boolean riuscito = fruitore.rinnovo();
+		if(riuscito)
+		{
+			FruitoriView.iscrizioneRinnovata();
+		}
+		else
+		{
+			FruitoriView.iscrizioneNonRinnovata(fruitore.getDataInizioRinnovo(), fruitore.getDataScadenza());
+		}
+	}
+
+	public Fruitori getModel() 
+	{
+		return model;
+	}
+
+	/**
+	 * interagisce con l'utente chiedendogli le credenziali.
+	 * @return true se il login è andato a buon fine
+	 */
+	public boolean login() 
+	{
+		String user = FruitoriView.chiediUsername();
+		String password = FruitoriView.chiediPassword();
+		
+		Main.setUtenteLoggato(model.trovaUtente(user, password));
+		
+		if(Main.getUtenteLoggato()==null)
+		{
+			FruitoriView.utenteNonTrovato();
+			return false;
+		}
+		else // -> utente trovato
+		{
+			FruitoriView.benvenuto(Main.getUtenteLoggato().getNome());
+			return true;
+		}	
+	}
+}

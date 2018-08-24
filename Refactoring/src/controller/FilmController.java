@@ -134,6 +134,9 @@ public class FilmController
 		return idSelezionato;
 	}
 	
+	/**
+	 * metodo di Test, per non dover chiedere all'utente l'input per il titolo della risorsa da eliminare
+	 */
 	public void removeFilm(String titolo)
 	{
 		Vector<Film> films = model.getFilms();
@@ -188,7 +191,7 @@ public class FilmController
 	}
 	
 //	main contatta il controller che si occupa dell'interazione con la view
-	public void stampaDati() 
+	public void stampaDatiFilmPrestabili() 
 	{
 		Vector<Film>filmDaStampare = new Vector<>();
 		for(Film film : model.getFilms())

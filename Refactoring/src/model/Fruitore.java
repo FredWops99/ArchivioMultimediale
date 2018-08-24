@@ -3,10 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import myLib.BelleStringhe;
 import myLib.GestioneDate;
-import view.FruitoriView;
 
 /**
  * Classe rappresentante un fruitore dell'archivio multimediale
@@ -115,19 +113,21 @@ public class Fruitore implements Serializable
 	
 	/**
 	 * Rinnova l'iscrizione di un Fruitore (se possibile)
+	 * @return true o false: il controller viene informato della riuscita per dire alla view cosa stampare
 	 */
-	public void rinnovo()
+	public boolean rinnovo()
 	{  
 		if(fruitoreRinnovabile())
 		{			
 			rinnovi.addElement(GestioneDate.DATA_CORRENTE);
 			calcolaScadenza(GestioneDate.DATA_CORRENTE);
 			CalcolaInizioRinnovo(dataScadenza);
-			FruitoriView.iscrizioneRinnovata();
+			
+			return true;
 		}
 		else
 		{
-			FruitoriView.iscrizioneNonRinnovata(dataInizioRinnovo, dataScadenza);
+			return false;
 		}
 	}
 	
@@ -144,11 +144,6 @@ public class Fruitore implements Serializable
 		sb.append("Rinnovo iscrizione dal----: " + GestioneDate.visualizzaData(dataInizioRinnovo) + "\n");
 		
 		return sb.toString();
-	}
-	
-	public void stampaDati()
-	{
-		FruitoriView.stampaDati(this);
 	}
 
 	// -- GETTER -- //
@@ -225,7 +220,8 @@ public class Fruitore implements Serializable
 	{
 		this.rinnovi = rinnovi;
 	}
-	public GregorianCalendar getDataInizioRinnovo() {
+	public GregorianCalendar getDataInizioRinnovo() 
+	{
 		return dataInizioRinnovo;
 	}
 }

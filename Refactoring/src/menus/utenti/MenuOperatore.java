@@ -1,10 +1,12 @@
 package menus.utenti;
 
 import controller.ArchivioController;
+import controller.FruitoriController;
 import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
-import menus.risorse.MenuElencoRisorse;
+import menus.risorse.MenuStampaElencoRisorse;
 import menus.storico.MenuStorico;
+import model.Fruitore;
 import model.Fruitori;
 import model.Prestiti;
 import myLib.MyMenu;
@@ -21,7 +23,7 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(Fruitori fruitori, Prestiti prestiti, ArchivioController archivioController)
+	public static void show(Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController)
 	{
 		MessaggiSistemaView.accessoEseguito();
 		
@@ -29,7 +31,7 @@ public class MenuOperatore
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), fruitori, prestiti, archivioController);
+			gestisciMenuOperatore(menuOperatore.scegli(), prestiti, archivioController, fruitoriController);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -38,7 +40,7 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, Fruitori fruitori, Prestiti prestiti, ArchivioController archivioController) 
+	private static void gestisciMenuOperatore(int scelta, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -51,7 +53,7 @@ public class MenuOperatore
 			case 1://VISUALIZZA FRUITORI
 			{
 				//fruitori.stampaFruitoriAttivi();
-				fruitori.stampaDati();
+				fruitoriController.stampaDatiFruitori();
 				
 				continuaMenuOperatore=true;
 				break;
@@ -69,7 +71,7 @@ public class MenuOperatore
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				String idRimosso = archivioController.rimuoviRisorsa(CATEGORIE);
+				String idRimosso = archivioController.scegliRisorsaDaRimuovere();
 //				se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
@@ -83,7 +85,7 @@ public class MenuOperatore
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				MenuElencoRisorse.show(CATEGORIE, archivioController);
+				MenuStampaElencoRisorse.show(CATEGORIE, archivioController);
 				
 				continuaMenuOperatore=true;
 				break;
@@ -104,7 +106,7 @@ public class MenuOperatore
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				MenuStorico.show(prestiti, archivioController, fruitori);
+				MenuStorico.show(prestiti, archivioController, fruitoriController);
 				
 				continuaMenuOperatore = true;
 				break;

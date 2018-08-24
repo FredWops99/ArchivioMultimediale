@@ -2,6 +2,7 @@ package model;
 
 import java.util.Vector;
 import controller.ArchivioController;
+import controller.FruitoriController;
 import menus.utenti.MenuAccesso;
 
 /**
@@ -29,18 +30,22 @@ public class Main
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		ricostruisciPrestiti();
 		
-//		segna come "decadute" le iscrizioni in archivio che sono scadute.
-		Vector<Fruitore>utentiScaduti = fruitori.controlloIscrizioni();
+//		controllers per interazione utente-vista-model. presenti nelle operazioni dei casi d'uso (interazione utente-sistema) 
+//		gli passo archivio appena caricato. associa model e view.
+//		si potrà creare un unico gestore dei controller?
+		ArchivioController archivioController = new ArchivioController(archivio);
+		FruitoriController fruitoriController = new FruitoriController(fruitori);
+		
+//		segna come "decadute" le iscrizioni dei fruitori in archivio che sono scadute.
+		Vector<Fruitore>utentiScaduti = fruitoriController.controlloIscrizioni();
+//		rimuove i prestiti di tali utenti scaduti
 		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
 		prestiti.controlloPrestitiScaduti();
 		
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-//		controller per interazione utente/vista/model. gli passo archivio appena caricato. associa model e view.
-		ArchivioController mainController = new ArchivioController(archivio);
-		
-		MenuAccesso.show(fruitori, prestiti, mainController);
+		MenuAccesso.show(prestiti, archivioController, fruitoriController);
 	}
 	
 	/**
@@ -95,5 +100,9 @@ public class Main
 	public static void salvaArchivio()
 	{
 		GestoreSalvataggi.salvaArchivio(archivio);
+	}
+	public static void salvaFruitori()
+	{
+		GestoreSalvataggi.salvaFruitori(fruitori);
 	}
 }

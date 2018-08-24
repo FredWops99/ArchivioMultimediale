@@ -5,23 +5,15 @@ import myLib.MyMenu;
 
 public class MenuRimuoviRisorsa 
 {
+	private static final String INTESTAZIONE = "scegli la categoria: ";
+
 	public static String showAndReturnID(String[] CATEGORIE, ArchivioController archivioController)
 	{
-		String idRisorsa = "-1";
-
-		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		try
 		{
 			String categoria = CATEGORIE[menu.scegliBase() - 1];
-			if(categoria == CATEGORIE[0])//LIBRI
-			{
-				idRisorsa = archivioController.getLibriController().removeLibro();
-			}
-			if(categoria == CATEGORIE[1])//FILMS
-			{
-				idRisorsa = archivioController.getFilmController().removeFilm();
-			}
-			return idRisorsa;
+			return archivioController.removeRisorsa(categoria);		
 		}
 //		se non sono presenti risorse ritorna -1
 		catch(ArrayIndexOutOfBoundsException e)

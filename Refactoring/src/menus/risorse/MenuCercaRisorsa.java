@@ -5,21 +5,16 @@ import myLib.MyMenu;
 
 public class MenuCercaRisorsa 
 {
+	private static final String INTESTAZIONE = "scegli la categoria: ";
+
 	public static void show(String[] CATEGORIE, ArchivioController archivioController)
 	{
-		MyMenu menu = new MyMenu("scegli la categoria: ", CATEGORIE, true);
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		try
 		{
 			String categoria = CATEGORIE[menu.scegliBase() - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
-
-			if(categoria == CATEGORIE[0])//"Libri"
-			{
-				archivioController.getLibriController().cercaLibro();
-			}
-			else if(categoria == CATEGORIE[1])//"Films"
-			{
-				archivioController.getFilmController().cercaFilm();
-			}
+//			viene passata come stringa la categoria selezionata: archivioController deciderà poi se CERCARE un libro o un film
+			archivioController.cercaRisorsa(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{

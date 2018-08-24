@@ -1,12 +1,10 @@
 package menus.utenti;
 
 import controller.ArchivioController;
-import model.Fruitori;
+import controller.FruitoriController;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
-import model.GestoreSalvataggi;
-import view.FruitoriView;
 
 public class MenuFruitore 
 {
@@ -15,13 +13,13 @@ public class MenuFruitore
 	
 	private static boolean continuaMenuFruitore;
 	
-	public static void show(Fruitori fruitori, ArchivioController mainController, Prestiti prestiti)
+	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
 	{
 		MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE, true);
 		continuaMenuFruitore=true;
 		do
 		{
-			gestisciMenuFruitore(menuFruitore.scegli(), fruitori, mainController, prestiti);
+			gestisciMenuFruitore(menuFruitore.scegli(), archivioController, fruitoriController, prestiti);
 		}
 		while(continuaMenuFruitore);
 	}
@@ -30,7 +28,7 @@ public class MenuFruitore
 	 * menu che compare una volta che si esegue l'accesso come fruitore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuFruitore(int scelta, Fruitori fruitori, ArchivioController mainController, Prestiti prestiti)
+	private static void gestisciMenuFruitore(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
 	{
 		continuaMenuFruitore=true;
 		
@@ -43,28 +41,18 @@ public class MenuFruitore
 			}
 			case 1:	//registrazione nuovo fruitore
 			{
-				fruitori.addFruitore();
-				GestoreSalvataggi.salvaFruitori(fruitori);
+				fruitoriController.addFruitore();
+				Main.salvaFruitori();
 
 				continuaMenuFruitore=true;//torna al menu
 				break;				
 			}
 			case 2:	//login
 			{
-				String user = FruitoriView.chiediUsername();
-				String password = FruitoriView.chiediPassword();
-				
-				Main.setUtenteLoggato(fruitori.trovaUtente(user, password));
-				
-				if(Main.getUtenteLoggato()==null)
+				boolean loginRiuscito = fruitoriController.login();
+				if(loginRiuscito)
 				{
-					FruitoriView.utenteNonTrovato();
-				}
-				else // -> utente trovato
-				{
-					FruitoriView.benvenuto(Main.getUtenteLoggato().getNome());
-					
-					MenuPersonale.show(mainController, prestiti);
+					MenuPersonale.show(archivioController, fruitoriController, prestiti);
 				}
 
 				continuaMenuFruitore=true;

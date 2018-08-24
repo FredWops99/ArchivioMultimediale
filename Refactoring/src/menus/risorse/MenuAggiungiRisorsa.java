@@ -13,21 +13,13 @@ public class MenuAggiungiRisorsa
 		try
 		{
 			String categoria = CATEGORIE[menu.scegliBase()-1];
-			if(categoria == CATEGORIE[0])//LIBRO
-			{
-				archivioController.getLibriController().addLibro();
-			}
-			if(categoria == CATEGORIE[1])//FILM
-			{
-//				controller interagisce con view per creare il film
-				archivioController.getFilmController().addFilm();
-				
-			}
+//			viene passata come stringa la categoria selezionata: archivioController deciderà poi se creare un libro o un film
+			archivioController.addRisorsa(categoria);
 		}
-		catch(ArrayIndexOutOfBoundsException e)
+		catch(ArrayIndexOutOfBoundsException e) 
 		{
-//			se utente seleziona 0 per uscire viene lanciata eccezione: CATEGORIE[-1].
-//			non va fatto nulla, basta intercettarla
+//			se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
+//			corrisponde ad ANNULLA, non va fatto nulla
 		}
 	}
 }

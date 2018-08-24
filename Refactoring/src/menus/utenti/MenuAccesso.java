@@ -1,7 +1,7 @@
 package menus.utenti;
 
 import controller.ArchivioController;
-import model.Fruitori;
+import controller.FruitoriController;
 import model.Prestiti;
 import myLib.MyMenu;
 import view.FruitoriView;
@@ -15,13 +15,13 @@ public class MenuAccesso
 	
 	private static boolean continuaMenuAccesso;
 
-	public static void show(Fruitori fruitori, Prestiti prestiti, ArchivioController mainController)
+	public static void show(Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController)
 	{
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
 		do
 		{
-			gestisciMenuAccesso(menuAccesso.scegli(), fruitori, prestiti, mainController);
+			gestisciMenuAccesso(menuAccesso.scegli(), prestiti, archivioController, fruitoriController);
 		}
 		while(continuaMenuAccesso);	
 	}
@@ -30,7 +30,7 @@ public class MenuAccesso
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuAccesso(int scelta, Fruitori fruitori, Prestiti prestiti, ArchivioController mainController) 
+	private static void gestisciMenuAccesso(int scelta, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController) 
 	{
 		continuaMenuAccesso=true;
 
@@ -44,7 +44,7 @@ public class MenuAccesso
 			}
 			case 1://accesso FRUITORE
 			{
-				MenuFruitore.show(fruitori, mainController, prestiti);
+				MenuFruitore.show(archivioController, fruitoriController, prestiti);
 				
 				continuaMenuAccesso=true;
 				break;
@@ -54,7 +54,7 @@ public class MenuAccesso
 				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
-					MenuOperatore.show(fruitori, prestiti, mainController);
+					MenuOperatore.show(prestiti, archivioController, fruitoriController);
 				}
 				else
 				{
