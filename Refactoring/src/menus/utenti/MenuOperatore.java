@@ -2,12 +2,11 @@ package menus.utenti;
 
 import controller.ArchivioController;
 import controller.FruitoriController;
+import controller.StoricoController;
 import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
 import menus.risorse.MenuStampaElencoRisorse;
 import menus.storico.MenuStorico;
-import model.Fruitore;
-import model.Fruitori;
 import model.Prestiti;
 import myLib.MyMenu;
 import model.Main;
@@ -23,7 +22,7 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController)
+	public static void show(StoricoController sc, Prestiti prestiti, ArchivioController ac, FruitoriController fc)
 	{
 		MessaggiSistemaView.accessoEseguito();
 		
@@ -31,7 +30,7 @@ public class MenuOperatore
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), prestiti, archivioController, fruitoriController);
+			gestisciMenuOperatore(menuOperatore.scegli(), sc, prestiti, ac, fc);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -40,7 +39,7 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController) 
+	private static void gestisciMenuOperatore(int scelta, StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -106,7 +105,7 @@ public class MenuOperatore
 			}
 			case 7://VISUALIZZA STORICO
 			{
-				MenuStorico.show(prestiti, archivioController, fruitoriController);
+				MenuStorico.show(storicoController, prestiti, archivioController, fruitoriController);
 				
 				continuaMenuOperatore = true;
 				break;

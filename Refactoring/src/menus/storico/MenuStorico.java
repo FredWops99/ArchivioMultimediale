@@ -1,8 +1,8 @@
 package menus.storico;
 
 import controller.ArchivioController;
+import controller.FruitoriController;
 import controller.StoricoController;
-import model.Fruitori;
 import model.Prestiti;
 import model.Storico;
 import myLib.MyMenu;
@@ -36,9 +36,8 @@ public class MenuStorico
 	 * @param fruitori l'elenco dei fruitori che è utilizzato dai vari metodi del menù
 	 */
 	
-	public static void show(Prestiti prestiti, ArchivioController archivioController, Fruitori fruitori)
+	public static void show(StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController)
 	{
-		StoricoController storicoController = new StoricoController(prestiti, fruitori);
 		boolean continuaMenuStorico = true;
 		do
 		{
@@ -95,7 +94,7 @@ public class MenuStorico
 				}
 				case 7://visualizza iscrizioni rinnovate
 				{
-					Storico.fruitoriRinnovati(fruitori);
+					Storico.fruitoriRinnovati(fruitoriController.getModel());
 					
 					continuaMenuStorico = true;
 					break;
