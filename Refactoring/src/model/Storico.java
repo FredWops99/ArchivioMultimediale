@@ -1,7 +1,5 @@
 package model;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -226,10 +224,10 @@ public class Storico implements Serializable
 	
 	public static Vector<Libro> risorePrestabiliLibri(ArchivioController archivioController)
 	{
-		Vector<Libro> libri = archivioController.getLibriController().getModel().getLibri();
+		Vector<Libro> libri = archivioController.getVectorLibri();
 		
 		int libriPrestabiliInPassato = 0;
-		Vector<Libro> libriPrestabili = null;
+		Vector<Libro> libriPrestabili = new Vector<>();
 		for(int i = 0; i < libri.size(); i++)
 		{
 			if(!libri.get(i).isPrestabile())
@@ -252,10 +250,9 @@ public class Storico implements Serializable
 	
 	public static Vector<Film> risorsePrestabiliFilms(ArchivioController archivioController)
 	{
-		Vector<Film>  films = archivioController.getFilmController().getModel().getFilms();
-		
+		Vector<Film>  films = archivioController.getVectorFilm();
 		int filmPrestabiliInPassato = 0;
-		Vector<Film> filmsPrestabili = null;
+		Vector<Film> filmsPrestabili = new Vector<>();
 		for(int i = 0; i < films.size(); i++)
 		{
 			if(!films.get(i).isPrestabile())
@@ -323,7 +320,7 @@ public class Storico implements Serializable
 	public static Vector<Fruitore> fruitoriDecaduti(Fruitori fruitori)
 	{
 		int num = 0;
-		Vector<Fruitore> fruitoriDecaduti = null;
+		Vector<Fruitore> fruitoriDecaduti = new Vector<>();
 		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
 		{
 			if(fruitori.getFruitori().get(i).isDecaduto())
@@ -376,7 +373,7 @@ public class Storico implements Serializable
 	public static Vector<String> fruitoriRinnovati(Fruitori fruitori)
 	{
 		int num = 0;
-		Vector<String> dateRinnovi = null;
+		Vector<String> dateRinnovi = new Vector<>();
 		for (int i = 0; i < fruitori.getFruitori().size(); i++) 
 		{
 			if(!fruitori.getFruitori().get(i).getRinnovi().isEmpty())
@@ -437,7 +434,7 @@ public class Storico implements Serializable
 	public static Vector<Prestito> prestitiProrogati(Prestiti prestiti)
 	{
 		int num = 0;
-		Vector<Prestito> prestitiProrogati = null;
+		Vector<Prestito> prestitiProrogati = new Vector<>();
 		
 		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
 		{
@@ -491,7 +488,7 @@ public class Storico implements Serializable
 	public static Vector<Prestito> prestitiTerminati(Prestiti prestiti)
 	{
 		int num = 0;
-		Vector<Prestito> prestitiTerminati = null;
+		Vector<Prestito> prestitiTerminati = new Vector<>();
 		for (int i = 0; i < prestiti.getPrestiti().size(); i++) 
 		{
 			if(prestiti.getPrestiti().get(i).isTerminato())
@@ -548,7 +545,7 @@ public class Storico implements Serializable
 	public static Vector<Prestito> prestitiTerminatiInAnticipo(Prestiti prestiti)
 	{
 		int num = 0;
-		Vector<Prestito> prestitiTerminatiInAnticipo = null;
+		Vector<Prestito> prestitiTerminatiInAnticipo = new Vector<>();
 		for(Prestito prestito : prestiti.getPrestiti())
 		{
 			if(prestito.isTerminato() && prestito.getDataRitorno().before(prestito.getDataScadenza()))
