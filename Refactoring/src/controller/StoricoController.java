@@ -37,6 +37,7 @@ public class StoricoController
 		int annoSelezionato = StoricoView.selezionaAnno();
 
 		Vector<Risorsa> risorseAnnue = new Vector<Risorsa>();
+		
 		//seleziono solo le risorse che sono state prenotate nell'anno corrente
 		for (Prestito prestito : model.getPrestiti().getPrestiti())
 		{
@@ -45,6 +46,7 @@ public class StoricoController
 				risorseAnnue.add(prestito.getRisorsa());
 			}
 		}
+		
 		//da qui avviene il conteggio
 		for(int i = 0; i < risorseAnnue.size(); i++)
 		{
@@ -64,6 +66,7 @@ public class StoricoController
 				titoloRisorsaMax = risorseAnnue.get(i).getTitolo();
 			}
 		}
+		
 		//qui avviene la stampa
 		if(maxGenerale==0)
 		{

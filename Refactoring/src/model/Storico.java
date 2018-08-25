@@ -38,7 +38,7 @@ public class Storico implements Serializable
 	/**
 	 * (precondizione: prestiti != null)
 	 * Metodo che conta i prestiti che sono avvenuti nell'anno solare inserito dall'utente
-	 * @param prestiti l'elenco di tutti i prestiti in archivio
+	 * @param anno selezionato
 	 * @return il numero dei prestiti avvenuti durante l'anno inserito dall'utente
 	 */
 	public int prestitiAnnoSolare(int anno)
@@ -57,7 +57,7 @@ public class Storico implements Serializable
 	/**
 	 * (precondizione: prestiti != null)
 	 * Metodo che conta tutte le proroghe che sono avvenute nell'anno solare inserito dall'utente
-	 * @param prestiti l'elenco di tutti i prestiti in archivio
+	 * @param anno selezionato
 	 * @return il numero di proroghe avvenute durante l'anno inserito dall'utente
 	 */
 	public int prorogheAnnoSolare(int anno)
@@ -72,10 +72,17 @@ public class Storico implements Serializable
 		return contatoreProroghe;
 	}
 	
+	/**
+	 *(precondizione: prestiti != null)
+	 * Metodo che restituisce un vettore di prestiti avvenuti nell'anno inserito
+	 * @param annoanno selezionato
+	 * @return vettore di prestiti avvenuti nell'anno inserito
+	 */
 	public Vector<Prestito> prestitiAnnui(int anno)
 	{
 		Vector<Prestito> prestitiAnnui = new Vector<Prestito>();
 		//int annoSelezionato = StoricoView.AnnoSelezionato();
+		
 		//seleziono solo i prestiti che sono stati effettuati nell'anno indicato
 		for (Prestito prestito : prestiti.getPrestiti()) 
 		{
@@ -95,15 +102,15 @@ public class Storico implements Serializable
 		}	
 	}
 	
+	
 	/**
 	 * (precondizione: prestiti != null)
-	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore
+	 * Metodo che restituisce tutti i prestiti effettuati dal fruitore il cui user 
+	 * è uguale ad user selezionato
 	 * @param prestiti l'elenco di tutti i prestiti in archivio
-	 */
-	/**
-	 * (precondizione: prestiti != null)
-	 * Metodo che mostra tutti i prestiti annui effettuati da ogni fruitore
-	 * @param prestiti l'elenco di tutti i prestiti in archivio
+	 * @param user = nome utente selezionato
+	 * @return tutti i prestiti effettuati dal fruitore il cui user 
+	 * è uguale ad user selezionato
 	 */
 	public int prestitiPerFruitore(Vector<Prestito> prestiti, String user)
 	{
@@ -118,6 +125,11 @@ public class Storico implements Serializable
 		return nPrestiti;
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore di Libri o Films che erano prestabili in passato
+	 * @param risorsa -> "Libro" o "Film". Indica se si vuole cercare nei libri o nei films
+	 * @return Vector<Risorsa> -> un vettore di risorse (Libri o Films) che erano prestabili in passato
+	 */
 	public Vector<Risorsa> risorsePrestabiliInPassato(String risorsa)
 	{
 		Vector<Risorsa>risorsePrestabili = new Vector<>();
@@ -155,6 +167,10 @@ public class Storico implements Serializable
 		}
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore di fruitori che sono decaduti 
+	 * @return Vector<Fruitore> -> vettore di fruitori che sono decaduti
+	 */
 	public Vector<Fruitore> fruitoriDecaduti()
 	{
 		int num = 0;
@@ -178,6 +194,10 @@ public class Storico implements Serializable
 		}
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore composto dai nomi dei fruitori che hanno rinnovato l'iscrizione
+	 * @return Vector<String> -> vettore composto dai nomi dei fruitori che hanno rinnovato l'iscrizione
+	 */
 	public Vector<String> fruitoriRinnovati()
 	{
 		int num = 0;
@@ -205,6 +225,10 @@ public class Storico implements Serializable
 		}
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore di prestiti che sono stati prorogati
+	 * @return  Vector<Prestito> -> vettore di prestiti che sono stati prorogati
+	 */
 	public Vector<Prestito> prestitiProrogati()
 	{
 		int num = 0;
@@ -230,6 +254,10 @@ public class Storico implements Serializable
 		}	
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore di prestiti che sono terminati
+	 * @return Vector<Prestito> -> vettore di prestiti che sono terminati
+	 */
 	public Vector<Prestito> prestitiTerminati()
 	{
 		int num = 0;
@@ -254,6 +282,10 @@ public class Storico implements Serializable
 		}
 	}
 	
+	/**
+	 * Metodo che restituisce un vettore di prestiti che sono terminati in anticipo
+	 * @return Vector<Prestito> -> vettore di prestiti che sono terminati in anticipo
+	 */
 	public Vector<Prestito> prestitiTerminatiInAnticipo()
 	{
 		int num = 0;
