@@ -26,8 +26,9 @@ public class Prestiti implements Serializable
 	
 	/**
 	 * controllo per tutti i prestiti presenti se sono scaduti (li rimuovo) oppure no
+	 * @return numero prestiti rientrati dal prestito
 	 */
-	public void controlloPrestitiScaduti() 
+	public int controlloPrestitiScaduti() 
 	{
 		int rimossi = 0;
 		for (Prestito prestito : prestiti) 
@@ -44,108 +45,128 @@ public class Prestiti implements Serializable
 			}
 			
 		}
-		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
+		return rimossi;
 	}
 	
+	
 	/**
-	 * Stampa l'elenco di tutti i prestiti attivi
+	 * Metodo che restituisce un vettore dei prestiti che sono ancora attivi 
+	 * @param prestiti
+	 * @return Vector<Prestito> -> vettore dei prestiti che sono ancora attivi 
 	 */
-	public void stampaPrestitiAttivi() 
+	public Vector<Prestito> stampaPrestitiAttivi(Prestiti prestiti) 
 	{
 		int i = 0;
-		for(Prestito prestito : prestiti)
+		Vector<Prestito> prestitiAttivi = new Vector<Prestito>();
+		for(Prestito prestito : prestiti.getPrestiti())
 		{
 			if(!prestito.isTerminato())
 			{
-				MessaggiSistemaView.cornice();
-				prestito.visualizzaPrestito();
+				prestitiAttivi.addElement(prestito);
+				//MessaggiSistemaView.cornice();
+				//prestito.visualizzaPrestito();
 				i++;
 			}	
 		}
 		if(i == 0)
 		{
-			PrestitiView.noPrestitiAttivi();
+			return null;
+			//PrestitiView.noPrestitiAttivi();
+		}
+		else
+		{
+			return prestitiAttivi;
 		}
 	}
 	
+	
 	/**
 	 * (precondizione: fruitore != null)
-	 * stampa tutti i prestiti attivi di un utente
+	 * Metodo che restituisce un vettore di tutti i prestiti attivi di un utente
 	 * @param fruitore lo username dell'utente di cui stampare i prestiti
 	 */
-	public void stampaPrestitiAttiviDi(Fruitore fruitore) 
+	
+	public Vector<Prestito> stampaPrestitiAttiviDi(Fruitore fruitore,Prestiti prestiti) 
 	{		
 		int totPrestiti = 0;
-		for(Prestito prestito : prestiti)
+		Vector<Prestito> prestitiAttiviDi = new Vector<Prestito>();
+		for(Prestito prestito : prestiti.getPrestiti())
 		{
 			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
 			{
-				if(totPrestiti == 0)//all'inizio
-				{
-					System.out.println("\nPrestiti in corso: \n");
-					System.out.println(BelleStringhe.CORNICE);
-				}
-				prestito.visualizzaPrestito();
-				System.out.println(BelleStringhe.CORNICE);
+				
+				prestitiAttiviDi.addElement(prestito);			
+				//prestito.visualizzaPrestito();
+				//MessaggiSistemaView.cornice();	
 				totPrestiti++;
 			}
 		}
 		if(totPrestiti == 0)
 		{
-			PrestitiView.noPrestitiAttivi();
+			return null;
+			//PrestitiView.noPrestitiAttivi();			
+		}
+		else
+		{
+			return prestitiAttiviDi;			
 		}
 	}
 	
+	
+	public void terminaPrestitoSelezionato(int selezione,Vector<Prestito> prestitiUtente)
+	{
+		Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
+					
+		prestitoSelezionato.getRisorsa().tornaDalPrestito();
+		prestitoSelezionato.terminaPrestito();
+		
+	}
 	/**
 	 * (precondizione: fruitore != null)
 	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare
 	 * @param fruitore il fruitore al quale chiedere quale prestito terminare
 	 */
-	public void terminaPrestitoDi(Fruitore fruitore)
-	{
-		Vector<Prestito>prestitiUtente = new Vector<>();
-		for(Prestito prestito : prestiti)
-		{
-			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-			{
-				prestitiUtente.add(prestito);
-			}
-		}
-		if(prestitiUtente.isEmpty())
-		{
-			PrestitiView.noPrestiti();
-		}
-		else
-		{
-			PrestitiView.prestitoDaTerminare();
-			
-			for(int i = 0; i < prestitiUtente.size(); i++)
-			{
-				MessaggiSistemaView.stampaPosizione(i);
-				MessaggiSistemaView.cornice();
-				prestitiUtente.get(i).visualizzaPrestito();
-				MessaggiSistemaView.cornice();
-			}
-			
-			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiUtente.size());
-
-			if(selezione != 0)
-			{
-				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
-				
-				prestitoSelezionato.getRisorsa().tornaDalPrestito();
-				prestitoSelezionato.terminaPrestito();
-				PrestitiView.prestitoTerminato();
-			}
-		}
-	}
+//	public void terminaPrestitoDi(Fruitore fruitore)
+//	{
+//		Vector<Prestito>prestitiUtente = new Vector<>();
+//		for(Prestito prestito : prestiti)
+//		{
+//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
+//			{
+//				prestitiUtente.add(prestito);
+//			}
+//		}
+//		if(prestitiUtente.isEmpty())
+//		{
+//			PrestitiView.noPrestiti();
+//		}
+//		else
+//		{
+//			PrestitiView.prestitoDaTerminare();
+//			
+//			for(int i = 0; i < prestitiUtente.size(); i++)
+//			{
+//				MessaggiSistemaView.stampaPosizione(i);
+//				MessaggiSistemaView.cornice();
+//				prestitiUtente.get(i).visualizzaPrestito();
+//				MessaggiSistemaView.cornice();
+//			}
+//			
+//			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiUtente.size());
+//
+//			if(selezione != 0)
+//			{
+//				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
+//				
+//				prestitoSelezionato.getRisorsa().tornaDalPrestito();
+//				prestitoSelezionato.terminaPrestito();
+//				PrestitiView.prestitoTerminato();
+//			}
+//		}
+//	}
 	
-	/**
-	 * (precondizione: fruitore != null)
-	 * metodo che elimina tutti i prestiti di un determinato fruitore
-	 * @param fruitore il fruitore del quale eliminare tutti i prestiti
-	 */
-	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
+	
+	public int terminaTuttiPrestitiDi(Fruitore fruitore) 
 	{		
 		int j = 0;
 //		dal fondo perchè se elimino dall'inizio si sballano le posizioni
@@ -158,15 +179,37 @@ public class Prestiti implements Serializable
 				j++;
 			}
 		}
-		if(j == 0)
-		{
-			PrestitiView.noPrestiti();
-		}
-		else
-		{
-			PrestitiView.prestitiEliminati();
-		}
+		
+		return j;
+		
 	}	
+	/**
+	 * (precondizione: fruitore != null)
+	 * metodo che elimina tutti i prestiti di un determinato fruitore
+	 * @param fruitore il fruitore del quale eliminare tutti i prestiti
+	 */
+//	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
+//	{		
+//		int j = 0;
+////		dal fondo perchè se elimino dall'inizio si sballano le posizioni
+//		for(Prestito prestito : prestiti)
+//		{
+//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
+//			{
+//				prestito.getRisorsa().tornaDalPrestito();
+//				prestito.terminaPrestito();
+//				j++;
+//			}
+//		}
+//		if(j == 0)
+//		{
+//			PrestitiView.noPrestiti();
+//		}
+//		else
+//		{
+//			PrestitiView.prestitiEliminati();
+//		}
+//	}	
 	
 	/**
 	 * (precondizione: utenti != null)
@@ -277,56 +320,61 @@ public class Prestiti implements Serializable
 		return true;
 	}
 	
+	public void rinnovaPrestito(Prestito prestitoSelezionato) 
+	{
+
+					prestitoSelezionato.prorogaPrestito();
+	}
 	/**
 	 * (precondizione: fruitore != null)
 	 * metodo che esegue il rinnovo di un prestito
 	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
 	 */
-	public void rinnovaPrestito(Fruitore fruitore) 
-	{
-		Vector<Prestito>prestitiUtente = new Vector<>();
-		for(Prestito prestito : prestiti)
-		{
-			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-			{
-				prestitiUtente.add(prestito);
-			}
-		}
-		if(prestitiUtente.isEmpty())
-		{
-			PrestitiView.noRinnovi();
-		}
-		else
-		{
-			PrestitiView.selezionaRinnovo();
-			for(int i = 0; i < prestitiUtente.size(); i++)
-			{
-				MessaggiSistemaView.stampaPosizione(i);				
-				MessaggiSistemaView.cornice();
-				prestitiUtente.get(i).visualizzaPrestito();
-				MessaggiSistemaView.cornice();
-			}
-			
-			int selezione = PrestitiView.chiediRisorsaDaRinnovare(prestitiUtente.size());
-
-			if(selezione != 0)
-			{
-				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
-				
-				if(!prestitoSelezionato.isRinnovabile())
-				{
-					PrestitiView.prestitoGiàProrogato();
-				}
-				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
-//				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
-				{
-					prestitoSelezionato.prorogaPrestito();
-				}
-				else//non si può ancora rinnovare prestito
-				{
-					PrestitiView.prestitoNonRinnovabile(prestitoSelezionato);
-				}
-			}
-		}
-	}
+//	public void rinnovaPrestito(Fruitore fruitore) 
+//	{
+//		Vector<Prestito>prestitiUtente = new Vector<>();
+//		for(Prestito prestito : prestiti)
+//		{
+//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
+//			{
+//				prestitiUtente.add(prestito);
+//			}
+//		}
+//		if(prestitiUtente.isEmpty())
+//		{
+//			PrestitiView.noRinnovi();
+//		}
+//		else
+//		{
+//			PrestitiView.selezionaRinnovo();
+//			for(int i = 0; i < prestitiUtente.size(); i++)
+//			{
+//				MessaggiSistemaView.stampaPosizione(i);				
+//				MessaggiSistemaView.cornice();
+//				prestitiUtente.get(i).visualizzaPrestito();
+//				MessaggiSistemaView.cornice();
+//			}
+//			
+//			int selezione = PrestitiView.chiediRisorsaDaRinnovare(prestitiUtente.size());
+//
+//			if(selezione != 0)
+//			{
+//				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
+//				
+//				if(!prestitoSelezionato.isRinnovabile())
+//				{
+//					PrestitiView.prestitoGiàProrogato();
+//				}
+//				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
+////				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
+//				{
+//					prestitoSelezionato.prorogaPrestito();
+//				}
+//				else//non si può ancora rinnovare prestito
+//				{
+//					PrestitiView.prestitoNonRinnovabile(prestitoSelezionato);
+//				}
+//			}
+//		}
+//	}
 }

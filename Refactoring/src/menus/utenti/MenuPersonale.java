@@ -2,6 +2,7 @@ package menus.utenti;
 
 import controller.ArchivioController;
 import controller.FruitoriController;
+import controller.PrestitiController;
 import menus.prestiti.MenuRichiediPrestito;
 import menus.prestiti.MenuTerminaPrestiti;
 import menus.risorse.MenuCercaRisorsa;
@@ -19,13 +20,13 @@ public class MenuPersonale
 	private static boolean continuaMenuPersonale;
 
 	
-	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
+	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti,PrestitiController pc)
 	{
 		MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
 		continuaMenuPersonale=true;
 		do
 		{
-			gestisciMenuPersonale(menuPersonale.scegli(), archivioController, fruitoriController, prestiti);
+			gestisciMenuPersonale(menuPersonale.scegli(), archivioController, fruitoriController, prestiti,pc);
 		}
 		while(continuaMenuPersonale);
 	}
@@ -34,7 +35,7 @@ public class MenuPersonale
 	 * menu che compare dopo che un fruitore esegue il login
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuPersonale(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti) 
+	private static void gestisciMenuPersonale(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti, PrestitiController pc) 
 	{
 		continuaMenuPersonale=true;
 		
@@ -75,21 +76,21 @@ public class MenuPersonale
 			}
 			case 5: //RINNOVA PRESTITO
 			{
-				prestiti.rinnovaPrestito(Main.getUtenteLoggato());
+				pc.rinnovaPrestito(Main.getUtenteLoggato());
 				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
-				prestiti.stampaPrestitiAttiviDi(Main.getUtenteLoggato());
+				pc.stampaPrestitiAttiviDi(Main.getUtenteLoggato());
 				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 7://TERMINA PRESTITI
 			{
-				MenuTerminaPrestiti.show(prestiti, archivioController);
+				MenuTerminaPrestiti.show(prestiti, archivioController, pc);
 				
 				continuaMenuPersonale = true;
 				break;

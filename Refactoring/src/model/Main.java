@@ -3,6 +3,7 @@ package model;
 import java.util.Vector;
 import controller.ArchivioController;
 import controller.FruitoriController;
+import controller.PrestitiController;
 import controller.StoricoController;
 import menus.utenti.MenuAccesso;
 
@@ -38,6 +39,7 @@ public class Main
 		ArchivioController archivioController = new ArchivioController(archivio);
 		FruitoriController fruitoriController = new FruitoriController(fruitori);
 		StoricoController storicoController = new StoricoController(storico);
+		PrestitiController prestitiController = new PrestitiController(prestiti, fruitori);
 
 		
 //		segna come "decadute" le iscrizioni dei fruitori in archivio che sono scadute.
@@ -49,7 +51,7 @@ public class Main
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		MenuAccesso.show(prestiti, archivioController, fruitoriController, storicoController);
+		MenuAccesso.show(prestiti, archivioController, fruitoriController, storicoController,prestitiController);
 	}
 	
 	/**

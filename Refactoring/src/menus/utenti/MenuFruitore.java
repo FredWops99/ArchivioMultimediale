@@ -2,6 +2,7 @@ package menus.utenti;
 
 import controller.ArchivioController;
 import controller.FruitoriController;
+import controller.PrestitiController;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
@@ -13,13 +14,13 @@ public class MenuFruitore
 	
 	private static boolean continuaMenuFruitore;
 	
-	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
+	public static void show(ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti, PrestitiController pc)
 	{
 		MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE, true);
 		continuaMenuFruitore=true;
 		do
 		{
-			gestisciMenuFruitore(menuFruitore.scegli(), archivioController, fruitoriController, prestiti);
+			gestisciMenuFruitore(menuFruitore.scegli(), archivioController, fruitoriController, prestiti,pc);
 		}
 		while(continuaMenuFruitore);
 	}
@@ -28,7 +29,7 @@ public class MenuFruitore
 	 * menu che compare una volta che si esegue l'accesso come fruitore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuFruitore(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti)
+	private static void gestisciMenuFruitore(int scelta, ArchivioController archivioController, FruitoriController fruitoriController, Prestiti prestiti,PrestitiController pc)
 	{
 		continuaMenuFruitore=true;
 		
@@ -52,7 +53,7 @@ public class MenuFruitore
 				boolean loginRiuscito = fruitoriController.login();
 				if(loginRiuscito)
 				{
-					MenuPersonale.show(archivioController, fruitoriController, prestiti);
+					MenuPersonale.show(archivioController, fruitoriController, prestiti,pc);
 				}
 
 				continuaMenuFruitore=true;

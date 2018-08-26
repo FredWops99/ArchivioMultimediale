@@ -1,9 +1,11 @@
 package menus.prestiti;
 
 import controller.ArchivioController;
+import controller.PrestitiController;
 import model.Main;
 import model.Prestiti;
 import myLib.MyMenu;
+import model.Fruitori;
 import model.GestoreSalvataggi;
 
 public class MenuTerminaPrestiti 
@@ -12,8 +14,10 @@ public class MenuTerminaPrestiti
 	static String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
 
 	
-	public static void show(Prestiti prestiti, ArchivioController mainController) 
+	public static void show(Prestiti prestiti, ArchivioController mainController,PrestitiController pc) 
 	{
+		
+		
 		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
 		
 		switch (menuPrestiti.scegliBase()) 
@@ -34,7 +38,7 @@ public class MenuTerminaPrestiti
 		}
 		case 2://elimina un solo prestito (sceglie l'utente)
 		{
-			prestiti.terminaPrestitoDi(Main.getUtenteLoggato());
+			pc.terminaPrestitoDi(Main.getUtenteLoggato());
 			
 			GestoreSalvataggi.salvaPrestiti(prestiti);
 			Main.salvaArchivio();

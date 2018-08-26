@@ -2,6 +2,7 @@ package menus.utenti;
 
 import controller.ArchivioController;
 import controller.FruitoriController;
+import controller.PrestitiController;
 import controller.StoricoController;
 import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
@@ -22,15 +23,15 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(StoricoController sc, Prestiti prestiti, ArchivioController ac, FruitoriController fc)
-	{
+	public static void show(StoricoController sc, Prestiti prestiti, ArchivioController ac, FruitoriController fc,PrestitiController pc)
+	{	
 		MessaggiSistemaView.accessoEseguito();
 		
 		MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), sc, prestiti, ac, fc);
+			gestisciMenuOperatore(menuOperatore.scegli(), sc, prestiti, ac, fc,pc);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -39,7 +40,7 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController) 
+	private static void gestisciMenuOperatore(int scelta, StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController,PrestitiController pc) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -98,7 +99,7 @@ public class MenuOperatore
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
 			{
-				prestiti.stampaPrestitiAttivi();
+				pc.stampaPrestitiAttivi();
 				
 				continuaMenuOperatore = true;
 				break;
