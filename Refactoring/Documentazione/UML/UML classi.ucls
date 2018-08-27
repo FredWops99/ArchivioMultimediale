@@ -82,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="main.Main" project="Refactoring" file="/Refactoring/src/main/Main.java" 
+  <class id="10" language="java" name="model.Main" project="Refactoring" file="/Refactoring/src/model/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="160" width="134" x="504" y="106"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

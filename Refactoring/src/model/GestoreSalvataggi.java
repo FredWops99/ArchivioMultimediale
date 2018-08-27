@@ -1,11 +1,9 @@
-package myLib;
+package model;
 
 import java.io.File;
 import java.io.IOException;
 
-import model.Archivio;
-import model.Fruitori;
-import model.Prestiti;
+import myLib.ServizioFile;
 
 public class GestoreSalvataggi 
 {

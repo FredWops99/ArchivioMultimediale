@@ -1,13 +1,7 @@
-package main;
+package model;
 
 import controller.*;
 import menus.utenti.MenuAccesso;
-import model.Archivio;
-import model.Fruitore;
-import model.Fruitori;
-import model.Prestiti;
-import model.Storico;
-import myLib.GestoreSalvataggi;
 
 /**
  * Classe main del programma Archivio Multimediale

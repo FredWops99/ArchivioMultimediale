@@ -4,11 +4,11 @@ import controller.ArchivioController;
 import controller.FruitoriController;
 import controller.PrestitiController;
 import controller.StoricoController;
-import main.Main;
 import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
 import menus.risorse.MenuStampaElencoRisorse;
 import menus.storico.MenuStorico;
+import model.Main;
 import myLib.MyMenu;
 import view.MessaggiSistemaView;
 
