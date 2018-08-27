@@ -39,7 +39,7 @@ public class Main
 		ArchivioController archivioController = new ArchivioController(archivio);
 		FruitoriController fruitoriController = new FruitoriController(fruitori);
 		StoricoController storicoController = new StoricoController(storico);
-		PrestitiController prestitiController = new PrestitiController(prestiti);
+		PrestitiController prestitiController = new PrestitiController(prestiti); 
 
 		
 //		segna come "decadute" le iscrizioni dei fruitori in archivio che sono scadute.
