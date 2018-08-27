@@ -2,7 +2,7 @@ package menus.risorse.films;
 
 import java.util.Vector;
 
-import controller.FilmController;
+import controller.FilmsController;
 import model.Film;
 import myLib.MyMenu;
 import view.FilmsView;
@@ -13,7 +13,7 @@ public class MenuFiltroFilm
 	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
 	
-	public static Vector<Film> show(boolean daPrenotare, FilmController filmController) 
+	public static Vector<Film> show(boolean daPrenotare, FilmsController filmController) 
 	{
 		Vector<Film> filmsFiltrati = null;
 		String titoloParziale = null;
@@ -98,7 +98,7 @@ public class MenuFiltroFilm
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerTitolo(String titoloParziale, FilmController filmController)
+	public static Vector<Film> filtraFilmPerTitolo(String titoloParziale, FilmsController filmController)
 	{
 		Vector<Film> films = filmController.getModel().getFilms();
 		
@@ -120,7 +120,7 @@ public class MenuFiltroFilm
 	 * @param annoUscita l'anno da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerUscita(int annoUscita, FilmController filmController)
+	public static Vector<Film> filtraFilmPerUscita(int annoUscita, FilmsController filmController)
 	{
 		Vector<Film> films = filmController.getModel().getFilms();
 
@@ -142,7 +142,7 @@ public class MenuFiltroFilm
 	 * @param regista il nome del regista da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public static Vector<Film> filtraFilmPerRegista(String regista, FilmController filmController)
+	public static Vector<Film> filtraFilmPerRegista(String regista, FilmsController filmController)
 	{
 		Vector<Film> films = filmController.getModel().getFilms();
 

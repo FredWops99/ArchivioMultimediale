@@ -7,12 +7,12 @@ import model.Films;
 import view.FilmsView;
 import view.MessaggiSistemaView;
 
-public class FilmController 
+public class FilmsController 
 {
 	private Films model;
 	private int lastId;	
 	
-	public FilmController(Films films) 
+	public FilmsController(Films films) 
 	{
 		this.model = films;
 		this.lastId = films.getLastId();

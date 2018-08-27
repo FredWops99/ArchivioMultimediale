@@ -13,12 +13,12 @@ public class ArchivioController
 {
 	private final String[] CATEGORIE = {"Libri","Film"};
 
-	private FilmController filmController;
+	private FilmsController filmController;
 	private LibriController libriController;
 	
 	public ArchivioController(Archivio archivio)
 	{
-		filmController = new FilmController(archivio.getFilms());
+		filmController = new FilmsController(archivio.getFilms());
 		libriController = new LibriController(archivio.getLibri());
 	}
 	

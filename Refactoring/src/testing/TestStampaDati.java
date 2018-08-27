@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import controller.FilmController;
+import controller.FilmsController;
 import controller.FruitoriController;
 import controller.LibriController;
 import model.Film;
@@ -20,7 +20,7 @@ import model.Libro;
 public class TestStampaDati 
 {
 	private LibriController libriController = new LibriController(new Libri());
-	private FilmController filmController = new FilmController(new Films());
+	private FilmsController filmController = new FilmsController(new Films());
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;

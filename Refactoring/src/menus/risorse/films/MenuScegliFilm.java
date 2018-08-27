@@ -2,7 +2,7 @@ package menus.risorse.films;
 
 import java.util.Vector;
 
-import controller.FilmController;
+import controller.FilmsController;
 import model.Film;
 import myLib.MyMenu;
 import view.FilmsView;
@@ -13,7 +13,7 @@ public class MenuScegliFilm
 	private static final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
 	private static final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
 
-	public static Film show(FilmController filmController) 
+	public static Film show(FilmsController filmController) 
 	{
 		Vector<Film> films = filmController.getModel().getFilms();
 
@@ -54,7 +54,7 @@ public class MenuScegliFilm
 		return null;
 	}
 
-	private static Film selezionaFilm(Vector<Film> films, FilmController filmController) 
+	private static Film selezionaFilm(Vector<Film> films, FilmsController filmController) 
 	{
 		if(!films.isEmpty())
 		{

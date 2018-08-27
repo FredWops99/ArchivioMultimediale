@@ -2,14 +2,14 @@ package testing;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import controller.FilmController;
+import controller.FilmsController;
 import model.Film;
 import model.Films;
 
 public class TestFilm 
 {
 	Films films = new Films();
-	FilmController filmsController = new FilmController(films);
+	FilmsController filmsController = new FilmsController(films);
 	
 	@Test
 	public void filmEsistente()
