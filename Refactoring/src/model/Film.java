@@ -88,20 +88,20 @@ public class Film extends Risorsa implements Serializable
 	public String toString(boolean perPrestito)
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Categoria-----------------: Film");
-		sb.append("Sottocategoria------------: " + sottoCategoria);
-		sb.append("Titolo--------------------: " + titolo);
-		sb.append("Durata--------------------: " + durata + "'");
-		sb.append("Anno di uscita------------: " + annoDiUscita);
-		sb.append("Lingua--------------------: " + lingua);
+		sb.append("Categoria-----------------: Film" + "\n");
+		sb.append("Sottocategoria------------: " + sottoCategoria + "\n");
+		sb.append("Titolo--------------------: " + titolo + "\n");
+		sb.append("Durata--------------------: " + durata + "'" + "\n");
+		sb.append("Anno di uscita------------: " + annoDiUscita + "\n");
+		sb.append("Lingua--------------------: " + lingua + "\n");
 		if(!perPrestito)//dati utili all'operatore
 		{
-			sb.append("Numero licenze------------: " + nLicenze);
-			sb.append("In prestito---------------: " + inPrestito);
+			sb.append("Numero licenze------------: " + nLicenze + "\n");
+			sb.append("In prestito---------------: " + inPrestito + "\n");
 		}
 		else//dati utili al fruitore
 		{
-			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito));
+			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito) + "\n");
 		}
 		return sb.toString();
 	}

@@ -126,22 +126,22 @@ public class FruitoriController
 	 * interagisce con l'utente chiedendogli le credenziali.
 	 * @return true se il login è andato a buon fine
 	 */
-	public boolean login(Fruitore utenteLoggato) 
+	public Fruitore login() 
 	{
 		String user = FruitoriView.chiediUsername();
 		String password = FruitoriView.chiediPassword();
 		
-		utenteLoggato = model.trovaUtente(user, password);
+		Fruitore utenteLoggato = model.trovaUtente(user, password);
 		
 		if(utenteLoggato == null)
 		{
 			FruitoriView.utenteNonTrovato();
-			return false;
+			return null;
 		}
 		else // -> utente trovato
 		{
 			FruitoriView.benvenuto(utenteLoggato.getNome());
-			return true;
+			return utenteLoggato;
 		}	
 	}
 }

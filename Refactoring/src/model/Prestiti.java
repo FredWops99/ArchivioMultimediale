@@ -55,13 +55,6 @@ public class Prestiti implements Serializable
 		return prestitiAttiviDi;			
 	}
 	
-	public void terminaPrestitoSelezionato(int selezione,Vector<Prestito> prestitiUtente)
-	{
-		Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
-					
-		prestitoSelezionato.terminaPrestito();
-	}
-	
 	/**
 	 * crea il prestito e lo aggiunge all'elenco 
 	 * (precondizione: il fruitore non possiede già la risorsa in prestito & fruitore != null & risorsa != null)

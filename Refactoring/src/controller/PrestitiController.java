@@ -79,8 +79,6 @@ public class PrestitiController
 	public void stampaPrestitiAttiviDi(Fruitore fruitore)
 	{
 		Vector<Prestito> prestitiAttivi = model.prestitiAttiviDi(fruitore);
-		System.out.println("\nPrestiti in corso: \n");
-		MessaggiSistemaView.cornice();	
 		
 		if(prestitiAttivi.size() == 0)
 		{
@@ -108,7 +106,7 @@ public class PrestitiController
 		
 		if(prestitiAttivi.size() == 0)
 		{
-			PrestitiView.noPrestitiAttivi();
+			PrestitiView.noPrestiti();
 		}
 		else
 		{
@@ -124,8 +122,8 @@ public class PrestitiController
 			
 			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiAttivi.size());
 			if(selezione != 0)
-			{
-				model.terminaPrestitoSelezionato(selezione,prestitiAttivi);
+			{				
+				(prestitiAttivi.get(selezione-1)).terminaPrestito();
 				PrestitiView.prestitoTerminato();
 			}
 		}
@@ -138,14 +136,22 @@ public class PrestitiController
 	 */
 	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
 	{		
-//		dal fondo perchè se elimino dall'inizio si sballano le posizioni
+		int rimossi = 0;
 		for(Prestito prestito : model.getPrestiti())
 		{
 			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
 			{
-				prestito.getRisorsa().tornaDalPrestito();
 				prestito.terminaPrestito();
+				rimossi++;
 			}
+		}
+		if(rimossi == 0)
+		{
+			PrestitiView.noPrestiti();
+		}
+		else 
+		{
+			PrestitiView.prestitiEliminati();
 		}
 	}	
 	

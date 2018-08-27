@@ -51,8 +51,9 @@ public class MenuFruitore
 			}
 			case 2:	//login
 			{
-				boolean loginRiuscito = fruitoriController.login(utenteLoggato);
-				if(loginRiuscito)
+				utenteLoggato = fruitoriController.login();
+				
+				if(!(utenteLoggato==null))
 				{
 					MenuPersonale.show(utenteLoggato, archivioController, fruitoriController, prestitiController);
 				}
