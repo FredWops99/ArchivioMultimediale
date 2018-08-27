@@ -120,8 +120,8 @@ public class Fruitore implements Serializable
 		if(fruitoreRinnovabile())
 		{			
 			rinnovi.addElement(GestioneDate.DATA_CORRENTE);
-			calcolaScadenza(GestioneDate.DATA_CORRENTE);
-			CalcolaInizioRinnovo(dataScadenza);
+			dataScadenza = calcolaScadenza(GestioneDate.DATA_CORRENTE);
+			dataInizioRinnovo = CalcolaInizioRinnovo(dataScadenza);
 			
 			return true;
 		}

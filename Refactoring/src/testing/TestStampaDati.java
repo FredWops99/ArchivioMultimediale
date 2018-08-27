@@ -3,14 +3,17 @@ package testing;
 import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import controller.FilmController;
+import controller.FruitoriController;
 import controller.LibriController;
 import model.Film;
 import model.Films;
+import model.Fruitore;
+import model.Fruitori;
 import model.Libri;
 import model.Libro;
 
@@ -69,4 +72,18 @@ public class TestStampaDati
 		
 		assertEquals(libro.toString(true).trim(), outContent.toString().trim());
 	}
+	
+	@Test
+	public void stampaDatiFruitore() 
+	{
+		GregorianCalendar dataNascita = new GregorianCalendar(1900, 0, 1);
+		GregorianCalendar dataIscrizione = new GregorianCalendar(2000, 0, 1);
+		Fruitore fruitore = new Fruitore("nome", "cognome", dataNascita, dataIscrizione, "user", "psw");
+		FruitoriController fruitoriController = new FruitoriController(new Fruitori());
+		
+		fruitoriController.stampaDatiFruitore(fruitore);
+		
+		assertEquals(fruitore.toString().trim(), outContent.toString().trim());
+	}
+
 }

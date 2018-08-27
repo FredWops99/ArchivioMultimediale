@@ -99,6 +99,30 @@ public class FruitoriController
 		return utentiRimossi;
 	}
 	
+	/**
+	 * metodo per il test, così non stampa in console
+	 * @param test se true non stampa in console
+	 */
+	public Vector<Fruitore> controlloIscrizioni(boolean test)
+	{
+		Vector<Fruitore>utentiRimossi = new Vector<>();
+		int rimossi = 0;
+		for(Fruitore fruitore : model.getFruitori()) 
+		{
+			if((!fruitore.isDecaduto()) && fruitore.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)//se dataScadenza è precedente a oggi ritorna -1
+			{
+				fruitore.setDecaduto(true);
+				utentiRimossi.add(fruitore);
+				rimossi++;
+			}
+		}
+		if(!test)
+		{
+			FruitoriView.utentiRimossi(rimossi);
+		}
+		return utentiRimossi;
+	}
+	
 	public void stampaDatiFruitori()
 	{
 		FruitoriView.stampaDati(model.getFruitori());

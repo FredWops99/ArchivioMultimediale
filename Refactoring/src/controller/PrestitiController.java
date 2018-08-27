@@ -70,7 +70,7 @@ public class PrestitiController
 			for (Prestito prestito : prestitiAttivi) 
 			{
 				MessaggiSistemaView.cornice();
-				prestito.visualizzaPrestito();
+				PrestitiView.visualizzaPrestito(prestito);
 			}
 		}
 	}
@@ -88,7 +88,7 @@ public class PrestitiController
 		{
 			for (Prestito prestito : prestitiAttivi) 
 			{
-				prestito.visualizzaPrestito();
+				PrestitiView.visualizzaPrestito(prestito);
 				MessaggiSistemaView.cornice();
 			}
 		}
@@ -116,7 +116,7 @@ public class PrestitiController
 			{
 				MessaggiSistemaView.stampaPosizione(i);
 				MessaggiSistemaView.cornice();
-				prestitiAttivi.get(i).visualizzaPrestito();
+				PrestitiView.visualizzaPrestito(prestitiAttivi.get(i));
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -191,7 +191,7 @@ public class PrestitiController
 			{
 				MessaggiSistemaView.stampaPosizione(i);				
 				MessaggiSistemaView.cornice();
-				prestitiAttivi.get(i).visualizzaPrestito();
+				PrestitiView.visualizzaPrestito(prestitiAttivi.get(i));
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -200,11 +200,11 @@ public class PrestitiController
 			{
 				Prestito prestitoSelezionato = prestitiAttivi.get(selezione-1);
 				
-				if(!prestitoSelezionato.isRinnovabile())
+				if(prestitoSelezionato.isProrogato())
 				{
 					PrestitiView.prestitoGiàProrogato();
 				}
-				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
+				else if(prestitoSelezionato.isRinnovabile())
 //				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
 				{
 					prestitoSelezionato.prorogaPrestito();

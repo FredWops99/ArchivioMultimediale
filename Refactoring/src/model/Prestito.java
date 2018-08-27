@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import myLib.GestioneDate;
-import view.PrestitiView;
 
 /**
  * classe che rappresenta un prestito di una risorsa multimediale ad un fruitore
@@ -49,16 +48,20 @@ public class Prestito implements Serializable
 	}
 	
 	/**
-	 * visualizza le informazioni relative ad un prestito. In particolare sono presenti i seguenti campi:
-	 * - Categoria della risorsa
-	 * - Titolo della risorsa
-	 * - Il fruitore che ha in prestito la risorsa
-	 * - La data in cui è avvenuto il prestito
-	 * - La data di scadenza del prestito
+	 * Costruttore per TEST: così la data di inizio non è necessariamente "oggi" (quindi non fissa per i test)
+	 * @param fruitore
+	 * @param risorsa
+	 * @param dataInizio
 	 */
-	public void visualizzaPrestito()
+	public Prestito(Fruitore fruitore, Risorsa risorsa, GregorianCalendar dataInizio)
 	{
-		PrestitiView.visualizzaPrestito(this);
+		this.risorsa = risorsa;
+		this.fruitore = fruitore;
+		this.dataInizio = dataInizio;
+		this.dataScadenza = calcolaScadenza(dataInizio);
+		dataPerRichiestaProroga = calcolaDataPerRichiestaProroga(dataScadenza);
+		prorogato = false;	
+		terminato = false;
 	}
 	
 	public String toString()
@@ -95,13 +98,16 @@ public class Prestito implements Serializable
 		return dataScadenza;
 	}
 	
-	/**
-	 * il prestito è rinnovabile solo se non è già stato prorogato una volta
-	 * @return true se il prestito è rinnovabile
-	 */
 	public boolean isRinnovabile()
 	{
-		return !prorogato;
+		if(GestioneDate.DATA_CORRENTE.after(dataPerRichiestaProroga))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/**

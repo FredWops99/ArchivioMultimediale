@@ -2,7 +2,6 @@ package testing;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import controller.FilmController;
 import model.Film;
 import model.Films;
