@@ -2,10 +2,8 @@ package controller;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import model.Fruitore;
 import model.Fruitori;
-import model.Main;
 import myLib.GestioneDate;
 import view.FruitoriView;
 
@@ -133,21 +131,21 @@ public class FruitoriController
 	 * interagisce con l'utente chiedendogli le credenziali.
 	 * @return true se il login è andato a buon fine
 	 */
-	public boolean login() 
+	public boolean login(Fruitore utenteLoggato) 
 	{
 		String user = FruitoriView.chiediUsername();
 		String password = FruitoriView.chiediPassword();
 		
-		Main.setUtenteLoggato(model.trovaUtente(user, password));
+		utenteLoggato = model.trovaUtente(user, password);
 		
-		if(Main.getUtenteLoggato()==null)
+		if(utenteLoggato == null)
 		{
 			FruitoriView.utenteNonTrovato();
 			return false;
 		}
 		else // -> utente trovato
 		{
-			FruitoriView.benvenuto(Main.getUtenteLoggato().getNome());
+			FruitoriView.benvenuto(utenteLoggato.getNome());
 			return true;
 		}	
 	}

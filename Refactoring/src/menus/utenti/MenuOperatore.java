@@ -8,7 +8,6 @@ import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
 import menus.risorse.MenuStampaElencoRisorse;
 import menus.storico.MenuStorico;
-import model.Prestiti;
 import myLib.MyMenu;
 import model.Main;
 import view.MessaggiSistemaView;
@@ -23,7 +22,7 @@ public class MenuOperatore
 	
 	private static boolean continuaMenuOperatore;
 
-	public static void show(StoricoController sc, Prestiti prestiti, ArchivioController ac, FruitoriController fc,PrestitiController pc)
+	public static void show(StoricoController sc, ArchivioController ac, FruitoriController fc, PrestitiController pc)
 	{	
 		MessaggiSistemaView.accessoEseguito();
 		
@@ -31,7 +30,7 @@ public class MenuOperatore
 		continuaMenuOperatore=true;
 		do
 		{
-			gestisciMenuOperatore(menuOperatore.scegli(), sc, prestiti, ac, fc,pc);
+			gestisciMenuOperatore(menuOperatore.scegli(), sc, ac, fc,pc);
 		}
 		while(continuaMenuOperatore);
 	}
@@ -40,7 +39,8 @@ public class MenuOperatore
 	 * menu che compare una volta che si esegue l'accesso come operatore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuOperatore(int scelta, StoricoController storicoController, Prestiti prestiti, ArchivioController archivioController, FruitoriController fruitoriController,PrestitiController pc) 
+	private static void gestisciMenuOperatore(int scelta, StoricoController storicoController, ArchivioController archivioController, 
+												FruitoriController fruitoriController,PrestitiController prestitiController) 
 	{
 		continuaMenuOperatore=true;
 		switch(scelta)
@@ -75,7 +75,7 @@ public class MenuOperatore
 //				se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
-					prestiti.annullaPrestitiConRisorsa(idRimosso);
+					prestitiController.annullaPrestitiConRisorsa(idRimosso);
 					Main.salvaArchivio();
 //					GestoreSalvataggi.salvaArchivio(archivio);
 				}
@@ -99,7 +99,7 @@ public class MenuOperatore
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
 			{
-				pc.stampaPrestitiAttivi();
+				prestitiController.stampaPrestitiAttivi();
 				
 				continuaMenuOperatore = true;
 				break;

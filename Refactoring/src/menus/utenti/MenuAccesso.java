@@ -4,7 +4,7 @@ import controller.ArchivioController;
 import controller.FruitoriController;
 import controller.PrestitiController;
 import controller.StoricoController;
-import model.Prestiti;
+import model.Fruitore;
 import myLib.MyMenu;
 import view.FruitoriView;
 import view.MessaggiSistemaView;
@@ -17,13 +17,13 @@ public class MenuAccesso
 	
 	private static boolean continuaMenuAccesso;
 
-	public static void show(Prestiti prestiti, ArchivioController ac, FruitoriController fc, StoricoController sc, PrestitiController pc)
+	public static void show(Fruitore utenteLoggato, ArchivioController ac, FruitoriController fc, StoricoController sc, PrestitiController pc)
 	{
 		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
 		continuaMenuAccesso=true;
 		do
 		{
-			gestisciMenuAccesso(menuAccesso.scegli(), prestiti, ac, fc, sc,pc);
+			gestisciMenuAccesso(utenteLoggato, menuAccesso.scegli(), ac, fc, sc,pc);
 		}
 		while(continuaMenuAccesso);	
 	}
@@ -32,8 +32,8 @@ public class MenuAccesso
 	 * menu iniziale: si sceglie se si vuole accedere come fruitore (1) o come operatore (2)
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	private static void gestisciMenuAccesso(int scelta, Prestiti prestiti, ArchivioController archivioController, 
-											FruitoriController fruitoriController, StoricoController storicoController,PrestitiController pc) 
+	private static void gestisciMenuAccesso(Fruitore utenteLoggato, int scelta, ArchivioController archivioController, FruitoriController fruitoriController, 
+						StoricoController storicoController,PrestitiController prestitiController) 
 	{
 		continuaMenuAccesso=true;
 
@@ -47,7 +47,7 @@ public class MenuAccesso
 			}
 			case 1://accesso FRUITORE
 			{
-				MenuFruitore.show(archivioController, fruitoriController, prestiti,pc);
+				MenuFruitore.show(utenteLoggato, archivioController, fruitoriController, prestitiController);
 				
 				continuaMenuAccesso=true;
 				break;
@@ -57,7 +57,7 @@ public class MenuAccesso
 				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
-					MenuOperatore.show(storicoController, prestiti, archivioController, fruitoriController,pc);
+					MenuOperatore.show(storicoController, archivioController, fruitoriController, prestitiController);
 				}
 				else
 				{

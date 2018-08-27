@@ -39,19 +39,19 @@ public class Main
 		ArchivioController archivioController = new ArchivioController(archivio);
 		FruitoriController fruitoriController = new FruitoriController(fruitori);
 		StoricoController storicoController = new StoricoController(storico);
-		PrestitiController prestitiController = new PrestitiController(prestiti, fruitori);
+		PrestitiController prestitiController = new PrestitiController(prestiti);
 
 		
 //		segna come "decadute" le iscrizioni dei fruitori in archivio che sono scadute.
 		Vector<Fruitore>utentiScaduti = fruitoriController.controlloIscrizioni();
 //		rimuove i prestiti di tali utenti scaduti
-		prestiti.terminaTuttiPrestitiDi(utentiScaduti);
-		prestiti.controlloPrestitiScaduti();
+		prestitiController.terminaTuttiPrestitiDi(utentiScaduti);
+		prestitiController.controlloPrestitiScaduti();
 		
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		MenuAccesso.show(prestiti, archivioController, fruitoriController, storicoController,prestitiController);
+		MenuAccesso.show(utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
 	}
 	
 	/**
@@ -92,16 +92,6 @@ public class Main
 			
 		}
 	}
-
-	public static Fruitore getUtenteLoggato() 
-	{
-		return utenteLoggato;
-	}
-
-	public static void setUtenteLoggato(Fruitore _utenteLoggato) 
-	{
-		utenteLoggato = _utenteLoggato;
-	}	
 	
 	public static void salvaArchivio()
 	{
@@ -110,5 +100,9 @@ public class Main
 	public static void salvaFruitori()
 	{
 		GestoreSalvataggi.salvaFruitori(fruitori);
+	}
+	public static void salvaPrestiti()
+	{
+		GestoreSalvataggi.salvaPrestiti(prestiti);
 	}
 }

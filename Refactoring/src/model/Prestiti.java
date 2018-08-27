@@ -2,16 +2,11 @@ package model;
 
 import java.io.Serializable;
 import java.util.Vector;
-import myLib.BelleStringhe;
-import myLib.GestioneDate;
-import view.MessaggiSistemaView;
-import view.PrestitiView;
 
 /**
  * Classe che racchiude l'elenco dei prestiti attivi degli utenti
  * @author Prandini Stefano
  * @author Landi Federico
- *
  */
 public class Prestiti implements Serializable
 {
@@ -22,32 +17,7 @@ public class Prestiti implements Serializable
 	public Prestiti()
 	{
 		prestiti = new Vector<>();
-	}
-	
-	/**
-	 * controllo per tutti i prestiti presenti se sono scaduti (li rimuovo) oppure no
-	 * @return numero prestiti rientrati dal prestito
-	 */
-	public int controlloPrestitiScaduti() 
-	{
-		int rimossi = 0;
-		for (Prestito prestito : prestiti) 
-		{
-//			controllo solo i prestiti che sono attivi
-			if(!prestito.isTerminato())
-			{
-				if(prestito.getDataScadenza().compareTo(GestioneDate.DATA_CORRENTE) < 0)	//se dataScadenza è precedente a oggi ritorna -1
-				{
-					prestito.getRisorsa().tornaDalPrestito();
-					prestito.terminaPrestito();
-					rimossi++;				
-				}
-			}
-			
-		}
-		return rimossi;
-	}
-	
+	}	
 	
 	/**
 	 * Metodo che restituisce un vettore dei prestiti che sono ancora attivi 
@@ -79,13 +49,11 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	
 	/**
 	 * (precondizione: fruitore != null)
 	 * Metodo che restituisce un vettore di tutti i prestiti attivi di un utente
 	 * @param fruitore lo username dell'utente di cui stampare i prestiti
 	 */
-	
 	public Vector<Prestito> stampaPrestitiAttiviDi(Fruitore fruitore,Prestiti prestiti) 
 	{		
 		int totPrestiti = 0;
@@ -112,7 +80,6 @@ public class Prestiti implements Serializable
 		}
 	}
 	
-	
 	public void terminaPrestitoSelezionato(int selezione,Vector<Prestito> prestitiUtente)
 	{
 		Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
@@ -120,127 +87,6 @@ public class Prestiti implements Serializable
 		prestitoSelezionato.getRisorsa().tornaDalPrestito();
 		prestitoSelezionato.terminaPrestito();
 		
-	}
-	/**
-	 * (precondizione: fruitore != null)
-	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare
-	 * @param fruitore il fruitore al quale chiedere quale prestito terminare
-	 */
-//	public void terminaPrestitoDi(Fruitore fruitore)
-//	{
-//		Vector<Prestito>prestitiUtente = new Vector<>();
-//		for(Prestito prestito : prestiti)
-//		{
-//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-//			{
-//				prestitiUtente.add(prestito);
-//			}
-//		}
-//		if(prestitiUtente.isEmpty())
-//		{
-//			PrestitiView.noPrestiti();
-//		}
-//		else
-//		{
-//			PrestitiView.prestitoDaTerminare();
-//			
-//			for(int i = 0; i < prestitiUtente.size(); i++)
-//			{
-//				MessaggiSistemaView.stampaPosizione(i);
-//				MessaggiSistemaView.cornice();
-//				prestitiUtente.get(i).visualizzaPrestito();
-//				MessaggiSistemaView.cornice();
-//			}
-//			
-//			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiUtente.size());
-//
-//			if(selezione != 0)
-//			{
-//				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
-//				
-//				prestitoSelezionato.getRisorsa().tornaDalPrestito();
-//				prestitoSelezionato.terminaPrestito();
-//				PrestitiView.prestitoTerminato();
-//			}
-//		}
-//	}
-	
-	
-	public int terminaTuttiPrestitiDi(Fruitore fruitore) 
-	{		
-		int j = 0;
-//		dal fondo perchè se elimino dall'inizio si sballano le posizioni
-		for(Prestito prestito : prestiti)
-		{
-			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-			{
-				prestito.getRisorsa().tornaDalPrestito();
-				prestito.terminaPrestito();
-				j++;
-			}
-		}
-		
-		return j;
-		
-	}	
-	/**
-	 * (precondizione: fruitore != null)
-	 * metodo che elimina tutti i prestiti di un determinato fruitore
-	 * @param fruitore il fruitore del quale eliminare tutti i prestiti
-	 */
-//	public void terminaTuttiPrestitiDi(Fruitore fruitore) 
-//	{		
-//		int j = 0;
-////		dal fondo perchè se elimino dall'inizio si sballano le posizioni
-//		for(Prestito prestito : prestiti)
-//		{
-//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-//			{
-//				prestito.getRisorsa().tornaDalPrestito();
-//				prestito.terminaPrestito();
-//				j++;
-//			}
-//		}
-//		if(j == 0)
-//		{
-//			PrestitiView.noPrestiti();
-//		}
-//		else
-//		{
-//			PrestitiView.prestitiEliminati();
-//		}
-//	}	
-	
-	/**
-	 * (precondizione: utenti != null)
-	 * permette di terminare tutti i prestiti di vari fruitori.
-	 * Metodo utilizzato quando l'operatore decide che una risorsa non è più
-	 * disponibile per il prestito.
-	 * @param utenti gli utenti a cui verranno terminati tutti i prestiti 
-	 */
-	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
-	{
-		for(int i = 0; i < utenti.size(); i++)
-		{
-			terminaTuttiPrestitiDi(utenti.get(i));
-		}
-	}
-	
-	/**
-	 * (precondizione: id != null)
-	 * rimuove tutti i prestiti di una determinata risorsa
-	 * (gli id dei libri sono diversi da quelli dei film (Lxxx e Fxxx)
-	 * @param id l'id della risorsa
-	 */
-	public void annullaPrestitiConRisorsa(String id)
-	{
-		for(Prestito prestito : prestiti)
-		{
-			if((!prestito.isTerminato()) && prestito.getRisorsa().getId().equals(id))
-			{
-				prestito.terminaPrestito();
-			}
-		}
 	}
 	
 	/**
@@ -323,58 +169,6 @@ public class Prestiti implements Serializable
 	public void rinnovaPrestito(Prestito prestitoSelezionato) 
 	{
 
-					prestitoSelezionato.prorogaPrestito();
+		prestitoSelezionato.prorogaPrestito();
 	}
-	/**
-	 * (precondizione: fruitore != null)
-	 * metodo che esegue il rinnovo di un prestito
-	 * @param fruitore il fruitore che richiede il rinnovo di un prestito
-	 */
-//	public void rinnovaPrestito(Fruitore fruitore) 
-//	{
-//		Vector<Prestito>prestitiUtente = new Vector<>();
-//		for(Prestito prestito : prestiti)
-//		{
-//			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
-//			{
-//				prestitiUtente.add(prestito);
-//			}
-//		}
-//		if(prestitiUtente.isEmpty())
-//		{
-//			PrestitiView.noRinnovi();
-//		}
-//		else
-//		{
-//			PrestitiView.selezionaRinnovo();
-//			for(int i = 0; i < prestitiUtente.size(); i++)
-//			{
-//				MessaggiSistemaView.stampaPosizione(i);				
-//				MessaggiSistemaView.cornice();
-//				prestitiUtente.get(i).visualizzaPrestito();
-//				MessaggiSistemaView.cornice();
-//			}
-//			
-//			int selezione = PrestitiView.chiediRisorsaDaRinnovare(prestitiUtente.size());
-//
-//			if(selezione != 0)
-//			{
-//				Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
-//				
-//				if(!prestitoSelezionato.isRinnovabile())
-//				{
-//					PrestitiView.prestitoGiàProrogato();
-//				}
-//				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
-////				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
-//				{
-//					prestitoSelezionato.prorogaPrestito();
-//				}
-//				else//non si può ancora rinnovare prestito
-//				{
-//					PrestitiView.prestitoNonRinnovabile(prestitoSelezionato);
-//				}
-//			}
-//		}
-//	}
 }
