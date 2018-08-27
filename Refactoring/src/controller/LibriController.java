@@ -1,10 +1,7 @@
 package controller;
 
 import java.util.Vector;
-import menus.risorse.libri.MenuFiltroLibri;
-import menus.risorse.libri.MenuScegliGenereLibro;
-import menus.risorse.libri.MenuScegliLibro;
-import menus.risorse.libri.MenuSottoCategoriaLibri;
+import menus.risorse.libri.*;
 import model.Libri;
 import model.Libro;
 import view.LibriView;
@@ -38,13 +35,14 @@ public class LibriController
 	
 	public void addLibro()
 	{
-		String sottoCategoria = this.scegliSottoCategoria();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
+		String sottoCategoria = MenuSottoCategoriaLibri.show();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
 			return;
 		}
-		String genere = scegliGenere(sottoCategoria);//se la sottocategoria ha generi disponibili
+		
+		String genere = MenuScegliGenereLibro.show(sottoCategoria);//se la sottocategoria ha generi disponibili
 		String titolo = LibriView.chiediTitolo(Libro.class);
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
@@ -67,10 +65,6 @@ public class LibriController
 		if(aggiuntaRiuscita)
 		{
 			LibriView.aggiuntaRiuscita(Libro.class);
-			
-//			il main salva su file quell'archivio, nella classe MenuOperatore
-//			non c'è bisogno di settare l'archivio del main perchè è lo stesso riferimento
-//			Main.setArchivio(model);
 		}
 		else
 		{
@@ -139,7 +133,7 @@ public class LibriController
 				MessaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 			
 			if(daRimuovere > 0)
 			{
@@ -196,7 +190,7 @@ public class LibriController
 				MessaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 			
 			if(daRimuovere > 0)
 			{
@@ -231,46 +225,5 @@ public class LibriController
 			}
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
-	}
-	
-	/**
-	 * presenta all'utente la scelta della sottocategoria di Libro tra quelle presenti in elenco
-	 * @return la scelta dell'utente
-	 */
-	private String scegliSottoCategoria()
-	{
-		String sottocategoria = MenuSottoCategoriaLibri.show();
-		
-		return sottocategoria;
-	}	
-	
-	/**
-	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
-	 * se la sottocategoria non ne prevede restituisce un simbolo di default
-	 * (precondizione: sottoCategoria != null)
-	 * @param sottoCategoria la sottocategoria di libro che l'utente sta inserendo
-	 * @return la scelta dell'utente o "-" se la sottocategoria non prevede generi
-	 */
-	private String scegliGenere(String sottoCategoria)
-	{
-		return MenuScegliGenereLibro.show(sottoCategoria);
-	}
-	
-	/**
-	 * stampa i dati dei libri corrispondenti ai parametri di ricerca specificati dall'utente
-	 */
-	public void cercaLibro()
-	{
-		MenuFiltroLibri.show(false, this);
-	}
-	
-	/**
-	 * Consente all'utente di selezionare un libro in base a dei criteri di ricerca
-	 * @return il libro corrispondente ali criteri inseriti dall'utente
-	 */
-	public Libro scegliLibro() 
-	{
-		Libro libroSelezionato = MenuScegliLibro.show(this);
-		return libroSelezionato;
 	}
 }

@@ -2,8 +2,8 @@ package menus.prestiti;
 
 import controller.ArchivioController;
 import controller.PrestitiController;
+import main.Main;
 import model.Fruitore;
-import model.Main;
 import model.Risorsa;
 import myLib.MyMenu;
 
@@ -28,7 +28,7 @@ public class MenuRichiediPrestito
 			Risorsa risorsa = archivioController.scegliRisorsa(categoria);
 			if(risorsa != null)
 			{
-				prestitiController.controllaRisorsa(utenteLoggato, risorsa);
+				prestitiController.effettuaPrestito(utenteLoggato, risorsa);
 			}
 
 			Main.salvaPrestiti();

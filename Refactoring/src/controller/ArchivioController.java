@@ -1,18 +1,17 @@
 package controller;
 
 import java.util.Vector;
-
-import menus.risorse.MenuCercaRisorsa;
-import menus.risorse.MenuRimuoviRisorsa;
-import model.Archivio;
-import model.Film;
-import model.Libro;
-import model.Risorsa;
+import menus.risorse.*;
+import menus.risorse.films.MenuFiltroFilm;
+import menus.risorse.films.MenuScegliFilm;
+import menus.risorse.libri.MenuFiltroLibri;
+import menus.risorse.libri.MenuScegliLibro;
+import model.*;
 import view.MessaggiSistemaView;
 
 public class ArchivioController 
 {
-	private static final String[] CATEGORIE = {"Libri","Film"};
+	private final String[] CATEGORIE = {"Libri","Film"};
 
 	private FilmController filmController;
 	private LibriController libriController;
@@ -62,27 +61,15 @@ public class ArchivioController
 		}
 	}
 	
-	/**
-	 * permette la ricerca in archivio di un libro o di un film
-	 * (precondizione: CATEGORIE != null)
-	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
-	 */
-	public void scegliRisorsaDaCercare() 
-	{
-		MenuCercaRisorsa.show(CATEGORIE, this);
-	}
-	
 	public void cercaRisorsa(String categoria)
 	{
 		if(categoria == CATEGORIE[0])//LIBRO
 		{
-//			controller interagisce con view per cercare il libro
-			libriController.cercaLibro();
+			MenuFiltroLibri.show(false, libriController);
 		}
 		else if(categoria == CATEGORIE[1])//FILM
 		{
-//			controller interagisce con view per cercare il film
-			filmController.cercaFilm();
+			MenuFiltroFilm.show(false, filmController);	
 		}
 	}
 
@@ -116,12 +103,12 @@ public class ArchivioController
 	{
 		if(categoria == CATEGORIE[0])
 		{
-			return libriController.scegliLibro();
+			return MenuScegliLibro.show(libriController);
 		}
 		else if(categoria == CATEGORIE[1])
 		{
-			return filmController.scegliFilm();
+			return MenuScegliFilm.show(filmController);
 		}
 		else return null;
-	}
+	} 
 }

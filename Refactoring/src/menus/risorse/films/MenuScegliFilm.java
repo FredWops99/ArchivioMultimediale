@@ -29,42 +29,7 @@ public class MenuScegliFilm
 			{
 				Vector<Film> filmsFiltrati = MenuFiltroFilm.show(true, filmController);
 				
-				if(!filmsFiltrati.isEmpty())
-				{
-					for(int i = 0; i < filmsFiltrati.size(); i++)
-					{
-						MessaggiSistemaView.stampaPosizione(i);
-						MessaggiSistemaView.cornice();
-						filmController.stampaDatiFilm(filmsFiltrati.get(i), true);
-						MessaggiSistemaView.cornice();
-					}
-					
-					int selezione;
-					
-					do
-					{
-						MessaggiSistemaView.cornice();
-						selezione = FilmsView.selezionaPrestito(films, Film.class);
-						if(selezione == 0)
-						{
-							return null;
-						}
-						else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getnLicenze())
-						{
-							return films.get(selezione-1);
-						}
-						else
-						{
-							FilmsView.copieTutteInPrestito(films.get(selezione-1).getTitolo());
-						}
-					}
-					while(true);
-				}
-				else//nessuna corrispondenza: vettore vuoto
-				{
-					FilmsView.nessunaCorrispondenza(Film.class);
-					return null;
-				}
+				return selezionaFilm(filmsFiltrati, filmController);
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
@@ -82,35 +47,49 @@ public class MenuScegliFilm
 					return null;
 				}
 				
-				FilmsView.risorseInArchivio(Film.class);
-				for(int i = 0; i < filmPrestabili.size(); i++)
-				{
-					MessaggiSistemaView.stampaPosizione(i);
-					MessaggiSistemaView.cornice();
-					filmController.stampaDatiFilm(filmPrestabili.get(i), true);
-					MessaggiSistemaView.cornice();
-				}
-				int selezione;
-				do
-				{
-					selezione = FilmsView.selezionaPrestito(filmPrestabili, Film.class);
-					if(selezione == 0)
-					{
-						return null;
-					}
-					else if(filmPrestabili.get(selezione-1).getInPrestito() < filmPrestabili.get(selezione-1).getnLicenze())
-					{
-						return filmPrestabili.get(selezione-1);
-					}
-					else
-					{
-						FilmsView.copieTutteInPrestito(filmPrestabili.get(selezione-1).getTitolo());
-					}
-				}
-				while(true);
+				return selezionaFilm(filmPrestabili, filmController);
 			}
 		}
 //		DEFAULT: qua non arriva mai
 		return null;
+	}
+
+	private static Film selezionaFilm(Vector<Film> films, FilmController filmController) 
+	{
+		if(!films.isEmpty())
+		{
+			for(int i = 0; i < films.size(); i++)
+			{
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
+				filmController.stampaDatiFilm(films.get(i), true);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int selezione;
+			do
+			{
+				MessaggiSistemaView.cornice();
+				selezione = FilmsView.selezionaRisorsa(films.size(), Film.class);
+				if(selezione == 0)
+				{
+					return null;
+				}
+				else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getNLicenze())
+				{
+					return films.get(selezione-1);
+				}
+				else
+				{
+					FilmsView.copieTutteInPrestito(films.get(selezione-1).getTitolo());
+				}
+			}
+			while(true);
+		}
+		else//vettore vuoto: nessuna corrispondenza
+		{
+			FilmsView.nessunaCorrispondenza(Film.class);
+			return null;
+		}
 	}
 }

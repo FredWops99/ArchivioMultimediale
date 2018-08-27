@@ -1,4 +1,4 @@
-package model;
+package myLib;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.io.IOException;
 import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
-import myLib.ServizioFile;
 
 public class GestoreSalvataggi 
 {
@@ -45,7 +44,6 @@ public class GestoreSalvataggi
 		if (file.exists())
 		{
 			return;
-			
 		}
         else if (file.createNewFile())
         {
@@ -86,6 +84,4 @@ public class GestoreSalvataggi
 	{
 		ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);	
 	}
-	
-	
 }

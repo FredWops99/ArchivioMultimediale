@@ -48,16 +48,13 @@ public class MenuPersonale
 			}
 			case 1:	//RINNOVA ISCRIZIONE
 			{
-				fruitoriController.rinnovo(utenteLoggato);
-//				Main.getUtenteLoggato().rinnovo();
-				
+				fruitoriController.rinnovo(utenteLoggato);				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 2:	//VISUALIZZA INFO PERSONALI
 			{
 				fruitoriController.stampaDatiFruitore(utenteLoggato);
-				
 				continuaMenuPersonale = true;
 				break;
 			}
@@ -70,32 +67,27 @@ public class MenuPersonale
 			case 4: //RICHIEDI PRESTITO (non in prestiti perchè devo poter accedere alle risorse)
 			{
 				MenuRichiediPrestito.show(utenteLoggato, prestitiController, archivioController);
-				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 5: //RINNOVA PRESTITO
 			{
 				prestitiController.rinnovaPrestito(utenteLoggato);
-				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 6: //VISUALIZZA PRESTITI IN CORSO
 			{
 				prestitiController.stampaPrestitiAttiviDi(utenteLoggato);
-				
 				continuaMenuPersonale = true;
 				break;
 			}
 			case 7://TERMINA PRESTITI
 			{
 				MenuTerminaPrestiti.show(utenteLoggato, archivioController, prestitiController);
-				
 				continuaMenuPersonale = true;
 				break;
 			}
 		}
 	}
-	
 }

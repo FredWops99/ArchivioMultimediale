@@ -24,29 +24,17 @@ public class Prestiti implements Serializable
 	 * @param prestiti
 	 * @return Vector<Prestito> -> vettore dei prestiti che sono ancora attivi 
 	 */
-	public Vector<Prestito> stampaPrestitiAttivi(Prestiti prestiti) 
+	public Vector<Prestito> prestitiAttivi() 
 	{
-		int i = 0;
 		Vector<Prestito> prestitiAttivi = new Vector<Prestito>();
-		for(Prestito prestito : prestiti.getPrestiti())
+		for(Prestito prestito : prestiti)
 		{
 			if(!prestito.isTerminato())
 			{
 				prestitiAttivi.addElement(prestito);
-				//MessaggiSistemaView.cornice();
-				//prestito.visualizzaPrestito();
-				i++;
 			}	
 		}
-		if(i == 0)
-		{
-			return null;
-			//PrestitiView.noPrestitiAttivi();
-		}
-		else
-		{
-			return prestitiAttivi;
-		}
+		return prestitiAttivi;
 	}
 	
 	/**
@@ -54,43 +42,28 @@ public class Prestiti implements Serializable
 	 * Metodo che restituisce un vettore di tutti i prestiti attivi di un utente
 	 * @param fruitore lo username dell'utente di cui stampare i prestiti
 	 */
-	public Vector<Prestito> stampaPrestitiAttiviDi(Fruitore fruitore,Prestiti prestiti) 
+	public Vector<Prestito> prestitiAttiviDi(Fruitore fruitore) 
 	{		
-		int totPrestiti = 0;
 		Vector<Prestito> prestitiAttiviDi = new Vector<Prestito>();
-		for(Prestito prestito : prestiti.getPrestiti())
+		for(Prestito prestito : prestiti)
 		{
-			if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
+			if( (!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore))
 			{
-				
-				prestitiAttiviDi.addElement(prestito);			
-				//prestito.visualizzaPrestito();
-				//MessaggiSistemaView.cornice();	
-				totPrestiti++;
+				prestitiAttiviDi.addElement(prestito);
 			}
 		}
-		if(totPrestiti == 0)
-		{
-			return null;
-			//PrestitiView.noPrestitiAttivi();			
-		}
-		else
-		{
-			return prestitiAttiviDi;			
-		}
+		return prestitiAttiviDi;			
 	}
 	
 	public void terminaPrestitoSelezionato(int selezione,Vector<Prestito> prestitiUtente)
 	{
 		Prestito prestitoSelezionato = prestitiUtente.get(selezione-1);
 					
-		prestitoSelezionato.getRisorsa().tornaDalPrestito();
 		prestitoSelezionato.terminaPrestito();
-		
 	}
 	
 	/**
-	 * crea ed aggiunge un prestito all'elenco 
+	 * crea il prestito e lo aggiunge all'elenco 
 	 * (precondizione: il fruitore non possiede già la risorsa in prestito & fruitore != null & risorsa != null)
 	 * @param fruitore fruitore che richiede il prestito
 	 * @param risorsa la risorsa che verrà presa in prestito dal fruitore 
@@ -166,9 +139,42 @@ public class Prestiti implements Serializable
 		return true;
 	}
 	
-	public void rinnovaPrestito(Prestito prestitoSelezionato) 
+	/**
+	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono più a quelli in "Libri" (verificato con hashcode che cambia, da 
+	 * uguale prima del caricamento diventa diverso dopo il caricamento): Risorse e Prestiti vengono salvati in posti diversi e poi caricati come "diversi".
+	 * Quando invece viene creato il prestito, la sua risorsa e quella in archivio sono lo stesso oggetto. Salvando e caricando in due posti diversi è come se "si sdoppiasse".
+	 * Per non dover salvare tutto in unico file, in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
+	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
+	 */
+	public void ricostruisciPrestiti(Archivio archivio)
 	{
-
-		prestitoSelezionato.prorogaPrestito();
+		for(Prestito prestito : prestiti)
+		{
+			if(prestito.getRisorsa() instanceof Libro)
+			{
+				for(Libro libro : archivio.getLibri().getLibri())
+				{
+					if(prestito.getRisorsa().equals(libro))
+					{
+						prestito.setRisorsa(libro);
+					}
+				}
+			}
+			else if(prestito.getRisorsa() instanceof Film)
+			{
+				for(Film film : archivio.getFilms().getFilms())
+				{
+					if(prestito.getRisorsa().equals(film))
+					{
+						prestito.setRisorsa(film);
+					}
+				}
+			}
+//			else if(altra categoria)
+//			{
+//				...
+//			}
+			
+		}
 	}
 }

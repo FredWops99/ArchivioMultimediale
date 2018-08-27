@@ -115,7 +115,7 @@ public class FilmController
 				MessaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 					
 			if(daRimuovere > 0)
 			{
@@ -127,10 +127,7 @@ public class FilmController
 			{
 				idSelezionato = "-1";
 			}
-		}
-//		non c'è bisogno di settare l'archivio nel main perchè si sta lavorando sullo stesso oggetto
-//		Main.setArchivio(model);
-		
+		}		
 		return idSelezionato;
 	}
 	
@@ -175,7 +172,7 @@ public class FilmController
 				MessaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
+			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 					
 			if(daRimuovere > 0)
 			{
@@ -227,21 +224,4 @@ public class FilmController
 	{
 		return model;
 	}
-
-	public void cercaFilm() 
-	{
-		MenuFiltroFilm.show(false, this);			
-	}
-	
-	/**
-	 * Consente all'utente di selezionare un film in base a dei criteri di ricerca
-	 * @return il film corrispondente ai criteri inseriti dall'utente
-	 */
-	public Film scegliFilm() 
-	{
-		Film filmSelezionato = MenuScegliFilm.show(this);
-		return filmSelezionato;
-	}
-
-		
 }

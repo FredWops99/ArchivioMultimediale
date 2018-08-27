@@ -2,10 +2,7 @@ package controller;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-import model.Fruitore;
-import model.Prestito;
-import model.Risorsa;
-import model.Storico;
+import model.*;
 import view.StoricoView;
 
 public class StoricoController 
@@ -19,7 +16,6 @@ public class StoricoController
 	
 	public int prestitiAnnoSolare()
 	{
-		
 		int annoSelezionato = StoricoView.selezionaAnno();
 		return model.prestitiAnnoSolare(annoSelezionato);
 	}
@@ -66,8 +62,6 @@ public class StoricoController
 				titoloRisorsaMax = risorseAnnue.get(i).getTitolo();
 			}
 		}
-		
-		//qui avviene la stampa
 		if(maxGenerale==0)
 		{
 			StoricoView.noPrestitiInAnnoSelezionato();

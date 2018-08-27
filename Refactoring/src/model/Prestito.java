@@ -133,6 +133,7 @@ public class Prestito implements Serializable
 	 */
 	public void terminaPrestito()
 	{
+		risorsa.tornaDalPrestito();
 		setDataRitorno(GestioneDate.DATA_CORRENTE);
 		terminato=true;
 	}
@@ -150,17 +151,9 @@ public class Prestito implements Serializable
 	{
 		return fruitore;
 	}
-	public void setFruitore(Fruitore fruitore) 
-	{
-		this.fruitore = fruitore;
-	}
 	public GregorianCalendar getDataInizio()
 	{
 		return dataInizio;
-	}
-	public void setDataInizio(GregorianCalendar dataInizio) 
-	{
-		this.dataInizio = dataInizio;
 	}
 	public GregorianCalendar getDataScadenza() 
 	{
@@ -193,10 +186,6 @@ public class Prestito implements Serializable
 	public boolean isTerminato() 
 	{
 		return terminato;
-	}
-	public void setTerminato(boolean terminato) 
-	{
-		this.terminato = terminato;
 	}
 	public boolean isProrogato() 
 	{

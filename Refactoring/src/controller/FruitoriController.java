@@ -122,11 +122,6 @@ public class FruitoriController
 		}
 	}
 
-	public Fruitori getModel() 
-	{
-		return model;
-	}
-
 	/**
 	 * interagisce con l'utente chiedendogli le credenziali.
 	 * @return true se il login è andato a buon fine

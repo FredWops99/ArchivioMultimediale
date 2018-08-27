@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-//import view.FilmsView;
 
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film
@@ -143,7 +142,7 @@ public class Film extends Risorsa implements Serializable
 	{
 		return lingua;
 	}
-	public int getnLicenze() 
+	public int getNLicenze() 
 	{
 		return nLicenze;
 	}

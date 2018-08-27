@@ -37,7 +37,7 @@ public class MenuFiltroLibri
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
 				annoPubblicazione = LibriView.chiediAnnoPubblicazione();
-				libriFiltrati = filtraLibriPerData(annoPubblicazione, libriController);
+				libriFiltrati = filtraLibriPerAnnoPubblicazione(annoPubblicazione, libriController);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
@@ -121,7 +121,7 @@ public class MenuFiltroLibri
 	 * @param annoPubblicazione l'anno da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public static Vector<Libro> filtraLibriPerData(int annoPubblicazione, LibriController libriController)
+	public static Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione, LibriController libriController)
 	{
 		Vector<Libro> libri = libriController.getModel().getLibri();
 

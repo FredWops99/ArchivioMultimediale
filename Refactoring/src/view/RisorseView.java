@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Vector;
 import model.Risorsa;
 import myLib.InputDati;
 
@@ -61,9 +60,9 @@ public abstract class RisorseView
 		System.out.println("\nRicorrenza " + ++pos + ":");
 	}
 	
-	public static int chiediRicorrenzaDaRimuovere(Vector<Integer> posizioniRicorrenze) 
+	public static int chiediRicorrenzaDaRimuovere(int size) 
 	{
-		return InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, posizioniRicorrenze.size());
+		return InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, size);
 	}
 	
 	public static void noRisorseDisponibili(Class<?> c) 
@@ -81,9 +80,9 @@ public abstract class RisorseView
 		System.out.println("\nE' presente un " + c.getSimpleName().toLowerCase() + " in archivio: ");
 	}
 	
-	public static void numeroRisorseInArchivio(int dim, Class<?> c)
+	public static void numeroRisorseInArchivio(int size, Class<?> c)
 	{
-		System.out.println("\nSono presenti " + dim + " " + c.getSimpleName().toLowerCase() + " in archivio: ");
+		System.out.println("\nSono presenti " + size + " " + c.getSimpleName().toLowerCase() + " in archivio: ");
 	}
 	
 	public static void stampaTitolo(Risorsa risorsa) 
@@ -96,9 +95,9 @@ public abstract class RisorseView
 		System.out.println("\n " + c.getSimpleName() + " in archivio: \n");	
 	}
 	
-	public static int selezionaPrestito(Vector<?> elenco, Class<?> c)
+	public static int selezionaRisorsa(int size, Class<?> c)
 	{
-		return InputDati.leggiIntero("Seleziona il " + c.getSimpleName().toLowerCase() + " che vuoi ricevere in prestito (0 per annullare): ", 0, elenco.size());
+		return InputDati.leggiIntero("Seleziona il " + c.getSimpleName().toLowerCase() + " che vuoi ricevere in prestito (0 per annullare): ", 0, size);
 	}
 	
 	public static void copieTutteInPrestito(String titolo) 

@@ -1,19 +1,14 @@
 package controller;
 
 import java.util.Vector;
-import model.Film;
-import model.Fruitore;
-import model.Libro;
-import model.Prestiti;
-import model.Prestito;
-import model.Risorsa;
+import model.*;
 import myLib.GestioneDate;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
 
 public class PrestitiController 
 {
-	private static final String[] CATEGORIE = {"Libri","Film"};
+	private final String[] CATEGORIE = {"Libri","Film"};
 
 	Prestiti model;
 
@@ -62,46 +57,40 @@ public class PrestitiController
 		}
 	}
 	
-//	//stampa il numero di risorse che sono rientrate dal prestito
-//	public void controlloPrestitiScaduti()
-//	{
-//		PrestitiView.numeroRisorseTornateDaPrestito(model.controlloPrestitiScaduti());
-//	}
-	
 	//stampai prestiti attivi
 	public void stampaPrestitiAttivi()
 	{
-		Vector<Prestito> prestitiAttivi = model.stampaPrestitiAttivi(model);
-		if(prestitiAttivi==null)
+		Vector<Prestito> prestitiAttivi = model.prestitiAttivi();
+		if(prestitiAttivi.size() == 0)
 		{
 			PrestitiView.noPrestitiAttivi();
 		}
 		else
 		{
-			for (int i=0;i<prestitiAttivi.size();i++) 
+			for (Prestito prestito : prestitiAttivi) 
 			{
 				MessaggiSistemaView.cornice();
-				prestitiAttivi.get(i).visualizzaPrestito();
+				prestito.visualizzaPrestito();
 			}
 		}
 	}
 	
-	//stampai prestiti attivi di un fruitore selezionato
+	//stampa i prestiti attivi di un fruitore selezionato
 	public void stampaPrestitiAttiviDi(Fruitore fruitore)
 	{
-		Vector<Prestito> prestitiAttivi = model.stampaPrestitiAttiviDi(fruitore,model);
+		Vector<Prestito> prestitiAttivi = model.prestitiAttiviDi(fruitore);
 		System.out.println("\nPrestiti in corso: \n");
 		MessaggiSistemaView.cornice();	
 		
-		if(prestitiAttivi==null)
+		if(prestitiAttivi.size() == 0)
 		{
 			PrestitiView.noPrestitiAttivi();
 		}
 		else
 		{
-			for (int i=0;i<prestitiAttivi.size();i++) 
+			for (Prestito prestito : prestitiAttivi) 
 			{
-				prestitiAttivi.get(i).visualizzaPrestito();
+				prestito.visualizzaPrestito();
 				MessaggiSistemaView.cornice();
 			}
 		}
@@ -114,31 +103,31 @@ public class PrestitiController
 	 */
 	public void terminaPrestitoDi(Fruitore fruitore)
 	{
-		Vector<Prestito> prestitiAttivi = model.stampaPrestitiAttiviDi(fruitore,model);
+		Vector<Prestito> prestitiAttivi = model.prestitiAttiviDi(fruitore);
 		MessaggiSistemaView.cornice();	
 		
-		if(prestitiAttivi==null)
+		if(prestitiAttivi.size() == 0)
 		{
 			PrestitiView.noPrestitiAttivi();
 		}
 		else
 		{
-				PrestitiView.prestitoDaTerminare();
-				
-				for(int i = 0; i < prestitiAttivi.size(); i++)
-				{
-					MessaggiSistemaView.stampaPosizione(i);
-					MessaggiSistemaView.cornice();
-					prestitiAttivi.get(i).visualizzaPrestito();
-					MessaggiSistemaView.cornice();
-				}
-				
-				int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiAttivi.size());
-				if(selezione != 0)
-				{
-					model.terminaPrestitoSelezionato(selezione,prestitiAttivi);
-					PrestitiView.prestitoTerminato();
-				}
+			PrestitiView.prestitoDaTerminare();
+			
+			for(int i = 0; i < prestitiAttivi.size(); i++)
+			{
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
+				prestitiAttivi.get(i).visualizzaPrestito();
+				MessaggiSistemaView.cornice();
+			}
+			
+			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiAttivi.size());
+			if(selezione != 0)
+			{
+				model.terminaPrestitoSelezionato(selezione,prestitiAttivi);
+				PrestitiView.prestitoTerminato();
+			}
 		}
 	}
 	
@@ -169,9 +158,9 @@ public class PrestitiController
 	 */
 	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
 	{
-		for(int i = 0; i < utenti.size(); i++)
+		for(Fruitore fruitore : utenti)
 		{
-			terminaTuttiPrestitiDi(utenti.get(i));
+			terminaTuttiPrestitiDi(fruitore);
 		}
 	}
 	
@@ -182,7 +171,7 @@ public class PrestitiController
 	 */
 	public void rinnovaPrestito(Fruitore fruitore)
 	{
-		Vector<Prestito> prestitiAttivi = model.stampaPrestitiAttiviDi(fruitore,model);
+		Vector<Prestito> prestitiAttivi = model.prestitiAttiviDi(fruitore);
 		
 		if(prestitiAttivi.isEmpty())
 		{
@@ -212,7 +201,7 @@ public class PrestitiController
 				else if(GestioneDate.DATA_CORRENTE.after(prestitoSelezionato.getDataPerRichiestaProroga()))
 //				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
 				{
-					model.rinnovaPrestito(prestitoSelezionato);
+					prestitoSelezionato.prorogaPrestito();
 				}
 				else//non si può ancora rinnovare prestito
 				{
@@ -243,12 +232,11 @@ public class PrestitiController
 		return false;
 	}
 
-	public void controllaRisorsa(Fruitore utenteLoggato, Risorsa risorsa) 
+	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
 	{
 		if(model.prestitoFattibile(utenteLoggato, risorsa))
 		{
 			model.addPrestito(utenteLoggato, risorsa);
-		    
 			PrestitiView.prenotazioneEffettuata(risorsa);
 		}
 		else//!prestitoFattibile se l'utente ha già una copia in prestito

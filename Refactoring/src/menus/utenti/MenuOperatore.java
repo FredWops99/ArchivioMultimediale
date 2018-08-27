@@ -4,12 +4,12 @@ import controller.ArchivioController;
 import controller.FruitoriController;
 import controller.PrestitiController;
 import controller.StoricoController;
+import main.Main;
 import menus.risorse.MenuAggiungiRisorsa;
 import menus.risorse.MenuCercaRisorsa;
 import menus.risorse.MenuStampaElencoRisorse;
 import menus.storico.MenuStorico;
 import myLib.MyMenu;
-import model.Main;
 import view.MessaggiSistemaView;
 
 public class MenuOperatore 
@@ -52,20 +52,15 @@ public class MenuOperatore
 			}
 			case 1://VISUALIZZA FRUITORI
 			{
-				//fruitori.stampaFruitoriAttivi();
 				fruitoriController.stampaDatiFruitori();
-				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-//				archivio.getLibri diventerà libriController?
 				MenuAggiungiRisorsa.show(CATEGORIE, archivioController);
 				
 				Main.salvaArchivio();
-//				GestoreSalvataggi.salvaArchivio(archivio);
-				
 				continuaMenuOperatore=true;
 				break;
 			}
@@ -79,35 +74,30 @@ public class MenuOperatore
 					Main.salvaArchivio();
 //					GestoreSalvataggi.salvaArchivio(archivio);
 				}
-				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
 				MenuStampaElencoRisorse.show(CATEGORIE, archivioController);
-				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 5://CERCA RISORSA
 			{
 				MenuCercaRisorsa.show(CATEGORIE, archivioController);
-				
 				continuaMenuOperatore=true;
 				break;
 			}
 			case 6://VIUSALIZZA TUTTI I PRESTITI ATTIVI
 			{
 				prestitiController.stampaPrestitiAttivi();
-				
 				continuaMenuOperatore = true;
 				break;
 			}
 			case 7://VISUALIZZA STORICO
 			{
 				MenuStorico.show(storicoController);
-				
 				continuaMenuOperatore = true;
 				break;
 			}

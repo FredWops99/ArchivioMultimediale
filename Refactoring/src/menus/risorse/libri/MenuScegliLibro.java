@@ -29,42 +29,9 @@ public class MenuScegliLibro
 			{
 				Vector<Libro> libriFiltrati = MenuFiltroLibri.show(true, libriController);
 				
-				if(!libriFiltrati.isEmpty())
-				{
-					for(int i = 0; i < libriFiltrati.size(); i++)
-					{
-						MessaggiSistemaView.stampaPosizione(i);
-						MessaggiSistemaView.cornice();
-						libriController.stampaDatiLibro(libriFiltrati.get(i), true);
-						MessaggiSistemaView.cornice();
-					}
-					
-					int selezione;
-					do
-					{
-						MessaggiSistemaView.cornice();
-						selezione = LibriView.selezionaPrestito(libri, Libro.class);
-						if(selezione == 0)
-						{
-							return null;
-						}
-						else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getnLicenze())
-						{
-							return libri.get(selezione-1);
-						}
-						else
-						{
-							LibriView.copieTutteInPrestito(libri.get(selezione-1).getTitolo());
-						}
-					}
-					while(true);
-				}
-				else//nessuna corrispondenza: vettore vuoto
-				{
-					LibriView.nessunaCorrispondenza(Libro.class);
-					return null;
-				}
+				return selezionaLibro(libriFiltrati, libriController);
 			}
+				
 			case 2://VISUALIZZA ARCHIVIO
 			{
 				Vector<Libro>libriPrestabili = new Vector<>();
@@ -75,6 +42,7 @@ public class MenuScegliLibro
 						libriPrestabili.add(libro);
 					}
 				}
+				
 				if(libriPrestabili.isEmpty())
 				{
 					LibriView.noRisorseDisponibili(Libri.class);
@@ -82,36 +50,50 @@ public class MenuScegliLibro
 				}
 				
 				LibriView.risorseInArchivio(Libri.class);
-				for(int i = 0; i < libriPrestabili.size(); i++)
-				{
-					MessaggiSistemaView.stampaPosizione(i);
-					MessaggiSistemaView.cornice();
-					libriController.stampaDatiLibro(libriPrestabili.get(i), true);
-					MessaggiSistemaView.cornice();
-				}
 				
-				int selezione;
-				do
-				{
-					selezione = LibriView.selezionaPrestito(libriPrestabili, Libro.class);
-					if(selezione == 0)
-					{
-						return null;
-					}
-					else if(libriPrestabili.get(selezione-1).getInPrestito() < libriPrestabili.get(selezione-1).getnLicenze())
-					{
-						return libriPrestabili.get(selezione-1);
-					}
-					else
-					{
-						LibriView.copieTutteInPrestito(libriPrestabili.get(selezione-1).getTitolo());
-					}
-				}
-				while(true);
+				return selezionaLibro(libriPrestabili, libriController);
 			}
 		}
 //		DEFAULT: qua non arriva mai
 		return null;
 	}
-	
+	private static Libro selezionaLibro(Vector<Libro> libri, LibriController libriController) 
+	{
+		if(!libri.isEmpty())
+		{
+			for(int i = 0; i < libri.size(); i++)
+			{
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
+				libriController.stampaDatiLibro(libri.get(i), true);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int selezione;
+			do
+			{
+				MessaggiSistemaView.cornice();
+				selezione = LibriView.selezionaRisorsa(libri.size(), Libro.class);
+				if(selezione == 0)
+				{
+					return null;
+				}
+				else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getNLicenze())
+				{
+					return libri.get(selezione-1);
+				}
+				else
+				{
+					LibriView.copieTutteInPrestito(libri.get(selezione-1).getTitolo());
+				}
+			}
+			while(true);
+		}
+		else//nessuna corrispondenza: vettore vuoto
+		{
+			LibriView.nessunaCorrispondenza(Libro.class);
+			return null;
+		}
+	}	
 }
+

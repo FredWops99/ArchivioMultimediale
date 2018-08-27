@@ -210,7 +210,7 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.genere = sottoGenere;
 	}
-	public int getnLicenze() 
+	public int getNLicenze() 
 	{
 		return nLicenze;
 	}

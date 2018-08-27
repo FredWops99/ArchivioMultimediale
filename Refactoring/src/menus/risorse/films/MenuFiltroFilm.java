@@ -71,7 +71,6 @@ public class MenuFiltroFilm
 			{
 				MessaggiSistemaView.cornice(true, false);
 				filmController.stampaDatiFilm(filmsFiltrati.get(i), false);
-//				filmsFiltrati.get(i).stampaDati(false);
 			}	
 		}
 		
