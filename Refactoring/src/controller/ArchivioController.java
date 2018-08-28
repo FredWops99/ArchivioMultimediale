@@ -33,7 +33,6 @@ public class ArchivioController
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
 	 * (precondizione: CATEGORIE != null)
-	 * @param CATEGORIE le categorie di risorsa tra cui scegliere
 	 * @return l'id della risorsa rimossa
 	 */
 	public String scegliRisorsaDaRimuovere() 
@@ -101,12 +100,13 @@ public class ArchivioController
 	{
 		if(categoria == CATEGORIE[0])
 		{
+//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliLibroHandler
 			return libriController.menuScegliLibro();
 		}
 		else if(categoria == CATEGORIE[1])
 		{
+//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliFilmHandler
 			return filmController.menuScegliFilm();
-//			return ScegliFilmHandler.show(filmController);
 		}
 		else return null;
 	} 
