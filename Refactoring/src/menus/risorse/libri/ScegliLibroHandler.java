@@ -3,17 +3,16 @@ package menus.risorse.libri;
 import java.util.Vector;
 import controller.LibriController;
 import model.Libro;
-import myLib.MyMenu;
 
+/**
+ * Gestisce il caso d'uso di scelta di un libro, in entrambi gli scenari: scelta dall'archivio completo o filtrando la ricerca
+ * @author Stefano Prandini
+ * @author Federico Landi
+ */
 public class ScegliLibroHandler 
 {	
-	private static final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
-	private static final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
-
-	public static Libro show(LibriController libriController)
+	public static Libro scegliLibro(int scelta, LibriController libriController)
 	{
-		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
-		int scelta = menuSceltaLibro.scegliBase();
 		switch(scelta)
 		{
 			case 0://INDIETRO

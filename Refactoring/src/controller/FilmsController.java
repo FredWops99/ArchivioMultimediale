@@ -4,6 +4,8 @@ import java.util.Vector;
 import menus.risorse.films.*;
 import model.Film;
 import model.Films;
+import model.Risorsa;
+import myLib.MyMenu;
 import view.FilmsView;
 import view.MessaggiSistemaView;
 
@@ -251,6 +253,22 @@ public class FilmsController
 			}
 		}
 		return filmPrestabili;
+	}
+	
+	/**
+	 * presenta all'utente il menu per decidere se scegliere un film dall'archivio completo o filtrando la ricerca.
+	 * informerà della scelta l'handler del caso d'uso (ScegliFilmHandler)
+	 * @return la risorsa selezionata dall'utente
+	 */
+	public Risorsa menuScegliFilm() 
+	{
+		final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
+		final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
+
+		MyMenu menuSceltaFilm = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
+		int scelta = menuSceltaFilm.scegliBase();
+		
+		return ScegliFilmHandler.scegliFilm(scelta, this);
 	}
 	
 	public Film selezionaFilm(Vector<Film> films) 

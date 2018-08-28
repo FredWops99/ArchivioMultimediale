@@ -4,6 +4,8 @@ import java.util.Vector;
 import menus.risorse.libri.*;
 import model.Libri;
 import model.Libro;
+import model.Risorsa;
+import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
 
@@ -256,6 +258,22 @@ public class LibriController
 		return libriPrestabili;
 	}
 	
+	/**
+	 * presenta all'utente il menu per decidere se scegliere un libro dall'archivio completo o filtrando la ricerca.
+	 * informerà della scelta l'handler del caso d'uso (ScegliLibroHandler)
+	 * @return
+	 */
+	public Risorsa menuScegliLibro() 
+	{
+		final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
+		final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
+		
+		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
+		int scelta = menuSceltaLibro.scegliBase();
+		
+		return ScegliLibroHandler.scegliLibro(scelta, this);
+	}	
+	
 	public Libro selezionaLibro(Vector<Libro> libri) 
 	{
 		if(libri.isEmpty())
@@ -293,5 +311,5 @@ public class LibriController
 			}
 			while(true);
 		}		
-	}	
+	}
 }

@@ -4,8 +4,6 @@ import java.util.Vector;
 import menus.risorse.*;
 import menus.risorse.films.MenuFiltroFilm;
 import menus.risorse.libri.MenuFiltroLibri;
-import menus.risorse.films.ScegliFilmHandler;
-import menus.risorse.libri.ScegliLibroHandler;
 import model.*;
 import view.MessaggiSistemaView;
 
@@ -103,12 +101,12 @@ public class ArchivioController
 	{
 		if(categoria == CATEGORIE[0])
 		{
-//			return libriController
-			return ScegliLibroHandler.show(libriController);
+			return libriController.menuScegliLibro();
 		}
 		else if(categoria == CATEGORIE[1])
 		{
-			return ScegliFilmHandler.show(filmController);
+			return filmController.menuScegliFilm();
+//			return ScegliFilmHandler.show(filmController);
 		}
 		else return null;
 	} 
