@@ -4,10 +4,7 @@ import java.util.Vector;
 import menus.risorse.*;
 import menus.risorse.films.MenuFiltroFilm;
 import menus.risorse.libri.MenuFiltroLibri;
-<<<<<<< Upstream, based on origin/master
 import menus.risorse.films.ScegliFilmHandler;
-=======
->>>>>>> 31b44c4 Signed-off-by: Stefano <s.prandini003@studenti.unibs.it>
 import menus.risorse.libri.ScegliLibroHandler;
 import model.*;
 import view.MessaggiSistemaView;
