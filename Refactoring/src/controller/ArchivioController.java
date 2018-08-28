@@ -3,9 +3,9 @@ package controller;
 import java.util.Vector;
 import menus.risorse.*;
 import menus.risorse.films.MenuFiltroFilm;
-import menus.risorse.films.MenuScegliFilm;
 import menus.risorse.libri.MenuFiltroLibri;
-import menus.risorse.libri.MenuScegliLibro;
+import menus.risorse.films.ScegliFilmHandler;
+import menus.risorse.libri.ScegliLibroHandler;
 import model.*;
 import view.MessaggiSistemaView;
 
@@ -103,11 +103,12 @@ public class ArchivioController
 	{
 		if(categoria == CATEGORIE[0])
 		{
-			return MenuScegliLibro.show(libriController);
+//			return libriController
+			return ScegliLibroHandler.show(libriController);
 		}
 		else if(categoria == CATEGORIE[1])
 		{
-			return MenuScegliFilm.show(filmController);
+			return ScegliFilmHandler.show(filmController);
 		}
 		else return null;
 	} 

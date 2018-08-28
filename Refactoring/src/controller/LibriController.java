@@ -226,4 +226,72 @@ public class LibriController
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
 	}
+	
+	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale)
+	{
+		return model.filtraLibriPerTitolo(titoloParziale);
+	}
+	
+	
+	public Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
+	{
+		return model.filtraLibriPerAnnoPubblicazione(annoPubblicazione);
+	}
+	
+	public Vector<Libro> filtraLibriPerAutori(String autore)
+	{
+		return model.filtraLibriPerAutori(autore);
+	}
+	
+	public Vector<Libro> libriPrestabili()
+	{
+		Vector<Libro>libriPrestabili = new Vector<>();
+		for(Libro libro : model.getLibri())
+		{
+			if(libro.isPrestabile())
+			{
+				libriPrestabili.add(libro);
+			}
+		}
+		return libriPrestabili;
+	}
+	
+	public Libro selezionaLibro(Vector<Libro> libri) 
+	{
+		if(libri.isEmpty())
+		{
+			LibriView.noRisorseDisponibili(Libri.class);
+			return null;
+		}
+		else
+		{
+			for(int i = 0; i < libri.size(); i++)
+			{
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
+				stampaDatiLibro(libri.get(i), true);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int selezione;
+			do
+			{
+				MessaggiSistemaView.cornice();
+				selezione = LibriView.selezionaRisorsa(libri.size(), Libro.class);
+				if(selezione == 0)
+				{
+					return null;
+				}
+				else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getNLicenze())
+				{
+					return libri.get(selezione-1);
+				}
+				else
+				{
+					LibriView.copieTutteInPrestito(libri.get(selezione-1).getTitolo());
+				}
+			}
+			while(true);
+		}		
+	}	
 }

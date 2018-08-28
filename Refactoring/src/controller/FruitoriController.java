@@ -63,11 +63,11 @@ public class FruitoriController
 		while(!corretta);
 		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
-//		creo il nuovo fruitore
-		Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
-		
+
 		if(FruitoriView.confermaDati())
 		{
+//			creo il nuovo fruitore
+			Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 //			aggiungo al vector fruitori il nuovo fruitore
 			model.addFruitore(f);
 			FruitoriView.confermaIscrizione();

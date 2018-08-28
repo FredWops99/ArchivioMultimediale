@@ -92,7 +92,7 @@ public abstract class RisorseView
 	
 	public static void risorseInArchivio(Class<?> c) 
 	{
-		System.out.println("\n " + c.getSimpleName() + " in archivio: \n");	
+		System.out.println("\n" + c.getSimpleName() + " in archivio: \n");	
 	}
 	
 	public static int selezionaRisorsa(int size, Class<?> c)

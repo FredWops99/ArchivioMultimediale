@@ -31,19 +31,19 @@ public class MenuFiltroLibri
 			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = LibriView.chiediTitolo(Libro.class);
-				libriFiltrati = filtraLibriPerTitolo(titoloParziale, libriController);
+				libriFiltrati = libriController.filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
 				annoPubblicazione = LibriView.chiediAnnoPubblicazione();
-				libriFiltrati = filtraLibriPerAnnoPubblicazione(annoPubblicazione, libriController);
+				libriFiltrati = libriController.filtraLibriPerAnnoPubblicazione(annoPubblicazione);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeAutore = LibriView.chiediAutore();
-				libriFiltrati = filtraLibriPerAutori(nomeAutore, libriController);
+				libriFiltrati = libriController.filtraLibriPerAutori(nomeAutore);
 				break;
 			}
 		}
@@ -70,9 +70,7 @@ public class MenuFiltroLibri
 				MessaggiSistemaView.cornice(true,false);
 				libriController.stampaDatiLibro(libriFiltrati.get(i), false);
 			}
-			
 		}
-		
 		else if (daPrenotare == true)
 		{
 			return libriFiltrati;
@@ -80,7 +78,6 @@ public class MenuFiltroLibri
 		
 		//se non sono da prenotare (quindi solo da visualizzare) non deve ritornare nulla
 		return null;
-	
 	}
 	
 	

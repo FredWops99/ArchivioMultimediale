@@ -103,45 +103,64 @@ public class Films implements Serializable
 	}
 	
 	/**
-	 * procedura per rimuovere un film dalla raccolta: viene chiesto il nome del film e se ce ne sono più di uno viene chiesto all'utente quale eliminare
-	 * @return l'id del film che l'utente ha deciso di rimuovere ("-1" se non viene rimosso nessun film)
+	 * filtra tutti i film in base al titolo
+	 * (precondizione: titoloParziale != null)
+	 * @param titoloParziale la parte di titolo usata come criterio
+	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-//	public String removeFilm()
-	{
+	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
+	{		
+		Vector<Film> filmTrovati = new Vector<>(); 
 		
+		for(Film film : films)
+		{
+			if(film.isPrestabile() && film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			{
+				filmTrovati.add(film);
+			}
+		}
+		return filmTrovati;
 	}
 	
 	/**
-	 * stampa i dati dei film corrispondenti ai parametri di ricerca specificati dall'utente
+	 * filtra tutti i film in base all'anno di pubblicazione
+	 * (precondizione: annoUscita != null)
+	 * @param annoUscita l'anno da usare come criterio
+	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-//	public void cercaFilm()
-//	{
-//		MenuFiltroFilm.show(films, false, filmController);	
-//	}
-	
+	public Vector<Film> filtraFilmPerUscita(int annoUscita) 
+	{
+		Vector<Film> filmTrovati = new Vector<>(); 
+		
+		for(Film film : films)
+		{
+			if(film.isPrestabile() && film.getAnnoDiUscita() == annoUscita)
+			{
+				filmTrovati.add(film);
+			}
+		}
+		return filmTrovati;
+	}
+
 	/**
-	 * stampa tutti i films raggruppandoli per sottocategoria
+	 * filtra tutti i film in base al regista
+	 * (precondizione: regista != null)
+	 * @param regista il nome del regista da usare come criterio
+	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-//	public void stampaFilms()
-//	{
-//		Vector<Film>filmDaStampare = new Vector<>();
-//		for(Film film : films)
-//		{
-//			if(film.isPrestabile())
-//			{
-//				filmDaStampare.add(film);
-//			}
-//		}
-//		FilmsView.stampaDati(filmDaStampare);
-//	}
-	
-//	/**
-//	 * Consente all'utente di selezionare un film in base a dei criteri di ricerca
-//	 * @return il film corrispondente ai criteri inseriti dall'utente
-//	 */
-//	public Film scegliFilm() 
-//	{
-//		Film filmSelezionato = MenuScegliFilm.show();
-//		return filmSelezionato;
-//	}	
+	public Vector<Film> filtraFilmPerRegista(String regista) 
+	{
+		Vector<Film> filmTrovati = new Vector<>(); 
+		for(Film film : films)
+		{
+			if(film.isPrestabile())
+			{
+				if(regista.toLowerCase().equals(regista.toLowerCase()))
+				{
+					filmTrovati.add(film);
+				}
+			}
+		}
+		return filmTrovati;
+	}
 }

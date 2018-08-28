@@ -154,115 +154,67 @@ public class Libri implements Serializable
 		return false;
 	}
 	
-//	/**
-//	 * permette la rimozione di un libro da parte dell'operatore: il libro selezionato verrà etichettato come "non Prestabile" ma rimarrà in archivio per 
-//	 * motivi storici
-//	 * @return l'id del libro rimosso
-//	 */
-//	public String removeLibro()
-//	{
-//		String idSelezionato;
-//		
-//		String titolo = LibriView.chiediRisorsaDaRimuovere(Libro.class);
-//		
-//		Vector<Integer> posizioniRicorrenze = new Vector<>();
-//		
-//		for (int i = 0; i < libri.size(); i++)
-//		{
-//			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
-//			{
-////				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
-//				posizioniRicorrenze.add(i);
-//			}
-//		}
-//		if(posizioniRicorrenze.size()==0)
-//		{
-//			LibriView.risorsaNonPresente(Libro.class);
-//			idSelezionato = "-1";
-//		}
-////		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
-//		else if(posizioniRicorrenze.size()==1)
-//		{
-//			idSelezionato = libri.get((int)posizioniRicorrenze.get(0)).getId();
-//			libri.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-//			LibriView.rimozioneAvvenuta();
-//		}
-////		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
-////		l'utente inserisce quello che vuole rimuovere
-//		else
-//		{
-//			LibriView.piùRisorseStessoTitolo(Libri.class, titolo);
-//			
-//			int pos = 0;
-//			for(Integer i : posizioniRicorrenze)
-//			{
-//				LibriView.numeroRicorrenza(pos);
-//				MessaggiSistemaView.cornice();
-//				libri.elementAt((int)i).stampaDati(false);
-//				MessaggiSistemaView.cornice();
-//			}
-//			
-//			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze);
-//			
-//			if(daRimuovere > 0)
-//			{
-//				idSelezionato = libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-//				libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-//				LibriView.rimozioneAvvenuta();
-//			}
-//			else//0: annulla
-//			{
-//				idSelezionato = "-1";
-//			}
-//		}
-//		return idSelezionato;
-//	}
+	/** filtra tutti i libri in base al titolo
+	  * (precondizione: titoloParziale != null)
+	 * @param titoloParziale la parte di titolo usata come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
+	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale) 
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		
+		for(Libro libro : libri)
+		{
+			if(libro.isPrestabile() && libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			{
+				libriTrovati.add(libro);
+			}
+		}
+		return libriTrovati;
+	}
 	
-//	/**
-//	 * stampa i dati dei libri corrispondenti ai parametri di ricerca specificati dall'utente
-//	 */
-//	public void cercaLibro()
-//	{
-//		MenuFiltroLibri.show(libri,true);
-//	}
-//	/**
-//	 * stampa tutti i libri raggruppandoli per sottocategoria e genere
-//	 */
-//	public void stampaLibri()
-//	{
-////		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
-//		Vector<Libro> libriDaStampare = new Vector<>();
-//		for(Libro libro : libri)
-//		{
-//			if(libro.isPrestabile())
-//			{
-//				libriDaStampare.add(libro);
-//			}
-//		}
-//		LibriView.stampaDati(libriDaStampare);
-//		
-//		
-//	}
+	/**
+	 * filtra tutti i libri in base all'anno di pubblicazione
+	 * (precondizione: annoPubblicazione != null)
+	 * @param annoPubblicazione l'anno da usare come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
+	public Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione) 
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		
+		for(Libro libro : libri)
+		{
+			if(libro.isPrestabile() && libro.getAnnoPubblicazione() == annoPubblicazione)
+			{
+				libriTrovati.add(libro);
+			}
+		}
+		return libriTrovati;
+	}
 	
-//	/**
-//	 * se la sottocategoria di libro ne prevede, presenta all'utente la scelta del genere del libro tra quelli presenti in elenco.
-//	 * se la sottocategoria non ne prevede restituisce un simbolo di default
-//	 * (precondizione: sottoCategoria != null)
-//	 * @param sottoCategoria la sottocategoria di libro che l'utente sta inserendo
-//	 * @return la scelta dell'utente o "-" se la sottocategoria non prevede generi
-//	 */
-//	private String scegliGenere(String sottoCategoria)
-//	{
-//		return MenuScegliGenereLibro.show(sottoCategoria);
-//	}
-
-//	/**
-//	 * Consente all'utente di selezionare un libro in base a dei criteri di ricerca
-//	 * @return il libro corrispondente ali criteri inseriti dall'utente
-//	 */
-//	public Libro scegliLibro() 
-//	{
-//		Libro libroSelezionato = MenuScegliLibro.show(libri);
-//		return libroSelezionato;
-//	}
+	/**
+	 * filtra tutti i libri in base all'autore
+	 * (precondizione: autore != null)
+	 * @param autore il nome dell'autore da usare come criterio
+	 * @return un vector contenente i libri corrispondenti al criterio
+	 */
+	public Vector<Libro> filtraLibriPerAutori(String autore) 
+	{
+		Vector<Libro> libriTrovati = new Vector<>(); 
+		for(Libro libro : libri)
+		{
+			if(libro.isPrestabile())
+			{
+				for(String s : libro.getAutori())
+				{
+					if(s.toLowerCase().equals(autore.toLowerCase()))
+					{
+						libriTrovati.add(libro);
+					}
+				}
+			}
+		}
+		return libriTrovati;
+	}
 }

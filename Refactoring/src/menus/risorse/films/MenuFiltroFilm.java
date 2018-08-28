@@ -31,25 +31,25 @@ public class MenuFiltroFilm
 			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = FilmsView.chiediTitolo(Film.class);
-				filmsFiltrati = filtraFilmPerTitolo(titoloParziale, filmController);
+				filmsFiltrati = filmController.filtraFilmPerTitolo(titoloParziale);
 				break;
 			}
 			
 			case 2:	//FILTRA PER ANNO PUBBLICAZIONE
 			{
 				annoUscita = FilmsView.chiediAnnoUscita();
-				filmsFiltrati = filtraFilmPerUscita(annoUscita, filmController);
+				filmsFiltrati = filmController.filtraFilmPerUscita(annoUscita);
 				break;
 			}
 			
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeRegista = FilmsView.chiediRegista();
-				filmsFiltrati = filtraFilmPerRegista(nomeRegista, filmController);
+				filmsFiltrati = filmController.filtraFilmPerRegista(nomeRegista);
 				break;
 			}
 		}
-		if(daPrenotare == false)
+		if(!daPrenotare)
 		{
 			if(scelta == 1 && filmsFiltrati.isEmpty()) 
 			{
@@ -74,7 +74,7 @@ public class MenuFiltroFilm
 			}	
 		}
 		
-		else if (daPrenotare == true)
+		else if (daPrenotare)
 		{
 			return filmsFiltrati;
 		}

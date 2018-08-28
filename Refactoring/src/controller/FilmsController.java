@@ -224,4 +224,71 @@ public class FilmsController
 	{
 		return model;
 	}
+	
+	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
+	{
+		return model.filtraFilmPerTitolo(titoloParziale);
+	}
+	
+	public Vector<Film> filtraFilmPerUscita(int annoUscita)
+	{
+		return model.filtraFilmPerUscita(annoUscita);
+	}
+	
+	public Vector<Film> filtraFilmPerRegista(String regista)
+	{
+		return model.filtraFilmPerRegista(regista);
+	}
+	
+	public Vector<Film> filmsPrestabili() 
+	{
+		Vector<Film>filmPrestabili = new Vector<>();
+		for(Film film : model.getFilms())
+		{
+			if(film.isPrestabile())
+			{
+				filmPrestabili.add(film);
+			}
+		}
+		return filmPrestabili;
+	}
+	
+	public Film selezionaFilm(Vector<Film> films) 
+	{
+		if(films.isEmpty())
+		{
+			FilmsView.noRisorseDisponibili(Film.class);
+			return null;
+		}
+		else
+		{
+			for(int i = 0; i < films.size(); i++)
+			{
+				MessaggiSistemaView.stampaPosizione(i);
+				MessaggiSistemaView.cornice();
+				stampaDatiFilm(films.get(i), true);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int selezione;
+			do
+			{
+				MessaggiSistemaView.cornice();
+				selezione = FilmsView.selezionaRisorsa(films.size(), Film.class);
+				if(selezione == 0)
+				{
+					return null;
+				}
+				else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getNLicenze())
+				{
+					return films.get(selezione-1);
+				}
+				else
+				{
+					FilmsView.copieTutteInPrestito(films.get(selezione-1).getTitolo());
+				}
+			}
+			while(true);
+		}
+	}
 }
