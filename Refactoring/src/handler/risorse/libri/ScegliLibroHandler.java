@@ -1,6 +1,7 @@
-package menus.risorse.libri;
+package handler.risorse.libri;
 
 import java.util.Vector;
+
 import controller.LibriController;
 import model.Libro;
 
@@ -21,7 +22,7 @@ public class ScegliLibroHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Libro> libriFiltrati = MenuFiltroLibri.show(true, libriController);
+				Vector<Libro> libriFiltrati = libriController.menuFiltraLibri(true);
 				
 				return libriController.selezionaLibro(libriFiltrati);
 			}

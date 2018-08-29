@@ -1,10 +1,10 @@
 package controller;
 
 import java.util.Vector;
-import menus.risorse.*;
-import menus.risorse.films.MenuFiltroFilm;
-import menus.risorse.libri.MenuFiltroLibri;
+
+import handler.risorse.*;
 import model.*;
+import myLib.MyMenu;
 import view.MessaggiSistemaView;
 
 public class ArchivioController 
@@ -30,6 +30,16 @@ public class ArchivioController
 		return filmController.getModel().getFilms();
 	}
 	
+	private String menuRimuoviRisorsa() 
+	{
+		final String INTESTAZIONE = "scegli la categoria: ";
+
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+		int scelta = menu.scegliBase();
+		
+		return RimuoviRisorsaHandler.rimuoviRisorsa(scelta, CATEGORIE, this);
+	}
+	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
 	 * (precondizione: CATEGORIE != null)
@@ -40,9 +50,33 @@ public class ArchivioController
 		MessaggiSistemaView.avvisoRimozioneRisorsa();
 		
 //		se utente annulla procedura removelibro/removefilm ritornato -1
-		String idRimosso = MenuRimuoviRisorsa.showAndReturnID(CATEGORIE, this);
+		String idRimosso = menuRimuoviRisorsa();
+//				RimuoviRisorsaHandler.showAndReturnID(CATEGORIE, this);
 		return idRimosso;
 	}
+	
+	public String rimuoviRisorsa(String categoria) 
+	{
+		String idRisorsa = "-1";
+		if(categoria == CATEGORIE[0])//LIBRI
+		{
+			idRisorsa = libriController.removeLibro();
+		}
+		if(categoria == CATEGORIE[1])//FILMS
+		{
+			idRisorsa = filmController.removeFilm();
+		}
+		return idRisorsa;
+	}
+
+	public void menuAggiungiRisorsa() 
+	{
+		final String INTESTAZIONE = "scegli la categoria: ";
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+		int scelta = menu.scegliBase();
+		
+		AggiungiRisorsaHandler.aggiungiRisorsa(scelta, CATEGORIE, this);
+	} 
 	
 	public void addRisorsa(String categoria)
 	{
@@ -58,19 +92,37 @@ public class ArchivioController
 		}
 	}
 	
+	public void menuCercaRisorsa() 
+	{
+		final String INTESTAZIONE = "scegli la categoria: ";
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+		int scelta = menu.scegliBase();
+		
+		CercaRisorsaHandler.cercaRisorsa(scelta, CATEGORIE, this);
+	}
+	
 	public void cercaRisorsa(String categoria)
 	{
 		if(categoria == CATEGORIE[0])//LIBRO
 		{
-			MenuFiltroLibri.show(false, libriController);
+			libriController.menuFiltraLibri(false);
 		}
 		else if(categoria == CATEGORIE[1])//FILM
 		{
-			MenuFiltroFilm.show(false, filmController);	
+			filmController.menuFiltraFilm(false);
 		}
 	}
 
-	public void stampaDatiRisorsePrestabili(String categoria) 
+	public void menuVisualizzaElencoRisorse() 
+	{
+		final String INTESTAZIONE = "scegli la categoria: ";
+		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+		int scelta = menu.scegliBase();
+		
+		VisualizzaElencoRisorseHandler.visualizza(scelta, CATEGORIE, this);
+	}
+	
+	public void visualizzaDatiRisorsePrestabili(String categoria) 
 	{
 		if(categoria == CATEGORIE[0])//LIBRI
 		{
@@ -80,20 +132,6 @@ public class ArchivioController
 		{
 			filmController.stampaDatiFilmPrestabili();
 		}		
-	}
-
-	public String removeRisorsa(String categoria) 
-	{
-		String idRisorsa = "-1";
-		if(categoria == CATEGORIE[0])//LIBRI
-		{
-			idRisorsa = libriController.removeLibro();
-		}
-		if(categoria == CATEGORIE[1])//FILMS
-		{
-			idRisorsa = filmController.removeFilm();
-		}
-		return idRisorsa;
 	}
 
 	public Risorsa scegliRisorsa(String categoria) 
@@ -109,5 +147,5 @@ public class ArchivioController
 			return filmController.menuScegliFilm();
 		}
 		else return null;
-	} 
+	}
 }

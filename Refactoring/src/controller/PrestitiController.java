@@ -1,8 +1,17 @@
 package controller;
 
 import java.util.Vector;
-import model.*;
+
+import handler.prestiti.RichiediPrestitoHandler;
+import handler.prestiti.TerminaPrestitiHandler;
+import model.Film;
+import model.Fruitore;
+import model.Libro;
+import model.Prestiti;
+import model.Prestito;
+import model.Risorsa;
 import myLib.GestioneDate;
+import myLib.MyMenu;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
 
@@ -38,6 +47,28 @@ public class PrestitiController
 			}	
 		}
 		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
+	}
+	
+	public void menuRichiediPrestito(Fruitore utenteLoggato, ArchivioController archivioController) 
+	{
+		final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
+		MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
+		int scelta = menu.scegliBase();
+		
+		RichiediPrestitoHandler.richiedi(scelta, utenteLoggato, this, archivioController);
+	}	
+
+	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
+	{
+		if(model.prestitoFattibile(utenteLoggato, risorsa))
+		{
+			model.addPrestito(utenteLoggato, risorsa);
+			PrestitiView.prenotazioneEffettuata(risorsa);
+		}
+		else//!prestitoFattibile se l'utente ha già una copia in prestito
+		{
+			PrestitiView.risorsaPosseduta();
+		}	
 	}
 	
 	/**
@@ -92,6 +123,16 @@ public class PrestitiController
 				MessaggiSistemaView.cornice();
 			}
 		}
+	}
+	
+	public void menuTerminaPrestiti(Fruitore utenteLoggato, ArchivioController archivioController) 
+	{
+		String[] scelte = new String[] {"tutti","solo uno"};
+		String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
+		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
+		int scelta = menuPrestiti.scegliBase();
+		
+		TerminaPrestitiHandler.terminaPrestiti(scelta, utenteLoggato, this);
 	}
 	
 	/**
@@ -237,17 +278,4 @@ public class PrestitiController
 		}
 		return false;
 	}
-
-	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
-	{
-		if(model.prestitoFattibile(utenteLoggato, risorsa))
-		{
-			model.addPrestito(utenteLoggato, risorsa);
-			PrestitiView.prenotazioneEffettuata(risorsa);
-		}
-		else//!prestitoFattibile se l'utente ha già una copia in prestito
-		{
-			PrestitiView.risorsaPosseduta();
-		}	
-	}	
 }

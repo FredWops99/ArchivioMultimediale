@@ -2,7 +2,10 @@ package controller;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import handler.storico.MostraStoricoHandler;
 import model.*;
+import myLib.MyMenu;
 import view.StoricoView;
 
 public class StoricoController 
@@ -13,6 +16,25 @@ public class StoricoController
 	{
 		model = storico;
 	}
+	
+	public void menuStorico() 
+	{
+		final String[] VOCI_MENU_STORICO = {"Numero prestiti per anno solare", "Numero proroghe per anno solare",
+				"Risorsa che è stata oggetto del maggior numero di prestiti per anno solare",
+				"Numero di prestiti per fruitore per anno solare", "Risorse prestabili in passato", "Iscrizioni decadute",
+				"Iscrizioni rinnovate", "Prestiti prorogati", "Prestiti terminati", "Prestiti terminati in anticipo"};
+		final String INTESTAZIONE = "\nScegli cosa visualizzare: ";
+		
+		boolean terminato = false;
+		do
+		{
+			MyMenu menuStorico = new MyMenu(INTESTAZIONE, VOCI_MENU_STORICO, true);
+			int scelta = menuStorico.scegliBase();
+			
+			terminato = MostraStoricoHandler.mostra(scelta, this);
+		}
+		while(!terminato);
+	}	
 	
 	public int prestitiAnnoSolare()
 	{
@@ -42,8 +64,6 @@ public class StoricoController
 				risorseAnnue.add(prestito.getRisorsa());
 			}
 		}
-		
-		//da qui avviene il conteggio
 		for(int i = 0; i < risorseAnnue.size(); i++)
 		{
 			int maxRisorsa = 1;

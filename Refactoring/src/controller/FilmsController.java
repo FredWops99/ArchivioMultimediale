@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.Vector;
-import menus.risorse.films.*;
+
+import handler.risorse.films.FiltroFilmHandler;
+import handler.risorse.films.ScegliFilmHandler;
 import model.Film;
 import model.Films;
 import model.Risorsa;
@@ -13,6 +15,8 @@ public class FilmsController
 {
 	private Films model;
 	private int lastId;	
+	
+	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 	
 	public FilmsController(Films films) 
 	{
@@ -205,9 +209,17 @@ public class FilmsController
 
 	private String scegliSottoCategoria()
 	{
-		String sottocategoria = MenuSottoCategoriaFilm.show();
-		
-		return sottocategoria;
+		final String SCEGLI_CATEGORIA = "scegli la sottocategoria del film: ";
+		MyMenu menu = new MyMenu(SCEGLI_CATEGORIA, SOTTOCATEGORIE, true);
+		try
+		{
+			return SOTTOCATEGORIE[menu.scegliBase() - 1];
+		}
+//		se l'utente selezione 0: ANNULLA -> eccezione
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			return "annulla";
+		}	
 	}
 
 	public void conferma(boolean aggiuntaRiuscita) 
@@ -225,6 +237,31 @@ public class FilmsController
 	public Films getModel()
 	{
 		return model;
+	}
+	
+	/**
+	 * se i film vengono filtrati per essere prenotati viene restituita la lista, se invece è solo per la ricerca vengono visualizzati e basta
+	 * @param daPrenotare 
+	 * @return la lista dei film filtrati (if daPrenotare)
+	 */
+	public Vector<Film> menuFiltraFilm(boolean daPrenotare) 
+	{
+		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
+		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
+		
+		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
+		int scelta = menuFiltro.scegliBase();
+		
+		Vector<Film> filmFiltrati = FiltroFilmHandler.filtraFilm(scelta, daPrenotare, this);
+		
+		if(daPrenotare)
+		{
+			return filmFiltrati;
+		}
+		else// !daPrenotare
+		{
+			return null;
+		}
 	}
 	
 	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
@@ -308,5 +345,5 @@ public class FilmsController
 			}
 			while(true);
 		}
-	}
+	}	
 }

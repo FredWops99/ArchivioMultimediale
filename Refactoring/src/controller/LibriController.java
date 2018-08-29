@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.Vector;
-import menus.risorse.libri.*;
+
+import handler.risorse.libri.FiltroLibriHandler;
+import handler.risorse.libri.ScegliLibroHandler;
 import model.Libri;
 import model.Libro;
 import model.Risorsa;
@@ -18,6 +20,10 @@ public class LibriController
 {
 	private Libri model;
 	private int lastId;	
+	
+//	CATEGORIA è libro
+	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
+	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	
 	public LibriController(Libri libri)
 	{
@@ -37,14 +43,15 @@ public class LibriController
 	
 	public void addLibro()
 	{
-		String sottoCategoria = MenuSottoCategoriaLibri.show();//la sottocategoria della categoria LIBRO (Romanzo, fumetto, poesia,...)
+		String sottoCategoria = menuScegliSottoCategoria();
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
 			return;
 		}
 		
-		String genere = MenuScegliGenereLibro.show(sottoCategoria);//se la sottocategoria ha generi disponibili
+		String genere = menuScegliGenere(sottoCategoria);
+//				ScegliGenereLibroHandler.show(sottoCategoria);//se la sottocategoria ha generi disponibili
 		String titolo = LibriView.chiediTitolo(Libro.class);
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
@@ -73,7 +80,34 @@ public class LibriController
 			LibriView.aggiuntaNonRiuscita(Libro.class);
 		}
 	}
+
+	private String menuScegliSottoCategoria() 
+	{
+		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE, true);
+		try
+		{
+			return SOTTOCATEGORIE[menu.scegliBase() - 1];
+		}
+//		se l'utente selezione 0: ANNULLA -> eccezione
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			return "annulla";
+		}
+	}
 	
+	private String menuScegliGenere(String sottoCategoria) 
+	{
+		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
+		{
+			MyMenu menu = new MyMenu("scegli un genere: ", GENERI);
+			return GENERI[menu.scegliNoIndietro() - 1];	
+		}
+		else
+		{
+			return "-";
+		}
+	}
+
 	/**
 	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
 	 */
@@ -227,6 +261,32 @@ public class LibriController
 			}
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
+	}
+	
+	/**
+	 * se i libri vengono filtrati per essere prenotati viene restituita la lista, se invece è solo per la ricerca vengono visualizzati e basta
+	 * @param daPrenotare 
+	 * @return la lista dei libri filtrati (if daPrenotare)
+	 */
+	public Vector<Libro> menuFiltraLibri(boolean daPrenotare) 
+	{
+		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
+		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
+		
+		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
+		int scelta = menuFiltro.scegliBase();
+		
+		Vector<Libro> libriFiltrati = FiltroLibriHandler.filtraLibri(scelta, daPrenotare, this);
+		
+		if(daPrenotare)
+		{
+			return libriFiltrati;
+		}
+		else// !daPrenotare
+		{
+			return null;
+		}
+		
 	}
 	
 	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale)

@@ -1,6 +1,7 @@
-package menus.risorse.films;
+package handler.risorse.films;
 
 import java.util.Vector;
+
 import controller.FilmsController;
 import model.Film;
 
@@ -22,7 +23,7 @@ public class ScegliFilmHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Film> filmsFiltrati = MenuFiltroFilm.show(true, filmController);
+				Vector<Film> filmsFiltrati = filmController.menuFiltraFilm(true);
 				
 				return filmController.selezionaFilm(filmsFiltrati);
 			}

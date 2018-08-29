@@ -5,12 +5,12 @@ import myLib.InputDati;
 
 public class MessaggiSistemaView 
 {
-	private static final String MESSAGGIO_ADDIO = "\nGrazie per aver usato ArchivioMultimediale!";
+	private static final String MESSAGGIO_ADDIO = "Grazie per aver usato ArchivioMultimediale!";
 	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";	
 	
 	public static void stampaAddio()
 	{
-		System.out.println(BelleStringhe.incornicia(MESSAGGIO_ADDIO));
+		System.out.println("\n"+BelleStringhe.incornicia(MESSAGGIO_ADDIO));
 	}
 	
 	public static String chiediPasswordOperatore() 

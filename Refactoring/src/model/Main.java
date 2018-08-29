@@ -1,7 +1,8 @@
 package model;
 
 import controller.*;
-import menus.utenti.MenuAccesso;
+import handler.utenti.AccessoHandler;
+import myLib.MyMenu;
 
 /**
  * Classe main del programma Archivio Multimediale
@@ -45,9 +46,28 @@ public class Main
 		GestoreSalvataggi.salvaFruitori(fruitori);
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		MenuAccesso.show(utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
+		mostraMenuAccesso(archivioController, fruitoriController, storicoController, prestitiController);
+		
+//		AccessoHandler.show(utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
 	}
 	
+	private static void mostraMenuAccesso(ArchivioController archivioController, FruitoriController fruitoriController, 
+											StoricoController storicoController, PrestitiController prestitiController) 
+	{
+		final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
+		final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
+		
+		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
+		
+		boolean terminato;
+		do
+		{
+			int scelta = menuAccesso.scegli();
+			terminato = AccessoHandler.gestisciAccesso(utenteLoggato, scelta, archivioController, fruitoriController, storicoController, prestitiController);
+		}
+		while(!terminato);	
+	}
+
 	public static void salvaArchivio()
 	{
 		GestoreSalvataggi.salvaArchivio(archivio);

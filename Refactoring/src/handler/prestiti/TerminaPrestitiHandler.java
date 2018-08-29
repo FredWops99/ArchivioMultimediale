@@ -1,21 +1,14 @@
-package menus.prestiti;
+package handler.prestiti;
 
-import controller.ArchivioController;
 import controller.PrestitiController;
 import model.Fruitore;
 import model.Main;
-import myLib.MyMenu;
 
-public class MenuTerminaPrestiti 
+public class TerminaPrestitiHandler 
 {
-	static String[] scelte = new String[] {"tutti","solo uno"};
-	static String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
-
-	public static void show(Fruitore utenteLoggato, ArchivioController mainController, PrestitiController prestitiController) 
+	public static void terminaPrestiti(int scelta, Fruitore utenteLoggato, PrestitiController prestitiController) 
 	{
-		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
-		
-		switch (menuPrestiti.scegliBase()) 
+		switch (scelta) 
 		{
 			case 0://indietro
 			{

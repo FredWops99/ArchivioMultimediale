@@ -1,27 +1,22 @@
-package menus.risorse.libri;
+package handler.risorse.libri;
 
 import java.util.Vector;
+
 import controller.LibriController;
 import model.Libri;
 import model.Libro;
-import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
 
-public class MenuFiltroLibri 
+public class FiltroLibriHandler 
 {
-	private static final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-	private static final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
-	
-	public static Vector<Libro> show(boolean daPrenotare, LibriController libriController) 
+	public static Vector<Libro> filtraLibri(int scelta, boolean daPrenotare, LibriController libriController) 
 	{
 		Vector<Libro> libriFiltrati = null;
 		String titoloParziale = null;
 		int annoPubblicazione = 0;
 		String nomeAutore = null;
 		
-		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-		int scelta = menuFiltro.scegliBase();
 		switch(scelta) 
 		{
 			case 0:	//INDIETRO
