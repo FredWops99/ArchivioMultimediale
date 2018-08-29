@@ -61,11 +61,20 @@ public class Prestiti implements Serializable
 	 * @param fruitore fruitore che richiede il prestito
 	 * @param risorsa la risorsa che verrà presa in prestito dal fruitore 
 	 */
-	public void addPrestito(Fruitore fruitore, Risorsa risorsa)
+	public boolean addPrestito(Fruitore fruitore, Risorsa risorsa)
 	{
-		Prestito prestito = new Prestito(fruitore, risorsa);
-		prestiti.add(prestito);
-		prestito.getRisorsa().mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
+		if(prestitoFattibile(fruitore, risorsa))
+		{
+			Prestito prestito = new Prestito(fruitore, risorsa);
+			prestiti.add(prestito);
+			risorsa.mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public Vector<Prestito> getPrestiti() 

@@ -60,9 +60,10 @@ public class PrestitiController
 
 	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
 	{
-		if(model.prestitoFattibile(utenteLoggato, risorsa))
+		boolean prestitoEffettuato = model.addPrestito(utenteLoggato, risorsa);
+		
+		if(prestitoEffettuato)
 		{
-			model.addPrestito(utenteLoggato, risorsa);
 			PrestitiView.prenotazioneEffettuata(risorsa);
 		}
 		else//!prestitoFattibile se l'utente ha già una copia in prestito
