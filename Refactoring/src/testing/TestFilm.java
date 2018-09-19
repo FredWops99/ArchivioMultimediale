@@ -103,6 +103,6 @@ public class TestFilm
 	
 	public static Film creaFilm(String titolo, String sottoCategoria)
 	{
-		return new Film("F0", sottoCategoria, titolo, "regista", 120, 1900, "italiano", 10);
+		return new Film(titolo, sottoCategoria, titolo, "regista", 120, 1900, "italiano", 10);
 	}
 }

@@ -16,10 +16,10 @@ public class RichiediPrestitoHandler
 		{
 			String categoria = CATEGORIE[scelta - 1];
 						
-			if(prestitiController.raggiunteRisorseMassime(utenteLoggato, categoria))
-			{
-				return;
-			}
+//			if(prestitiController.raggiunteRisorseMassime(utenteLoggato, categoria))
+//			{
+//				return;
+//			}
 			
 			Risorsa risorsa = archivioController.scegliRisorsa(categoria);
 			if(risorsa != null)

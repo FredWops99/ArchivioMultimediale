@@ -3,6 +3,8 @@ package testing;
 import static org.junit.Assert.*;
 import java.util.GregorianCalendar;
 import org.junit.Test;
+import exceptions.RaggiunteRisorseMaxException;
+import exceptions.RisorsaGi‡Posseduta;
 import model.Film;
 import model.Fruitore;
 import model.Prestiti;
@@ -121,8 +123,22 @@ public class TestPrestiti
 		Film film2 = TestFilm.creaFilm("Titolo2", "Avventura");
 		
 		
-		prestiti.addPrestito(fruitore, film);
-		prestiti.addPrestito(fruitore, film2);
+		try 
+		{
+			prestiti.addPrestito(fruitore, film);
+		} 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		{
+			e.printStackTrace();
+		}
+		try 
+		{
+			prestiti.addPrestito(fruitore, film2);
+		} 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		{
+			e.printStackTrace();
+		}
 
 		prestiti.getPrestiti().get(0).terminaPrestito();
 		
@@ -141,29 +157,26 @@ public class TestPrestiti
 		Film film = TestFilm.creaFilm("Titolo", "Avventura");
 		Film film2 = TestFilm.creaFilm("Titolo2", "Avventura");
 		
-		
-		prestiti.addPrestito(fruitore, film);
-		prestiti.addPrestito(fruitore2, film2);
+		try 
+		{
+			prestiti.addPrestito(fruitore, film);
+		} 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		{
+			e.printStackTrace();
+		}
+		try 
+		{
+			prestiti.addPrestito(fruitore2, film2);
+		} 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		{
+			e.printStackTrace();
+		}
 
 		prestiti.getPrestiti().get(0).terminaPrestito();
 		
 		assertEquals(0, prestiti.prestitiAttiviDi(fruitore).size());
 		assertEquals(1, prestiti.prestitiAttiviDi(fruitore2).size());
-	}
-	
-	@Test
-	public void prestitoFattibile() 
-	{
-		Prestiti prestiti = new Prestiti();
-		GregorianCalendar dataNascita = new GregorianCalendar(2000, 0, 1);
-		GregorianCalendar dataIscrizione = new GregorianCalendar(2020, 0, 1);
-		Fruitore fruitore = new Fruitore("nome", "cognome", dataNascita, dataIscrizione, "user", "psw");
-
-		Film film = TestFilm.creaFilm("Titolo", "Avventura");
-		
-//		gi‡ presente
-		prestiti.addPrestito(fruitore, film);
-
-		assertFalse(prestiti.prestitoFattibile(fruitore, film));
 	}
 }

@@ -2,7 +2,6 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-
 import myLib.ServizioFile;
 
 public class GestoreSalvataggi 

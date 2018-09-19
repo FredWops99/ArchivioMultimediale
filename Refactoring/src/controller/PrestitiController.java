@@ -1,12 +1,11 @@
 package controller;
 
 import java.util.Vector;
-
+import exceptions.RaggiunteRisorseMaxException;
+import exceptions.RisorsaGi‡Posseduta;
 import handler.prestiti.RichiediPrestitoHandler;
 import handler.prestiti.TerminaPrestitiHandler;
-import model.Film;
 import model.Fruitore;
-import model.Libro;
 import model.Prestiti;
 import model.Prestito;
 import model.Risorsa;
@@ -58,18 +57,22 @@ public class PrestitiController
 		RichiediPrestitoHandler.richiedi(scelta, utenteLoggato, this, archivioController);
 	}	
 
+	//addPrestito puÚ lanciare due eccezioni diverse: o il fruitore possiede gi‡ la risorsa o ha raggiunto il limite di risorse possedute
 	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
 	{
-		boolean prestitoEffettuato = model.addPrestito(utenteLoggato, risorsa);
-		
-		if(prestitoEffettuato)
+		try
 		{
+			model.addPrestito(utenteLoggato, risorsa);
 			PrestitiView.prenotazioneEffettuata(risorsa);
 		}
-		else//!prestitoFattibile se l'utente ha gi‡ una copia in prestito
+		catch(RaggiunteRisorseMaxException e)
+		{
+			PrestitiView.raggiunteRisorseMassime(risorsa.getSottoCategoria());
+		}
+		catch(RisorsaGi‡Posseduta e1)
 		{
 			PrestitiView.risorsaPosseduta();
-		}	
+		}
 	}
 	
 	/**
@@ -259,24 +262,24 @@ public class PrestitiController
 		}
 	}
 
-	public boolean raggiunteRisorseMassime(Fruitore utenteLoggato, String categoria) 
-	{
-		if(categoria == CATEGORIE[0])// == "Libri"
-		{
-			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
-			{
-				PrestitiView.raggiunteRisorseMassime(categoria);
-				return true;
-			}
-		}
-		else if(categoria == CATEGORIE[1])// == "Films"
-		{
-			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Film.PRESTITI_MAX)
-			{
-				PrestitiView.raggiunteRisorseMassime(categoria);
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean raggiunteRisorseMassime(Fruitore utenteLoggato, String categoria) 
+//	{
+//		if(categoria == CATEGORIE[0])// == "Libri"
+//		{
+//			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
+//			{
+//				PrestitiView.raggiunteRisorseMassime(categoria);
+//				return true;
+//			}
+//		}
+//		else if(categoria == CATEGORIE[1])// == "Films"
+//		{
+//			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Film.PRESTITI_MAX)
+//			{
+//				PrestitiView.raggiunteRisorseMassime(categoria);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 }

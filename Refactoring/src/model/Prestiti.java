@@ -3,6 +3,9 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
+import exceptions.RaggiunteRisorseMaxException;
+import exceptions.RisorsaGi‡Posseduta;
+
 /**
  * Classe che racchiude l'elenco dei prestiti attivi degli utenti
  * @author Prandini Stefano
@@ -55,28 +58,6 @@ public class Prestiti implements Serializable
 		return prestitiAttiviDi;			
 	}
 	
-	/**
-	 * crea il prestito e lo aggiunge all'elenco 
-	 * (precondizione: il fruitore non possiede gi‡ la risorsa in prestito & fruitore != null & risorsa != null)
-	 * @param fruitore fruitore che richiede il prestito
-	 * @param risorsa la risorsa che verr‡ presa in prestito dal fruitore 
-	 */
-	public boolean addPrestito(Fruitore fruitore, Risorsa risorsa)
-	{
-		if(prestitoFattibile(fruitore, risorsa))
-		{
-			Prestito prestito = new Prestito(fruitore, risorsa);
-			prestiti.add(prestito);
-			risorsa.mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
 	public Vector<Prestito> getPrestiti() 
 	{
 		return prestiti;
@@ -97,7 +78,7 @@ public class Prestiti implements Serializable
 	{
 		int risorse = 0;
 		
-		if(categoria.equals("Libri"))
+		if(categoria.equals("Libro"))
 		{
 			for(Prestito prestito : prestiti)
 			{
@@ -107,11 +88,10 @@ public class Prestiti implements Serializable
 				}
 			}
 		}
-		else if(categoria.equals("Films"))
+		else if(categoria.equals("Film"))
 		{
 			for(Prestito prestito : prestiti)
 			{
-				
 				if((!prestito.isTerminato()) && prestito.getFruitore().equals(fruitore) && prestito.getRisorsa() instanceof Film)
 				{
 					risorse++;
@@ -120,26 +100,40 @@ public class Prestiti implements Serializable
 		}
 		return risorse;
 	}
-
-	/**
-	 * (precondizione: fruitore != null & risorsa != null)
-	 * controlla che il fruitore non abbia gi‡ la risorsa in prestito 
-	 * @param fruitore il fruitore che richede il prestito
-	 * @param risorsa la risorsa oggetto del prestito
-	 * @return true se il fruitore non ha gi‡ la risorsa in prestito (quindi prestito fattibile)
-	 */
-	public boolean prestitoFattibile(Fruitore fruitore, Risorsa risorsa) 
+	
+	public void prestitoFattibile(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta
 	{
+		if(numPrestitiAttiviDi(fruitore, risorsa.getClass().getSimpleName()) == risorsa.getPrestitiMax())
+		{
+			throw new RaggiunteRisorseMaxException();
+		}
+		
 		for(Prestito prestito : prestiti)
 		{
 			if((!prestito.isTerminato()) && prestito.getRisorsa().equals(risorsa) && prestito.getFruitore().equals(fruitore))
 			{
-				return false;
+				throw new RisorsaGi‡Posseduta();
 			}
 		}
-//		se arriva qua l'utente non ha gi‡ la risorsa in prestito
-		return true;
 	}
+
+	/**
+	 * crea il prestito e lo aggiunge all'elenco 
+	 * (precondizione: il fruitore non possiede gi‡ la risorsa in prestito & fruitore != null & risorsa != null)
+	 * @param fruitore il fruitore che richede il prestito
+	 * @param risorsa la risorsa oggetto del prestito
+	 * @return true se il fruitore non ha gi‡ la risorsa in prestito (quindi prestito fattibile)
+	 * @throws RisorsaGi‡Posseduta 
+	 * @throws RisorsaGi‡Posseduta 
+	 */
+	public void addPrestito(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta 
+	{		
+		prestitoFattibile(fruitore, risorsa);
+//		se non lancia un'eccezione prosegue
+		Prestito prestito = new Prestito(fruitore, risorsa);
+		prestiti.add(prestito);
+		risorsa.mandaInPrestito();//aggiorna il numero di copie attualmente in prestito	
+	}	
 	
 	/**
 	 * quando salvo oggetti in un file e poi li ricarico, i libri di "Prestiti" non corrispondono pi˘ a quelli in "Libri" (verificato con hashcode che cambia, da 

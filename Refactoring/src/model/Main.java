@@ -47,8 +47,6 @@ public class Main
 		GestoreSalvataggi.salvaPrestiti(prestiti);
 		
 		mostraMenuAccesso(archivioController, fruitoriController, storicoController, prestitiController);
-		
-//		AccessoHandler.show(utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
 	}
 	
 	private static void mostraMenuAccesso(ArchivioController archivioController, FruitoriController fruitoriController, 
