@@ -42,7 +42,7 @@ public class TestEccezioni
 		prestiti.addPrestito(fruitore, film3);
 //		non posso prenotare questo libro perchè supero il limite: lancia eccezione
 		Film film4 = TestFilm.creaFilm("Titolo4", "Avventura");
-		prestiti.addPrestito(fruitore, film4);		
+		prestiti.addPrestito(fruitore, film4);	 	
 	}
 
 }
