@@ -144,7 +144,7 @@ public class Prestiti implements Serializable
 	 */
 	public void ricostruisciPrestiti(Archivio archivio)
 	{
-		for(Prestito prestito : prestiti)
+		for(Prestito prestito : prestiti) 
 		{
 			Risorsa risorsa = archivio.getRisorsa(prestito.getRisorsa().getId());
 			
