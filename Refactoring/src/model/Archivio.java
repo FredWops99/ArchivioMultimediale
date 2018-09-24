@@ -48,34 +48,25 @@ public class Archivio implements Serializable
 		
 		switch(id.charAt(0))
 		{
-		case 'L':
-		{
-			for(Libro libro : libri.getLibri())
+			case 'L':
 			{
-				if(libro.getId().equals(id))
+				for(Libro libro : libri.getLibri())
 				{
-					r = libro;
+					if(libro.getId().equals(id))
+						r = libro;
 				}
+				break;
 			}
-			break;
-		}
-		case 'F':
-		{
-			for(Film film : films.getFilms())
+			case 'F':
 			{
-				if(film.getId().equals(id))
+				for(Film film : films.getFilms())
 				{
-					r = film;
+					if(film.getId().equals(id))
+						r = film;
 				}
+				break;
 			}
-			break;
-		}
-		default:
-		{
-			return null;
-		}
 		}
 		return r;
 	}
-	
 }

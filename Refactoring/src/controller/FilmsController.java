@@ -17,6 +17,7 @@ public class FilmsController
 	private int lastId;	
 	
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
+	private static final String IDENTIFIER = "F";
 	
 	public FilmsController(Films films) 
 	{
@@ -45,7 +46,7 @@ public class FilmsController
 		String regista = FilmsView.chiediRegista();
 		int nLicenze = FilmsView.chiediNumeroLicenze();
 		
-		Film f = new Film("F"+ lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
+		Film f = new Film(IDENTIFIER + lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
 		boolean aggiuntaRiuscita = model.addFilm(f);

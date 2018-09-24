@@ -2,6 +2,7 @@ package model;
 
 import controller.*;
 import handler.utenti.AccessoHandler;
+import interfaces.ISavesManager;
 import myLib.MyMenu;
 
 /**
@@ -19,12 +20,14 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		GestoreSalvataggi.checkFiles(fruitori, archivio, prestiti);
+		ISavesManager gestoreSalvataggi = new GestoreSalvataggi();
+		
+		gestoreSalvataggi.checkFiles(fruitori, archivio, prestiti);
 		
 //		avviato il programma carico i fruitori, i libri e i prestiti da file
-		fruitori = GestoreSalvataggi.caricaFruitori();
-		archivio = GestoreSalvataggi.caricaArchivio();
-		prestiti = GestoreSalvataggi.caricaPrestiti();		
+		fruitori = gestoreSalvataggi.caricaFruitori();
+		archivio = gestoreSalvataggi.caricaArchivio();
+		prestiti = gestoreSalvataggi.caricaPrestiti();		
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		prestiti.ricostruisciPrestiti(archivio);
 		
@@ -43,8 +46,8 @@ public class Main
 		prestitiController.terminaTuttiPrestitiDi(fruitoriController.controlloIscrizioni());
 		prestitiController.controlloPrestitiScaduti();
 		
-		GestoreSalvataggi.salvaFruitori(fruitori);
-		GestoreSalvataggi.salvaPrestiti(prestiti);
+		gestoreSalvataggi.salvaFruitori(fruitori);
+		gestoreSalvataggi.salvaPrestiti(prestiti);
 		
 		mostraMenuAccesso(archivioController, fruitoriController, storicoController, prestitiController);
 	}
@@ -68,14 +71,14 @@ public class Main
 
 	public static void salvaArchivio()
 	{
-		GestoreSalvataggi.salvaArchivio(archivio);
+		gestoreSalvataggi.salvaArchivio(archivio);
 	}
 	public static void salvaFruitori()
 	{
-		GestoreSalvataggi.salvaFruitori(fruitori);
+		gestoreSalvataggi.salvaFruitori(fruitori);
 	}
 	public static void salvaPrestiti()
 	{
-		GestoreSalvataggi.salvaPrestiti(prestiti);
+		gestoreSalvataggi.salvaPrestiti(prestiti);
 	}
 }

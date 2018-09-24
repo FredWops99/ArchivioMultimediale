@@ -66,11 +66,11 @@ public class FiltroLibriHandler
 				libriController.stampaDatiLibro(libriFiltrati.get(i), false);
 			}
 		}
+		
 		else if (daPrenotare == true)
 		{
 			return libriFiltrati;
 		}
-		
 		//se non sono da prenotare (quindi solo da visualizzare) non deve ritornare nulla
 		return null;
 	}

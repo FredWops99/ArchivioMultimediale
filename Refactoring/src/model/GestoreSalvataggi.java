@@ -2,9 +2,11 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+
+import interfaces.ISavesManager;
 import myLib.ServizioFile;
 
-public class GestoreSalvataggi 
+public class GestoreSalvataggi implements ISavesManager
 {
 	private static final String PATH_FRUITORI = "Fruitori.dat";
 	private static final String PATH_ARCHIVIO= "Archivio.dat";
@@ -14,7 +16,7 @@ public class GestoreSalvataggi
 	private static File fileArchivio = new File(PATH_ARCHIVIO);
 	private static File filePrestiti = new File(PATH_PRESTITI);
 	
-	public static void checkFiles(Fruitori fruitori, Archivio archivio, Prestiti prestiti) 
+	public void checkFiles(Fruitori fruitori, Archivio archivio, Prestiti prestiti) 
 	{
 		try 
 		{
@@ -36,7 +38,7 @@ public class GestoreSalvataggi
 	 * @param obj l'oggetto da salvare nel file nel caso in cui non esista e debba essere creato
 	 * @throws Exception 
 	 */
-	public static void checkFile(File file, Object obj) throws IOException 
+	public void checkFile(File file, Object obj) throws IOException 
 	{
 		if (file.exists())
 		{
@@ -52,32 +54,32 @@ public class GestoreSalvataggi
         }
 	}
 
-	public static Fruitori caricaFruitori() 
+	public Fruitori caricaFruitori() 
 	{
 		return (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori, false);
 	}
 
-	public static Archivio caricaArchivio() 
+	public Archivio caricaArchivio() 
 	{
 		return (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio, false);
 	}
 
-	public static Prestiti caricaPrestiti() 
+	public Prestiti caricaPrestiti() 
 	{
 		return (Prestiti)ServizioFile.caricaSingoloOggetto(filePrestiti, false);
 	}
 
-	public static void salvaFruitori(Fruitori fruitori) 
+	public void salvaFruitori(Fruitori fruitori) 
 	{
 		ServizioFile.salvaSingoloOggetto(fileFruitori, fruitori, false);	
 	}
 
-	public static void salvaPrestiti(Prestiti prestiti) 
+	public void salvaPrestiti(Prestiti prestiti) 
 	{
 		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);	
 	}
 	
-	public static void salvaArchivio(Archivio archivio) 
+	public void salvaArchivio(Archivio archivio) 
 	{
 		ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);	
 	}

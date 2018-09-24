@@ -261,25 +261,4 @@ public class PrestitiController
 			}
 		}
 	}
-
-//	public boolean raggiunteRisorseMassime(Fruitore utenteLoggato, String categoria) 
-//	{
-//		if(categoria == CATEGORIE[0])// == "Libri"
-//		{
-//			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Libro.PRESTITI_MAX)
-//			{
-//				PrestitiView.raggiunteRisorseMassime(categoria);
-//				return true;
-//			}
-//		}
-//		else if(categoria == CATEGORIE[1])// == "Films"
-//		{
-//			if(model.numPrestitiAttiviDi(utenteLoggato, categoria) == Film.PRESTITI_MAX)
-//			{
-//				PrestitiView.raggiunteRisorseMassime(categoria);
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 }

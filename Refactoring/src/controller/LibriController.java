@@ -24,6 +24,7 @@ public class LibriController
 //	CATEGORIA è libro
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
+	private static final String IDENTIFIER = "L";
 	
 	public LibriController(Libri libri)
 	{
@@ -67,7 +68,7 @@ public class LibriController
 		
 		int nLicenze = LibriView.chiediNumeroLicenze();
 		
-		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		Libro l = new Libro(IDENTIFIER +lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
 		boolean aggiuntaRiuscita = model.addLibro(l);
 		
