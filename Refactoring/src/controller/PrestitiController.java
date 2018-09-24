@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Vector;
 import exceptions.RaggiunteRisorseMaxException;
-import exceptions.RisorsaGi‡Posseduta;
+import exceptions.RisorsaGi‡PossedutaException;
 import handler.prestiti.RichiediPrestitoHandler;
 import handler.prestiti.TerminaPrestitiHandler;
 import model.Fruitore;
@@ -69,7 +69,7 @@ public class PrestitiController
 		{
 			PrestitiView.raggiunteRisorseMassime(risorsa.getSottoCategoria());
 		}
-		catch(RisorsaGi‡Posseduta e1)
+		catch(RisorsaGi‡PossedutaException e1)
 		{
 			PrestitiView.risorsaPosseduta();
 		}

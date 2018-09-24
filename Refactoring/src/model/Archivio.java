@@ -24,21 +24,58 @@ public class Archivio implements Serializable
 	}
 	
 	//GETTER//
-		public Libri getLibri() 
+	public Libri getLibri() 
+	{
+		return libri;
+	}
+	public Films getFilms()
+	{
+		return films;
+	}
+	//SETTER//
+	public void setLibri(Libri libri)
+	{
+		this.libri = libri;
+	}
+	public void setFilms(Films films)
+	{
+		this.films = films;
+	}
+
+	public Risorsa getRisorsa(String id) 
+	{
+		Risorsa r = null;
+		
+		switch(id.charAt(0))
 		{
-			return libri;
-		}
-		public Films getFilms()
+		case 'L':
 		{
-			return films;
+			for(Libro libro : libri.getLibri())
+			{
+				if(libro.getId().equals(id))
+				{
+					r = libro;
+				}
+			}
+			break;
 		}
-		//SETTER//
-		public void setLibri(Libri libri)
+		case 'F':
 		{
-			this.libri = libri;
+			for(Film film : films.getFilms())
+			{
+				if(film.getId().equals(id))
+				{
+					r = film;
+				}
+			}
+			break;
 		}
-		public void setFilms(Films films)
+		default:
 		{
-			this.films = films;
+			return null;
 		}
+		}
+		return r;
+	}
+	
 }

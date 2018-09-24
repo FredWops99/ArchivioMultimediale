@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 import exceptions.RaggiunteRisorseMaxException;
-import exceptions.RisorsaGi‡Posseduta;
+import exceptions.RisorsaGi‡PossedutaException;
 
 /**
  * Classe che racchiude l'elenco dei prestiti attivi degli utenti
@@ -101,7 +101,7 @@ public class Prestiti implements Serializable
 		return risorse;
 	}
 	
-	public void prestitoFattibile(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta
+	public void prestitoFattibile(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException
 	{
 		if(numPrestitiAttiviDi(fruitore, risorsa.getClass().getSimpleName()) == risorsa.getPrestitiMax())
 		{
@@ -112,7 +112,7 @@ public class Prestiti implements Serializable
 		{
 			if((!prestito.isTerminato()) && prestito.getRisorsa().equals(risorsa) && prestito.getFruitore().equals(fruitore))
 			{
-				throw new RisorsaGi‡Posseduta();
+				throw new RisorsaGi‡PossedutaException();
 			}
 		}
 	}
@@ -123,10 +123,10 @@ public class Prestiti implements Serializable
 	 * @param fruitore il fruitore che richede il prestito
 	 * @param risorsa la risorsa oggetto del prestito
 	 * @return true se il fruitore non ha gi‡ la risorsa in prestito (quindi prestito fattibile)
-	 * @throws RisorsaGi‡Posseduta 
-	 * @throws RisorsaGi‡Posseduta 
+	 * @throws RisorsaGi‡PossedutaException 
+	 * @throws RisorsaGi‡PossedutaException 
 	 */
-	public void addPrestito(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta 
+	public void addPrestito(Fruitore fruitore, Risorsa risorsa) throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException 
 	{		
 		prestitoFattibile(fruitore, risorsa);
 //		se non lancia un'eccezione prosegue
@@ -146,31 +146,9 @@ public class Prestiti implements Serializable
 	{
 		for(Prestito prestito : prestiti)
 		{
-			if(prestito.getRisorsa() instanceof Libro)
-			{
-				for(Libro libro : archivio.getLibri().getLibri())
-				{
-					if(prestito.getRisorsa().equals(libro))
-					{
-						prestito.setRisorsa(libro);
-					}
-				}
-			}
-			else if(prestito.getRisorsa() instanceof Film)
-			{
-				for(Film film : archivio.getFilms().getFilms())
-				{
-					if(prestito.getRisorsa().equals(film))
-					{
-						prestito.setRisorsa(film);
-					}
-				}
-			}
-//			else if(altra categoria)
-//			{
-//				...
-//			}
+			Risorsa risorsa = archivio.getRisorsa(prestito.getRisorsa().getId());
 			
+			prestito.setRisorsa(risorsa);
 		}
 	}
 }

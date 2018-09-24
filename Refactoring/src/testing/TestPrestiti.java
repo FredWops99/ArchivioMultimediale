@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 import exceptions.RaggiunteRisorseMaxException;
-import exceptions.RisorsaGi‡Posseduta;
+import exceptions.RisorsaGi‡PossedutaException;
 import model.Film;
 import model.Fruitore;
 import model.Prestiti;
@@ -127,7 +127,7 @@ public class TestPrestiti
 		{
 			prestiti.addPrestito(fruitore, film);
 		} 
-		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡PossedutaException e) 
 		{
 			e.printStackTrace();
 		}
@@ -135,7 +135,7 @@ public class TestPrestiti
 		{
 			prestiti.addPrestito(fruitore, film2);
 		} 
-		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡PossedutaException e) 
 		{
 			e.printStackTrace();
 		}
@@ -161,7 +161,7 @@ public class TestPrestiti
 		{
 			prestiti.addPrestito(fruitore, film);
 		} 
-		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡PossedutaException e) 
 		{
 			e.printStackTrace();
 		}
@@ -169,7 +169,7 @@ public class TestPrestiti
 		{
 			prestiti.addPrestito(fruitore2, film2);
 		} 
-		catch (RaggiunteRisorseMaxException | RisorsaGi‡Posseduta e) 
+		catch (RaggiunteRisorseMaxException | RisorsaGi‡PossedutaException e) 
 		{
 			e.printStackTrace();
 		}

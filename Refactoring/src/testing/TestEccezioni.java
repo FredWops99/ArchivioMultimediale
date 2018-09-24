@@ -3,15 +3,15 @@ package testing;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 import exceptions.RaggiunteRisorseMaxException;
-import exceptions.RisorsaGi‡Posseduta;
+import exceptions.RisorsaGi‡PossedutaException;
 import model.Film;
 import model.Fruitore;
 import model.Prestiti;
 
 public class TestEccezioni 
 {
-	@Test(expected = RisorsaGi‡Posseduta.class)
-	public void risorsaGi‡Posseduta() throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta 
+	@Test(expected = RisorsaGi‡PossedutaException.class)
+	public void risorsaGi‡Posseduta() throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException 
 	{
 		Prestiti prestiti = new Prestiti();
 		GregorianCalendar dataNascita = new GregorianCalendar(2000, 0, 1);
@@ -25,7 +25,7 @@ public class TestEccezioni
 	}
 	
 	@Test(expected = RaggiunteRisorseMaxException.class)
-	public void raggiunteRisorseMaxException() throws RaggiunteRisorseMaxException, RisorsaGi‡Posseduta
+	public void raggiunteRisorseMaxException() throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException
 	{
 		Prestiti prestiti = new Prestiti();
 		GregorianCalendar dataNascita = new GregorianCalendar(2000, 0, 1);
