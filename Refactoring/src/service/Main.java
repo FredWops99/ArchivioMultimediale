@@ -54,36 +54,22 @@ public class Main
 		gestoreSalvataggi.salvaFruitori(fruitori);
 		gestoreSalvataggi.salvaPrestiti(prestiti);
 		
-		mostraMenuAccesso(archivioController, fruitoriController, storicoController, prestitiController);
+		MainFacade controller = new MainFacade();
+		controller.begin(utenteLoggato,archivioController,fruitoriController,storicoController,prestitiController);
 	}
 	
-	private static void mostraMenuAccesso(ArchivioController archivioController, FruitoriController fruitoriController, 
-											StoricoController storicoController, PrestitiController prestitiController) 
-	{
-		final String MENU_ACCESSO = "Scegliere la tipologia di utente con cui accedere: ";
-		final String[] MENU_ACCESSO_SCELTE = {"Fruitore", "Operatore"};
-		
-		MyMenu menuAccesso = new MyMenu(MENU_ACCESSO, MENU_ACCESSO_SCELTE);
-		
-		boolean terminato;
-		do
-		{
-			int scelta = menuAccesso.scegli();
-			terminato = AccessoHandler.gestisciAccesso(utenteLoggato, scelta, archivioController, fruitoriController, storicoController, prestitiController);
-		}
-		while(!terminato);	
-	}
+	
 
-	public static void salvaArchivio()
-	{
-		gestoreSalvataggi.salvaArchivio(archivio);
-	}
-	public static void salvaFruitori()
-	{
-		gestoreSalvataggi.salvaFruitori(fruitori);
-	}
-	public static void salvaPrestiti()
-	{
-		gestoreSalvataggi.salvaPrestiti(prestiti);
-	}
+//	public static void salvaArchivio()
+//	{
+//		gestoreSalvataggi.salvaArchivio(archivio);
+//	}
+//	public static void salvaFruitori()
+//	{
+//		gestoreSalvataggi.salvaFruitori(fruitori);
+//	}
+//	public static void salvaPrestiti()
+//	{
+//		gestoreSalvataggi.salvaPrestiti(prestiti);
+//	}
 }
