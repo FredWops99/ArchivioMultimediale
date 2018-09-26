@@ -2,7 +2,7 @@ package handler.risorse.libri;
 
 import java.util.Vector;
 
-import controller.LibriController;
+import controllerMVC.LibriController;
 import model.Libro;
 
 /**

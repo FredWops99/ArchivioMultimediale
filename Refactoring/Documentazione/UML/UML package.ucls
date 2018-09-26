@@ -7,7 +7,7 @@
     <position height="-1" width="-1" x="175" y="195"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="2" language="java" name="controller" project="Refactoring" file="/Refactoring/src/controller" 
+  <package id="2" language="java" name="controllerMVC" project="Refactoring" file="/Refactoring/src/controllerMVC" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="352" y="381"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
@@ -19,15 +19,15 @@
   </package>  
   <dependency id="4">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
+    <end type="TARGET" refId="3"/>  
   </dependency>  
   <dependency id="5">    
-    <end type="SOURCE" refId="3"/>    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <dependency id="6">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

@@ -1,6 +1,6 @@
 package handler.storico;
 
-import controller.StoricoController;
+import controllerMVC.StoricoController;
 import view.StoricoView;
 
 /**

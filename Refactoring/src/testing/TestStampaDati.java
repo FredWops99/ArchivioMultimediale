@@ -8,9 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.FilmsController;
-import controller.FruitoriController;
-import controller.LibriController;
+import controllerMVC.FilmsController;
+import controllerMVC.FruitoriController;
+import controllerMVC.LibriController;
 import model.Film;
 import model.Films;
 import model.Fruitore;

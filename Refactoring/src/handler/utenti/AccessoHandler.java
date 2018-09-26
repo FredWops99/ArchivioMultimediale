@@ -1,9 +1,9 @@
 package handler.utenti;
 
-import controller.ArchivioController;
-import controller.FruitoriController;
-import controller.PrestitiController;
-import controller.StoricoController;
+import controllerMVC.ArchivioController;
+import controllerMVC.FruitoriController;
+import controllerMVC.PrestitiController;
+import controllerMVC.StoricoController;
 import model.Fruitore;
 import view.FruitoriView;
 import view.MessaggiSistemaView;

@@ -2,7 +2,7 @@ package handler.risorse.films;
 
 import java.util.Vector;
 
-import controller.FilmsController;
+import controllerMVC.FilmsController;
 import model.Film;
 
 /**

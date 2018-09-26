@@ -1,8 +1,13 @@
-package model;
+package service;
 
-import controller.*;
+import controllerMVC.*;
 import handler.utenti.AccessoHandler;
 import interfaces.ISavesManager;
+import model.Archivio;
+import model.Fruitore;
+import model.Fruitori;
+import model.Prestiti;
+import model.Storico;
 import myLib.MyMenu;
 
 /**

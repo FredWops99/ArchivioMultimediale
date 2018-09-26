@@ -1,10 +1,10 @@
 package handler.utenti;
 
-import controller.ArchivioController;
-import controller.FruitoriController;
-import controller.PrestitiController;
-import controller.StoricoController;
-import model.Main;
+import controllerMVC.ArchivioController;
+import controllerMVC.FruitoriController;
+import controllerMVC.PrestitiController;
+import controllerMVC.StoricoController;
+import service.Main;
 
 public class OperatoreHandler 
 {	

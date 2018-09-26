@@ -1,8 +1,8 @@
 package handler.utenti;
 
-import controller.ArchivioController;
-import controller.FruitoriController;
-import controller.PrestitiController;
+import controllerMVC.ArchivioController;
+import controllerMVC.FruitoriController;
+import controllerMVC.PrestitiController;
 import model.Fruitore;
 
 public class FruitoreHandler 

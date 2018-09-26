@@ -1,8 +1,8 @@
 package handler.prestiti;
 
-import controller.PrestitiController;
+import controllerMVC.PrestitiController;
 import model.Fruitore;
-import model.Main;
+import service.Main;
 
 public class TerminaPrestitiHandler 
 {

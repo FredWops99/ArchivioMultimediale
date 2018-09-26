@@ -1,9 +1,12 @@
-package model;
+package service;
 
 import java.io.File;
 import java.io.IOException;
 
 import interfaces.ISavesManager;
+import model.Archivio;
+import model.Fruitori;
+import model.Prestiti;
 import myLib.ServizioFile;
 
 public class GestoreSalvataggi implements ISavesManager

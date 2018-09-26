@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 
-import controller.FruitoriController;
+import controllerMVC.FruitoriController;
 import model.Fruitore;
 import model.Fruitori;
 

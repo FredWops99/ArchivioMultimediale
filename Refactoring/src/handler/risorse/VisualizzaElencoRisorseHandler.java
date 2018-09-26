@@ -1,6 +1,6 @@
 package handler.risorse;
 
-import controller.ArchivioController;
+import controllerMVC.ArchivioController;
 
 public class VisualizzaElencoRisorseHandler 
 {

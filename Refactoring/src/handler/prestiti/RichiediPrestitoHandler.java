@@ -1,10 +1,10 @@
 package handler.prestiti;
 
-import controller.ArchivioController;
-import controller.PrestitiController;
+import controllerMVC.ArchivioController;
+import controllerMVC.PrestitiController;
 import model.Fruitore;
-import model.Main;
 import model.Risorsa;
+import service.Main;
 
 public class RichiediPrestitoHandler 
 {
