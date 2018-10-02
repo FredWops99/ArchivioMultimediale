@@ -2,8 +2,6 @@ package controllerMVC;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
-import handler.utenti.AccessoFruitoreHandler;
 import handler.utenti.FruitoreHandler;
 import handler.utenti.OperatoreHandler;
 import model.Fruitore;
@@ -175,26 +173,7 @@ public class FruitoriController
 		}	
 	}
 
-	/**
-	 * menu che compare una volta che si esegue l'accesso come fruitore
-	 * @param scelta la scelta selezionata dall'utente
-	 */
-	public void menuAccessoFruitore(Fruitore utenteLoggato, ArchivioController archivioController, PrestitiController prestitiController) 
-	{
-		final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-		
-		MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE, true);
-		
-		int scelta;
-		boolean terminato;
-		do
-		{
-			scelta = menuFruitore.scegli();
-			terminato = AccessoFruitoreHandler.gestisciAccessoFruitore(utenteLoggato, scelta, archivioController, this, prestitiController);
-		}
-		while(!terminato);
-	}
+	
 
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore
