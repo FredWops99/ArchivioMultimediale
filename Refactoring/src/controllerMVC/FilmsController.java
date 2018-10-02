@@ -7,6 +7,7 @@ import handler.risorse.films.ScegliFilmHandler;
 import model.Film;
 import model.Films;
 import model.Risorsa;
+import model.Risorse;
 import myLib.MyMenu;
 import view.FilmsView;
 import view.MessaggiSistemaView;
@@ -265,12 +266,12 @@ public class FilmsController
 		}
 	}
 	
-	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
+	public Vector<Risorsa> filtraFilmPerTitolo(String titoloParziale)
 	{
-		return model.filtraFilmPerTitolo(titoloParziale);
+		return  model.filtraRisorsaPerTitolo(titoloParziale);
 	}
 	
-	public Vector<Film> filtraFilmPerUscita(int annoUscita)
+	public Vector<Risorsa> filtraFilmPerUscita(int annoUscita)
 	{
 		return model.filtraFilmPerUscita(annoUscita);
 	}

@@ -9,7 +9,7 @@ import model.Libro;
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Libri implements Serializable
+public class Libri extends Risorse implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	/**
@@ -113,25 +113,25 @@ public class Libri implements Serializable
 	 * (precondizione: l != null)
 	 * @param l il libro da inserire
 	 */
-	private void addPerSottoCategorie(Libro l)
-	{
-		if(libri.isEmpty())
-		{
-			libri.add(l);
-		}
-		else
-		{
-			for(int i = 0; i < libri.size(); i++)
-			{
-				if(libri.get(i).getSottoCategoria().equals(l.getSottoCategoria()))
-				{
-					libri.add(i+1, l);
-					return;
-				}
-			}
-			libri.add(l);
-		}
-	}
+//	private void addPerSottoCategorie(Libro l)
+//	{
+//		if(libri.isEmpty())
+//		{
+//			libri.add(l);
+//		}
+//		else
+//		{
+//			for(int i = 0; i < libri.size(); i++)
+//			{
+//				if(libri.get(i).getSottoCategoria().equals(l.getSottoCategoria()))
+//				{
+//					libri.add(i+1, l);
+//					return;
+//				}
+//			}
+//			libri.add(l);
+//		}
+//	}
 
 	/**
 	 * indica se il libro è già presente in archivio
@@ -159,19 +159,19 @@ public class Libri implements Serializable
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale) 
-	{
-		Vector<Libro> libriTrovati = new Vector<>(); 
-		
-		for(Libro libro : libri)
-		{
-			if(libro.isPrestabile() && libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
-			{
-				libriTrovati.add(libro);
-			}
-		}
-		return libriTrovati;
-	}
+//	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale) 
+//	{
+//		Vector<Libro> libriTrovati = new Vector<>(); 
+//		
+//		for(Libro libro : libri)
+//		{
+//			if(libro.isPrestabile() && libro.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+//			{
+//				libriTrovati.add(libro);
+//			}
+//		}
+//		return libriTrovati;
+//	}
 	
 	/**
 	 * filtra tutti i libri in base all'anno di pubblicazione
@@ -179,19 +179,19 @@ public class Libri implements Serializable
 	 * @param annoPubblicazione l'anno da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione) 
-	{
-		Vector<Libro> libriTrovati = new Vector<>(); 
-		
-		for(Libro libro : libri)
-		{
-			if(libro.isPrestabile() && libro.getAnnoPubblicazione() == annoPubblicazione)
-			{
-				libriTrovati.add(libro);
-			}
-		}
-		return libriTrovati;
-	}
+//	public Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione) 
+//	{
+//		Vector<Libro> libriTrovati = new Vector<>(); 
+//		
+//		for(Libro libro : libri)
+//		{
+//			if(libro.isPrestabile() && libro.getAnnoPubblicazione() == annoPubblicazione)
+//			{
+//				libriTrovati.add(libro);
+//			}
+//		}
+//		return libriTrovati;
+//	}
 	
 	/**
 	 * filtra tutti i libri in base all'autore

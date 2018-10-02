@@ -8,7 +8,7 @@ import java.util.Vector;
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Films implements Serializable
+public class Films extends Risorse implements Serializable  
 {	
 	private static final long serialVersionUID = 1L;
 	/**
@@ -82,25 +82,25 @@ public class Films implements Serializable
 	 * (precondizione: f != null)
 	 * @param f il film da inserire
 	 */
-	private void addPerSottoCategorie(Film f)
-	{
-		if(films.isEmpty())
-		{
-			films.add(f);
-		}
-		else
-		{
-			for(int i = 0; i < films.size(); i++)
-			{
-				if(films.get(i).getSottoCategoria().equals(f.getSottoCategoria()))
-				{
-					films.add(i+1, f);
-					return;
-				}
-			}
-			films.add(f);
-		}
-	}
+//	private void addPerSottoCategorie(Film f)
+//	{
+//		if(films.isEmpty())
+//		{
+//			films.add(f);
+//		}
+//		else
+//		{
+//			for(int i = 0; i < films.size(); i++)
+//			{
+//				if(films.get(i).getSottoCategoria().equals(f.getSottoCategoria()))
+//				{
+//					films.add(i+1, f);
+//					return;
+//				}
+//			}
+//			films.add(f);
+//		}
+//	}
 	
 	/**
 	 * filtra tutti i film in base al titolo
@@ -108,39 +108,39 @@ public class Films implements Serializable
 	 * @param titoloParziale la parte di titolo usata come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
-	{		
-		Vector<Film> filmTrovati = new Vector<>(); 
-		
-		for(Film film : films)
-		{
-			if(film.isPrestabile() && film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
-			{
-				filmTrovati.add(film);
-			}
-		}
-		return filmTrovati;
-	}
-	
+//	public Vector<Film> filtraFilmPerTitolo(String titoloParziale)
+//	{		
+//		Vector<Film> filmTrovati = new Vector<>(); 
+//		
+//		for(Film film : films)
+//		{
+//			if(film.isPrestabile() && film.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+//			{
+//				filmTrovati.add(film);
+//			}
+//		}
+//		return filmTrovati;
+//	}
+//	
 	/**
 	 * filtra tutti i film in base all'anno di pubblicazione
 	 * (precondizione: annoUscita != null)
 	 * @param annoUscita l'anno da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public Vector<Film> filtraFilmPerUscita(int annoUscita) 
-	{
-		Vector<Film> filmTrovati = new Vector<>(); 
-		
-		for(Film film : films)
-		{
-			if(film.isPrestabile() && film.getAnnoDiUscita() == annoUscita)
-			{
-				filmTrovati.add(film);
-			}
-		}
-		return filmTrovati;
-	}
+//	public Vector<Film> filtraFilmPerUscita(int annoUscita) 
+//	{
+//		Vector<Film> filmTrovati = new Vector<>(); 
+//		
+//		for(Film film : films)
+//		{
+//			if(film.isPrestabile() && film.getAnnoDiUscita() == annoUscita)
+//			{
+//				filmTrovati.add(film);
+//			}
+//		}
+//		return filmTrovati;
+//	}
 
 	/**
 	 * filtra tutti i film in base al regista

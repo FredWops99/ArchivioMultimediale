@@ -42,7 +42,7 @@ public class Libro extends Risorsa implements Serializable
 	private String titolo;
 	private Vector<String> autori = new Vector<>();
 	private int pagine;
-	private int annoPubblicazione;
+	private int annoDiUscita;
 	private String casaEditrice;
 	private String lingua;
 	private String genere;
@@ -66,7 +66,7 @@ public class Libro extends Risorsa implements Serializable
 	 * @param genere il genere del libro ( "-" se il genere non ha sottogeneri)
 	 * @param nLicenze il numero di licenze disponibili
 	 */
-	public Libro(String id, String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
+	public Libro(String id, String sottoCategoria, String titolo, Vector<String> autori, int pagine, int getAnnoDiUscita, String casaEditrice,
 			String lingua, String genere, int nLicenze) 
 	{
 		this.setId(id);
@@ -74,7 +74,7 @@ public class Libro extends Risorsa implements Serializable
 		this.setTitolo(titolo);
 		this.setAutori(autori);
 		this.setPagine(pagine);
-		this.setAnnoPubblicazione(annoPubblicazione);
+		this.setAnnoDiUscita(getAnnoDiUscita);
 		this.setCasaEditrice(casaEditrice);
 		this.setLingua(lingua);
 		this.setGenere(genere);
@@ -115,7 +115,7 @@ public class Libro extends Risorsa implements Serializable
 			sb.append("Genere--------------------: " + genere + "\n");
 		}
 		sb.append("Numero pagine-------------: " + pagine + "\n");
-		sb.append("Anno di pubblicazione-----: " + annoPubblicazione + "\n");
+		sb.append("Anno di pubblicazione-----: " + annoDiUscita + "\n");
 		sb.append("Casa editrice-------------: " + casaEditrice + "\n");
 		sb.append("Lingua--------------------: " + lingua + "\n");
 		if(!perPrestito)//dati utili all'operatore
@@ -172,11 +172,11 @@ public class Libro extends Risorsa implements Serializable
 	}
 	public int getAnnoPubblicazione() 
 	{
-		return annoPubblicazione;
+		return annoDiUscita;
 	}
-	public void setAnnoPubblicazione(int annoPubblicazione) 
+	public void setAnnoDiUscita(int annoDiUscita) 
 	{
-		this.annoPubblicazione = annoPubblicazione;
+		this.annoDiUscita = annoDiUscita;
 	}
 	public String getCasaEditrice() 
 	{
@@ -257,5 +257,10 @@ public class Libro extends Risorsa implements Serializable
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;
+	}
+
+	public int getAnnoDiUscita() 
+	{
+		return this.annoDiUscita;
 	}
 }
