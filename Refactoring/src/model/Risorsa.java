@@ -41,6 +41,8 @@ public abstract class Risorsa
 	 * @return il numero di copie della risorsa attualmente in prestito
 	 */
 	public abstract int getInPrestito();
+	
+	public abstract int getAnnoDiUscita();
 	/**
 	 * @return true se la risorsa è ancora disponibile al prestito
 	 */

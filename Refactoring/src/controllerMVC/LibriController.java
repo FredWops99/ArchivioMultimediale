@@ -290,15 +290,15 @@ public class LibriController
 		
 	}
 	
-	public Vector<Libro> filtraLibriPerTitolo(String titoloParziale)
+	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
 	{
-		return model.filtraLibriPerTitolo(titoloParziale);
+		return model.filtraRisorsaPerTitolo(titoloParziale);
 	}
 	
 	
-	public Vector<Libro> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
+	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
 	{
-		return model.filtraLibriPerAnnoPubblicazione(annoPubblicazione);
+		return model.filtraFilmPerUscita(annoPubblicazione);
 	}
 	
 	public Vector<Libro> filtraLibriPerAutori(String autore)
