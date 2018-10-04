@@ -1,8 +1,7 @@
 package controllerMVC;
 
 import java.util.Vector;
-
-import handler.risorse.*;
+import handler.ManageRisorseHandler;
 import model.*;
 import myLib.MyMenu;
 import view.MessaggiSistemaView;
@@ -37,7 +36,7 @@ public class ArchivioController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		return RimuoviRisorsaHandler.rimuoviRisorsa(scelta, CATEGORIE, this);
+		return ManageRisorseHandler.rimuoviRisorsa(scelta, CATEGORIE, this);
 	}
 	
 	public void menuAggiungiRisorsa() 
@@ -46,7 +45,7 @@ public class ArchivioController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		AggiungiRisorsaHandler.aggiungiRisorsa(scelta, CATEGORIE, this);
+		ManageRisorseHandler.aggiungiRisorsa(scelta, CATEGORIE, this);
 	} 
 	
 	public void addRisorsa(String categoria)
@@ -98,7 +97,7 @@ public class ArchivioController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		CercaRisorsaHandler.cercaRisorsa(scelta, CATEGORIE, this);
+		ManageRisorseHandler.cercaRisorsa(scelta, CATEGORIE, this);
 	}
 	
 	public void cercaRisorsa(String categoria)
@@ -119,7 +118,7 @@ public class ArchivioController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		VisualizzaElencoRisorseHandler.visualizza(scelta, CATEGORIE, this);
+		ManageRisorseHandler.visualizzaRisorse(scelta, CATEGORIE, this);
 	}
 	
 	public void visualizzaDatiRisorsePrestabili(String categoria) 

@@ -1,8 +1,8 @@
 package controllerMVC;
 
 import java.util.Vector;
-import handler.risorse.films.FiltroFilmHandler;
-import handler.risorse.films.ScegliFilmHandler;
+import handler.FiltriHandler;
+import handler.ManageRisorseHandler;
 import model.Film;
 import model.Films;
 import model.Risorsa;
@@ -252,7 +252,7 @@ public class FilmsController
 		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 		int scelta = menuFiltro.scegliBase();
 		
-		Vector<Risorsa> filmFiltrati = FiltroFilmHandler.filtraFilm(scelta, daPrenotare, this);
+		Vector<Risorsa> filmFiltrati = FiltriHandler.filtraFilm(scelta, daPrenotare, this);
 		
 		if(daPrenotare)
 		{
@@ -305,7 +305,7 @@ public class FilmsController
 		MyMenu menuSceltaFilm = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaFilm.scegliBase();
 		
-		return ScegliFilmHandler.scegliFilm(scelta, this);
+		return ManageRisorseHandler.scegliFilm(scelta, this);
 	}
 	
 	public Film selezionaFilm(Vector<Risorsa> filmsFiltrati) 

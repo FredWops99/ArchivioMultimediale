@@ -1,4 +1,4 @@
-package handler.storico;
+package handler;
 
 import controllerMVC.StoricoController;
 import view.StoricoView;
@@ -21,7 +21,7 @@ import view.StoricoView;
  * @author Stefano Prandini
  * @author Federico Landi
  */
-public class MostraStoricoHandler
+public class StoricoHandler
 {
 	public static boolean mostra(int scelta, StoricoController storicoController)
 	{

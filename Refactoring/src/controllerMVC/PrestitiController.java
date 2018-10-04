@@ -3,8 +3,7 @@ package controllerMVC;
 import java.util.Vector;
 import exceptions.RaggiunteRisorseMaxException;
 import exceptions.RisorsaGiàPossedutaException;
-import handler.prestiti.RichiediPrestitoHandler;
-import handler.prestiti.TerminaPrestitiHandler;
+import handler.ManagePrestitiHandler;
 import model.Fruitore;
 import model.Prestiti;
 import model.Prestito;
@@ -54,7 +53,7 @@ public class PrestitiController
 		MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
 		int scelta = menu.scegliBase();
 		
-		RichiediPrestitoHandler.richiedi(scelta, utenteLoggato, this, archivioController);
+		ManagePrestitiHandler.richiediPrestito(scelta, utenteLoggato, this, archivioController);
 	}	
 
 	//addPrestito può lanciare due eccezioni diverse: o il fruitore possiede già la risorsa o ha raggiunto il limite di risorse possedute
@@ -136,7 +135,7 @@ public class PrestitiController
 		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
 		int scelta = menuPrestiti.scegliBase();
 		
-		TerminaPrestitiHandler.terminaPrestiti(scelta, utenteLoggato, this);
+		ManagePrestitiHandler.terminaPrestiti(scelta, utenteLoggato, this);
 	}
 	
 	/**

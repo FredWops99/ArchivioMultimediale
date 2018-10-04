@@ -3,7 +3,7 @@ package controllerMVC;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import handler.storico.MostraStoricoHandler;
+import handler.StoricoHandler;
 import model.*;
 import myLib.MyMenu;
 import view.StoricoView;
@@ -31,7 +31,7 @@ public class StoricoController
 			MyMenu menuStorico = new MyMenu(INTESTAZIONE, VOCI_MENU_STORICO, true);
 			int scelta = menuStorico.scegliBase();
 			
-			terminato = MostraStoricoHandler.mostra(scelta, this);
+			terminato = StoricoHandler.mostra(scelta, this);
 		}
 		while(!terminato);
 	}	

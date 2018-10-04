@@ -2,7 +2,7 @@ package service;
 
 import model.*;
 import controllerMVC.*;
-import handler.utenti.AccessoHandler;
+import handler.AccessoHandler;
 import interfaces.ISavesManager;
 import myLib.MyMenu;
 
@@ -69,7 +69,7 @@ public class MainFacade
 		}
 		if(accessoHandler == null)
 		{
-			accessoHandler = new AccessoHandler(utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
+			accessoHandler = new AccessoHandler(gestoreSalvataggi, utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
 		}
 		
 		boolean fine;

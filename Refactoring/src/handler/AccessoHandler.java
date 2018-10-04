@@ -1,9 +1,10 @@
-package handler.utenti;
+package handler;
 
 import controllerMVC.ArchivioController;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
+import interfaces.ISavesManager;
 import model.Fruitore;
 import myLib.MyMenu;
 import view.FruitoriView;
@@ -16,12 +17,14 @@ public class AccessoHandler
 	private FruitoriController fruitoriController;
 	private StoricoController storicoController;
 	private PrestitiController prestitiController;
+	private ISavesManager gestoreSalvataggi;
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	
-	public AccessoHandler(Fruitore utenteLoggato, ArchivioController archivioController,FruitoriController fruitoriController,
+	public AccessoHandler(ISavesManager gestoreSalvataggi, Fruitore utenteLoggato, ArchivioController archivioController,FruitoriController fruitoriController,
 							StoricoController storicoController, PrestitiController prestitiController)
 	{
+		this.gestoreSalvataggi = gestoreSalvataggi;
 		this.utenteLoggato = utenteLoggato;
 		this.archivioController = archivioController;
 		this.fruitoriController = fruitoriController;
@@ -46,7 +49,7 @@ public class AccessoHandler
 			}
 			case 1://accesso FRUITORE
 			{
-				menuAccessoFruitore(utenteLoggato, archivioController, prestitiController);
+				accessoFruitore();
 //				FruitoreHandler.show(utenteLoggato, archivioController, fruitoriController, prestitiController);
 				
 				terminato = false;
@@ -80,7 +83,7 @@ public class AccessoHandler
 	 * menu che compare una volta che si esegue l'accesso come fruitore
 	 * @param scelta la scelta selezionata dall'utente
 	 */
-	public void menuAccessoFruitore(Fruitore utenteLoggato, ArchivioController archivioController, PrestitiController prestitiController) 
+	public void accessoFruitore() 
 	{
 		final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
 		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
@@ -92,9 +95,46 @@ public class AccessoHandler
 		do
 		{
 			scelta = menuFruitore.scegli();
-			terminato = AccessoFruitoreHandler.gestisciAccessoFruitore(utenteLoggato, scelta, archivioController, 
-																		fruitoriController, prestitiController);
+			terminato = gestisciAccessoFruitore(scelta);
 		}
 		while(!terminato);
+	}
+	
+	public boolean gestisciAccessoFruitore(int scelta)
+	{
+		boolean terminato;
+		switch(scelta)
+		{
+			case 0:	//EXIT
+			{
+				terminato = true;
+				break;
+			}
+			case 1:	//registrazione nuovo fruitore
+			{
+				fruitoriController.addFruitore();
+				gestoreSalvataggi.salvaFruitori();
+				
+				terminato = false;//torna al menu
+				break;				
+			}
+			case 2:	//login
+			{
+				utenteLoggato = fruitoriController.login();
+				
+				if(!(utenteLoggato == null))
+				{
+					fruitoriController.menuFruitore(utenteLoggato, archivioController, prestitiController);
+				}
+				
+				terminato = false;
+				break;
+			}
+			default:
+			{
+				terminato = true;
+			}
+		}	
+			return terminato;
 	}
 }

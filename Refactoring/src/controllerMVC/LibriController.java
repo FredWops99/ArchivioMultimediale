@@ -2,8 +2,8 @@ package controllerMVC;
 
 import java.util.Vector;
 
-import handler.risorse.libri.FiltroLibriHandler;
-import handler.risorse.libri.ScegliLibroHandler;
+import handler.FiltriHandler;
+import handler.ManageRisorseHandler;
 import model.Libri;
 import model.Libro;
 import model.Risorsa;
@@ -277,7 +277,7 @@ public class LibriController
 		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 		int scelta = menuFiltro.scegliBase();
 		
-		Vector<Risorsa> libriFiltrati = FiltroLibriHandler.filtraLibri(scelta, daPrenotare, this);
+		Vector<Risorsa> libriFiltrati = FiltriHandler.filtraLibri(scelta, daPrenotare, this);
 		
 		if(daPrenotare)
 		{
@@ -332,7 +332,7 @@ public class LibriController
 		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaLibro.scegliBase();
 		
-		return ScegliLibroHandler.scegliLibro(scelta, this);
+		return ManageRisorseHandler.scegliLibro(scelta, this);
 	}	
 	
 	public Libro selezionaLibro(Vector<Risorsa> libriFiltrati) 

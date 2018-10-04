@@ -2,8 +2,8 @@ package controllerMVC;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-import handler.utenti.FruitoreHandler;
-import handler.utenti.OperatoreHandler;
+
+import handler.MenuUtentiHandler;
 import model.Fruitore;
 import model.Fruitori;
 import myLib.GestioneDate;
@@ -193,7 +193,7 @@ public class FruitoriController
 		do
 		{
 			scelta = menuOperatore.scegli();
-			terminato = OperatoreHandler.gestisciOperatore(scelta, storicoController, archivioController, this, prestitiController);
+			terminato = MenuUtentiHandler.menuOperatore(scelta, storicoController, archivioController, this, prestitiController);
 		}
 		while(!terminato);
 	}
@@ -215,7 +215,7 @@ public class FruitoriController
 		do
 		{
 			scelta = menuPersonale.scegli();
-			terminato = FruitoreHandler.gestisciFruitore(utenteLoggato, scelta, archivioController, this, prestitiController);
+			terminato = MenuUtentiHandler.menuFruitore(utenteLoggato, scelta, archivioController, this, prestitiController);
 		}
 		while(!terminato);
 	}
