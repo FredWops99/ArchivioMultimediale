@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 /**
  * Classe che raggruppa le varie tipologie di risorsa (Libri, Films,...) e opera su di esse.
@@ -41,32 +42,56 @@ public class Archivio implements Serializable
 	{
 		this.films = films;
 	}
-
-	public Risorsa getRisorsa(String id) 
+	
+	private Vector<Risorsa> tutteLeRisorse()
 	{
-		Risorsa r = null;
-		
-		switch(id.charAt(0))
+		Vector<Risorsa> risorse = new Vector<>();
+		for(Risorsa risorsa : libri.getRisorse())
 		{
-			case 'L':
-			{
-				for(Libro libro : libri.getLibri())
-				{
-					if(libro.getId().equals(id))
-						r = libro;
-				}
-				break;
-			}
-			case 'F':
-			{
-				for(Film film : films.getFilms())
-				{
-					if(film.getId().equals(id))
-						r = film;
-				}
-				break;
-			}
+			risorse.add(risorsa);
 		}
-		return r;
+		for(Risorsa risorsa : films.getRisorse())
+		{
+			risorse.add(risorsa);
+		}
+		return risorse;
 	}
+	
+	public Risorsa getRisorsa(String id)
+	{		
+		for(Risorsa risorsa : tutteLeRisorse())
+		{
+			if(risorsa.getId().equals(id))
+				return risorsa;
+		}
+		return null;
+	}
+
+//	public Risorsa getRisorsa(String id) 
+//	{
+//		Risorsa r = null;
+//		
+//		switch(id.charAt(0))
+//		{
+//			case 'L':
+//			{
+//				for(Risorsa libro : libri.getRisorse())
+//				{
+//					if(libro.getId().equals(id))
+//						r = libro;
+//				}
+//				break;
+//			}
+//			case 'F':
+//			{
+//				for(Risorsa film : films.getRisorse())
+//				{
+//					if(film.getId().equals(id))
+//						r = film;
+//				}
+//				break;
+//			}
+//		}
+//		return r;
+//	}
 }

@@ -3,6 +3,7 @@ package view;
 import java.util.Vector;
 import model.Libri;
 import model.Libro;
+import model.Risorsa;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
@@ -48,9 +49,9 @@ public class LibriView extends RisorseView
 		System.out.println("In archivio non sono presenti libri il cui autore è " + nomeAutore);
 	}
 	
-	private static void stampaGenere(Libro libro) 
+	private static void stampaGenere(Risorsa risorsa) 
 	{
-		System.out.println("Genere: " + libro.getGenere());	
+		System.out.println("Genere: " + ((Libro) risorsa).getGenere());	
 	}
 
 	/**

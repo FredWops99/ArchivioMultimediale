@@ -20,14 +20,14 @@ public class ArchivioController
 		libriController = new LibriController(archivio.getLibri());
 	}
 	
-	public Vector<Libro> getVectorLibri()
+	public Vector<Risorsa> getVectorLibri()
 	{
-		return libriController.getModel().getLibri();
+		return libriController.getModel().getRisorse();
 	}
 	
-	public Vector<Film> getVectorFilm()
+	public Vector<Risorsa> getVectorFilm()
 	{
-		return filmController.getModel().getFilms();
+		return filmController.getModel().getRisorse();
 	}
 	
 	private String menuRimuoviRisorsa() 

@@ -4,14 +4,15 @@ import java.util.Vector;
 
 import controllerMVC.FilmsController;
 import model.Film;
+import model.Risorsa;
 import view.FilmsView;
 import view.MessaggiSistemaView;
 
 public class FiltroFilmHandler 
 {	
-	public static Vector<Film> filtraFilm(int scelta, boolean daPrenotare, FilmsController filmController) 
+	public static Vector<Risorsa> filtraFilm(int scelta, boolean daPrenotare, FilmsController filmController) 
 	{
-		Vector<Film> filmsFiltrati = null;
+		Vector<Risorsa> filmsFiltrati = null;
 		String titoloParziale = null;
 		int annoUscita = 0;
 		String nomeRegista = null;

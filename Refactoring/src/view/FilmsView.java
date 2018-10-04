@@ -2,6 +2,7 @@ package view;
 
 import java.util.Vector;
 import model.Film;
+import model.Risorsa;
 import myLib.GestioneDate;
 import myLib.InputDati;
 
@@ -40,7 +41,7 @@ public class FilmsView extends RisorseView
 //	non posso spostarlo in RisorseView perchè Film e Libro hanno campi diversi
 //	potrebbe essere come abstract e poi FilmsView e LibriView devono implementarlo
 //	metodi statici non possono essere astratti :(
-	public static void stampaDati(Vector<Film> filmDaStampare) 
+	public static void stampaDati(Vector<Risorsa> filmDaStampare) 
 	{
 		if(filmDaStampare.isEmpty())
 		{

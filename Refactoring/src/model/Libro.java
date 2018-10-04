@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
+import com.sun.corba.se.impl.io.TypeMismatchException;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
  * @author Prandini Stefano
@@ -92,6 +94,31 @@ public class Libro extends Risorsa implements Serializable
 		else return false;
 	}
 	
+	@Override
+	public boolean stessiAttributi(Risorsa r) 
+	{
+		if(r instanceof Libro)
+		{
+//			è istanza di Libro, quindi posso fare il casting per poter usare i metodi di Libro
+			Libro l=(Libro)r;
+			
+			if(l.getTitolo().equals(titolo) && l.getAutori().equals(autori) && l.getAnnoDiUscita()==annoDiUscita
+					&& l.getCasaEditrice().equals(casaEditrice) && l.getGenere().equals(genere) && l.getLingua().equals(lingua)
+					&& l.getSottoCategoria().equals(sottoCategoria) && l.getPagine()==pagine && prestabile)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			throw new TypeMismatchException();
+		}
+	}
+	
 	
 	@Override
 	public String toString(boolean perPrestito) 
@@ -170,7 +197,7 @@ public class Libro extends Risorsa implements Serializable
 	{
 		this.pagine = pagine;
 	}
-	public int getAnnoPubblicazione() 
+	public int getAnnoDiUscita() 
 	{
 		return annoDiUscita;
 	}
@@ -257,10 +284,5 @@ public class Libro extends Risorsa implements Serializable
 	public int getPrestitiMax() 
 	{
 		return Libro.PRESTITI_MAX;
-	}
-
-	public int getAnnoDiUscita() 
-	{
-		return this.annoDiUscita;
 	}
 }

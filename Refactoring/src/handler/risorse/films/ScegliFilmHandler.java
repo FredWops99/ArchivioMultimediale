@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import controllerMVC.FilmsController;
 import model.Film;
+import model.Risorsa;
 
 /**
  * Gestisce il caso d'uso di scelta di un film, in entrambi gli scenari: scelta dall'archivio completo o filtrando la ricerca
@@ -23,13 +24,13 @@ public class ScegliFilmHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Film> filmsFiltrati = filmController.menuFiltraFilm(true);
+				Vector<Risorsa> filmsFiltrati = filmController.menuFiltraFilm(true);
 				
 				return filmController.selezionaFilm(filmsFiltrati);
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				Vector<Film>filmPrestabili = filmController.filmsPrestabili();
+				Vector<Risorsa>filmPrestabili = filmController.filmsPrestabili();
 				
 				return filmController.selezionaFilm(filmPrestabili);
 			}

@@ -50,6 +50,7 @@ public abstract class Risorsa
 	/**
 	 * @return quanti giorni la risorsa può stare in prestito
 	 */
+	public abstract void setPrestabile(boolean prestabile);
 	public abstract int getGiorniDurataPrestito();
 	/**
 	 * @return di quanto viene prorogato il prestito della risorsa
@@ -74,4 +75,7 @@ public abstract class Risorsa
 	 * aggiorna il numero di copie disponibili e in prestito della risorsa
 	 */
 	public abstract void tornaDalPrestito();
+	
+	public abstract boolean stessiAttributi(Risorsa r);
+	public abstract int getNLicenze();
 }

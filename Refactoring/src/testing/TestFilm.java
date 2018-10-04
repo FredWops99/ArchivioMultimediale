@@ -6,6 +6,7 @@ import org.junit.Test;
 import controllerMVC.FilmsController;
 import model.Film;
 import model.Films;
+import model.Risorsa;
 
 public class TestFilm 
 {
@@ -16,8 +17,8 @@ public class TestFilm
 	public void filmEsistente()
 	{
 		Film film = creaFilm("Titolo", "Avventura");
-		films.addFilm(film);
-		boolean esistente = films.filmEsistente(film);
+		films.addRisorsa(film);
+		boolean esistente = films.risorsaEsistente(film);
 		assertEquals(true, esistente);
 	}
 	
@@ -25,7 +26,7 @@ public class TestFilm
 //	aggiunge un film non presente
 	public void filmAggiunto() 
 	{
-		boolean riuscito = films.addFilm(creaFilm("Titolo", "Avventura"));
+		boolean riuscito = films.addRisorsa(creaFilm("Titolo", "Avventura"));
 		assertEquals(true, riuscito);
 	}
 
@@ -33,22 +34,22 @@ public class TestFilm
 //	aggiunge un film già presente
 	public void filmNonAggiunto() 
 	{
-		films.addFilm(creaFilm("Titolo", "Avventura"));
-		boolean riuscito = films.addFilm(creaFilm("Titolo", "Avventura"));
+		films.addRisorsa(creaFilm("Titolo", "Avventura"));
+		boolean riuscito = films.addRisorsa(creaFilm("Titolo", "Avventura"));
 		assertEquals(false, riuscito);
 	}
 	
 	@Test
 	public void aggiungiFilmPerSottoCategoria()
 	{
-		films.addFilm(creaFilm("Titolo1", "Avventura"));
-		films.addFilm(creaFilm("Titolo1", "Azione"));
-		films.addFilm(creaFilm("Titolo2", "Avventura"));
-		films.addFilm(creaFilm("Titolo2", "Azione"));
+		films.addRisorsa(creaFilm("Titolo1", "Avventura"));
+		films.addRisorsa(creaFilm("Titolo1", "Azione"));
+		films.addRisorsa(creaFilm("Titolo2", "Avventura"));
+		films.addRisorsa(creaFilm("Titolo2", "Azione"));
 
 		
 		StringBuilder sb = new StringBuilder();
-		for(Film film : films.getFilms())
+		for(Risorsa film : films.getRisorse())
 		{
 			sb.append(film.getSottoCategoria() + "-");
 		}
@@ -59,17 +60,17 @@ public class TestFilm
 	@Test
 	public void dimensione()
 	{
-		films.addFilm(creaFilm("titolo", "Avventura"));
-		films.addFilm(creaFilm("titolo1", "Avventura"));
-		films.addFilm(creaFilm("titolo2", "Avventura"));
+		films.addRisorsa(creaFilm("titolo", "Avventura"));
+		films.addRisorsa(creaFilm("titolo1", "Avventura"));
+		films.addRisorsa(creaFilm("titolo2", "Avventura"));
 
-		assertEquals(3, films.getFilms().size());
+		assertEquals(3, films.getRisorse().size());
 		
-		films.addFilm(creaFilm("titolo", "Avventura"));
-		films.addFilm(creaFilm("titolo1", "Avventura"));
-		films.addFilm(creaFilm("titolo2", "Avventura"));
+		films.addRisorsa(creaFilm("titolo", "Avventura"));
+		films.addRisorsa(creaFilm("titolo1", "Avventura"));
+		films.addRisorsa(creaFilm("titolo2", "Avventura"));
 		
-		assertEquals(3, films.getFilms().size());
+		assertEquals(3, films.getRisorse().size());
 	}
 	
 	@Test
@@ -77,16 +78,16 @@ public class TestFilm
 	{
 		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
 		
-		assertEquals(1, films.getFilms().size());
+		assertEquals(1, films.getRisorse().size());
 	}
 	
 	@Test
 	public void rimuoviFilm()
 	{
-		films.addFilm(creaFilm("titolo", "Fantasy"));
+		films.addRisorsa(creaFilm("titolo", "Fantasy"));
 		filmsController.removeFilm("titolo");
 		
-		assertEquals(false, films.getFilms().get(0).isPrestabile());
+		assertEquals(false, films.getRisorse().get(0).isPrestabile());
 	}
 	
 	@Test
@@ -95,8 +96,8 @@ public class TestFilm
 		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
 		filmsController.addFilm("Fantasy", "titolo", "regista", 100, 2000, "italiano", 20);
 
-		assertEquals(films.getFilms().get(0).getId(), "F0");
-		assertEquals(films.getFilms().get(1).getId(), "F1");
+		assertEquals(films.getRisorse().get(0).getId(), "F0");
+		assertEquals(films.getRisorse().get(1).getId(), "F1");
 
 		assertEquals(2, filmsController.getLastId());
 	}

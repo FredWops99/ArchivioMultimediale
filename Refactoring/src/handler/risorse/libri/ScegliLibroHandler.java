@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import controllerMVC.LibriController;
 import model.Libro;
+import model.Risorsa;
 
 /**
  * Gestisce il caso d'uso di scelta di un libro, in entrambi gli scenari: scelta dall'archivio completo o filtrando la ricerca
@@ -22,14 +23,14 @@ public class ScegliLibroHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Libro> libriFiltrati = libriController.menuFiltraLibri(true);
+				Vector<Risorsa> libriFiltrati = libriController.menuFiltraLibri(true);
 				
 				return libriController.selezionaLibro(libriFiltrati);
 			}
 				
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				Vector<Libro>libriPrestabili = libriController.libriPrestabili();
+				Vector<Risorsa>libriPrestabili = libriController.libriPrestabili();
 				
 				return libriController.selezionaLibro(libriPrestabili);
 			}

@@ -70,7 +70,7 @@ public class LibriController
 		
 		Libro l = new Libro(IDENTIFIER +lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
-		boolean aggiuntaRiuscita = model.addLibro(l);
+		boolean aggiuntaRiuscita = model.addRisorsa(l);
 		
 		if(aggiuntaRiuscita)
 		{
@@ -117,7 +117,7 @@ public class LibriController
 	{
 		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
-		model.addLibro(l);
+		model.addRisorsa(l);
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class LibriController
 	 */
 	public String removeLibro()
 	{
-		Vector<Libro> libri = model.getLibri();
+		Vector<Risorsa> libri = model.getRisorse();
 
 		String idSelezionato;
 		
@@ -191,7 +191,7 @@ public class LibriController
 	 */
 	public void removeLibro(String titolo)
 	{
-		Vector<Libro> libri = model.getLibri();
+		Vector<Risorsa> libri = model.getRisorse();
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -242,7 +242,7 @@ public class LibriController
 	 * @param libro
 	 * @param perPrestito
 	 */
-	public void stampaDatiLibro(Libro libro, boolean perPrestito)
+	public void stampaDatiLibro(Risorsa libro, boolean perPrestito)
 	{
 		LibriView.stampaDati(libro, perPrestito);
 	}
@@ -254,11 +254,11 @@ public class LibriController
 	{
 //		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
 		Vector<Libro> libriDaStampare = new Vector<>();
-		for(Libro libro : model.getLibri())
+		for(Risorsa libro : model.getRisorse())
 		{
 			if(libro.isPrestabile())
 			{
-				libriDaStampare.add(libro);
+				libriDaStampare.add((Libro)libro);
 			}
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
@@ -269,7 +269,7 @@ public class LibriController
 	 * @param daPrenotare 
 	 * @return la lista dei libri filtrati (if daPrenotare)
 	 */
-	public Vector<Libro> menuFiltraLibri(boolean daPrenotare) 
+	public Vector<Risorsa> menuFiltraLibri(boolean daPrenotare) 
 	{
 		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
@@ -277,7 +277,7 @@ public class LibriController
 		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 		int scelta = menuFiltro.scegliBase();
 		
-		Vector<Libro> libriFiltrati = FiltroLibriHandler.filtraLibri(scelta, daPrenotare, this);
+		Vector<Risorsa> libriFiltrati = FiltroLibriHandler.filtraLibri(scelta, daPrenotare, this);
 		
 		if(daPrenotare)
 		{
@@ -292,24 +292,24 @@ public class LibriController
 	
 	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
 	{
-		return model.filtraRisorsaPerTitolo(titoloParziale);
+		return model.filtraRisorsePerTitolo(titoloParziale);
 	}
 	
 	
 	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
 	{
-		return model.filtraFilmPerUscita(annoPubblicazione);
+		return model.filtraRisorsePerUscita(annoPubblicazione);
 	}
 	
-	public Vector<Libro> filtraLibriPerAutori(String autore)
+	public Vector<Risorsa> filtraLibriPerAutori(String autore)
 	{
 		return model.filtraLibriPerAutori(autore);
 	}
 	
-	public Vector<Libro> libriPrestabili()
+	public Vector<Risorsa> libriPrestabili()
 	{
-		Vector<Libro>libriPrestabili = new Vector<>();
-		for(Libro libro : model.getLibri())
+		Vector<Risorsa>libriPrestabili = new Vector<>();
+		for(Risorsa libro : model.getRisorse())
 		{
 			if(libro.isPrestabile())
 			{
@@ -335,20 +335,20 @@ public class LibriController
 		return ScegliLibroHandler.scegliLibro(scelta, this);
 	}	
 	
-	public Libro selezionaLibro(Vector<Libro> libri) 
+	public Libro selezionaLibro(Vector<Risorsa> libriFiltrati) 
 	{
-		if(libri.isEmpty())
+		if(libriFiltrati.isEmpty())
 		{
 			LibriView.noRisorseDisponibili(Libri.class);
 			return null;
 		}
 		else
 		{
-			for(int i = 0; i < libri.size(); i++)
+			for(int i = 0; i < libriFiltrati.size(); i++)
 			{
 				MessaggiSistemaView.stampaPosizione(i);
 				MessaggiSistemaView.cornice();
-				stampaDatiLibro(libri.get(i), true);
+				stampaDatiLibro(libriFiltrati.get(i), true);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -356,18 +356,18 @@ public class LibriController
 			do
 			{
 				MessaggiSistemaView.cornice();
-				selezione = LibriView.selezionaRisorsa(libri.size(), Libro.class);
+				selezione = LibriView.selezionaRisorsa(libriFiltrati.size(), Libro.class);
 				if(selezione == 0)
 				{
 					return null;
 				}
-				else if(libri.get(selezione-1).getInPrestito() < libri.get(selezione-1).getNLicenze())
+				else if(libriFiltrati.get(selezione-1).getInPrestito() < libriFiltrati.get(selezione-1).getNLicenze())
 				{
-					return libri.get(selezione-1);
+					return (Libro) libriFiltrati.get(selezione-1);
 				}
 				else
 				{
-					LibriView.copieTutteInPrestito(libri.get(selezione-1).getTitolo());
+					LibriView.copieTutteInPrestito(libriFiltrati.get(selezione-1).getTitolo());
 				}
 			}
 			while(true);

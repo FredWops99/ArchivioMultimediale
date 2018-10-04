@@ -11,60 +11,42 @@ import java.util.Vector;
 public class Films extends Risorse implements Serializable  
 {	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * id incrementale univoco per ogni film
-	 */
-	private int lastId;	
-	private Vector<Film> films;
 	
-	/**
-	 * costruttore della classe: inizializza il Vector di films
-	 */
-	public Films()
-	{
-		this.films = new Vector<Film>();
-//		lastId = 0;
-	}
-	public Vector<Film> getFilms() 
-	{
-		return films;
-	}
-	public void setFilms(Vector<Film> films) 
-	{
-		this.films = films;
-	}
+//	public Vector<Film> getFilms() 
+//	{
+//		return films;
+//	}
+//	public void setFilms(Vector<Film> films) 
+//	{
+//		this.films = films;
+//	}
 	
-	public int getLastId()
-	{
-		return lastId;
-	}
+//	public boolean addFilm(Film f)
+//	{			
+//		if(!filmEsistente(f))
+//		{
+//			addPerSottoCategorie(f);
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}		
+//	}
 	
-	public boolean addFilm(Film f)
-	{			
-		if(!filmEsistente(f))
-		{
-			addPerSottoCategorie(f);
-			return true;
-		}
-		else
-		{
-			return false;
-		}		
-	}
-	
-	public boolean filmEsistente(Film f) 
-	{
-		for(Film film : films)
-		{			
-			if(f.getTitolo().equals(film.getTitolo()) && f.getRegista().equals(film.getRegista()) && f.getDurata() == film.getDurata() 
-				&& f.getAnnoDiUscita() == film.getAnnoDiUscita() && f.getLingua().equals(film.getLingua()) 
-				&& f.getSottoCategoria().equals(film.getSottoCategoria()) && f.isPrestabile() == film.isPrestabile())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean filmEsistente(Film f) 
+//	{
+//		for(Film film : films)
+//		{			
+//			if(f.getTitolo().equals(film.getTitolo()) && f.getRegista().equals(film.getRegista()) && f.getDurata() == film.getDurata() 
+//				&& f.getAnnoDiUscita() == film.getAnnoDiUscita() && f.getLingua().equals(film.getLingua()) 
+//				&& f.getSottoCategoria().equals(film.getSottoCategoria()) && f.isPrestabile() == film.isPrestabile())
+//			{
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	/**
 	 * presenta all'utente la scelta della sottocategoria di Film tra quelle presenti in elenco
 	 * @return la scelta dell'utente
@@ -148,10 +130,10 @@ public class Films extends Risorse implements Serializable
 	 * @param regista il nome del regista da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public Vector<Film> filtraFilmPerRegista(String regista) 
+	public Vector<Risorsa> filtraFilmPerRegista(String regista)
 	{
-		Vector<Film> filmTrovati = new Vector<>(); 
-		for(Film film : films)
+		Vector<Risorsa> filmTrovati = new Vector<>(); 
+		for(Risorsa film : getRisorse())
 		{
 			if(film.isPrestabile())
 			{

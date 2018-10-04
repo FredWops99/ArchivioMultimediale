@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import com.sun.corba.se.impl.io.TypeMismatchException;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film
  * @author Prandini Stefano
@@ -83,6 +85,30 @@ public class Film extends Risorsa implements Serializable
 			return true;
 		}
 		else return false;
+	}
+	
+	public boolean stessiAttributi(Risorsa r)
+	{
+		if(r instanceof Film)
+		{
+//			è istanza di Film, quindi posso fare il casting per poter usare i metodi di Film
+			Film f=(Film)r;
+			
+			if(f.getTitolo().equals(titolo) && f.getRegista().equals(regista) && f.getDurata() == durata 
+					&& f.getAnnoDiUscita() == annoDiUscita && f.getLingua().equals(lingua) 
+					&& f.getSottoCategoria().equals(sottoCategoria) && f.isPrestabile() == prestabile)
+			{
+					return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			throw new TypeMismatchException();
+		}
 	}
 	
 	public String toString(boolean perPrestito)

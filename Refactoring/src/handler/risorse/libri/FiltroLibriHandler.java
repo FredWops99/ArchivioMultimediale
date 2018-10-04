@@ -5,14 +5,15 @@ import java.util.Vector;
 import controllerMVC.LibriController;
 import model.Libri;
 import model.Libro;
+import model.Risorsa;
 import view.LibriView;
 import view.MessaggiSistemaView;
 
 public class FiltroLibriHandler 
 {
-	public static Vector<Libro> filtraLibri(int scelta, boolean daPrenotare, LibriController libriController) 
+	public static Vector<Risorsa> filtraLibri(int scelta, boolean daPrenotare, LibriController libriController) 
 	{
-		Vector<Libro> libriFiltrati = null;
+		Vector<Risorsa> libriFiltrati = null;
 		String titoloParziale = null;
 		int annoPubblicazione = 0;
 		String nomeAutore = null;

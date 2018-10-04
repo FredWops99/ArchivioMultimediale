@@ -1,13 +1,11 @@
 package controllerMVC;
 
 import java.util.Vector;
-
 import handler.risorse.films.FiltroFilmHandler;
 import handler.risorse.films.ScegliFilmHandler;
 import model.Film;
 import model.Films;
 import model.Risorsa;
-import model.Risorse;
 import myLib.MyMenu;
 import view.FilmsView;
 import view.MessaggiSistemaView;
@@ -50,7 +48,7 @@ public class FilmsController
 		Film f = new Film(IDENTIFIER + lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
-		boolean aggiuntaRiuscita = model.addFilm(f);
+		boolean aggiuntaRiuscita = model.addRisorsa(f);
 		
 		if(aggiuntaRiuscita)
 		{
@@ -74,13 +72,13 @@ public class FilmsController
 		Film f = new Film("F"+ lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
-		model.addFilm(f);
+		model.addRisorsa(f);
 	}
 	
 //	deve restituire al main l'id della risorsa da eliminare (far diventare non prestabile)
 	public String removeFilm()
 	{
-		Vector<Film> films = model.getFilms();
+		Vector<Risorsa> films = model.getRisorse();
 		
 		String idSelezionato;
 		
@@ -144,7 +142,7 @@ public class FilmsController
 	 */
 	public void removeFilm(String titolo)
 	{
-		Vector<Film> films = model.getFilms();
+		Vector<Risorsa> films = model.getRisorse();
 				
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -190,16 +188,16 @@ public class FilmsController
 		}
 	}
 	
-	public void stampaDatiFilm(Film film, boolean perPrestito) 
+	public void stampaDatiFilm(Risorsa risorsa, boolean perPrestito) 
 	{
-		FilmsView.stampaDati(film, perPrestito);
+		FilmsView.stampaDati(risorsa, perPrestito);
 	}
 	
 //	main contatta il controller che si occupa dell'interazione con la view
 	public void stampaDatiFilmPrestabili() 
 	{
-		Vector<Film>filmDaStampare = new Vector<>();
-		for(Film film : model.getFilms())
+		Vector<Risorsa>filmDaStampare = new Vector<>();
+		for(Risorsa film : model.getRisorse())
 		{
 			if(film.isPrestabile())
 			{
@@ -246,7 +244,7 @@ public class FilmsController
 	 * @param daPrenotare 
 	 * @return la lista dei film filtrati (if daPrenotare)
 	 */
-	public Vector<Film> menuFiltraFilm(boolean daPrenotare) 
+	public Vector<Risorsa> menuFiltraFilm(boolean daPrenotare) 
 	{
 		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
 		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
@@ -254,7 +252,7 @@ public class FilmsController
 		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
 		int scelta = menuFiltro.scegliBase();
 		
-		Vector<Film> filmFiltrati = FiltroFilmHandler.filtraFilm(scelta, daPrenotare, this);
+		Vector<Risorsa> filmFiltrati = FiltroFilmHandler.filtraFilm(scelta, daPrenotare, this);
 		
 		if(daPrenotare)
 		{
@@ -268,23 +266,23 @@ public class FilmsController
 	
 	public Vector<Risorsa> filtraFilmPerTitolo(String titoloParziale)
 	{
-		return  model.filtraRisorsaPerTitolo(titoloParziale);
+		return  model.filtraRisorsePerTitolo(titoloParziale);
 	}
 	
 	public Vector<Risorsa> filtraFilmPerUscita(int annoUscita)
 	{
-		return model.filtraFilmPerUscita(annoUscita);
+		return model.filtraRisorsePerUscita(annoUscita);
 	}
 	
-	public Vector<Film> filtraFilmPerRegista(String regista)
+	public Vector<Risorsa> filtraFilmPerRegista(String regista)
 	{
 		return model.filtraFilmPerRegista(regista);
 	}
 	
-	public Vector<Film> filmsPrestabili() 
+	public Vector<Risorsa> filmsPrestabili() 
 	{
-		Vector<Film>filmPrestabili = new Vector<>();
-		for(Film film : model.getFilms())
+		Vector<Risorsa>filmPrestabili = new Vector<>();
+		for(Risorsa film : model.getRisorse())
 		{
 			if(film.isPrestabile())
 			{
@@ -310,20 +308,20 @@ public class FilmsController
 		return ScegliFilmHandler.scegliFilm(scelta, this);
 	}
 	
-	public Film selezionaFilm(Vector<Film> films) 
+	public Film selezionaFilm(Vector<Risorsa> filmsFiltrati) 
 	{
-		if(films.isEmpty())
+		if(filmsFiltrati.isEmpty())
 		{
 			FilmsView.noRisorseDisponibili(Film.class);
 			return null;
 		}
 		else
 		{
-			for(int i = 0; i < films.size(); i++)
+			for(int i = 0; i < filmsFiltrati.size(); i++)
 			{
 				MessaggiSistemaView.stampaPosizione(i);
 				MessaggiSistemaView.cornice();
-				stampaDatiFilm(films.get(i), true);
+				stampaDatiFilm(filmsFiltrati.get(i), true);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -331,18 +329,18 @@ public class FilmsController
 			do
 			{
 				MessaggiSistemaView.cornice();
-				selezione = FilmsView.selezionaRisorsa(films.size(), Film.class);
+				selezione = FilmsView.selezionaRisorsa(filmsFiltrati.size(), Film.class);
 				if(selezione == 0)
 				{
 					return null;
 				}
-				else if(films.get(selezione-1).getInPrestito() < films.get(selezione-1).getNLicenze())
+				else if(filmsFiltrati.get(selezione-1).getInPrestito() < filmsFiltrati.get(selezione-1).getNLicenze())
 				{
-					return films.get(selezione-1);
+					return (Film) filmsFiltrati.get(selezione-1);
 				}
 				else
 				{
-					FilmsView.copieTutteInPrestito(films.get(selezione-1).getTitolo());
+					FilmsView.copieTutteInPrestito(filmsFiltrati.get(selezione-1).getTitolo());
 				}
 			}
 			while(true);

@@ -137,8 +137,8 @@ public class Storico implements Serializable
 		
 		if(risorsa.equals("Libri"))
 		{
-			Vector<Libro>libri = archivio.getLibri().getLibri();
-			for(Libro libro : libri)
+			Vector<Risorsa>libri = archivio.getLibri().getRisorse();
+			for(Risorsa libro : libri)
 			{
 				if(!libro.isPrestabile())
 				{
@@ -148,8 +148,8 @@ public class Storico implements Serializable
 		}
 		else if(risorsa.equals("Films"))
 		{
-			Vector<Film>films = archivio.getFilms().getFilms();
-			for(Film film : films)
+			Vector<Risorsa>films = archivio.getFilms().getRisorse();
+			for(Risorsa film : films)
 			{
 				if(!film.isPrestabile())
 				{
