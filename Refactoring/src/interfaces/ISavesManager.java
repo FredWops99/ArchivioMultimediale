@@ -13,4 +13,7 @@ public interface ISavesManager
 	public void salvaFruitori();
 	public void salvaPrestiti();
 	public void salvaArchivio();
+	public Fruitori getFruitori();
+	public Archivio getArchivio();
+	public Prestiti getPrestiti();
 }

@@ -5,79 +5,22 @@ import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
 import interfaces.ISavesManager;
-import model.Fruitore;
 import myLib.MyMenu;
 import view.FruitoriView;
 import view.MessaggiSistemaView;
 
 public class AccessoHandler 
 {
-	private Fruitore utenteLoggato;
-	private ArchivioController archivioController;
-	private FruitoriController fruitoriController;
-	private StoricoController storicoController;
-	private PrestitiController prestitiController;
-	private ISavesManager gestoreSalvataggi;
+	FruitoreHandler fruitoreHandler;
+	OperatoreHandler operatoreHandler;
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	
-	public AccessoHandler(ISavesManager gestoreSalvataggi, Fruitore utenteLoggato, ArchivioController archivioController,FruitoriController fruitoriController,
-							StoricoController storicoController, PrestitiController prestitiController)
+	public AccessoHandler(ISavesManager gestoreSalvataggi, ArchivioController archivioController,
+			FruitoriController fruitoriController, StoricoController storicoController, PrestitiController prestitiController)
 	{
-		this.gestoreSalvataggi = gestoreSalvataggi;
-		this.utenteLoggato = utenteLoggato;
-		this.archivioController = archivioController;
-		this.fruitoriController = fruitoriController;
-		this.storicoController = storicoController;
-		this.prestitiController = prestitiController;
-	}
-	
-	public void entryMenu(int scelta)
-	{
-		final String[] MENU_INIZIALE_SCELTE={"Registrazione", "Area personale (Login)"};
-		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-		
-		MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_INIZIALE_SCELTE, true);
-		
-		boolean terminato;
-		do
-		{
-			scelta = menuFruitore.scegli();
-			
-			switch(scelta)
-			{
-				case 0:	//EXIT
-				{
-					terminato = true;
-					break;
-				}
-				case 1:	//registrazione nuovo fruitore
-				{
-					fruitoriController.addFruitore();
-					gestoreSalvataggi.salvaFruitori();
-					
-					terminato = false;
-					break;				
-				}
-				case 2:	//login
-				{
-					utenteLoggato = fruitoriController.login();
-					
-					if(!(utenteLoggato == null))
-					{
-						fruitoriController.menuFruitore(utenteLoggato, archivioController, prestitiController);
-					}
-					
-					terminato = false;
-					break;
-				}
-				default:
-				{
-					terminato = true;
-				}
-			}	
-		}
-		while(!terminato);
+		fruitoreHandler = new FruitoreHandler(fruitoriController, archivioController, prestitiController, gestoreSalvataggi);
+		operatoreHandler = new OperatoreHandler(fruitoriController, archivioController, prestitiController, storicoController, gestoreSalvataggi);
 	}
 	
 	/**
@@ -86,7 +29,7 @@ public class AccessoHandler
 	 */
 	public boolean gestisciAccesso(int scelta) 
 	{
-		boolean terminato;
+		boolean terminato = false;
 
 		switch(scelta)
 		{
@@ -97,10 +40,19 @@ public class AccessoHandler
 				break;
 			}
 			case 1://accesso FRUITORE
-			{
-				fruitoriController.menuFruitore(utenteLoggato, archivioController, prestitiController);
+			{				
+				final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
+				final String[] MENU_SCELTE = {"Registrazione", "Area personale (Login)"};
+				MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_SCELTE, true);
 				
-				terminato = false;
+				boolean finito = false;
+				do
+				{
+					scelta = menuFruitore.scegli();
+					finito = fruitoreHandler.entryMenuFruitore(scelta);
+				}
+				while(!finito);
+				
 				break;
 			}
 			case 2://accesso OPERATORE
@@ -108,8 +60,7 @@ public class AccessoHandler
 				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
-					fruitoriController.menuOperatore(storicoController, archivioController, prestitiController);
-//					MenuOperatore.show(storicoController, archivioController, fruitoriController, prestitiController);
+					operatoreHandler.menuOperatore();
 				}
 				else
 				{

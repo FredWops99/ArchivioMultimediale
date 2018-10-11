@@ -23,7 +23,6 @@ public class MainFacade
 	private MyMenu menuAccesso;
 	private AccessoHandler accessoHandler;
 	
-	private Fruitore utenteLoggato;
 //	controllers per interazione utente-vista-model. presenti nelle operazioni dei casi d'uso (interazione utente-sistema) 
 //	associano model e view.
 	private ArchivioController archivioController;
@@ -32,10 +31,9 @@ public class MainFacade
 	private StoricoController storicoController;
 	private ISavesManager gestoreSalvataggi;
 	
-	public MainFacade(Fruitore utenteLoggato, Archivio archivio, Fruitori fruitori, Prestiti prestiti, 
+	public MainFacade(Archivio archivio, Fruitori fruitori, Prestiti prestiti, 
 						Storico storico, ISavesManager gestoreSalvataggi)
 	{ 
-		this.utenteLoggato = utenteLoggato;
 		this.archivioController = new ArchivioController(archivio);
 		this.fruitoriController = new FruitoriController(fruitori);
 		this.prestitiController = new PrestitiController(prestiti);
@@ -69,7 +67,7 @@ public class MainFacade
 		}
 		if(accessoHandler == null)
 		{
-			accessoHandler = new AccessoHandler(gestoreSalvataggi, utenteLoggato, archivioController, fruitoriController, storicoController, prestitiController);
+			accessoHandler = new AccessoHandler(gestoreSalvataggi, archivioController, fruitoriController, storicoController, prestitiController);
 		}
 		
 		boolean fine;

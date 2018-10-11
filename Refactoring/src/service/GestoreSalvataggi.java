@@ -19,15 +19,26 @@ public class GestoreSalvataggi implements ISavesManager
 	private static final String PATH_ARCHIVIO= "Archivio.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
 	
-	private static File fileFruitori = new File(PATH_FRUITORI);
-	private static File fileArchivio = new File(PATH_ARCHIVIO);
-	private static File filePrestiti = new File(PATH_PRESTITI);
+	private static File fileFruitori;
+	private static File fileArchivio;
+	private static File filePrestiti;
 	
-	public GestoreSalvataggi(Fruitori fruitori, Archivio archivio, Prestiti prestiti)
+	public GestoreSalvataggi()
 	{
-		this.fruitori = fruitori;
-		this.archivio = archivio;
-		this.prestiti = prestiti;
+		this.fruitori = new Fruitori();
+		this.archivio = new Archivio();
+		this.prestiti = new Prestiti();
+		load();
+	}
+	
+	private void load()
+	{
+//		se non ci sono i file nel percorso li crea (vuoti) e salva all'interno l'oggetto corrispondente.
+		checkFiles();
+//		avviato il programma carico i fruitori, i libri e i prestiti da file
+		fruitori = caricaFruitori();
+		archivio = caricaArchivio();
+		prestiti = caricaPrestiti();	
 	}
 
 	/**
@@ -36,6 +47,9 @@ public class GestoreSalvataggi implements ISavesManager
 	 */
 	public void checkFiles() 
 	{
+		fileFruitori = new File(PATH_FRUITORI);
+		fileArchivio = new File(PATH_ARCHIVIO);
+		filePrestiti = new File(PATH_PRESTITI);
 		try 
 		{
 			checkFile(fileFruitori, fruitori);
@@ -54,7 +68,7 @@ public class GestoreSalvataggi implements ISavesManager
 	 * @param obj l'oggetto da salvare nel file nel caso in cui non esista e debba essere creato
 	 * @throws Exception 
 	 */
-	public void checkFile(File file, Object obj) throws IOException 
+	private void checkFile(File file, Object obj) throws IOException 
 	{
 		if (file.exists())
 		{
@@ -98,5 +112,25 @@ public class GestoreSalvataggi implements ISavesManager
 	public void salvaArchivio() 
 	{
 		ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);	
+	}
+	
+	public Fruitori getFruitori() 
+	{
+		return fruitori;
+	}
+
+	public void setFruitori(Fruitori fruitori) 
+	{
+		this.fruitori = fruitori;
+	}
+	
+	public Archivio getArchivio() 
+	{
+		return archivio;
+	}
+
+	public Prestiti getPrestiti()
+	{
+		return prestiti;
 	}
 }

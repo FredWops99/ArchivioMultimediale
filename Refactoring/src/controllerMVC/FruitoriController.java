@@ -2,13 +2,10 @@ package controllerMVC;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-import handler.MenuUtentiHandler;
 import model.Fruitore;
 import model.Fruitori;
 import myLib.GestioneDate;
-import myLib.MyMenu;
 import view.FruitoriView;
-import view.MessaggiSistemaView;
 
 public class FruitoriController 
 {
@@ -173,49 +170,5 @@ public class FruitoriController
 	}
 
 	
-
-	/**
-	 * menu che compare una volta che si esegue l'accesso come operatore
-	 * @param scelta la scelta selezionata dall'utente
-	 */
-	public void menuOperatore(StoricoController storicoController, ArchivioController archivioController, PrestitiController prestitiController) 
-	{
-		final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
-				"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
-		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-		
-		MessaggiSistemaView.accessoEseguito();
-		
-		MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
-		boolean terminato;
-		int scelta;
-		do
-		{
-			scelta = menuOperatore.scegli();
-			terminato = MenuUtentiHandler.menuOperatore(scelta, storicoController, archivioController, this, prestitiController);
-		}
-		while(!terminato);
-	}
-
-	/**
-	 * menu che compare dopo che un fruitore esegue il login
-	 * @param scelta la scelta selezionata dall'utente
-	 */
-	public void menuFruitore(Fruitore utenteLoggato, ArchivioController archivioController, PrestitiController prestitiController) 
-	{
-		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-		final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Cerca una risorsa",
-															"Richiedi un prestito", "Rinnova un prestito", "Visualizza prestiti in corso", "Termina prestiti"};
-		
-		MyMenu menuPersonale=new MyMenu(MENU_INTESTAZIONE, MENU_PERSONALE_SCELTE, true);
-		
-		int scelta;
-		boolean terminato;
-		do
-		{
-			scelta = menuPersonale.scegli();
-			terminato = MenuUtentiHandler.menuFruitore(utenteLoggato, scelta, archivioController, this, prestitiController);
-		}
-		while(!terminato);
-	}
+	
 }

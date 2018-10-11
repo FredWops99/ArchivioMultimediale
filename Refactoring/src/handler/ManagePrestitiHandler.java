@@ -2,15 +2,29 @@ package handler;
 
 import controllerMVC.ArchivioController;
 import controllerMVC.PrestitiController;
+import interfaces.ISavesManager;
 import model.Fruitore;
 import model.Risorsa;
-import service.Main;
 
 public class ManagePrestitiHandler 
 {
 	private static final String[] CATEGORIE = {"Libri","Film"};
 	
-	public static void richiediPrestito(int scelta, Fruitore utenteLoggato, PrestitiController prestitiController, ArchivioController archivioController) 
+	private Fruitore utenteLoggato;
+	private PrestitiController prestitiController;
+	private ArchivioController archivioController;
+	private ISavesManager gestoreSalvataggi;
+	
+	public ManagePrestitiHandler(Fruitore utenteLoggato, PrestitiController prestitiController, 
+									ArchivioController archivioController, ISavesManager gestoreSalvataggi)
+	{
+		this.utenteLoggato = utenteLoggato;
+		this.prestitiController = prestitiController;
+		this.archivioController = archivioController;
+		this.gestoreSalvataggi = gestoreSalvataggi;
+	}
+	
+	public void richiediPrestito(int scelta) 
 	{
 		try
 		{
@@ -22,8 +36,8 @@ public class ManagePrestitiHandler
 				prestitiController.effettuaPrestito(utenteLoggato, risorsa);
 			}
 
-			Main.salvaPrestiti();
-			Main.salvaArchivio();
+			gestoreSalvataggi.salvaPrestiti();
+			gestoreSalvataggi.salvaArchivio();
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -32,7 +46,7 @@ public class ManagePrestitiHandler
 		}
 	}
 	
-	public static void terminaPrestiti(int scelta, Fruitore utenteLoggato, PrestitiController prestitiController) 
+	public void terminaPrestiti(int scelta) 
 	{
 		switch (scelta) 
 		{
@@ -44,8 +58,8 @@ public class ManagePrestitiHandler
 			{
 				prestitiController.terminaTuttiPrestitiDi(utenteLoggato);
 				
-				Main.salvaPrestiti();
-				Main.salvaArchivio();
+				gestoreSalvataggi.salvaPrestiti();
+				gestoreSalvataggi.salvaArchivio();
 				
 				break;
 			}
@@ -53,8 +67,8 @@ public class ManagePrestitiHandler
 			{
 				prestitiController.terminaPrestitoDi(utenteLoggato);
 				
-				Main.salvaPrestiti();
-				Main.salvaArchivio();
+				gestoreSalvataggi.salvaPrestiti();
+				gestoreSalvataggi.salvaArchivio();
 				
 				break;
 			}

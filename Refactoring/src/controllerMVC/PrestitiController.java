@@ -3,19 +3,16 @@ package controllerMVC;
 import java.util.Vector;
 import exceptions.RaggiunteRisorseMaxException;
 import exceptions.RisorsaGiàPossedutaException;
-import handler.ManagePrestitiHandler;
 import model.Fruitore;
 import model.Prestiti;
 import model.Prestito;
 import model.Risorsa;
 import myLib.GestioneDate;
-import myLib.MyMenu;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
 
 public class PrestitiController 
 {
-	private final String[] CATEGORIE = {"Libri","Film"};
 
 	Prestiti model;
 
@@ -49,11 +46,7 @@ public class PrestitiController
 	
 	public void menuRichiediPrestito(Fruitore utenteLoggato, ArchivioController archivioController) 
 	{
-		final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
-		MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
-		int scelta = menu.scegliBase();
 		
-		ManagePrestitiHandler.richiediPrestito(scelta, utenteLoggato, this, archivioController);
 	}	
 
 	//addPrestito può lanciare due eccezioni diverse: o il fruitore possiede già la risorsa o ha raggiunto il limite di risorse possedute
@@ -128,15 +121,10 @@ public class PrestitiController
 		}
 	}
 	
-	public void menuTerminaPrestiti(Fruitore utenteLoggato, ArchivioController archivioController) 
-	{
-		String[] scelte = new String[] {"tutti","solo uno"};
-		String messaggioEliminaPrestiti = "Vuoi eliminare tutti i prestiti o solo uno?";
-		MyMenu menuPrestiti = new MyMenu(messaggioEliminaPrestiti, scelte, true);
-		int scelta = menuPrestiti.scegliBase();
+//	public void menuTerminaPrestiti(Fruitore utenteLoggato, ArchivioController archivioController) 
+//	{
 		
-		ManagePrestitiHandler.terminaPrestiti(scelta, utenteLoggato, this);
-	}
+//	}
 	
 	/**
 	 * (precondizione: fruitore != null)
