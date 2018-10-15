@@ -1,6 +1,6 @@
 package handler;
 
-import controllerMVC.ArchivioController;
+import controllerMVC.RisorseController;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import interfaces.ISavesManager;
@@ -13,18 +13,20 @@ public class FruitoreHandler
 
 	private Fruitore utenteLoggato;
 	private FruitoriController fruitoriController;
-	private ArchivioController archivioController;
+	private RisorseController archivioController;
 	private PrestitiController prestitiController;
 	private ISavesManager gestoreSalvataggi;
 	private ManagePrestitiHandler managePrestitiHandler;
+	private ManageRisorseHandler manageRisorseHandler;
 	
-	public FruitoreHandler(FruitoriController fruitoriController, ArchivioController archivioController,
+	public FruitoreHandler(FruitoriController fruitoriController, RisorseController archivioController,
 											PrestitiController prestitiController, ISavesManager gestoreSalvataggi)
 	{
 		this.fruitoriController = fruitoriController;
 		this.archivioController = archivioController;
 		this.prestitiController = prestitiController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
+		this.manageRisorseHandler = new ManageRisorseHandler(archivioController);
 	}
 	
 	public boolean entryMenuFruitore(int scelta)
@@ -116,11 +118,15 @@ public class FruitoreHandler
 			}
 			case 3://CERCA UNA RISORSA
 			{
-				archivioController.menuCercaRisorsa();
+				final String INTESTAZIONE = "scegli la categoria: ";
+				MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+				int sceltaRisorsa = menu.scegliBase();
+				
+				manageRisorseHandler.cercaRisorsa(sceltaRisorsa, CATEGORIE);
 				terminato=false;
 				break;
 			}
-			case 4: //RICHIEDI PRESTITO (non in prestiti perchè devo poter accedere alle risorse)
+			case 4: //RICHIEDI PRESTITO
 			{
 				final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
 				MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);

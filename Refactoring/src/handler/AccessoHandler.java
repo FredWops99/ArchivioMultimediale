@@ -1,6 +1,6 @@
 package handler;
 
-import controllerMVC.ArchivioController;
+import controllerMVC.RisorseController;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
@@ -16,7 +16,7 @@ public class AccessoHandler
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	
-	public AccessoHandler(ISavesManager gestoreSalvataggi, ArchivioController archivioController,
+	public AccessoHandler(ISavesManager gestoreSalvataggi, RisorseController archivioController,
 			FruitoriController fruitoriController, StoricoController storicoController, PrestitiController prestitiController)
 	{
 		fruitoreHandler = new FruitoreHandler(fruitoriController, archivioController, prestitiController, gestoreSalvataggi);

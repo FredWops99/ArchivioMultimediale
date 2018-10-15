@@ -37,6 +37,21 @@ public class FilmsView extends RisorseView
 	{
 		System.out.println("In archivio non sono presenti film il cui regista è " + nomeRegista);	
 	}
+	
+	public static void piùRisorseStessoTitolo(String titolo) 
+	{
+		System.out.println("Sono presenti più films dal titolo \"" + titolo + "\": ");	
+	}
+	
+	public static void noRisorseDisponibili() 
+	{
+		System.out.println("In archivio non sono presenti films disponibili");
+	}
+	
+	public static void risorsaNonPresente(String s)
+	{
+		System.out.println("In archivio non sono presenti films il cui titolo è: " + s );
+	}
 
 //	non posso spostarlo in RisorseView perchè Film e Libro hanno campi diversi
 //	potrebbe essere come abstract e poi FilmsView e LibriView devono implementarlo
@@ -45,7 +60,7 @@ public class FilmsView extends RisorseView
 	{
 		if(filmDaStampare.isEmpty())
 		{
-			noRisorseDisponibili(Film.class);
+			noRisorseDisponibili();
 		}
 		else
 		{
@@ -55,7 +70,7 @@ public class FilmsView extends RisorseView
 			}
 			else
 			{
-				RisorseView.numeroRisorseInArchivio(filmDaStampare.size(), Film.class);
+				RisorseView.numeroRisorseInArchivio(filmDaStampare.size(), "films");
 			}
 			
 			for(int i = 0; i < filmDaStampare.size(); i++)

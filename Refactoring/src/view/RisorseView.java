@@ -40,19 +40,9 @@ public abstract class RisorseView
 		System.out.println("Siamo spiacenti, il " + c.getSimpleName().toLowerCase() + " non è presente nell'archivio");
 	}
 	
-	public static void risorsaNonPresente(Class<?> c, String s)
-	{
-		System.out.println("In archivio non sono presenti " + c.getSimpleName().toLowerCase() + " il cui titolo è: " + s );
-	}
-	
 	public static void rimozioneAvvenuta()
 	{
 		System.out.println("La risorsa è stata eliminata dalle risorse prestabili (verrà conservata in archivio per motivi storici)");
-	}
-	
-	public static void piùRisorseStessoTitolo(Class<?> c, String titolo) 
-	{
-		System.out.println("Sono presenti più " + c.getSimpleName().toLowerCase() + " dal titolo \"" + titolo + "\": ");	
 	}
 	
 	public static void numeroRicorrenza(int pos) 
@@ -65,11 +55,6 @@ public abstract class RisorseView
 		return InputDati.leggiIntero("\ninserisci il numero della ricorrenza da rimuovere (0 per annullare): ", 0, size);
 	}
 	
-	public static void noRisorseDisponibili(Class<?> c) 
-	{
-		System.out.println("In archivio non sono presenti " + c.getSimpleName().toLowerCase() + " disponibili");
-	}
-	
 	public static void nessunaCorrispondenza(Class<?> c)
 	{
 		System.out.println("Nessun " + c.getSimpleName().toLowerCase() + " corrispondente al criterio di ricerca");
@@ -80,9 +65,9 @@ public abstract class RisorseView
 		System.out.println("\nE' presente un " + c.getSimpleName().toLowerCase() + " in archivio: ");
 	}
 	
-	public static void numeroRisorseInArchivio(int size, Class<?> c)
+	public static void numeroRisorseInArchivio(int size, String s)
 	{
-		System.out.println("\nSono presenti " + size + " " + c.getSimpleName().toLowerCase() + " in archivio: ");
+		System.out.println("\nSono presenti " + size + " " + s + " in archivio: ");
 	}
 	
 	public static void stampaTitolo(Risorsa risorsa) 

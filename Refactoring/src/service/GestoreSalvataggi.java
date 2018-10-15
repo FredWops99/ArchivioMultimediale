@@ -2,31 +2,30 @@ package service;
 
 import java.io.File;
 import java.io.IOException;
-
 import interfaces.ISavesManager;
-import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
+import model.Risorse;
 import myLib.ServizioFile;
 
 public class GestoreSalvataggi implements ISavesManager
 {
 	private Fruitori fruitori;
-	private Archivio archivio;
+	private Risorse risorse;
 	private Prestiti prestiti; 
 	
 	private static final String PATH_FRUITORI = "Fruitori.dat";
-	private static final String PATH_ARCHIVIO= "Archivio.dat";
+	private static final String PATH_RISORSE= "Risorse.dat";
 	private static final String PATH_PRESTITI = "Prestiti.dat";
 	
 	private static File fileFruitori;
-	private static File fileArchivio;
+	private static File fileRisorse;
 	private static File filePrestiti;
 	
 	public GestoreSalvataggi()
 	{
 		this.fruitori = new Fruitori();
-		this.archivio = new Archivio();
+		this.risorse = new Risorse();
 		this.prestiti = new Prestiti();
 		load();
 	}
@@ -37,7 +36,7 @@ public class GestoreSalvataggi implements ISavesManager
 		checkFiles();
 //		avviato il programma carico i fruitori, i libri e i prestiti da file
 		fruitori = caricaFruitori();
-		archivio = caricaArchivio();
+		risorse = caricaRisorse();
 		prestiti = caricaPrestiti();	
 	}
 
@@ -48,12 +47,12 @@ public class GestoreSalvataggi implements ISavesManager
 	public void checkFiles() 
 	{
 		fileFruitori = new File(PATH_FRUITORI);
-		fileArchivio = new File(PATH_ARCHIVIO);
+		fileRisorse = new File(PATH_RISORSE);
 		filePrestiti = new File(PATH_PRESTITI);
 		try 
 		{
 			checkFile(fileFruitori, fruitori);
-			checkFile(fileArchivio, archivio);
+			checkFile(fileRisorse, risorse);
 			checkFile(filePrestiti, prestiti);
 		}	
 		catch (IOException e) 
@@ -89,9 +88,9 @@ public class GestoreSalvataggi implements ISavesManager
 		return (Fruitori)ServizioFile.caricaSingoloOggetto(fileFruitori, false);
 	}
 
-	public Archivio caricaArchivio() 
+	public Risorse caricaRisorse() 
 	{
-		return (Archivio)ServizioFile.caricaSingoloOggetto(fileArchivio, false);
+		return (Risorse)ServizioFile.caricaSingoloOggetto(fileRisorse, false);
 	}
 
 	public Prestiti caricaPrestiti() 
@@ -109,9 +108,9 @@ public class GestoreSalvataggi implements ISavesManager
 		ServizioFile.salvaSingoloOggetto(filePrestiti, prestiti, false);	
 	}
 	
-	public void salvaArchivio() 
+	public void salvaRisorse() 
 	{
-		ServizioFile.salvaSingoloOggetto(fileArchivio, archivio, false);	
+		ServizioFile.salvaSingoloOggetto(fileRisorse, risorse, false);	
 	}
 	
 	public Fruitori getFruitori() 
@@ -124,9 +123,9 @@ public class GestoreSalvataggi implements ISavesManager
 		this.fruitori = fruitori;
 	}
 	
-	public Archivio getArchivio() 
+	public Risorse getRisorse() 
 	{
-		return archivio;
+		return risorse;
 	}
 
 	public Prestiti getPrestiti()

@@ -1,6 +1,6 @@
 package handler;
 
-import controllerMVC.ArchivioController;
+import controllerMVC.RisorseController;
 import controllerMVC.PrestitiController;
 import interfaces.ISavesManager;
 import model.Fruitore;
@@ -12,15 +12,15 @@ public class ManagePrestitiHandler
 	
 	private Fruitore utenteLoggato;
 	private PrestitiController prestitiController;
-	private ArchivioController archivioController;
+	private RisorseController risorseController;
 	private ISavesManager gestoreSalvataggi;
 	
 	public ManagePrestitiHandler(Fruitore utenteLoggato, PrestitiController prestitiController, 
-									ArchivioController archivioController, ISavesManager gestoreSalvataggi)
+									RisorseController archivioController, ISavesManager gestoreSalvataggi)
 	{
 		this.utenteLoggato = utenteLoggato;
 		this.prestitiController = prestitiController;
-		this.archivioController = archivioController;
+		this.risorseController = archivioController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
 	}
 	
@@ -30,14 +30,14 @@ public class ManagePrestitiHandler
 		{
 			String categoria = CATEGORIE[scelta - 1];
 			
-			Risorsa risorsa = archivioController.scegliRisorsa(categoria);
+			Risorsa risorsa = risorseController.scegliRisorsa(categoria);
 			if(risorsa != null)
 			{
 				prestitiController.effettuaPrestito(utenteLoggato, risorsa);
 			}
 
 			gestoreSalvataggi.salvaPrestiti();
-			gestoreSalvataggi.salvaArchivio();
+			gestoreSalvataggi.salvaRisorse();
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -59,7 +59,7 @@ public class ManagePrestitiHandler
 				prestitiController.terminaTuttiPrestitiDi(utenteLoggato);
 				
 				gestoreSalvataggi.salvaPrestiti();
-				gestoreSalvataggi.salvaArchivio();
+				gestoreSalvataggi.salvaRisorse();
 				
 				break;
 			}
@@ -68,7 +68,7 @@ public class ManagePrestitiHandler
 				prestitiController.terminaPrestitoDi(utenteLoggato);
 				
 				gestoreSalvataggi.salvaPrestiti();
-				gestoreSalvataggi.salvaArchivio();
+				gestoreSalvataggi.salvaRisorse();
 				
 				break;
 			}

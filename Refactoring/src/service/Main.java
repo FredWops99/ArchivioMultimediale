@@ -16,16 +16,16 @@ public class Main
 		ISavesManager gestoreSalvataggi = new GestoreSalvataggi();
 		
 		Fruitori fruitori = gestoreSalvataggi.getFruitori();
-		Archivio archivio = gestoreSalvataggi.getArchivio();
+		Risorse risorse = gestoreSalvataggi.getRisorse();
 		Prestiti prestiti = gestoreSalvataggi.getPrestiti();
 	
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
-		prestiti.ricostruisciPrestiti(archivio);
+		prestiti.ricostruisciPrestiti(risorse);
 		
-		Storico storico = new Storico(prestiti, fruitori, archivio);
+		Storico storico = new Storico(prestiti, fruitori, risorse);
 		
 //		coordina i compiti
-		MainFacade mainFacade = new MainFacade(archivio, fruitori, prestiti, storico, gestoreSalvataggi);
+		MainFacade mainFacade = new MainFacade(risorse, fruitori, prestiti, storico, gestoreSalvataggi);
 		mainFacade.start();
 	}
 }

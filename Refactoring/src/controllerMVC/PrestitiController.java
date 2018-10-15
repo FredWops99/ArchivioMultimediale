@@ -44,7 +44,7 @@ public class PrestitiController
 		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
 	}
 	
-	public void menuRichiediPrestito(Fruitore utenteLoggato, ArchivioController archivioController) 
+	public void menuRichiediPrestito(Fruitore utenteLoggato, RisorseController archivioController) 
 	{
 		
 	}	

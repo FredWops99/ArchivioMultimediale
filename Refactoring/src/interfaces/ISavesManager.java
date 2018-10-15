@@ -1,19 +1,19 @@
 package interfaces;
 
-import model.Archivio;
 import model.Fruitori;
 import model.Prestiti;
+import model.Risorse;
 
 public interface ISavesManager 
 {
 	public void checkFiles();
 	public Fruitori caricaFruitori();
-	public Archivio caricaArchivio();
+	public Risorse caricaRisorse();
 	public Prestiti caricaPrestiti();
 	public void salvaFruitori();
 	public void salvaPrestiti();
-	public void salvaArchivio();
+	public void salvaRisorse();
 	public Fruitori getFruitori();
-	public Archivio getArchivio();
+	public Risorse getRisorse();
 	public Prestiti getPrestiti();
 }

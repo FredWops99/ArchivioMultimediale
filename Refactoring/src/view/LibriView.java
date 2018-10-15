@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Vector;
-import model.Libri;
 import model.Libro;
 import model.Risorsa;
 import myLib.GestioneDate;
@@ -53,6 +52,21 @@ public class LibriView extends RisorseView
 	{
 		System.out.println("Genere: " + ((Libro) risorsa).getGenere());	
 	}
+	
+	public static void piùRisorseStessoTitolo(String titolo) 
+	{
+		System.out.println("Sono presenti più libri dal titolo \"" + titolo + "\": ");	
+	}
+	
+	public static void noRisorseDisponibili() 
+	{
+		System.out.println("In archivio non sono presenti libri disponibili");
+	}
+	
+	public static void risorsaNonPresente(String s)
+	{
+		System.out.println("In archivio non sono presenti libri il cui titolo è: " + s );
+	}
 
 	/**
 	 * stampa i libri raggruppandoli per sottocategorie
@@ -62,7 +76,7 @@ public class LibriView extends RisorseView
 	{
 		if(libriDaStampare.isEmpty())
 		{
-			RisorseView.noRisorseDisponibili(Libri.class);
+			noRisorseDisponibili();
 		}
 		else
 		{
@@ -72,7 +86,7 @@ public class LibriView extends RisorseView
 			}
 			else//piu di un libro prestabile in archivio
 			{
-				RisorseView.numeroRisorseInArchivio(libriDaStampare.size(), Libri.class);
+				RisorseView.numeroRisorseInArchivio(libriDaStampare.size(), "libri");
 			}
 			
 			for(int j = 0; j < libriDaStampare.size(); j++)

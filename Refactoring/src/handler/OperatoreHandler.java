@@ -1,6 +1,6 @@
 package handler;
 
-import controllerMVC.ArchivioController;
+import controllerMVC.RisorseController;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
@@ -10,20 +10,24 @@ import view.MessaggiSistemaView;
 
 public class OperatoreHandler 
 {
+	private final String[] CATEGORIE = {"Libri","Film"};
+
 	FruitoriController fruitoriController;
-	ArchivioController archivioController;
+	RisorseController risorseController;
 	PrestitiController prestitiController;
 	StoricoController storicoController;
 	ISavesManager gestoreSalvataggi;
+	private ManageRisorseHandler manageRisorseHandler;
 	
-	public OperatoreHandler(FruitoriController fruitoriController, ArchivioController archivioController,
-											PrestitiController prestitiController, StoricoController storicoController, ISavesManager gestoreSalvataggi)
+	public OperatoreHandler(FruitoriController fruitoriController, RisorseController archivioController,PrestitiController prestitiController, 
+								StoricoController storicoController, ISavesManager gestoreSalvataggi)
 	{
 		this.fruitoriController = fruitoriController;
-		this.archivioController = archivioController;
+		this.risorseController = archivioController;
 		this.prestitiController = prestitiController;
 		this.storicoController = storicoController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
+		this.manageRisorseHandler = new ManageRisorseHandler(archivioController);
 	}
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore
@@ -65,33 +69,37 @@ public class OperatoreHandler
 			}
 			case 2://AGGIUNGI RISORSA
 			{
-				archivioController.menuAggiungiRisorsa();
+				risorseController.menuAggiungiRisorsa();
 				
-				gestoreSalvataggi.salvaArchivio();
+				gestoreSalvataggi.salvaRisorse();
 				terminato = false;
 				break;
 			}
 			case 3://RIMUOVI RISORSA
 			{
-				String idRimosso = archivioController.scegliRisorsaDaRimuovere();
+				String idRimosso = risorseController.scegliRisorsaDaRimuovere();
 				//se utente annulla procedura ritorna "-1"
 				if(!idRimosso.equals("-1"))
 				{
 					prestitiController.annullaPrestitiConRisorsa(idRimosso);
-					gestoreSalvataggi.salvaArchivio();
+					gestoreSalvataggi.salvaRisorse();
 				}
 				terminato = false;
 				break;
 			}
 			case 4://VISUALIZZA ELENCO RISORSE
 			{
-				archivioController.menuVisualizzaElencoRisorse();
+				risorseController.menuVisualizzaElencoRisorse();
 				terminato = false;
 				break;
 			}
 			case 5://CERCA RISORSA
 			{
-				archivioController.menuCercaRisorsa();
+				final String INTESTAZIONE = "scegli la categoria: ";
+				MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
+				int sceltaRisorsa = menu.scegliBase();
+				
+				manageRisorseHandler.cercaRisorsa(sceltaRisorsa, CATEGORIE);				
 				terminato = false;
 				break;
 			}

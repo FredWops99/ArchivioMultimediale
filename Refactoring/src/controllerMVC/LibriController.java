@@ -1,12 +1,10 @@
 package controllerMVC;
 
 import java.util.Vector;
-
-import handler.FiltriHandler;
 import handler.ManageRisorseHandler;
-import model.Libri;
 import model.Libro;
 import model.Risorsa;
+import model.Risorse;
 import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
@@ -18,23 +16,20 @@ import view.MessaggiSistemaView;
  */
 public class LibriController 
 {
-	private Libri model;
+	private Risorse model;
 	private int lastId;	
+	private ManageRisorseHandler manageRisorseHandler;
 	
 //	CATEGORIA è libro
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	private static final String IDENTIFIER = "L";
 	
-	public LibriController(Libri libri)
+	public LibriController(Risorse risorse, ManageRisorseHandler manageRisorseHandler)
 	{
-		this.model = libri;
-		this.lastId = libri.getLastId();
-	}
-
-	public Libri getModel() 
-	{
-		return model;
+		this.model = risorse;
+		this.lastId = risorse.getLastIdLibro();
+		this.manageRisorseHandler = manageRisorseHandler;
 	}
 	
 	public int getLastId() 
@@ -127,7 +122,7 @@ public class LibriController
 	 */
 	public String removeLibro()
 	{
-		Vector<Risorsa> libri = model.getRisorse();
+		Vector<Risorsa> risorse = model.getRisorse();
 
 		String idSelezionato;
 		
@@ -135,9 +130,10 @@ public class LibriController
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
-		for (int i = 0; i < libri.size(); i++)
+		for (int i = 0; i < risorse.size(); i++)
 		{
-			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+			if(risorse.get(i).getId().charAt(0)=='L' && risorse.get(i).isPrestabile() 
+					&& risorse.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
 			{
 //				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -151,22 +147,22 @@ public class LibriController
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
 		else if(posizioniRicorrenze.size()==1)
 		{
-			idSelezionato = libri.get((int)posizioniRicorrenze.get(0)).getId();
-			libri.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+			idSelezionato = risorse.get((int)posizioniRicorrenze.get(0)).getId();
+			risorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
 			LibriView.rimozioneAvvenuta();
 		}
 //		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
 //		l'utente inserisce quello che vuole rimuovere
 		else
 		{
-			LibriView.piùRisorseStessoTitolo(Libri.class, titolo);
+			LibriView.piùRisorseStessoTitolo(titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
 			{
 				LibriView.numeroRicorrenza(pos);
 				MessaggiSistemaView.cornice();
-				stampaDatiLibro(libri.elementAt((int)i), false);
+				stampaDatiLibro(risorse.elementAt((int)i), false);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -174,8 +170,8 @@ public class LibriController
 			
 			if(daRimuovere > 0)
 			{
-				idSelezionato = libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-				libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				idSelezionato = risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
+				risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
 				LibriView.rimozioneAvvenuta();
 			}
 			else//0: annulla
@@ -184,57 +180,6 @@ public class LibriController
 			}
 		}
 		return idSelezionato;
-	}
-	
-	/**
-	 * metodo di Test, per non dover chiedere all'utente l'input per il titolo della risorsa da eliminare
-	 */
-	public void removeLibro(String titolo)
-	{
-		Vector<Risorsa> libri = model.getRisorse();
-		
-		Vector<Integer> posizioniRicorrenze = new Vector<>();
-		
-		for (int i = 0; i < libri.size(); i++)
-		{
-			if(libri.get(i).isPrestabile() && libri.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
-			{
-//				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
-				posizioniRicorrenze.add(i);
-			}
-		}
-		if(posizioniRicorrenze.size()==0)
-		{
-			LibriView.risorsaNonPresente(Libro.class);
-		}
-//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
-		else if(posizioniRicorrenze.size()==1)
-		{
-			libri.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-		}
-//		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
-//		l'utente inserisce quello che vuole rimuovere
-		else
-		{
-			LibriView.piùRisorseStessoTitolo(Libri.class, titolo);
-			
-			int pos = 0;
-			for(Integer i : posizioniRicorrenze)
-			{
-				LibriView.numeroRicorrenza(pos);
-				MessaggiSistemaView.cornice();
-				stampaDatiLibro(libri.elementAt((int)i), false);
-				MessaggiSistemaView.cornice();
-			}
-			
-			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
-			
-			if(daRimuovere > 0)
-			{
-				libri.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				LibriView.rimozioneAvvenuta();
-			}
-		}
 	}
 	
 	/**
@@ -254,66 +199,67 @@ public class LibriController
 	{
 //		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
 		Vector<Libro> libriDaStampare = new Vector<>();
-		for(Risorsa libro : model.getRisorse())
+		for(Risorsa risorsa : model.getRisorse())
 		{
-			if(libro.isPrestabile())
+			if(risorsa.getId().charAt(0)=='L' && risorsa.isPrestabile())
 			{
-				libriDaStampare.add((Libro)libro);
+				libriDaStampare.add((Libro)risorsa);
 			}
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
 	}
 	
-	/**
-	 * se i libri vengono filtrati per essere prenotati viene restituita la lista, se invece è solo per la ricerca vengono visualizzati e basta
-	 * @param daPrenotare 
-	 * @return la lista dei libri filtrati (if daPrenotare)
-	 */
-	public Vector<Risorsa> menuFiltraLibri(boolean daPrenotare) 
-	{
-		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di pubblicazione", "Filtra per autore"};
-		
-		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-		int scelta = menuFiltro.scegliBase();
-		
-		Vector<Risorsa> libriFiltrati = FiltriHandler.filtraLibri(scelta, daPrenotare, this);
-		
-		if(daPrenotare)
-		{
-			return libriFiltrati;
-		}
-		else// !daPrenotare
-		{
-			return null;
-		}
-		
-	}
-	
 	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
 	{
-		return model.filtraRisorsePerTitolo(titoloParziale);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraRisorsePerTitolo(titoloParziale);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	
 	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
 	{
-		return model.filtraRisorsePerUscita(annoPubblicazione);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraRisorsePerUscita(annoPubblicazione);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	public Vector<Risorsa> filtraLibriPerAutori(String autore)
 	{
-		return model.filtraLibriPerAutori(autore);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraLibriPerAutori(autore);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	public Vector<Risorsa> libriPrestabili()
 	{
 		Vector<Risorsa>libriPrestabili = new Vector<>();
-		for(Risorsa libro : model.getRisorse())
+		for(Risorsa risorsa : model.getRisorse())
 		{
-			if(libro.isPrestabile())
+			if(risorsa.getId().charAt(0)=='L' && risorsa.isPrestabile())
 			{
-				libriPrestabili.add(libro);
+				libriPrestabili.add(risorsa);
 			}
 		}
 		return libriPrestabili;
@@ -332,14 +278,14 @@ public class LibriController
 		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaLibro.scegliBase();
 		
-		return ManageRisorseHandler.scegliLibro(scelta, this);
+		return manageRisorseHandler.scegliLibro(scelta);
 	}	
 	
 	public Libro selezionaLibro(Vector<Risorsa> libriFiltrati) 
 	{
 		if(libriFiltrati.isEmpty())
 		{
-			LibriView.noRisorseDisponibili(Libri.class);
+			LibriView.noRisorseDisponibili();
 			return null;
 		}
 		else

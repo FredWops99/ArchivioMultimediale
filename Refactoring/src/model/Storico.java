@@ -12,13 +12,13 @@ public class Storico implements Serializable
 	
 	private Prestiti prestiti;
 	private Fruitori fruitori;
-	private Archivio archivio;
+	private Risorse risorse;
 	
-	public Storico(Prestiti prestiti, Fruitori fruitori, Archivio archivio)
+	public Storico(Prestiti prestiti, Fruitori fruitori, Risorse risorse)
 	{
 		this.prestiti = prestiti;
 		this.fruitori = fruitori;
-		this.archivio = archivio;
+		this.risorse = risorse;
 	}
 	
 	public Prestiti getPrestiti() 
@@ -31,9 +31,9 @@ public class Storico implements Serializable
 		return fruitori;
 	}
 
-	public Archivio getArchivio() 
+	public Risorse getRisorse() 
 	{
-		return archivio;
+		return risorse;
 	}
 	
 	/**
@@ -128,32 +128,30 @@ public class Storico implements Serializable
 	
 	/**
 	 * Metodo che restituisce un vettore di Libri o Films che erano prestabili in passato
-	 * @param risorsa -> "Libro" o "Film". Indica se si vuole cercare nei libri o nei films
-	 * @return Vector<Risorsa> -> un vettore di risorse (Libri o Films) che erano prestabili in passato
+	 * @param categoria "Libro" o "Film". Indica se si vuole cercare nei libri o nei films
+	 * @return un vettore di risorse (Libri o Films) che erano prestabili in passato
 	 */
-	public Vector<Risorsa> risorsePrestabiliInPassato(String risorsa)
+	public Vector<Risorsa> risorsePrestabiliInPassato(String categoria)
 	{
 		Vector<Risorsa>risorsePrestabili = new Vector<>();
 		
-		if(risorsa.equals("Libri"))
-		{
-			Vector<Risorsa>libri = archivio.getLibri().getRisorse();
-			for(Risorsa libro : libri)
+		if(categoria.equals("Libri"))
+		{			
+			for(Risorsa risorsa : risorse.getRisorse())
 			{
-				if(!libro.isPrestabile())
+				if(risorsa.getId().charAt(0)=='L' && !risorsa.isPrestabile())
 				{
-					risorsePrestabili.add(libro);
+					risorsePrestabili.addElement(risorsa);
 				}
 			}
 		}
-		else if(risorsa.equals("Films"))
-		{
-			Vector<Risorsa>films = archivio.getFilms().getRisorse();
-			for(Risorsa film : films)
+		else if(categoria.equals("Films"))
+		{			
+			for(Risorsa risorsa : risorse.getRisorse())
 			{
-				if(!film.isPrestabile())
+				if(risorsa.getId().charAt(0)=='F' && !risorsa.isPrestabile())
 				{
-					risorsePrestabili.add(film);
+					risorsePrestabili.addElement(risorsa);
 				}
 			}
 		}

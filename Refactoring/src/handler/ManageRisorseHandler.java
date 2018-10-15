@@ -1,23 +1,31 @@
 package handler;
 
 import java.util.Vector;
-
-import controllerMVC.ArchivioController;
-import controllerMVC.FilmsController;
-import controllerMVC.LibriController;
+import controllerMVC.RisorseController;
 import model.Film;
 import model.Libro;
 import model.Risorsa;
 
 public class ManageRisorseHandler 
 {	
-	public static void aggiungiRisorsa(int scelta, String[] CATEGORIE, ArchivioController archivioController)
+	private RisorseController risorseController;
+	private FiltraFilmHandler filtraFilmHandler;
+	private FiltraLibriHandler filtraLibriHandler;
+	
+	public ManageRisorseHandler(RisorseController risorseController)
+	{
+		this.risorseController = risorseController;
+		this.filtraFilmHandler = new FiltraFilmHandler(risorseController.getFilmsController());
+		this.filtraLibriHandler = new FiltraLibriHandler(risorseController.getLibriController());
+	}
+	
+	public void aggiungiRisorsa(int scelta, String[] CATEGORIE)
 	{
 		try
 		{
 			String categoria = CATEGORIE[scelta - 1];
 //			viene passata come stringa la categoria selezionata: archivioController deciderà poi se creare un libro o un film
-			archivioController.addRisorsa(categoria);
+			risorseController.addRisorsa(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e) 
 		{
@@ -26,13 +34,13 @@ public class ManageRisorseHandler
 		}
 	}
 	
-	public static void cercaRisorsa(int scelta, String[] CATEGORIE, ArchivioController archivioController)
+	public void cercaRisorsa(int scelta, String[] CATEGORIE)
 	{
 		try
 		{
 			String categoria = CATEGORIE[scelta - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 //			viene passata come stringa la categoria selezionata: archivioController deciderà poi se CERCARE un libro o un film
-			archivioController.cercaRisorsa(categoria);
+			risorseController.cercaRisorsa(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -41,12 +49,12 @@ public class ManageRisorseHandler
 		}
 	}
 	
-	public static String rimuoviRisorsa(int scelta, String[] CATEGORIE, ArchivioController archivioController)
+	public String rimuoviRisorsa(int scelta, String[] CATEGORIE)
 	{			
 		try
 		{
 			String categoria = CATEGORIE[scelta - 1];
-			return archivioController.rimuoviRisorsa(categoria);		
+			return risorseController.rimuoviRisorsa(categoria);		
 		}
 //		se non sono presenti risorse ritorna -1
 		catch(ArrayIndexOutOfBoundsException e)
@@ -55,7 +63,7 @@ public class ManageRisorseHandler
 		}
 	}
 	
-	public static Film scegliFilm(int scelta, FilmsController filmController) 
+	public Film scegliFilm(int scelta) 
 	{
 		switch(scelta)
 		{
@@ -65,22 +73,22 @@ public class ManageRisorseHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Risorsa> filmsFiltrati = filmController.menuFiltraFilm(true);
+				Vector<Risorsa> filmsFiltrati = filtraFilmHandler.menuFiltraFilm(true);
 				
-				return filmController.selezionaFilm(filmsFiltrati);
+				return risorseController.getFilmsController().selezionaFilm(filmsFiltrati);
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				Vector<Risorsa>filmPrestabili = filmController.filmsPrestabili();
+				Vector<Risorsa>filmPrestabili = risorseController.getFilmsController().filmsPrestabili();
 				
-				return filmController.selezionaFilm(filmPrestabili);
+				return risorseController.getFilmsController().selezionaFilm(filmPrestabili);
 			}
 		}
 //		DEFAULT: qua non arriva mai
 		return null;
 	}
 	
-	public static Libro scegliLibro(int scelta, LibriController libriController)
+	public Libro scegliLibro(int scelta)
 	{
 		switch(scelta)
 		{
@@ -90,29 +98,29 @@ public class ManageRisorseHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Risorsa> libriFiltrati = libriController.menuFiltraLibri(true);
+				Vector<Risorsa> libriFiltrati = filtraLibriHandler.menuFiltraLibri(true);
 				
-				return libriController.selezionaLibro(libriFiltrati);
+				return risorseController.getLibriController().selezionaLibro(libriFiltrati);
 			}
 				
 			case 2://VISUALIZZA ARCHIVIO
 			{
-				Vector<Risorsa>libriPrestabili = libriController.libriPrestabili();
+				Vector<Risorsa>libriPrestabili = risorseController.getLibriController().libriPrestabili();
 				
-				return libriController.selezionaLibro(libriPrestabili);
+				return risorseController.getLibriController().selezionaLibro(libriPrestabili);
 			}
 		}
 //		DEFAULT: qua non arriva mai
 		return null;
 	}
 	
-	public static void visualizzaRisorse(int scelta, String[] CATEGORIE, ArchivioController archivioController)
+	public void visualizzaRisorse(int scelta, String[] CATEGORIE)
 	{
 		try
 		{
 			String categoria = CATEGORIE[scelta - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 //			viene passata come stringa la categoria selezionata: archivioController deciderà poi se stampare libri o film
-			archivioController.visualizzaDatiRisorsePrestabili(categoria);
+			risorseController.visualizzaDatiRisorsePrestabili(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{

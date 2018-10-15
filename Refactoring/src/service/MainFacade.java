@@ -25,16 +25,16 @@ public class MainFacade
 	
 //	controllers per interazione utente-vista-model. presenti nelle operazioni dei casi d'uso (interazione utente-sistema) 
 //	associano model e view.
-	private ArchivioController archivioController;
+	private RisorseController risorseController;
 	private FruitoriController fruitoriController;
 	private PrestitiController prestitiController;
 	private StoricoController storicoController;
 	private ISavesManager gestoreSalvataggi;
 	
-	public MainFacade(Archivio archivio, Fruitori fruitori, Prestiti prestiti, 
+	public MainFacade(Risorse risorse, Fruitori fruitori, Prestiti prestiti, 
 						Storico storico, ISavesManager gestoreSalvataggi)
 	{ 
-		this.archivioController = new ArchivioController(archivio);
+		this.risorseController = new RisorseController(risorse);
 		this.fruitoriController = new FruitoriController(fruitori);
 		this.prestitiController = new PrestitiController(prestiti);
 		this.storicoController = new StoricoController(storico);
@@ -67,7 +67,7 @@ public class MainFacade
 		}
 		if(accessoHandler == null)
 		{
-			accessoHandler = new AccessoHandler(gestoreSalvataggi, archivioController, fruitoriController, storicoController, prestitiController);
+			accessoHandler = new AccessoHandler(gestoreSalvataggi, risorseController, fruitoriController, storicoController, prestitiController);
 		}
 		
 		boolean fine;

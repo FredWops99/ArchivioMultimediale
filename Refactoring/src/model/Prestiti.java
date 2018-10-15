@@ -142,11 +142,11 @@ public class Prestiti implements Serializable
 	 * Per non dover salvare tutto in unico file, in questo metodo ricollego gli elementi in modo da farli riferire allo stesso oggetto (tramite ID univoco):
 	 * quando dico che il libro in "Prestito" torna dal prestito, si aggiornano anche le copie disponibili in "Libri"
 	 */
-	public void ricostruisciPrestiti(Archivio archivio)
+	public void ricostruisciPrestiti(Risorse risorse)
 	{
 		for(Prestito prestito : prestiti) 
 		{
-			Risorsa risorsa = archivio.getRisorsa(prestito.getRisorsa().getId());
+			Risorsa risorsa = risorse.getRisorsa(prestito.getRisorsa().getId());
 			
 			prestito.setRisorsa(risorsa);
 		}

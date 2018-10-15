@@ -1,27 +1,28 @@
 package controllerMVC;
 
 import java.util.Vector;
-import handler.FiltriHandler;
 import handler.ManageRisorseHandler;
 import model.Film;
-import model.Films;
 import model.Risorsa;
+import model.Risorse;
 import myLib.MyMenu;
 import view.FilmsView;
 import view.MessaggiSistemaView;
 
 public class FilmsController 
 {
-	private Films model;
-	private int lastId;	
+	private Risorse model;
+	private int lastId;
+	private ManageRisorseHandler manageRisorseHandler;
 	
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 	private static final String IDENTIFIER = "F";
 	
-	public FilmsController(Films films) 
+	public FilmsController(Risorse risorse, ManageRisorseHandler manageRisorseHandler) 
 	{
-		this.model = films;
-		this.lastId = films.getLastId();
+		this.model = risorse;
+		this.lastId = risorse.getLastIdFilm();
+		this.manageRisorseHandler = manageRisorseHandler;
 	}
 	
 	public int getLastId() 
@@ -78,7 +79,7 @@ public class FilmsController
 //	deve restituire al main l'id della risorsa da eliminare (far diventare non prestabile)
 	public String removeFilm()
 	{
-		Vector<Risorsa> films = model.getRisorse();
+		Vector<Risorsa> risorse = model.getRisorse();
 		
 		String idSelezionato;
 		
@@ -86,9 +87,10 @@ public class FilmsController
 		
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
-		for (int i = 0; i < films.size(); i++) 
+		for (int i = 0; i < risorse.size(); i++) 
 		{
-			if(films.get(i).isPrestabile() && films.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+			if(risorse.get(i).getId().charAt(0)=='F' && risorse.get(i).isPrestabile() 
+					&& risorse.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
 			{
 //				ogni volta che in films trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
 				posizioniRicorrenze.add(i);
@@ -102,22 +104,22 @@ public class FilmsController
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in films
 		else if(posizioniRicorrenze.size()==1)
 		{
-			idSelezionato = films.get((int)posizioniRicorrenze.get(0)).getId();
-			films.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+			idSelezionato = risorse.get((int)posizioniRicorrenze.get(0)).getId();
+			risorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
 			FilmsView.rimozioneAvvenuta();
 		}
 //		se ci sono più elementi nel vettore (più films con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
 //		l'utente inserisce quale rimuovere -> prendo la posizione in films di quell'elemento e lo rimuovo da films
 		else
 		{
-			FilmsView.piùRisorseStessoTitolo(Film.class, titolo);
+			FilmsView.piùRisorseStessoTitolo(titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
 			{
 				FilmsView.numeroRicorrenza(pos);
 				MessaggiSistemaView.cornice();
-				stampaDatiFilm(films.elementAt((int)i), false);
+				stampaDatiFilm(risorse.elementAt((int)i), false);
 				MessaggiSistemaView.cornice();
 			}
 			
@@ -125,8 +127,8 @@ public class FilmsController
 					
 			if(daRimuovere > 0)
 			{
-				idSelezionato = films.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-				films.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				idSelezionato = risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
+				risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
 				FilmsView.rimozioneAvvenuta();
 			}
 			else//0: annulla
@@ -135,57 +137,6 @@ public class FilmsController
 			}
 		}		
 		return idSelezionato;
-	}
-	
-	/**
-	 * metodo di Test, per non dover chiedere all'utente l'input per il titolo della risorsa da eliminare
-	 */
-	public void removeFilm(String titolo)
-	{
-		Vector<Risorsa> films = model.getRisorse();
-				
-		Vector<Integer> posizioniRicorrenze = new Vector<>();
-		
-		for (int i = 0; i < films.size(); i++) 
-		{
-			if(films.get(i).isPrestabile() && films.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
-			{
-//				ogni volta che in films trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
-				posizioniRicorrenze.add(i);
-			}
-		}
-		if(posizioniRicorrenze.size()==0)
-		{
-			FilmsView.risorsaNonPresente(Film.class);
-		}
-//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in films
-		else if(posizioniRicorrenze.size()==1)
-		{
-			films.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-		}
-//		se ci sono più elementi nel vettore (più films con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
-//		l'utente inserisce quale rimuovere -> prendo la posizione in films di quell'elemento e lo rimuovo da films
-		else
-		{
-			FilmsView.piùRisorseStessoTitolo(Film.class, titolo);
-			
-			int pos = 0;
-			for(Integer i : posizioniRicorrenze)
-			{
-				FilmsView.numeroRicorrenza(pos);
-				MessaggiSistemaView.cornice();
-				stampaDatiFilm(films.elementAt((int)i), false);
-				MessaggiSistemaView.cornice();
-			}
-			
-			int daRimuovere = FilmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
-					
-			if(daRimuovere > 0)
-			{
-				films.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				FilmsView.rimozioneAvvenuta();
-			}
-		}
 	}
 	
 	public void stampaDatiFilm(Risorsa risorsa, boolean perPrestito) 
@@ -197,11 +148,11 @@ public class FilmsController
 	public void stampaDatiFilmPrestabili() 
 	{
 		Vector<Risorsa>filmDaStampare = new Vector<>();
-		for(Risorsa film : model.getRisorse())
+		for(Risorsa risorsa : model.getRisorse())
 		{
-			if(film.isPrestabile())
+			if(risorsa.getId().charAt(0)=='F' && risorsa.isPrestabile())
 			{
-				filmDaStampare.add(film);
+				filmDaStampare.add(risorsa);
 			}
 		}
 		FilmsView.stampaDati(filmDaStampare);
@@ -234,59 +185,56 @@ public class FilmsController
 		}
 	}
 	
-	public Films getModel()
-	{
-		return model;
-	}
-	
-	/**
-	 * se i film vengono filtrati per essere prenotati viene restituita la lista, se invece è solo per la ricerca vengono visualizzati e basta
-	 * @param daPrenotare 
-	 * @return la lista dei film filtrati (if daPrenotare)
-	 */
-	public Vector<Risorsa> menuFiltraFilm(boolean daPrenotare) 
-	{
-		final String TITOLO_MENU_FILTRO = "Scegli in base a cosa filtrare la ricerca: ";
-		final String[] VOCI_TITOLO_MENU_FILTRO = {"Filtra per titolo", "Filtra per anno di uscita", "Filtra per regista"};
-		
-		MyMenu menuFiltro = new MyMenu(TITOLO_MENU_FILTRO, VOCI_TITOLO_MENU_FILTRO, true); 
-		int scelta = menuFiltro.scegliBase();
-		
-		Vector<Risorsa> filmFiltrati = FiltriHandler.filtraFilm(scelta, daPrenotare, this);
-		
-		if(daPrenotare)
-		{
-			return filmFiltrati;
-		}
-		else// !daPrenotare
-		{
-			return null;
-		}
-	}
-	
 	public Vector<Risorsa> filtraFilmPerTitolo(String titoloParziale)
 	{
-		return  model.filtraRisorsePerTitolo(titoloParziale);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraRisorsePerTitolo(titoloParziale);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='F')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	public Vector<Risorsa> filtraFilmPerUscita(int annoUscita)
 	{
-		return model.filtraRisorsePerUscita(annoUscita);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraRisorsePerUscita(annoUscita);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='F')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	public Vector<Risorsa> filtraFilmPerRegista(String regista)
 	{
-		return model.filtraFilmPerRegista(regista);
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = model.filtraFilmPerRegista(regista);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='F')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 	
 	public Vector<Risorsa> filmsPrestabili() 
 	{
 		Vector<Risorsa>filmPrestabili = new Vector<>();
-		for(Risorsa film : model.getRisorse())
+		for(Risorsa risorsa : model.getRisorse())
 		{
-			if(film.isPrestabile())
+			if(risorsa.getId().charAt(0)=='F' && risorsa.isPrestabile())
 			{
-				filmPrestabili.add(film);
+				filmPrestabili.add(risorsa);
 			}
 		}
 		return filmPrestabili;
@@ -305,14 +253,14 @@ public class FilmsController
 		MyMenu menuSceltaFilm = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
 		int scelta = menuSceltaFilm.scegliBase();
 		
-		return ManageRisorseHandler.scegliFilm(scelta, this);
+		return manageRisorseHandler.scegliFilm(scelta);
 	}
 	
 	public Film selezionaFilm(Vector<Risorsa> filmsFiltrati) 
 	{
 		if(filmsFiltrati.isEmpty())
 		{
-			FilmsView.noRisorseDisponibili(Film.class);
+			FilmsView.noRisorseDisponibili();
 			return null;
 		}
 		else
