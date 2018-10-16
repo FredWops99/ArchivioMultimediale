@@ -13,20 +13,20 @@ public class FruitoreHandler
 
 	private Fruitore utenteLoggato;
 	private FruitoriController fruitoriController;
-	private RisorseController archivioController;
+	private RisorseController risorseController;
 	private PrestitiController prestitiController;
 	private ISavesManager gestoreSalvataggi;
 	private ManagePrestitiHandler managePrestitiHandler;
 	private ManageRisorseHandler manageRisorseHandler;
 	
-	public FruitoreHandler(FruitoriController fruitoriController, RisorseController archivioController,
+	public FruitoreHandler(FruitoriController fruitoriController, RisorseController risorseController,
 											PrestitiController prestitiController, ISavesManager gestoreSalvataggi)
 	{
 		this.fruitoriController = fruitoriController;
-		this.archivioController = archivioController;
+		this.risorseController = risorseController;
 		this.prestitiController = prestitiController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
-		this.manageRisorseHandler = new ManageRisorseHandler(archivioController);
+		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
 	}
 	
 	public boolean entryMenuFruitore(int scelta)
@@ -74,7 +74,7 @@ public class FruitoreHandler
 	public void menuFruitore() 
 	{
 //		lo creo qui perchè mi serve l'utenteLoggato
-		managePrestitiHandler = new ManagePrestitiHandler(utenteLoggato, prestitiController, archivioController, gestoreSalvataggi);
+		managePrestitiHandler = new ManagePrestitiHandler(utenteLoggato, prestitiController, risorseController, gestoreSalvataggi);
 		
 		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 		final String[] MENU_PERSONALE_SCELTE = {"Rinnova iscrizione", "Visualizza informazioni personali", "Cerca una risorsa",

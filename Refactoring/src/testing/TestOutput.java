@@ -7,8 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import model.Film;
-import model.Libri;
 import model.Libro;
+import view.FilmsView;
+import view.LibriView;
 import view.RisorseView;
 
 /**
@@ -65,9 +66,16 @@ public class TestOutput
 	}
 	
 	@Test
-	public void piùRisorseStessoTitolo()
+	public void piùLibriStessoTitolo()
 	{
-		RisorseView.piùRisorseStessoTitolo(Libri.class, "Titolo");
+		LibriView.piùRisorseStessoTitolo("Titolo");
 		assertEquals("Sono presenti più libri dal titolo \"Titolo\":", outContent.toString().trim());
+	}
+	
+	@Test
+	public void piùFilmStessoTitolo()
+	{
+		FilmsView.piùRisorseStessoTitolo("Titolo");
+		assertEquals("Sono presenti più films dal titolo \"Titolo\":", outContent.toString().trim());
 	}
 }

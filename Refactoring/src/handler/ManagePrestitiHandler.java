@@ -16,11 +16,11 @@ public class ManagePrestitiHandler
 	private ISavesManager gestoreSalvataggi;
 	
 	public ManagePrestitiHandler(Fruitore utenteLoggato, PrestitiController prestitiController, 
-									RisorseController archivioController, ISavesManager gestoreSalvataggi)
+									RisorseController risorseController, ISavesManager gestoreSalvataggi)
 	{
 		this.utenteLoggato = utenteLoggato;
 		this.prestitiController = prestitiController;
-		this.risorseController = archivioController;
+		this.risorseController = risorseController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
 	}
 	

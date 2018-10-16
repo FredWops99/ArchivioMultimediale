@@ -7,21 +7,24 @@ import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import controllerMVC.FilmsController;
 import controllerMVC.FruitoriController;
 import controllerMVC.LibriController;
+import controllerMVC.RisorseController;
+import handler.ManageRisorseHandler;
 import model.Film;
-import model.Films;
 import model.Fruitore;
 import model.Fruitori;
-import model.Libri;
 import model.Libro;
+import model.Risorse;
 
 public class TestStampaDati 
 {
-	private LibriController libriController = new LibriController(new Libri());
-	private FilmsController filmController = new FilmsController(new Films());
+	Risorse risorse = new Risorse();
+	RisorseController rc = new RisorseController(risorse);
+	ManageRisorseHandler mr = new ManageRisorseHandler(rc);
+	private LibriController libriController = new LibriController(risorse,mr);
+	private FilmsController filmController = new FilmsController(risorse, mr);
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;

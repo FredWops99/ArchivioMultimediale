@@ -52,29 +52,6 @@ public class Risorse implements Serializable
 		return null;
 	}
 	
-	public void addPerSottoCategorie(Risorsa r)
-	{
-		if(risorse.isEmpty())
-		{
-			risorse.add(r);
-		}
-		else
-		{
-			for(int i = 0; i < risorse.size(); i++)
-			{
-//				
-//				se tutte le risorse saranno nello stesso vettore bisogna controllare anche che la classe dell'oggetto sia la stessa
-//				
-				if(risorse.get(i).getSottoCategoria().equals(r.getSottoCategoria()))
-				{
-					risorse.add(i+1, r);
-					return;
-				}
-			}
-			risorse.add(r);
-		}
-	}
-	
 	public Vector<Risorsa> filtraRisorsePerTitolo(String titoloParziale) 
 	{
 		Vector<Risorsa> risorseTrovate = new Vector<>(); 
@@ -126,6 +103,29 @@ public class Risorse implements Serializable
 		{
 			return false;
 		}	
+	}
+	
+	public void addPerSottoCategorie(Risorsa r)
+	{
+		if(risorse.isEmpty())
+		{
+			risorse.add(r);
+		}
+		else
+		{
+			for(int i = 0; i < risorse.size(); i++)
+			{
+//				
+//				se tutte le risorse saranno nello stesso vettore bisogna controllare anche che la classe dell'oggetto sia la stessa
+//				
+				if(risorse.get(i).getSottoCategoria().equals(r.getSottoCategoria()))
+				{
+					risorse.add(i+1, r);
+					return;
+				}
+			}
+			risorse.add(r);
+		}
 	}
 	
 	/**

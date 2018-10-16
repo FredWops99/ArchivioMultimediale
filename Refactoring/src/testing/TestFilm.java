@@ -2,23 +2,26 @@ package testing;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 import controllerMVC.FilmsController;
+import controllerMVC.RisorseController;
+import handler.ManageRisorseHandler;
 import model.Film;
-import model.Films;
 import model.Risorsa;
+import model.Risorse;
 
 public class TestFilm 
 {
-	Films films = new Films();
-	FilmsController filmsController = new FilmsController(films);
+	Risorse risorse = new Risorse();
+	RisorseController risorseController = new RisorseController(risorse);
+	ManageRisorseHandler mr = new ManageRisorseHandler(risorseController);
+	FilmsController filmsController = new FilmsController(risorse,mr);
 	
 	@Test
 	public void filmEsistente()
 	{
 		Film film = creaFilm("Titolo", "Avventura");
-		films.addRisorsa(film);
-		boolean esistente = films.risorsaEsistente(film);
+		risorse.addRisorsa(film);
+		boolean esistente = risorse.risorsaEsistente(film);
 		assertEquals(true, esistente);
 	}
 	
@@ -26,7 +29,7 @@ public class TestFilm
 //	aggiunge un film non presente
 	public void filmAggiunto() 
 	{
-		boolean riuscito = films.addRisorsa(creaFilm("Titolo", "Avventura"));
+		boolean riuscito = risorse.addRisorsa(creaFilm("Titolo", "Avventura"));
 		assertEquals(true, riuscito);
 	}
 
@@ -34,22 +37,22 @@ public class TestFilm
 //	aggiunge un film già presente
 	public void filmNonAggiunto() 
 	{
-		films.addRisorsa(creaFilm("Titolo", "Avventura"));
-		boolean riuscito = films.addRisorsa(creaFilm("Titolo", "Avventura"));
+		risorse.addRisorsa(creaFilm("Titolo", "Avventura"));
+		boolean riuscito = risorse.addRisorsa(creaFilm("Titolo", "Avventura"));
 		assertEquals(false, riuscito);
 	}
 	
 	@Test
 	public void aggiungiFilmPerSottoCategoria()
 	{
-		films.addRisorsa(creaFilm("Titolo1", "Avventura"));
-		films.addRisorsa(creaFilm("Titolo1", "Azione"));
-		films.addRisorsa(creaFilm("Titolo2", "Avventura"));
-		films.addRisorsa(creaFilm("Titolo2", "Azione"));
+		risorse.addRisorsa(creaFilm("Titolo1", "Avventura"));
+		risorse.addRisorsa(creaFilm("Titolo1", "Azione"));
+		risorse.addRisorsa(creaFilm("Titolo2", "Avventura"));
+		risorse.addRisorsa(creaFilm("Titolo2", "Azione"));
 
 		
 		StringBuilder sb = new StringBuilder();
-		for(Risorsa film : films.getRisorse())
+		for(Risorsa film : risorse.getRisorse())
 		{
 			sb.append(film.getSottoCategoria() + "-");
 		}
@@ -60,17 +63,17 @@ public class TestFilm
 	@Test
 	public void dimensione()
 	{
-		films.addRisorsa(creaFilm("titolo", "Avventura"));
-		films.addRisorsa(creaFilm("titolo1", "Avventura"));
-		films.addRisorsa(creaFilm("titolo2", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo1", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo2", "Avventura"));
 
-		assertEquals(3, films.getRisorse().size());
+		assertEquals(3, risorse.getRisorse().size());
 		
-		films.addRisorsa(creaFilm("titolo", "Avventura"));
-		films.addRisorsa(creaFilm("titolo1", "Avventura"));
-		films.addRisorsa(creaFilm("titolo2", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo1", "Avventura"));
+		risorse.addRisorsa(creaFilm("titolo2", "Avventura"));
 		
-		assertEquals(3, films.getRisorse().size());
+		assertEquals(3, risorse.getRisorse().size());
 	}
 	
 	@Test
@@ -78,16 +81,7 @@ public class TestFilm
 	{
 		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
 		
-		assertEquals(1, films.getRisorse().size());
-	}
-	
-	@Test
-	public void rimuoviFilm()
-	{
-		films.addRisorsa(creaFilm("titolo", "Fantasy"));
-		filmsController.removeFilm("titolo");
-		
-		assertEquals(false, films.getRisorse().get(0).isPrestabile());
+		assertEquals(1, risorse.getRisorse().size());
 	}
 	
 	@Test
@@ -96,8 +90,8 @@ public class TestFilm
 		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
 		filmsController.addFilm("Fantasy", "titolo", "regista", 100, 2000, "italiano", 20);
 
-		assertEquals(films.getRisorse().get(0).getId(), "F0");
-		assertEquals(films.getRisorse().get(1).getId(), "F1");
+		assertEquals(risorse.getRisorse().get(0).getId(), "F0");
+		assertEquals(risorse.getRisorse().get(1).getId(), "F1");
 
 		assertEquals(2, filmsController.getLastId());
 	}

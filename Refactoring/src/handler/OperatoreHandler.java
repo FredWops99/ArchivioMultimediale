@@ -19,15 +19,15 @@ public class OperatoreHandler
 	ISavesManager gestoreSalvataggi;
 	private ManageRisorseHandler manageRisorseHandler;
 	
-	public OperatoreHandler(FruitoriController fruitoriController, RisorseController archivioController,PrestitiController prestitiController, 
+	public OperatoreHandler(FruitoriController fruitoriController, RisorseController risorseController,PrestitiController prestitiController, 
 								StoricoController storicoController, ISavesManager gestoreSalvataggi)
 	{
 		this.fruitoriController = fruitoriController;
-		this.risorseController = archivioController;
+		this.risorseController = risorseController;
 		this.prestitiController = prestitiController;
 		this.storicoController = storicoController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
-		this.manageRisorseHandler = new ManageRisorseHandler(archivioController);
+		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
 	}
 	/**
 	 * menu che compare una volta che si esegue l'accesso come operatore

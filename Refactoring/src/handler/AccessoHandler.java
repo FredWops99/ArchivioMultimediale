@@ -16,11 +16,11 @@ public class AccessoHandler
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	
-	public AccessoHandler(ISavesManager gestoreSalvataggi, RisorseController archivioController,
+	public AccessoHandler(ISavesManager gestoreSalvataggi, RisorseController risorseController,
 			FruitoriController fruitoriController, StoricoController storicoController, PrestitiController prestitiController)
 	{
-		fruitoreHandler = new FruitoreHandler(fruitoriController, archivioController, prestitiController, gestoreSalvataggi);
-		operatoreHandler = new OperatoreHandler(fruitoriController, archivioController, prestitiController, storicoController, gestoreSalvataggi);
+		fruitoreHandler = new FruitoreHandler(fruitoriController, risorseController, prestitiController, gestoreSalvataggi);
+		operatoreHandler = new OperatoreHandler(fruitoriController, risorseController, prestitiController, storicoController, gestoreSalvataggi);
 	}
 	
 	/**

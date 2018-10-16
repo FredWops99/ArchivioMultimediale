@@ -3,23 +3,26 @@ package testing;
 import static org.junit.Assert.assertEquals;
 import java.util.Vector;
 import org.junit.Test;
-
 import controllerMVC.LibriController;
-import model.Libri;
+import controllerMVC.RisorseController;
+import handler.ManageRisorseHandler;
 import model.Libro;
 import model.Risorsa;
+import model.Risorse;
 
 public class TestLibri
 {
-	Libri libri = new Libri();
-	LibriController libriController = new LibriController(libri);
+	Risorse risorse = new Risorse();
+	RisorseController risorseController = new RisorseController(risorse);
+	ManageRisorseHandler mr = new ManageRisorseHandler(risorseController);
+	LibriController libriController = new LibriController(risorse,mr);
 	
 	@Test
 	public void libroEsistente()
 	{
 		Libro libro = creaLibro("titolo", "Romanzo");
-		libri.addRisorsa(libro);
-		boolean esistente = libri.risorsaEsistente(libro);
+		risorse.addRisorsa(libro);
+		boolean esistente = risorse.risorsaEsistente(libro);
 		assertEquals(true, esistente);
 	}
 	
@@ -27,31 +30,31 @@ public class TestLibri
 //	aggiunge un libro non presente
 	public void libroAggiunto() 
 	{
-		boolean riuscito = libri.addRisorsa(creaLibro("titolo", "Romanzo"));
+		boolean riuscito = risorse.addRisorsa(creaLibro("titolo", "Romanzo"));
 		assertEquals(true, riuscito);
-		assertEquals(1, libri.getRisorse().size());
+		assertEquals(1, risorse.getRisorse().size());
 	}
 
 	@Test
 //	aggiunge un libro già presente
 	public void libroNonAggiunto() 
 	{
-		libri.addRisorsa(creaLibro("titolo", "Romanzo"));
-		boolean riuscito = libri.addRisorsa(creaLibro("titolo", "Romanzo"));
+		risorse.addRisorsa(creaLibro("titolo", "Romanzo"));
+		boolean riuscito = risorse.addRisorsa(creaLibro("titolo", "Romanzo"));
 		assertEquals(false, riuscito);
-		assertEquals(1, libri.getRisorse().size());
+		assertEquals(1, risorse.getRisorse().size());
 	}
 	
 	@Test
 	public void aggiungiLibroPerSottoCategoria()
 	{
-		libri.addRisorsa(creaLibro("titolo1", "Romanzo"));
-		libri.addRisorsa(creaLibro("titolo1", "Fumetto"));
-		libri.addRisorsa(creaLibro("titolo2", "Romanzo"));
-		libri.addRisorsa(creaLibro("titolo2", "Fumetto"));
+		risorse.addRisorsa(creaLibro("titolo1", "Romanzo"));
+		risorse.addRisorsa(creaLibro("titolo1", "Fumetto"));
+		risorse.addRisorsa(creaLibro("titolo2", "Romanzo"));
+		risorse.addRisorsa(creaLibro("titolo2", "Fumetto"));
 		
 		StringBuilder sb = new StringBuilder();
-		for(Risorsa libro : libri.getRisorse())
+		for(Risorsa libro : risorse.getRisorse())
 		{
 			sb.append(libro.getSottoCategoria() + "-");
 		}
@@ -62,17 +65,17 @@ public class TestLibri
 	@Test
 	public void dimensione()
 	{
-		libri.addRisorsa(creaLibro("titolo", "Azione"));
-		libri.addRisorsa(creaLibro("titolo1", "Azione"));
-		libri.addRisorsa(creaLibro("titolo2", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo1", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo2", "Azione"));
 		
-		assertEquals(3, libri.getRisorse().size());
+		assertEquals(3, risorse.getRisorse().size());
 		
-		libri.addRisorsa(creaLibro("titolo", "Azione"));
-		libri.addRisorsa(creaLibro("titolo1", "Azione"));
-		libri.addRisorsa(creaLibro("titolo2", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo1", "Azione"));
+		risorse.addRisorsa(creaLibro("titolo2", "Azione"));
 			
-		assertEquals(3, libri.getRisorse().size());
+		assertEquals(3, risorse.getRisorse().size());
 	}
 	
 	@Test
@@ -82,16 +85,7 @@ public class TestLibri
 		autori.add("autore");
 		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
 		
-		assertEquals(1, libri.getRisorse().size());
-	}
-	
-	@Test
-	public void rimuoviLibro()
-	{
-		libri.addRisorsa(creaLibro("titolo", "Romanzo"));
-		libriController.removeLibro("titolo");
-		
-		assertEquals(false, libri.getRisorse().get(0).isPrestabile());
+		assertEquals(1, risorse.getRisorse().size());
 	}
 	
 	@Test
@@ -102,8 +96,8 @@ public class TestLibri
 		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
 		libriController.addLibro("Fumetto", "fumetto", autori, 10, 200, "casa", "italiano", "avventura", 10);
 
-		assertEquals(libri.getRisorse().get(0).getId(), "L0");
-		assertEquals(libri.getRisorse().get(1).getId(), "L1");
+		assertEquals(risorse.getRisorse().get(0).getId(), "L0");
+		assertEquals(risorse.getRisorse().get(1).getId(), "L1");
 
 		assertEquals(2, libriController.getLastId());
 	}

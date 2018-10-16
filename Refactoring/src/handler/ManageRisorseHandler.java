@@ -21,17 +21,7 @@ public class ManageRisorseHandler
 	
 	public void aggiungiRisorsa(int scelta, String[] CATEGORIE)
 	{
-		try
-		{
-			String categoria = CATEGORIE[scelta - 1];
-//			viene passata come stringa la categoria selezionata: archivioController deciderà poi se creare un libro o un film
-			risorseController.addRisorsa(categoria);
-		}
-		catch(ArrayIndexOutOfBoundsException e) 
-		{
-//			se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
-//			corrisponde ad ANNULLA, non va fatto nulla
-		}
+		
 	}
 	
 	public void cercaRisorsa(int scelta, String[] CATEGORIE)
