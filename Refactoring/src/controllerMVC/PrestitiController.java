@@ -3,10 +3,10 @@ package controllerMVC;
 import java.util.Vector;
 import exceptions.RaggiunteRisorseMaxException;
 import exceptions.RisorsaGiàPossedutaException;
+import interfaces.Risorsa;
 import model.Fruitore;
 import model.Prestiti;
 import model.Prestito;
-import model.Risorsa;
 import myLib.GestioneDate;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
@@ -43,11 +43,6 @@ public class PrestitiController
 		}
 		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
 	}
-	
-	public void menuRichiediPrestito(Fruitore utenteLoggato, RisorseController archivioController) 
-	{
-		
-	}	
 
 	//addPrestito può lanciare due eccezioni diverse: o il fruitore possiede già la risorsa o ha raggiunto il limite di risorse possedute
 	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
@@ -194,7 +189,7 @@ public class PrestitiController
 	 * disponibile per il prestito.
 	 * @param utenti gli utenti a cui verranno terminati tutti i prestiti 
 	 */
-	public void terminaTuttiPrestitiDi(Vector<Fruitore>utenti)
+	public void terminaTuttiPrestitiDi(Vector<Fruitore> utenti)
 	{
 		for(Fruitore fruitore : utenti)
 		{

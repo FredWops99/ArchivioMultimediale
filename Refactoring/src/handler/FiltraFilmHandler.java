@@ -2,8 +2,7 @@ package handler;
 
 import java.util.Vector;
 import controllerMVC.FilmsController;
-import model.Film;
-import model.Risorsa;
+import interfaces.Risorsa;
 import myLib.MyMenu;
 import view.FilmsView;
 import view.MessaggiSistemaView;
@@ -42,8 +41,6 @@ public class FiltraFilmHandler
 		}
 	}
 	
-	
-	
 	public Vector<Risorsa> filtraFilm(int scelta, boolean daPrenotare) 
 	{
 		Vector<Risorsa> filmsFiltrati = null;
@@ -59,7 +56,7 @@ public class FiltraFilmHandler
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = FilmsView.chiediTitolo(Film.class);
+				titoloParziale = FilmsView.chiediTitolo();
 				filmsFiltrati = filmsController.filtraFilmPerTitolo(titoloParziale);
 				break;
 			}

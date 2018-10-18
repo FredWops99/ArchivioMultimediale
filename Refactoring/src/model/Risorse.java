@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.Vector;
 
+import interfaces.Risorsa;
+
 public class Risorse implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -52,34 +54,6 @@ public class Risorse implements Serializable
 		return null;
 	}
 	
-	public Vector<Risorsa> filtraRisorsePerTitolo(String titoloParziale) 
-	{
-		Vector<Risorsa> risorseTrovate = new Vector<>(); 
-		
-		for(Risorsa r : risorse)
-		{
-			if(r.isPrestabile() && r.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
-			{
-				risorseTrovate.add(r);
-			}
-		}
-		return risorseTrovate;
-	}
-	
-	public Vector<Risorsa> filtraRisorsePerUscita(int annoUscita) 
-	{
-		Vector<Risorsa> risorseTrovate = new Vector<>(); 
-		
-		for(Risorsa r : risorse)
-		{
-			if(r.isPrestabile() && r.getAnnoDiUscita() == annoUscita)
-			{
-				risorseTrovate.add(r);
-			}
-		}
-		return risorseTrovate;
-	}
-	
 	public boolean risorsaEsistente(Risorsa r)
 	{
 		for(Risorsa risorsa : risorse)
@@ -126,6 +100,34 @@ public class Risorse implements Serializable
 			}
 			risorse.add(r);
 		}
+	}
+	
+	public Vector<Risorsa> filtraRisorsePerTitolo(String titoloParziale) 
+	{
+		Vector<Risorsa> risorseTrovate = new Vector<>(); 
+		
+		for(Risorsa r : risorse)
+		{
+			if(r.isPrestabile() && r.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			{
+				risorseTrovate.add(r);
+			}
+		}
+		return risorseTrovate;
+	}
+	
+	public Vector<Risorsa> filtraRisorsePerUscita(int annoUscita) 
+	{
+		Vector<Risorsa> risorseTrovate = new Vector<>(); 
+		
+		for(Risorsa r : risorse)
+		{
+			if(r.isPrestabile() && r.getAnnoDiUscita() == annoUscita)
+			{
+				risorseTrovate.add(r);
+			}
+		}
+		return risorseTrovate;
 	}
 	
 	/**

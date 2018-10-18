@@ -2,8 +2,8 @@ package controllerMVC;
 
 import java.util.Vector;
 import handler.ManageRisorseHandler;
+import interfaces.Risorsa;
 import model.Libro;
-import model.Risorsa;
 import model.Risorse;
 import myLib.MyMenu;
 import view.LibriView;
@@ -31,6 +31,11 @@ public class LibriController
 		this.lastId = risorse.getLastIdLibro();
 		this.manageRisorseHandler = manageRisorseHandler;
 	}
+
+	public Risorse getModel() 
+	{
+		return model;
+	}
 	
 	public int getLastId() 
 	{
@@ -39,16 +44,16 @@ public class LibriController
 	
 	public void addLibro()
 	{
-		String sottoCategoria = menuScegliSottoCategoria();
+		String sottoCategoria = scegliSottoCategoria();
 //		se l'utente annulla la procedura
 		if(sottoCategoria == "annulla")
 		{
 			return;
 		}
 		
-		String genere = menuScegliGenere(sottoCategoria);
+		String genere = scegliGenere(sottoCategoria);
 //				ScegliGenereLibroHandler.show(sottoCategoria);//se la sottocategoria ha generi disponibili
-		String titolo = LibriView.chiediTitolo(Libro.class);
+		String titolo = LibriView.chiediTitolo();
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
 		String casaEditrice = LibriView.chiediCasaEditrice();
@@ -76,8 +81,19 @@ public class LibriController
 			LibriView.aggiuntaNonRiuscita(Libro.class);
 		}
 	}
+	
+	/**
+	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
+	 */
+	public void addLibro(String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione,
+			String casaEditrice, String lingua, String genere, int nLicenze)
+	{
+		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		
+		model.addRisorsa(l);
+	}
 
-	private String menuScegliSottoCategoria() 
+	private String scegliSottoCategoria() 
 	{
 		MyMenu menu = new MyMenu("scegli la sottocategoria del libro: ", SOTTOCATEGORIE, true);
 		try
@@ -91,7 +107,7 @@ public class LibriController
 		}
 	}
 	
-	private String menuScegliGenere(String sottoCategoria) 
+	private String scegliGenere(String sottoCategoria) 
 	{
 		if(sottoCategoria.equals("Romanzo") || sottoCategoria.equals("Fumetto")) //se si aggiunge un genere va aggiunto anche qui !
 		{
@@ -102,17 +118,6 @@ public class LibriController
 		{
 			return "-";
 		}
-	}
-
-	/**
-	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
-	 */
-	public void addLibro(String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione,
-			String casaEditrice, String lingua, String genere, int nLicenze)
-	{
-		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
-		
-		model.addRisorsa(l);
 	}
 	
 	/**
@@ -207,49 +212,6 @@ public class LibriController
 			}
 		}
 		LibriView.stampaDatiPerCategorie(libriDaStampare);
-	}
-	
-	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
-	{
-		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = model.filtraRisorsePerTitolo(titoloParziale);
-		for(Risorsa risorsa : filtrati)
-		{
-			if(risorsa.getId().charAt(0)=='L')
-			{
-				result.addElement(risorsa);
-			}
-		}
-		return result;
-	}
-	
-	
-	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
-	{
-		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = model.filtraRisorsePerUscita(annoPubblicazione);
-		for(Risorsa risorsa : filtrati)
-		{
-			if(risorsa.getId().charAt(0)=='L')
-			{
-				result.addElement(risorsa);
-			}
-		}
-		return result;
-	}
-	
-	public Vector<Risorsa> filtraLibriPerAutori(String autore)
-	{
-		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = model.filtraLibriPerAutori(autore);
-		for(Risorsa risorsa : filtrati)
-		{
-			if(risorsa.getId().charAt(0)=='L')
-			{
-				result.addElement(risorsa);
-			}
-		}
-		return result;
 	}
 	
 	public Vector<Risorsa> libriPrestabili()

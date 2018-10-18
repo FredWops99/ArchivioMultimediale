@@ -23,7 +23,13 @@ import view.StoricoView;
  */
 public class StoricoHandler
 {
-	public static boolean mostra(int scelta, StoricoController storicoController)
+	private StoricoController storicoController;
+	public StoricoHandler(StoricoController storicoController)
+	{
+		this.storicoController = storicoController;
+	}
+	
+	public boolean mostra(int scelta)
 	{
 		boolean terminato;
 			

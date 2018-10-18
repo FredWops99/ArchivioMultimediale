@@ -1,7 +1,7 @@
 package view;
 
+import interfaces.Risorsa;
 import model.Prestito;
-import model.Risorsa;
 import myLib.GestioneDate;
 import myLib.InputDati;
 

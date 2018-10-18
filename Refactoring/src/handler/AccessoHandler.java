@@ -60,7 +60,21 @@ public class AccessoHandler
 				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
-					operatoreHandler.menuOperatore();
+					final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
+							"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
+					final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
+					
+					MessaggiSistemaView.accessoEseguito();
+					
+					MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
+					boolean terminatoOperatore;
+					int sceltaOperatore;
+					do
+					{
+						sceltaOperatore = menuOperatore.scegli();
+						terminatoOperatore = operatoreHandler.menuOperatore(sceltaOperatore);
+					}
+					while(!terminatoOperatore);				
 				}
 				else
 				{

@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import exceptions.RaggiunteRisorseMaxException;
 import exceptions.RisorsaGi‡PossedutaException;
+import interfaces.Risorsa;
 
 /**
  * Classe che racchiude l'elenco dei prestiti attivi degli utenti

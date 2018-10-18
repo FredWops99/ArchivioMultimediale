@@ -1,11 +1,11 @@
-package model;
+package interfaces;
 
 /**
  * classe astratta che rappresenta una generica risorsa dell'archivio multimediale
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public abstract class Risorsa 
+public interface Risorsa 
 {
 	/**
 	 * Override del metodo equals di Object: in Object il metodo confronta gli oggetti tramite hashcode, ma salvando e caricando da file esso cambia e il programma

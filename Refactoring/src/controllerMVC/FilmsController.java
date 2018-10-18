@@ -2,8 +2,8 @@ package controllerMVC;
 
 import java.util.Vector;
 import handler.ManageRisorseHandler;
+import interfaces.Risorsa;
 import model.Film;
-import model.Risorsa;
 import model.Risorse;
 import myLib.MyMenu;
 import view.FilmsView;
@@ -39,7 +39,7 @@ public class FilmsController
 			return;
 		}
 
-		String titolo = FilmsView.chiediTitolo(Film.class);
+		String titolo = FilmsView.chiediTitolo();
 		int durata = FilmsView.chiediDurata();
 		int annoDiUscita = FilmsView.chiediAnnoUscita();
 		String lingua = FilmsView.chiediLingua();

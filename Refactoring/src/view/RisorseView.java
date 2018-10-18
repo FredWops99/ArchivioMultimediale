@@ -1,6 +1,6 @@
 package view;
 
-import model.Risorsa;
+import interfaces.Risorsa;
 import myLib.InputDati;
 
 public abstract class RisorseView 
@@ -10,9 +10,9 @@ public abstract class RisorseView
 		System.out.println(risorsa.toString(perPrestito));
 	}
 	
-	public static String chiediTitolo(Class<?> c)
+	public static String chiediTitolo()
 	{
-		return InputDati.leggiStringaNonVuota("Inserisci il titolo del " + c.getSimpleName().toLowerCase() + ": ");
+		return InputDati.leggiStringaNonVuota("Inserisci il titolo: ");
 	}
 	
 	public static int chiediNumeroLicenze() 

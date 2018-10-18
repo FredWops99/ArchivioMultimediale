@@ -6,7 +6,6 @@ import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
 import interfaces.ISavesManager;
 import myLib.MyMenu;
-import view.MessaggiSistemaView;
 
 public class OperatoreHandler 
 {
@@ -28,27 +27,6 @@ public class OperatoreHandler
 		this.storicoController = storicoController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
 		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
-	}
-	/**
-	 * menu che compare una volta che si esegue l'accesso come operatore
-	 */
-	public void menuOperatore() 
-	{
-		final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
-				"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
-		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-		
-		MessaggiSistemaView.accessoEseguito();
-		
-		MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
-		boolean terminato;
-		int scelta;
-		do
-		{
-			scelta = menuOperatore.scegli();
-			terminato = menuOperatore(scelta);
-		}
-		while(!terminato);
 	}
 	
 	public boolean menuOperatore(int scelta) 

@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
+import interfaces.Risorsa;
 import myLib.GestioneDate;
 
 /**

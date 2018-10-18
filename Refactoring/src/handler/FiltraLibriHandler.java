@@ -2,8 +2,7 @@ package handler;
 
 import java.util.Vector;
 import controllerMVC.LibriController;
-import model.Libro;
-import model.Risorsa;
+import interfaces.Risorsa;
 import myLib.MyMenu;
 import view.LibriView;
 import view.MessaggiSistemaView;
@@ -57,20 +56,20 @@ public class FiltraLibriHandler
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = LibriView.chiediTitolo(Libro.class);
-				libriFiltrati = libriController.filtraLibriPerTitolo(titoloParziale);
+				titoloParziale = LibriView.chiediTitolo();
+				libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
 				annoPubblicazione = LibriView.chiediAnnoPubblicazione();
-				libriFiltrati = libriController.filtraLibriPerAnnoPubblicazione(annoPubblicazione);
+				libriFiltrati = filtraLibriPerAnnoPubblicazione(annoPubblicazione);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeAutore = LibriView.chiediAutore();
-				libriFiltrati = libriController.filtraLibriPerAutori(nomeAutore);
+				libriFiltrati = filtraLibriPerAutori(nomeAutore);
 				break;
 			}
 		}
@@ -107,4 +106,45 @@ public class FiltraLibriHandler
 		return null;
 	}
 	
+	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerTitolo(titoloParziale);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
+	}
+	
+	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerUscita(annoPubblicazione);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
+	}
+	
+	public Vector<Risorsa> filtraLibriPerAutori(String autore)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = libriController.getModel().filtraLibriPerAutori(autore);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getId().charAt(0)=='L')
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
+	}
 }

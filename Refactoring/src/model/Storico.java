@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import interfaces.Risorsa;
 import myLib.GestioneDate;
 
 public class Storico implements Serializable

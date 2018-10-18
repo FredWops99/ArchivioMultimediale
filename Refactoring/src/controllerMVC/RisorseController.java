@@ -3,6 +3,7 @@ package controllerMVC;
 import handler.FiltraFilmHandler;
 import handler.FiltraLibriHandler;
 import handler.ManageRisorseHandler;
+import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
 import view.MessaggiSistemaView;
@@ -35,6 +36,21 @@ public class RisorseController
 		return libriController;
 	}
 	
+	/**
+	 * permette la rimozione di un libro o di un film dall'archivio
+	 * (precondizione: CATEGORIE != null)
+	 * @return l'id della risorsa rimossa
+	 */
+	public String scegliRisorsaDaRimuovere() 
+	{
+		MessaggiSistemaView.avvisoRimozioneRisorsa();
+		
+//		se utente annulla procedura removelibro/removefilm ritornato -1
+		String idRimosso = menuRimuoviRisorsa();
+//				RimuoviRisorsaHandler.showAndReturnID(CATEGORIE, this);
+		return idRimosso;
+	}
+	
 	private String menuRimuoviRisorsa() 
 	{
 		final String INTESTAZIONE = "scegli la categoria: ";
@@ -42,7 +58,30 @@ public class RisorseController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		return manageRisorseHandler.rimuoviRisorsa(scelta, CATEGORIE);
+		try
+		{
+			String categoria = CATEGORIE[scelta - 1];
+			return rimuoviRisorsa(categoria);		
+		}
+//		se non sono presenti risorse ritorna -1
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			return "-1";
+		}
+	}
+	
+	public String rimuoviRisorsa(String categoria) 
+	{
+		String idRisorsa = "-1";
+		if(categoria == CATEGORIE[0])//LIBRI
+		{
+			idRisorsa = libriController.removeLibro();
+		}
+		if(categoria == CATEGORIE[1])//FILMS
+		{
+			idRisorsa = filmsController.removeFilm();
+		}
+		return idRisorsa;
 	}
 	
 	public void menuAggiungiRisorsa() 
@@ -61,8 +100,6 @@ public class RisorseController
 //			se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
 //			corrisponde ad ANNULLA, non va fatto nulla
 		}
-		
-		manageRisorseHandler.aggiungiRisorsa(scelta, CATEGORIE);
 	} 
 	
 	public void addRisorsa(String categoria)
@@ -78,35 +115,6 @@ public class RisorseController
 			filmsController.addFilm();
 		}
 	}
-	
-	/**
-	 * permette la rimozione di un libro o di un film dall'archivio
-	 * (precondizione: CATEGORIE != null)
-	 * @return l'id della risorsa rimossa
-	 */
-	public String scegliRisorsaDaRimuovere() 
-	{
-		MessaggiSistemaView.avvisoRimozioneRisorsa();
-		
-//		se utente annulla procedura removelibro/removefilm ritornato -1
-		String idRimosso = menuRimuoviRisorsa();
-//				RimuoviRisorsaHandler.showAndReturnID(CATEGORIE, this);
-		return idRimosso;
-	}
-	
-	public String rimuoviRisorsa(String categoria) 
-	{
-		String idRisorsa = "-1";
-		if(categoria == CATEGORIE[0])//LIBRI
-		{
-			idRisorsa = libriController.removeLibro();
-		}
-		if(categoria == CATEGORIE[1])//FILMS
-		{
-			idRisorsa = filmsController.removeFilm();
-		}
-		return idRisorsa;
-	}
 
 	public void menuVisualizzaElencoRisorse() 
 	{
@@ -114,8 +122,17 @@ public class RisorseController
 		MyMenu menu = new MyMenu(INTESTAZIONE, CATEGORIE, true);
 		int scelta = menu.scegliBase();
 		
-		manageRisorseHandler.visualizzaRisorse(scelta, CATEGORIE);
-	}
+		try
+		{
+			String categoria = CATEGORIE[scelta - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
+//			viene passata come stringa la categoria selezionata: archivioController deciderà poi se stampare libri o film
+			visualizzaDatiRisorsePrestabili(categoria);
+		}
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+//			se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
+//			corrisponde ad ANNULLA, non va fatto nulla
+		}	}
 	
 	public void visualizzaDatiRisorsePrestabili(String categoria) 
 	{

@@ -5,8 +5,8 @@ import org.junit.Test;
 import controllerMVC.FilmsController;
 import controllerMVC.RisorseController;
 import handler.ManageRisorseHandler;
+import interfaces.Risorsa;
 import model.Film;
-import model.Risorsa;
 import model.Risorse;
 
 public class TestFilm 

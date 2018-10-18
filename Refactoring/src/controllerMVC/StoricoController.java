@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import handler.StoricoHandler;
+import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
 import view.StoricoView;
@@ -11,6 +12,7 @@ import view.StoricoView;
 public class StoricoController 
 {
 	Storico model;
+	StoricoHandler storicoHandler;
 
 	public StoricoController(Storico storico) 
 	{
@@ -31,7 +33,12 @@ public class StoricoController
 			MyMenu menuStorico = new MyMenu(INTESTAZIONE, VOCI_MENU_STORICO, true);
 			int scelta = menuStorico.scegliBase();
 			
-			terminato = StoricoHandler.mostra(scelta, this);
+			if(storicoHandler==null)
+			{
+				storicoHandler = new StoricoHandler(this);
+			}
+			
+			terminato = storicoHandler.mostra(scelta);
 		}
 		while(!terminato);
 	}	

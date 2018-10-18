@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
 
+import interfaces.Risorsa;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Film
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Film extends Risorsa implements Serializable
+public class Film implements Risorsa, Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private static final int ANNO_PRIMA_PELLICOLA = 1885;

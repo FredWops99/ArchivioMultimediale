@@ -74,6 +74,7 @@ public class FruitoreHandler
 	public void menuFruitore() 
 	{
 //		lo creo qui perchè mi serve l'utenteLoggato
+//		utenteLoggato può cambiare durante l'esecuzione del programma
 		managePrestitiHandler = new ManagePrestitiHandler(utenteLoggato, prestitiController, risorseController, gestoreSalvataggi);
 		
 		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
@@ -130,9 +131,9 @@ public class FruitoreHandler
 			{
 				final String SCELTA_CATEGORIA = "scegli la categoria di risorsa: ";
 				MyMenu menu = new MyMenu(SCELTA_CATEGORIA, CATEGORIE);
-				int sceltaRisorsa = menu.scegliBase();
+				int categoria = menu.scegliBase();
 				
-				managePrestitiHandler.richiediPrestito(sceltaRisorsa);
+				managePrestitiHandler.richiediPrestito(categoria);
 				terminato = false;
 				
 				break;

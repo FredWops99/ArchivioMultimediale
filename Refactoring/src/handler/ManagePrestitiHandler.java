@@ -3,8 +3,8 @@ package handler;
 import controllerMVC.RisorseController;
 import controllerMVC.PrestitiController;
 import interfaces.ISavesManager;
+import interfaces.Risorsa;
 import model.Fruitore;
-import model.Risorsa;
 
 public class ManagePrestitiHandler 
 {

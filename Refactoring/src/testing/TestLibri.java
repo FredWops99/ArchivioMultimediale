@@ -6,8 +6,8 @@ import org.junit.Test;
 import controllerMVC.LibriController;
 import controllerMVC.RisorseController;
 import handler.ManageRisorseHandler;
+import interfaces.Risorsa;
 import model.Libro;
-import model.Risorsa;
 import model.Risorse;
 
 public class TestLibri

@@ -5,12 +5,14 @@ import java.util.Vector;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
 
+import interfaces.Risorsa;
+
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Libro extends Risorsa implements Serializable
+public class Libro implements Risorsa, Serializable
 {	
 	private static final long serialVersionUID = 1L;
 

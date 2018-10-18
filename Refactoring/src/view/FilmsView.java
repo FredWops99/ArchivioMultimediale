@@ -1,8 +1,9 @@
 package view;
 
 import java.util.Vector;
+
+import interfaces.Risorsa;
 import model.Film;
-import model.Risorsa;
 import myLib.GestioneDate;
 import myLib.InputDati;
 

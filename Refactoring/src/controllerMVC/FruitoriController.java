@@ -123,29 +123,6 @@ public class FruitoriController
 		return utentiRimossi;
 	}
 	
-	public void stampaDatiFruitori()
-	{
-		FruitoriView.stampaDati(model.getFruitori());
-	}
-	
-	public void stampaDatiFruitore(Fruitore f)
-	{
-		FruitoriView.stampaDati(f);
-	}
-	
-	public void rinnovo(Fruitore fruitore)
-	{
-		boolean riuscito = fruitore.rinnovo();
-		if(riuscito)
-		{
-			FruitoriView.iscrizioneRinnovata();
-		}
-		else
-		{
-			FruitoriView.iscrizioneNonRinnovata(fruitore.getDataInizioRinnovo(), fruitore.getDataScadenza());
-		}
-	}
-
 	/**
 	 * interagisce con l'utente chiedendogli le credenziali.
 	 * @return true se il login è andato a buon fine
@@ -168,7 +145,27 @@ public class FruitoriController
 			return utenteLoggato;
 		}	
 	}
-
 	
+	public void stampaDatiFruitori()
+	{
+		FruitoriView.stampaDati(model.getFruitori());
+	}
 	
+	public void stampaDatiFruitore(Fruitore f)
+	{
+		FruitoriView.stampaDati(f);
+	}
+	
+	public void rinnovo(Fruitore fruitore)
+	{
+		boolean riuscito = fruitore.rinnovo();
+		if(riuscito)
+		{
+			FruitoriView.iscrizioneRinnovata();
+		}
+		else
+		{
+			FruitoriView.iscrizioneNonRinnovata(fruitore.getDataInizioRinnovo(), fruitore.getDataScadenza());
+		}
+	}	
 }
