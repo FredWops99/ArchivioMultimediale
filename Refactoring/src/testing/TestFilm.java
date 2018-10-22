@@ -93,7 +93,7 @@ public class TestFilm
 		assertEquals(risorse.getRisorse().get(0).getId(), "F0");
 		assertEquals(risorse.getRisorse().get(1).getId(), "F1");
 
-		assertEquals(2, filmsController.getLastId());
+		assertEquals(2, risorse.getLastId());
 	}
 	
 	public static Film creaFilm(String titolo, String sottoCategoria)

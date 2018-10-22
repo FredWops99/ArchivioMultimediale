@@ -17,7 +17,6 @@ import view.MessaggiSistemaView;
 public class LibriController 
 {
 	private Risorse model;
-	private int lastId;	
 	private ManageRisorseHandler manageRisorseHandler;
 	
 //	CATEGORIA è libro
@@ -28,18 +27,12 @@ public class LibriController
 	public LibriController(Risorse risorse, ManageRisorseHandler manageRisorseHandler)
 	{
 		this.model = risorse;
-		this.lastId = risorse.getLastIdLibro();
 		this.manageRisorseHandler = manageRisorseHandler;
 	}
 
 	public Risorse getModel() 
 	{
 		return model;
-	}
-	
-	public int getLastId() 
-	{
-		return lastId;
 	}
 	
 	public void addLibro()
@@ -68,7 +61,7 @@ public class LibriController
 		
 		int nLicenze = LibriView.chiediNumeroLicenze();
 		
-		Libro l = new Libro(IDENTIFIER +lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		Libro l = new Libro(IDENTIFIER + model.getLastId(), sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
 		boolean aggiuntaRiuscita = model.addRisorsa(l);
 		
@@ -88,7 +81,7 @@ public class LibriController
 	public void addLibro(String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione,
 			String casaEditrice, String lingua, String genere, int nLicenze)
 	{
-		Libro l = new Libro("L"+lastId++, sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
+		Libro l = new Libro("L"+ model.getLastId(), sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
 		model.addRisorsa(l);
 	}

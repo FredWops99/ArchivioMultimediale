@@ -11,14 +11,13 @@ public class Risorse implements Serializable
 	
 	private Vector<Risorsa> risorse;
 	
-	private int lastIdFilm;
-	private int lastIdLibro;
+//	servono per gli id incrementali delle risorse
+	private int lastId;
 	
 	public Risorse()
 	{
 		this.risorse = new Vector<>();
-		lastIdFilm=0;
-		lastIdLibro=0;
+		lastId=0;
 	}
 	
 	public Vector<Risorsa> getRisorse() 
@@ -30,14 +29,9 @@ public class Risorse implements Serializable
 		this.risorse = risorse;
 	}
 	
-	public int getLastIdLibro()
+	public int getLastId()
 	{
-		return lastIdLibro;
-	}
-	
-	public int getLastIdFilm()
-	{
-		return lastIdFilm;
+		return lastId;
 	}
 	
 	public Risorsa getRisorsa(String id)
@@ -69,12 +63,10 @@ public class Risorse implements Serializable
 		if(!risorsaEsistente(r))
 		{
 			addPerSottoCategorie(r);
+			lastId++;
 			return true;
 		}
-		else
-		{
-			return false;
-		}	
+		else return false;
 	}
 	
 	public void addPerSottoCategorie(Risorsa r)
@@ -193,5 +185,4 @@ public class Risorse implements Serializable
 		}
 		return filmTrovati;
 	}
-
 }

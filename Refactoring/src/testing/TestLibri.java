@@ -99,7 +99,7 @@ public class TestLibri
 		assertEquals(risorse.getRisorse().get(0).getId(), "L0");
 		assertEquals(risorse.getRisorse().get(1).getId(), "L1");
 
-		assertEquals(2, libriController.getLastId());
+		assertEquals(2, risorse.getLastId());
 	}
 	
 	public static Libro creaLibro(String titolo, String sottoCategoria)

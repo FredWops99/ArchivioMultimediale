@@ -12,7 +12,6 @@ import view.MessaggiSistemaView;
 public class FilmsController 
 {
 	private Risorse model;
-	private int lastId;
 	private ManageRisorseHandler manageRisorseHandler;
 	
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
@@ -21,13 +20,7 @@ public class FilmsController
 	public FilmsController(Risorse risorse, ManageRisorseHandler manageRisorseHandler) 
 	{
 		this.model = risorse;
-		this.lastId = risorse.getLastIdFilm();
 		this.manageRisorseHandler = manageRisorseHandler;
-	}
-	
-	public int getLastId() 
-	{
-		return lastId;
 	}
 
 	public void addFilm()
@@ -46,7 +39,7 @@ public class FilmsController
 		String regista = FilmsView.chiediRegista();
 		int nLicenze = FilmsView.chiediNumeroLicenze();
 		
-		Film f = new Film(IDENTIFIER + lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
+		Film f = new Film(IDENTIFIER + model.getLastId(), sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
 		boolean aggiuntaRiuscita = model.addRisorsa(f);
@@ -70,7 +63,7 @@ public class FilmsController
 	 */
 	public void addFilm(String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze)
 	{
-		Film f = new Film("F"+ lastId++, sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
+		Film f = new Film("F"+ model.getLastId(), sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
 //		aggiunge il film al model del controller (se non è già esistente)
 		model.addRisorsa(f);
