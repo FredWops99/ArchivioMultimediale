@@ -56,7 +56,7 @@ public class TestStampaDati
 	public void libroAggiuntoPerPrestito() 
 	{
 		Film film = TestFilm.creaFilm("titolo", "Avventura");
-		RisorseView.stampaDati(film, false);
+		RisorseView.stampaDati(film, true);
 		
 		assertEquals(film.toString(true).trim(), outContent.toString().trim());
 	}
@@ -65,7 +65,7 @@ public class TestStampaDati
 	public void filmAggiuntoPerPrestito() 
 	{
 		Libro libro = TestLibri.creaLibro("titolo", "Azione");
-		RisorseView.stampaDati(libro, false);
+		RisorseView.stampaDati(libro, true);
 		
 		assertEquals(libro.toString(true).trim(), outContent.toString().trim());
 	}

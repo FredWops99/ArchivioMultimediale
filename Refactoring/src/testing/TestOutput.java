@@ -66,14 +66,14 @@ public class TestOutput
 	@Test
 	public void piùLibriStessoTitolo()
 	{
-		RisorseView.piùRisorseStessoTitolo("Libri","Titolo");
+		RisorseView.piùRisorseStessoTitolo("libri","Titolo");
 		assertEquals("Sono presenti più libri dal titolo \"Titolo\":", outContent.toString().trim());
 	}
 	
 	@Test
 	public void piùFilmStessoTitolo()
 	{
-		RisorseView.piùRisorseStessoTitolo("Libri","Titolo");
+		RisorseView.piùRisorseStessoTitolo("films","Titolo");
 		assertEquals("Sono presenti più films dal titolo \"Titolo\":", outContent.toString().trim());
 	}
 }
