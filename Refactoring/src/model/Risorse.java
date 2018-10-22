@@ -10,9 +10,7 @@ public class Risorse implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	private Vector<Risorsa> risorse;
-	/**
-	 * id incrementale univoco per ogni risorsa
-	 */
+	
 	private int lastIdFilm;
 	private int lastIdLibro;
 	
@@ -81,23 +79,37 @@ public class Risorse implements Serializable
 	
 	public void addPerSottoCategorie(Risorsa r)
 	{
-		if(risorse.isEmpty())
+//		se il vettore è vuoto o se c'è un solo elemento, aggiungo in coda
+		if(risorse.size() <= 1)
 		{
 			risorse.add(r);
 		}
-		else
+		else //size > 1
 		{
+			int posCandidata = -1;
 			for(int i = 0; i < risorse.size(); i++)
 			{
-//				
-//				se tutte le risorse saranno nello stesso vettore bisogna controllare anche che la classe dell'oggetto sia la stessa
-//				
-				if(risorse.get(i).getSottoCategoria().equals(r.getSottoCategoria()))
+				if(risorse.get(i).getClass().equals(r.getClass()))
 				{
-					risorse.add(i+1, r);
+//					quando trovo una risorsa della stessa classe salvo la posizione
+					posCandidata = i;
+					if(risorse.get(i).getSottoCategoria().equals(r.getSottoCategoria()))
+					{
+						risorse.add(i+1, r);
+						return;
+					}
+				}
+//				c'era un elemento della stessa classe ma quello di adesso non è più della stessa classe:
+//				devo inserire la risorsa in questa posizione, cioè alla fine delle risorse con stessa Classe
+//				se posCandidata è -1 non ho ancora trovato la stessa classe
+				else if(posCandidata != -1)
+				{
+					risorse.add(i, r);
+					posCandidata = -1;//non ce ne sarebbe bisogno
 					return;
 				}
 			}
+//			se non c'è un'altra risorsa con stessa categoria (classe)
 			risorse.add(r);
 		}
 	}
