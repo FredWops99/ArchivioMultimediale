@@ -1,17 +1,24 @@
 package controllerMVC;
 
+import java.util.Vector;
+
 import handler.FiltraFilmHandler;
 import handler.FiltraLibriHandler;
 import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
+import view.FilmsView;
+import view.LibriView;
 import view.MessaggiSistemaView;
+import view.RisorseView;
 
 public class RisorseController 
 {
-	private final String[] CATEGORIE = {"Libri","Film"};
+	private final String[] CATEGORIE = {"Libri","Films"};
 
+	private Risorse risorse;
+	
 	private FilmsController filmsController;
 	private LibriController libriController;
 	
@@ -22,6 +29,7 @@ public class RisorseController
 	public RisorseController(Risorse risorse)
 	{
 		manageRisorseHandler = new ManageRisorseHandler(this);
+		this.risorse = risorse;
 		filmsController = new FilmsController(risorse,manageRisorseHandler);
 		libriController = new LibriController(risorse,manageRisorseHandler);
 	}
@@ -70,18 +78,85 @@ public class RisorseController
 		}
 	}
 	
+	/**
+	 * permette la rimozione di una risorsa da parte dell'operatore: la risorsa selezionata verrà etichettata come "non Prestabile" 
+	 * ma rimarrà in archivio per motivi storici
+	 * @return l'id della risorsa rimosso
+	 */
 	public String rimuoviRisorsa(String categoria) 
 	{
-		String idRisorsa = "-1";
+		Vector<Risorsa> elencoRisorse = risorse.getRisorse();
+		String idSelezionato;
+		
+		String titolo = RisorseView.chiediRisorsaDaRimuovere();
+				
+		Vector<Integer> posizioniRicorrenze = new Vector<>();
+		
 		if(categoria == CATEGORIE[0])//LIBRI
 		{
-			idRisorsa = libriController.removeLibro();
+			for (int i = 0; i < elencoRisorse.size(); i++)
+			{
+				if(elencoRisorse.get(i).getId().charAt(0)=='L' && elencoRisorse.get(i).isPrestabile() 
+						&& elencoRisorse.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+				{
+//					ogni volta che trovo una risorsa con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
+					posizioniRicorrenze.add(i);
+				}
+			}
 		}
-		if(categoria == CATEGORIE[1])//FILMS
+		else if(categoria == CATEGORIE[1])//FILM
 		{
-			idRisorsa = filmsController.removeFilm();
+			for (int i = 0; i < elencoRisorse.size(); i++)
+			{
+				if(elencoRisorse.get(i).getId().charAt(0)=='F' && elencoRisorse.get(i).isPrestabile() 
+						&& elencoRisorse.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
+				{
+//					ogni volta che trovo una risorsa con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
+					posizioniRicorrenze.add(i);
+				}
+			}
 		}
-		return idRisorsa;
+		
+		if(posizioniRicorrenze.size()==0)
+		{
+			RisorseView.risorsaNonPresente();
+			idSelezionato = "-1";
+		}
+//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizione
+		else if(posizioniRicorrenze.size()==1)
+		{
+			idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(0)).getId();
+			elencoRisorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
+			RisorseView.rimozioneAvvenuta();
+		}
+//		se ci sono più elementi nel vettore li stampo e chiedo di selezionare quale si vuole rimuovere
+		else
+		{
+			LibriView.piùRisorseStessoTitolo(categoria, titolo);
+			
+			int pos = 0;
+			for(Integer i : posizioniRicorrenze)
+			{
+				RisorseView.numeroRicorrenza(pos);
+				MessaggiSistemaView.cornice();
+				RisorseView.stampaDati(elencoRisorse.elementAt((int)i), false);
+				MessaggiSistemaView.cornice();
+			}
+			
+			int daRimuovere = RisorseView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
+			
+			if(daRimuovere > 0)
+			{
+				idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
+				elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
+				RisorseView.rimozioneAvvenuta();
+			}
+			else//0: annulla
+			{
+				idSelezionato = "-1";
+			}
+		}
+		return idSelezionato;
 	}
 	
 	public void menuAggiungiRisorsa() 
@@ -126,24 +201,38 @@ public class RisorseController
 		{
 			String categoria = CATEGORIE[scelta - 1];	//stampa il menu (partendo da 1 e non da 0) con i generi e ritorna quello selezionato
 //			viene passata come stringa la categoria selezionata: archivioController deciderà poi se stampare libri o film
-			visualizzaDatiRisorsePrestabili(categoria);
+			
+			stampaDatiRisorsePrestabili(categoria);
+			
+//			visualizzaDatiRisorsePrestabili(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 //			se utente seleziona 0 (INDIETRO) -> CATEGORIE[-1] dà eccezione
 //			corrisponde ad ANNULLA, non va fatto nulla
-		}	}
+		}	
+	}
 	
-	public void visualizzaDatiRisorsePrestabili(String categoria) 
+	private void stampaDatiRisorsePrestabili(String categoria)
 	{
-		if(categoria == CATEGORIE[0])//LIBRI
+	//	uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
+		Vector<Risorsa> risorseDaStampare = new Vector<>();
+		for(Risorsa risorsa : risorse.getRisorse())
 		{
-			libriController.stampaDatiLibriPrestabili();
+			if(risorsa.getCategoria().equals(categoria) && risorsa.isPrestabile())
+			{
+				risorseDaStampare.add(risorsa);
+			}
 		}
-		if(categoria == CATEGORIE[1])//FILMS
+		//anche se unifico con interfaccia risorsa devo comunque stampare i dati in modo diverso: films e risorse hanno campi diversi
+		if(categoria == CATEGORIE[0])
 		{
-			filmsController.stampaDatiFilmPrestabili();
-		}		
+			LibriView.stampaDatiPerCategorie(risorseDaStampare);
+		}
+		else if(categoria == CATEGORIE[1])
+		{
+			FilmsView.stampaDati(risorseDaStampare);
+		}
 	}
 	
 //	la ricerca avviene tramite filtri

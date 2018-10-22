@@ -20,12 +20,9 @@ public interface Risorsa
 	 * @return
 	 */
 	public abstract String toString(boolean perPrestito);
-	/**
- 	 * stampa le informazioni relative alla risorsa
-	 * 
-	 * @param perPrestito indica se le informazioni vanno visualizzate nella schermata dei prestiti o no (vengono mostrate info diverse)
-	 */
-//	public abstract void stampaDati(boolean perPrestito);
+	
+	public abstract String getCategoria();
+	
 	/**
 	 * @return il titolo della risorsa
 	 */

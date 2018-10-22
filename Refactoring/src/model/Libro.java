@@ -13,8 +13,12 @@ import interfaces.Risorsa;
  * @author Landi Federico
  */
 public class Libro implements Risorsa, Serializable
-{	
+{
 	private static final long serialVersionUID = 1L;
+	/**
+	 * utile per confrontare risorse con categoria selezionata da utente
+	 */
+	private static final String CATEGORIA = "Libri";
 
 	/********************************************************************
 	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI: *
@@ -73,16 +77,16 @@ public class Libro implements Risorsa, Serializable
 	public Libro(String id, String sottoCategoria, String titolo, Vector<String> autori, int pagine, int getAnnoDiUscita, String casaEditrice,
 			String lingua, String genere, int nLicenze) 
 	{
-		this.setId(id);
-		this.setSottoCategoria(sottoCategoria);
-		this.setTitolo(titolo);
-		this.setAutori(autori);
-		this.setPagine(pagine);
-		this.setAnnoDiUscita(getAnnoDiUscita);
-		this.setCasaEditrice(casaEditrice);
-		this.setLingua(lingua);
-		this.setGenere(genere);
-		this.setnLicenze(nLicenze);
+		this.id = (id);
+		this.sottoCategoria = (sottoCategoria);
+		this.titolo = (titolo);
+		this.autori = (autori);
+		this.pagine = (pagine);
+		this.annoDiUscita = (getAnnoDiUscita);
+		this.casaEditrice = (casaEditrice);
+		this.lingua = (lingua);
+		this.genere = (genere);
+		this.nLicenze = (nLicenze);
 		this.setInPrestito(0);
 		this.prestabile = true;
 	}
@@ -121,7 +125,6 @@ public class Libro implements Risorsa, Serializable
 		}
 	}
 	
-	
 	@Override
 	public String toString(boolean perPrestito) 
 	{
@@ -159,93 +162,50 @@ public class Libro implements Risorsa, Serializable
 
 		return sb.toString();
 	}
-
-//	va messo nel suo controller
-//	public void stampaDati(boolean perPrestito)
-//	{
-//		LibriView.stampaDati(this, perPrestito);
-//	}
 	
-
+	public String getCategoria() 
+	{
+		return CATEGORIA;
+	}
 	public String getId() 
 	{
 		return id;
-	}
-	public void setId(String id) 
-	{
-		this.id = id;
 	}
 	public String getTitolo()
 	{
 		return titolo;
 	}
-	public void setTitolo(String titolo) 
-	{
-		this.titolo = titolo;
-	}
 	public Vector<String> getAutori() 
 	{
 		return autori;
-	}
-	public void setAutori(Vector<String> autori) 
-	{
-		this.autori = autori;
 	}
 	public int getPagine()
 	{
 		return pagine;
 	}
-	public void setPagine(int pagine) 
-	{
-		this.pagine = pagine;
-	}
 	public int getAnnoDiUscita() 
 	{
 		return annoDiUscita;
-	}
-	public void setAnnoDiUscita(int annoDiUscita) 
-	{
-		this.annoDiUscita = annoDiUscita;
 	}
 	public String getCasaEditrice() 
 	{
 		return casaEditrice;
 	}
-	public void setCasaEditrice(String casaEditrice) 
-	{
-		this.casaEditrice = casaEditrice;
-	}
 	public String getLingua() 
 	{
 		return lingua;
-	}
-	public void setLingua(String lingua) 
-	{
-		this.lingua = lingua;
 	}
 	public String getSottoCategoria() 
 	{
 		return sottoCategoria;
 	}
-	public void setSottoCategoria(String sottoCategoria) 
-	{
-		this.sottoCategoria = sottoCategoria;
-	}
 	public String getGenere() 
 	{
 		return genere;
 	}
-	public void setGenere(String sottoGenere) 
-	{
-		this.genere = sottoGenere;
-	}
 	public int getNLicenze() 
 	{
 		return nLicenze;
-	}
-	public void setnLicenze(int nLicenze) 
-	{
-		this.nLicenze = nLicenze;
 	}
 	public int getInPrestito() 
 	{

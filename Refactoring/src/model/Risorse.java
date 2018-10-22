@@ -50,7 +50,7 @@ public class Risorse implements Serializable
 	{
 		for(Risorsa risorsa : risorse)
 		{
-			if(risorsa.getId().charAt(0)==r.getId().charAt(0) && risorsa.stessiAttributi(r))
+			if(risorsa.getCategoria()==r.getCategoria() && risorsa.stessiAttributi(r))
 			{
 				return true;
 			}
@@ -106,13 +106,13 @@ public class Risorse implements Serializable
 		}
 	}
 	
-	public Vector<Risorsa> filtraRisorsePerTitolo(String titoloParziale) 
+	public Vector<Risorsa> filtraRisorsePerTitolo(String categoria, String titoloParziale) 
 	{
 		Vector<Risorsa> risorseTrovate = new Vector<>(); 
 		
 		for(Risorsa r : risorse)
 		{
-			if(r.isPrestabile() && r.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
+			if(r.getCategoria().equals(categoria) && r.isPrestabile() && r.getTitolo().toLowerCase().contains(titoloParziale.toLowerCase()))
 			{
 				risorseTrovate.add(r);
 			}
@@ -120,13 +120,13 @@ public class Risorse implements Serializable
 		return risorseTrovate;
 	}
 	
-	public Vector<Risorsa> filtraRisorsePerUscita(int annoUscita) 
+	public Vector<Risorsa> filtraRisorsePerUscita(String categoria, int annoUscita) 
 	{
 		Vector<Risorsa> risorseTrovate = new Vector<>(); 
 		
 		for(Risorsa r : risorse)
 		{
-			if(r.isPrestabile() && r.getAnnoDiUscita() == annoUscita)
+			if(r.getCategoria().equals(categoria) && r.isPrestabile() && r.getAnnoDiUscita() == annoUscita)
 			{
 				risorseTrovate.add(r);
 			}
@@ -140,12 +140,12 @@ public class Risorse implements Serializable
 	 * @param autore il nome dell'autore da usare come criterio
 	 * @return un vector contenente i libri corrispondenti al criterio
 	 */
-	public Vector<Risorsa> filtraLibriPerAutori(String autore) 
+	public Vector<Risorsa> filtraLibriPerAutori(String categoria, String autore) 
 	{
 		Vector<Risorsa> libriTrovati = new Vector<>(); 
 		for(Risorsa r : getRisorse())
 		{
-			if(r.getId().charAt(0)=='L')
+			if(r.getCategoria().equals(categoria))
 			{
 //				metodo getAutori è solo di Libro: posso fare il cast perchè primo char è L
 				Libro libro = (Libro)r;
@@ -170,12 +170,12 @@ public class Risorse implements Serializable
 	 * @param regista il nome del regista da usare come criterio
 	 * @return un vector contenente i film corrispondenti al criterio
 	 */
-	public Vector<Risorsa> filtraFilmPerRegista(String regista)
+	public Vector<Risorsa> filtraFilmPerRegista(String categoria, String regista)
 	{
 		Vector<Risorsa> filmTrovati = new Vector<>(); 
 		for(Risorsa r : getRisorse())
 		{
-			if(r.getId().charAt(0) == 'F' && r.isPrestabile())
+			if(r.getCategoria().equals(categoria) && r.isPrestabile())
 			{
 				if(regista.toLowerCase().equals(regista.toLowerCase()))
 				{

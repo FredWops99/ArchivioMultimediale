@@ -45,7 +45,6 @@ public class LibriController
 		}
 		
 		String genere = scegliGenere(sottoCategoria);
-//				ScegliGenereLibroHandler.show(sottoCategoria);//se la sottocategoria ha generi disponibili
 		String titolo = LibriView.chiediTitolo();
 		int pagine = LibriView.chiediPagine();
 		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
@@ -114,98 +113,21 @@ public class LibriController
 	}
 	
 	/**
-	 * permette la rimozione di un libro da parte dell'operatore: il libro selezionato verrà etichettato come "non Prestabile" ma rimarrà in archivio per 
-	 * motivi storici
-	 * @return l'id del libro rimosso
-	 */
-	public String removeLibro()
-	{
-		Vector<Risorsa> risorse = model.getRisorse();
-
-		String idSelezionato;
-		
-		String titolo = LibriView.chiediRisorsaDaRimuovere(Libro.class);
-		
-		Vector<Integer> posizioniRicorrenze = new Vector<>();
-		
-		for (int i = 0; i < risorse.size(); i++)
-		{
-			if(risorse.get(i).getId().charAt(0)=='L' && risorse.get(i).isPrestabile() 
-					&& risorse.get(i).getTitolo().toLowerCase().equals(titolo.toLowerCase()))
-			{
-//				ogni volta che in libri trovo un libro con il nome inserito dall'operatore, aggiungo la sua posizione al vettore
-				posizioniRicorrenze.add(i);
-			}
-		}
-		if(posizioniRicorrenze.size()==0)
-		{
-			LibriView.risorsaNonPresente(Libro.class);
-			idSelezionato = "-1";
-		}
-//		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizioni in libri
-		else if(posizioniRicorrenze.size()==1)
-		{
-			idSelezionato = risorse.get((int)posizioniRicorrenze.get(0)).getId();
-			risorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-			LibriView.rimozioneAvvenuta();
-		}
-//		se ci sono più elementi nel vettore (più libri con il nome inserito dall'operatore) li stampo e chiedo di selezionare quale si vuole rimuovere:
-//		l'utente inserisce quello che vuole rimuovere
-		else
-		{
-			LibriView.piùRisorseStessoTitolo(titolo);
-			
-			int pos = 0;
-			for(Integer i : posizioniRicorrenze)
-			{
-				LibriView.numeroRicorrenza(pos);
-				MessaggiSistemaView.cornice();
-				stampaDatiLibro(risorse.elementAt((int)i), false);
-				MessaggiSistemaView.cornice();
-			}
-			
-			int daRimuovere = LibriView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
-			
-			if(daRimuovere > 0)
-			{
-				idSelezionato = risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
-				risorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				LibriView.rimozioneAvvenuta();
-			}
-			else//0: annulla
-			{
-				idSelezionato = "-1";
-			}
-		}
-		return idSelezionato;
-	}
-	
-	/**
-	 * ne stampa uno a uno, chiamando il corrispettivo metodo nella view
-	 * @param libro
-	 * @param perPrestito
-	 */
-	public void stampaDatiLibro(Risorsa libro, boolean perPrestito)
-	{
-		LibriView.stampaDati(libro, perPrestito);
-	}
-	
-	/**
 	 * stampa tutti i libri raggruppandoli per sottocategoria e genere, chiamando il corrispettivo metodo nella view
 	 */
-	public void stampaDatiLibriPrestabili()
-	{
-//		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
-		Vector<Libro> libriDaStampare = new Vector<>();
-		for(Risorsa risorsa : model.getRisorse())
-		{
-			if(risorsa.getId().charAt(0)=='L' && risorsa.isPrestabile())
-			{
-				libriDaStampare.add((Libro)risorsa);
-			}
-		}
-		LibriView.stampaDatiPerCategorie(libriDaStampare);
-	}
+//	public void stampaDatiLibriPrestabili()
+//	{
+////		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
+//		Vector<Libro> libriDaStampare = new Vector<>();
+//		for(Risorsa risorsa : model.getRisorse())
+//		{
+//			if(risorsa.getId().charAt(0)=='L' && risorsa.isPrestabile())
+//			{
+//				libriDaStampare.add((Libro)risorsa);
+//			}
+//		}
+//		LibriView.stampaDatiPerCategorie(libriDaStampare);
+//	}
 	
 	public Vector<Risorsa> libriPrestabili()
 	{
@@ -240,7 +162,7 @@ public class LibriController
 	{
 		if(libriFiltrati.isEmpty())
 		{
-			LibriView.noRisorseDisponibili();
+			LibriView.noRisorseDisponibili("libri");
 			return null;
 		}
 		else
@@ -249,7 +171,7 @@ public class LibriController
 			{
 				MessaggiSistemaView.stampaPosizione(i);
 				MessaggiSistemaView.cornice();
-				stampaDatiLibro(libriFiltrati.get(i), true);
+				LibriView.stampaDati(libriFiltrati.get(i), true);
 				MessaggiSistemaView.cornice();
 			}
 			

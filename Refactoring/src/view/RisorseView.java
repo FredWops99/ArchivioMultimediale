@@ -30,14 +30,14 @@ public abstract class RisorseView
 		System.out.println("Il " + c.getSimpleName().toLowerCase() + " è già presente in archivio");
 	}
 	
-	public static String chiediRisorsaDaRimuovere(Class<?> c) 
+	public static String chiediRisorsaDaRimuovere() 
 	{
-		return InputDati.leggiStringaNonVuota("Inserisci il titolo del " + c.getSimpleName().toLowerCase() + " da rimuovere: ");
+		return InputDati.leggiStringaNonVuota("Inserisci il titolo della risorsa da rimuovere: ");
 	}
 	
-	public static void risorsaNonPresente(Class<?> c)
+	public static void risorsaNonPresente()
 	{
-		System.out.println("Siamo spiacenti, il " + c.getSimpleName().toLowerCase() + " non è presente nell'archivio");
+		System.out.println("Siamo spiacenti, la risorsa non è presente nell'archivio");
 	}
 	
 	public static void rimozioneAvvenuta()
@@ -93,5 +93,20 @@ public abstract class RisorseView
 	public static void stampaSottoCategoria(Risorsa risorsa)
 	{
 		System.out.println("Sottocategoria: " + risorsa.getSottoCategoria());
+	}
+	
+	public static void piùRisorseStessoTitolo(String categoria, String titolo) 
+	{
+		System.out.println("Sono presenti più " + categoria + " dal titolo \"" + titolo + "\": ");	
+	}
+	
+	public static void noRisorseDisponibili(String categoria) 
+	{
+		System.out.println("In archivio non sono presenti " + categoria + " disponibili");
+	}
+	
+	public static void risorsaNonPresente(String categoria, String titolo)
+	{
+		System.out.println("In archivio non sono presenti " + categoria + " il cui titolo è: " + titolo );
 	}
 }

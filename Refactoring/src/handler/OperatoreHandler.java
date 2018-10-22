@@ -9,7 +9,7 @@ import myLib.MyMenu;
 
 public class OperatoreHandler 
 {
-	private final String[] CATEGORIE = {"Libri","Film"};
+	private final String[] CATEGORIE = {"Libri","Films"};
 
 	FruitoriController fruitoriController;
 	RisorseController risorseController;

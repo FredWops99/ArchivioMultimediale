@@ -54,30 +54,17 @@ public class LibriView extends RisorseView
 		System.out.println("Genere: " + ((Libro) risorsa).getGenere());	
 	}
 	
-	public static void piùRisorseStessoTitolo(String titolo) 
-	{
-		System.out.println("Sono presenti più libri dal titolo \"" + titolo + "\": ");	
-	}
 	
-	public static void noRisorseDisponibili() 
-	{
-		System.out.println("In archivio non sono presenti libri disponibili");
-	}
-	
-	public static void risorsaNonPresente(String s)
-	{
-		System.out.println("In archivio non sono presenti libri il cui titolo è: " + s );
-	}
 
 	/**
 	 * stampa i libri raggruppandoli per sottocategorie
 	 * @param libriDaStampare
 	 */
-	public static void stampaDatiPerCategorie(Vector<Libro> libriDaStampare) 
+	public static void stampaDatiPerCategorie(Vector<Risorsa> libriDaStampare) 
 	{
 		if(libriDaStampare.isEmpty())
 		{
-			noRisorseDisponibili();
+			noRisorseDisponibili("libri");
 		}
 		else
 		{
@@ -93,7 +80,8 @@ public class LibriView extends RisorseView
 			for(int j = 0; j < libriDaStampare.size(); j++)
 			{				
 				MessaggiSistemaView.cornice(true, false);
-				if(!libriDaStampare.get(j).getGenere().equals("-"))
+//				devo aggiungere cast in Libro perchè passo un vettore di risorse
+				if(!((Libro)libriDaStampare.get(j)).getGenere().equals("-"))
 				{
 					stampaSottoCategoria(libriDaStampare.get(j));
 					stampaGenere(libriDaStampare.get(j));
@@ -106,7 +94,7 @@ public class LibriView extends RisorseView
 					{
 						if(libriDaStampare.get(j).getSottoCategoria().equals(libriDaStampare.get(i).getSottoCategoria()))
 						{
-							if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
+							if(((Libro)libriDaStampare.get(j)).getGenere().equals(((Libro)libriDaStampare.get(i)).getGenere()))
 							{
 								RisorseView.stampaTitolo(libriDaStampare.get(j));
 								libriDaStampare.remove(i);
@@ -122,7 +110,7 @@ public class LibriView extends RisorseView
 //					conteggio al contrario così quando elimino un elemento non salto il successivo
 					for(int i = libriDaStampare.size()-1; i >= j+1; i--)
 					{
-						if(libriDaStampare.get(j).getGenere().equals(libriDaStampare.get(i).getGenere()))
+						if(((Libro)libriDaStampare.get(j)).getGenere().equals(((Libro)libriDaStampare.get(i)).getGenere()))
 						{
 							RisorseView.stampaTitolo(libriDaStampare.get(j));
 							libriDaStampare.remove(i);

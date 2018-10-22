@@ -57,19 +57,19 @@ public class FiltraFilmHandler
 			case 1: //FILTRA PER TITOLO
 			{
 				titoloParziale = FilmsView.chiediTitolo();
-				filmsFiltrati = filmsController.filtraFilmPerTitolo(titoloParziale);
+				filmsFiltrati = filtraFilmPerTitolo(titoloParziale);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO PUBBLICAZIONE
 			{
 				annoUscita = FilmsView.chiediAnnoUscita();
-				filmsFiltrati = filmsController.filtraFilmPerUscita(annoUscita);
+				filmsFiltrati = filtraFilmPerUscita(annoUscita);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
 				nomeRegista = FilmsView.chiediRegista();
-				filmsFiltrati = filmsController.filtraFilmPerRegista(nomeRegista);
+				filmsFiltrati = filtraFilmPerRegista(nomeRegista);
 				break;
 			}
 		}
@@ -77,7 +77,7 @@ public class FiltraFilmHandler
 		{
 			if(scelta == 1 && filmsFiltrati.isEmpty()) 
 			{
-				FilmsView.risorsaNonPresente(titoloParziale);
+				FilmsView.risorsaNonPresente("films",titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && filmsFiltrati.isEmpty())
@@ -94,7 +94,7 @@ public class FiltraFilmHandler
 			for (int i=0; i <filmsFiltrati.size(); i++) 
 			{
 				MessaggiSistemaView.cornice(true, false);
-				filmsController.stampaDatiFilm(filmsFiltrati.get(i), false);
+				FilmsView.stampaDati(filmsFiltrati.get(i), false);
 			}	
 		}
 		
@@ -104,5 +104,47 @@ public class FiltraFilmHandler
 		}
 //		se non sono da prenotare (quindi solo da visualizzare) non deve ritornare nulla
 		return null;
+	}
+	
+	public Vector<Risorsa> filtraFilmPerTitolo(String titoloParziale)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = filmsController.getModel().filtraRisorsePerTitolo("Films", titoloParziale);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getCategoria().equals("Films"))
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
+	}
+	
+	public Vector<Risorsa> filtraFilmPerUscita(int annoUscita)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = filmsController.getModel().filtraRisorsePerUscita("Films", annoUscita);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getCategoria().equals("Films"))
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
+	}
+	
+	public Vector<Risorsa> filtraFilmPerRegista(String regista)
+	{
+		Vector<Risorsa> result = new Vector<>();
+		Vector<Risorsa> filtrati = filmsController.getModel().filtraFilmPerRegista("Films", regista);
+		for(Risorsa risorsa : filtrati)
+		{
+			if(risorsa.getCategoria().equals("Films"))
+			{
+				result.addElement(risorsa);
+			}
+		}
+		return result;
 	}
 }

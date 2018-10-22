@@ -14,6 +14,10 @@ import interfaces.Risorsa;
 public class Film implements Risorsa, Serializable
 {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * utile per confrontare risorse con categoria selezionata da utente
+	 */
+	private static final String CATEGORIA = "Films";
 	private static final int ANNO_PRIMA_PELLICOLA = 1885;
 
 	/********************************************************************
@@ -68,14 +72,14 @@ public class Film implements Risorsa, Serializable
 	 */
 	public Film(String id, String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze) 
 	{
-		this.setId(id);
-		this.setSottoCategoria(sottoCategoria);
-		this.setTitolo(titolo);
-		this.setRegista(regista);
-		this.setDurata(durata);
-		this.setAnnoDiUscita(annoDiUscita);
-		this.setLingua(lingua);
-		this.setnLicenze(nLicenze);
+		this.id = (id);
+		this.sottoCategoria = (sottoCategoria);
+		this.titolo = (titolo);
+		this.regista = (regista);
+		this.durata = (durata);
+		this.annoDiUscita = (annoDiUscita);
+		this.lingua = (lingua);
+		this.nLicenze = (nLicenze);
 		this.setInPrestito(0);
 		this.prestabile = true;
 	}
@@ -133,15 +137,11 @@ public class Film implements Risorsa, Serializable
 		}
 		return sb.toString();
 	}
-	
-//	@Override
-//	public void stampaDati(boolean perPrestito) 
-//	{
-//		
-//		FilmsView.stampaDati(this, perPrestito);
-//	}
 
-	//GETTER//
+	public String getCategoria() 
+	{
+		return CATEGORIA;
+	}
 	public String getId() 
 	{
 		return id;
@@ -194,39 +194,7 @@ public class Film implements Risorsa, Serializable
 	{
 		return Film.PRESTITI_MAX;
 	}	
-	//SETTER//
-	public void setId(String id) 
-	{
-		this.id = id;
-	}
-	public void setSottoCategoria(String sottoCategoria) 
-	{
-		this.sottoCategoria = sottoCategoria;
-	}
-	public void setTitolo(String titolo) 
-	{
-		this.titolo = titolo;
-	}
-	public void setRegista(String regista) 
-	{
-		this.regista = regista;
-	}
-	public void setDurata(int durata) 
-	{
-		this.durata = durata;
-	}
-	public void setAnnoDiUscita(int annoDiUscita) 
-	{
-		this.annoDiUscita = annoDiUscita;
-	}
-	public void setLingua(String lingua) 
-	{
-		this.lingua = lingua;
-	}
-	public void setnLicenze(int nLicenze)
-	{
-		this.nLicenze = nLicenze;
-	}
+	
 	public void setInPrestito(int inPrestito) 
 	{
 		this.inPrestito = inPrestito;

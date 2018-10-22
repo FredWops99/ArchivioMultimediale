@@ -7,24 +7,17 @@ import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import controllerMVC.FilmsController;
 import controllerMVC.FruitoriController;
-import controllerMVC.LibriController;
-import controllerMVC.RisorseController;
-import handler.ManageRisorseHandler;
 import model.Film;
 import model.Fruitore;
 import model.Fruitori;
 import model.Libro;
 import model.Risorse;
+import view.RisorseView;
 
 public class TestStampaDati 
 {
 	Risorse risorse = new Risorse();
-	RisorseController rc = new RisorseController(risorse);
-	ManageRisorseHandler mr = new ManageRisorseHandler(rc);
-	private LibriController libriController = new LibriController(risorse,mr);
-	private FilmsController filmController = new FilmsController(risorse, mr);
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;
@@ -45,7 +38,7 @@ public class TestStampaDati
 	public void libroAggiunto() 
 	{
 		Film film = TestFilm.creaFilm("titolo", "Avventura");
-		filmController.stampaDatiFilm(film, false);
+		RisorseView.stampaDati(film, false);
 		
 		assertEquals(film.toString(false).trim(), outContent.toString().trim());
 	}
@@ -54,7 +47,7 @@ public class TestStampaDati
 	public void filmAggiunto() 
 	{
 		Libro libro = TestLibri.creaLibro("titolo", "Azione");
-		libriController.stampaDatiLibro(libro, false);
+		RisorseView.stampaDati(libro, false);
 		
 		assertEquals(libro.toString(false).trim(), outContent.toString().trim());
 	}
@@ -63,7 +56,7 @@ public class TestStampaDati
 	public void libroAggiuntoPerPrestito() 
 	{
 		Film film = TestFilm.creaFilm("titolo", "Avventura");
-		filmController.stampaDatiFilm(film, true);
+		RisorseView.stampaDati(film, false);
 		
 		assertEquals(film.toString(true).trim(), outContent.toString().trim());
 	}
@@ -72,7 +65,7 @@ public class TestStampaDati
 	public void filmAggiuntoPerPrestito() 
 	{
 		Libro libro = TestLibri.creaLibro("titolo", "Azione");
-		libriController.stampaDatiLibro(libro, true);
+		RisorseView.stampaDati(libro, false);
 		
 		assertEquals(libro.toString(true).trim(), outContent.toString().trim());
 	}

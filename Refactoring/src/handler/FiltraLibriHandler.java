@@ -77,7 +77,7 @@ public class FiltraLibriHandler
 		{
 			if(scelta == 1 && libriFiltrati.isEmpty()) 
 			{
-				LibriView.risorsaNonPresente(titoloParziale);
+				LibriView.risorsaNonPresente("libri",titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && libriFiltrati.isEmpty())
@@ -94,7 +94,7 @@ public class FiltraLibriHandler
 			for (int i=0; i <libriFiltrati.size(); i++) 
 			{
 				MessaggiSistemaView.cornice(true,false);
-				libriController.stampaDatiLibro(libriFiltrati.get(i), false);
+				LibriView.stampaDati(libriFiltrati.get(i), false);
 			}
 		}
 		
@@ -109,10 +109,10 @@ public class FiltraLibriHandler
 	public Vector<Risorsa> filtraLibriPerTitolo(String titoloParziale)
 	{
 		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerTitolo(titoloParziale);
+		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerTitolo("Libri",titoloParziale);
 		for(Risorsa risorsa : filtrati)
 		{
-			if(risorsa.getId().charAt(0)=='L')
+			if(risorsa.getCategoria().equals("Libri"))
 			{
 				result.addElement(risorsa);
 			}
@@ -123,10 +123,10 @@ public class FiltraLibriHandler
 	public Vector<Risorsa> filtraLibriPerAnnoPubblicazione(int annoPubblicazione)
 	{
 		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerUscita(annoPubblicazione);
+		Vector<Risorsa> filtrati = libriController.getModel().filtraRisorsePerUscita("Libri", annoPubblicazione);
 		for(Risorsa risorsa : filtrati)
 		{
-			if(risorsa.getId().charAt(0)=='L')
+			if(risorsa.getCategoria().equals("Libri"))
 			{
 				result.addElement(risorsa);
 			}
@@ -137,10 +137,10 @@ public class FiltraLibriHandler
 	public Vector<Risorsa> filtraLibriPerAutori(String autore)
 	{
 		Vector<Risorsa> result = new Vector<>();
-		Vector<Risorsa> filtrati = libriController.getModel().filtraLibriPerAutori(autore);
+		Vector<Risorsa> filtrati = libriController.getModel().filtraLibriPerAutori("Libri", autore);
 		for(Risorsa risorsa : filtrati)
 		{
-			if(risorsa.getId().charAt(0)=='L')
+			if(risorsa.getCategoria().equals("Libri"))
 			{
 				result.addElement(risorsa);
 			}
