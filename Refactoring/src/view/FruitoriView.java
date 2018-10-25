@@ -10,7 +10,8 @@ import myLib.InputDati;
  * Fa un po' da view e da controller?
  * il model chiede a questa classe, che gli restituisce il risultato che gli serve e stampa anche all'utente.
  * se per esempio l'input-dati restasse nel model, il controller sarebbe assieme ad esso(?)
- * @author Stefano
+ * @author Stefano Prandini
+ * @author Federico Landi
  */
 
 public class FruitoriView 
@@ -147,6 +148,4 @@ public class FruitoriView
 	{
 		System.out.println("Benvenuto " + nome + "!");
 	}
-
-	
 }
