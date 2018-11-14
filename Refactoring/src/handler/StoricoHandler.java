@@ -5,25 +5,14 @@ import view.StoricoView;
 
 /**
  * (precondizione: prestiti != null && archivio != null && fruitori != null)
- * menuStorico permette la consultazione dello storico. In particolare sono pesenti le seguenti opzioni:
- * - Numero prestiti per anno solare
- * - Numero proroghe per anno solare
- * - Risorsa che è stata oggetto del maggior numero di prestiti per anno solare
- * - Numero di prestiti per fruitore per anno solare
- * - Risorse prestabili in passato
- * - Iscrizioni decadute
- * - Iscrizioni rinnovate
- * - Prestiti prorogati
- * - Prestiti terminati
- * - Prestiti terminati in anticipo.
- * Questo metodo viene chiamato in menuOperatore (nel main).
- * 
+ * menuStorico permette la consultazione dello storico. 
  * @author Stefano Prandini
  * @author Federico Landi
  */
 public class StoricoHandler
 {
 	private StoricoController storicoController;
+	
 	public StoricoHandler(StoricoController storicoController)
 	{
 		this.storicoController = storicoController;

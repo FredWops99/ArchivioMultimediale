@@ -11,8 +11,8 @@ import view.StoricoView;
 
 public class StoricoController 
 {
-	Storico model;
-	StoricoHandler storicoHandler;
+	private Storico model;
+	private StoricoHandler storicoHandler;
 
 	public StoricoController(Storico storico) 
 	{

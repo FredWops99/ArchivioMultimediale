@@ -11,8 +11,8 @@ import view.MessaggiSistemaView;
 
 public class AccessoHandler 
 {
-	FruitoreHandler fruitoreHandler;
-	OperatoreHandler operatoreHandler;
+	private FruitoreHandler fruitoreHandler;
+	private OperatoreHandler operatoreHandler;
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	

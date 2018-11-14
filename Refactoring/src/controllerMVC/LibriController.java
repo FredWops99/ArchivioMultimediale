@@ -18,7 +18,6 @@ public class LibriController
 {
 	private Risorse model;
 	private ManageRisorseHandler manageRisorseHandler;
-	
 //	CATEGORIA è libro
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
@@ -112,23 +111,6 @@ public class LibriController
 		}
 	}
 	
-	/**
-	 * stampa tutti i libri raggruppandoli per sottocategoria e genere, chiamando il corrispettivo metodo nella view
-	 */
-//	public void stampaDatiLibriPrestabili()
-//	{
-////		uso "libriDaStampare" così quando stampo un libro nella sua categoria posso eliminarlo e non stamparlo di nuovo dopo
-//		Vector<Libro> libriDaStampare = new Vector<>();
-//		for(Risorsa risorsa : model.getRisorse())
-//		{
-//			if(risorsa.getId().charAt(0)=='L' && risorsa.isPrestabile())
-//			{
-//				libriDaStampare.add((Libro)risorsa);
-//			}
-//		}
-//		LibriView.stampaDatiPerCategorie(libriDaStampare);
-//	}
-	
 	public Vector<Risorsa> libriPrestabili()
 	{
 		Vector<Risorsa>libriPrestabili = new Vector<>();
@@ -141,22 +123,6 @@ public class LibriController
 		}
 		return libriPrestabili;
 	}
-	
-	/**
-	 * presenta all'utente il menu per decidere se scegliere un libro dall'archivio completo o filtrando la ricerca.
-	 * informerà della scelta l'handler del caso d'uso (ScegliLibroHandler)
-	 * @return
-	 */
-	public Risorsa menuScegliLibro() 
-	{
-		final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
-		final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
-		
-		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
-		int scelta = menuSceltaLibro.scegliBase();
-		
-		return manageRisorseHandler.scegliLibro(scelta);
-	}	
 	
 	public Libro selezionaLibro(Vector<Risorsa> libriFiltrati) 
 	{
@@ -196,4 +162,20 @@ public class LibriController
 			while(true);
 		}		
 	}
+
+	/**
+	 * presenta all'utente il menu per decidere se scegliere un libro dall'archivio completo o filtrando la ricerca.
+	 * informerà della scelta l'handler del caso d'uso (ScegliLibroHandler)
+	 * @return
+	 */
+	public Risorsa menuScegliLibro() 
+	{
+		final String INTESTAZIONE_MENU = "\nScegli come visualizzare le risorse: ";
+		final String[] SCELTE = new String[] {"Filtra ricerca", "Visualizza archivio"};
+		
+		MyMenu menuSceltaLibro = new MyMenu(INTESTAZIONE_MENU, SCELTE, true); 
+		int scelta = menuSceltaLibro.scegliBase();
+		
+		return manageRisorseHandler.scegliLibro(scelta);
+	}	
 }

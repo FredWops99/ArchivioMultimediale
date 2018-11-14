@@ -13,8 +13,7 @@ import view.PrestitiView;
 
 public class PrestitiController 
 {
-
-	Prestiti model;
+	private Prestiti model;
 
 	public PrestitiController(Prestiti prestiti) 
 	{
@@ -45,11 +44,11 @@ public class PrestitiController
 	}
 
 	//addPrestito può lanciare due eccezioni diverse: o il fruitore possiede già la risorsa o ha raggiunto il limite di risorse possedute
-	public void effettuaPrestito(Fruitore utenteLoggato, Risorsa risorsa) 
+	public void effettuaPrestito(Fruitore fruitore, Risorsa risorsa) 
 	{
 		try
 		{
-			model.addPrestito(utenteLoggato, risorsa);
+			model.addPrestito(fruitore, risorsa);
 			PrestitiView.prenotazioneEffettuata(risorsa);
 		}
 		catch(RaggiunteRisorseMaxException e)

@@ -44,6 +44,43 @@ public class RisorseController
 		return libriController;
 	}
 	
+//	la ricerca avviene tramite filtri
+	public void cercaRisorsa(String categoria)
+	{
+		if(categoria == CATEGORIE[0])//LIBRO
+		{
+			if(filtraLibriHandler==null)
+			{
+				filtraLibriHandler = new FiltraLibriHandler(libriController);
+			}
+			filtraLibriHandler.menuFiltraLibri(false);
+		}
+		else if(categoria == CATEGORIE[1])//FILM
+		{
+			if(filtraFilmHandler==null)
+			{
+				filtraFilmHandler = new FiltraFilmHandler(filmsController);
+			}
+			filtraFilmHandler.menuFiltraFilm(false);
+		}
+	}
+
+//	quando si deve scegliere una risorsa per il prestito c'è la possibilità di visualizzare l'intero elenco
+	public Risorsa scegliRisorsa(String categoria) 
+	{
+		if(categoria == CATEGORIE[0])
+		{
+//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliLibroHandler
+			return libriController.menuScegliLibro();
+		}
+		else if(categoria == CATEGORIE[1])
+		{
+//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliFilmHandler
+			return filmsController.menuScegliFilm();
+		}
+		else return null;
+	}
+	
 	/**
 	 * permette la rimozione di un libro o di un film dall'archivio
 	 * (precondizione: CATEGORIE != null)
@@ -233,42 +270,5 @@ public class RisorseController
 		{
 			FilmsView.stampaDati(risorseDaStampare);
 		}
-	}
-	
-//	la ricerca avviene tramite filtri
-	public void cercaRisorsa(String categoria)
-	{
-		if(categoria == CATEGORIE[0])//LIBRO
-		{
-			if(filtraLibriHandler==null)
-			{
-				filtraLibriHandler = new FiltraLibriHandler(libriController);
-			}
-			filtraLibriHandler.menuFiltraLibri(false);
-		}
-		else if(categoria == CATEGORIE[1])//FILM
-		{
-			if(filtraFilmHandler==null)
-			{
-				filtraFilmHandler = new FiltraFilmHandler(filmsController);
-			}
-			filtraFilmHandler.menuFiltraFilm(false);
-		}
-	}
-
-//	quando si deve scegliere una risorsa per il prestito c'è la possibilità di visualizzare l'intero elenco
-	public Risorsa scegliRisorsa(String categoria) 
-	{
-		if(categoria == CATEGORIE[0])
-		{
-//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliLibroHandler
-			return libriController.menuScegliLibro();
-		}
-		else if(categoria == CATEGORIE[1])
-		{
-//			stampa il menu, l'utente sceglie, poi se ne occupa ScegliFilmHandler
-			return filmsController.menuScegliFilm();
-		}
-		else return null;
 	}
 }

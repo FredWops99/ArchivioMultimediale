@@ -1,24 +1,16 @@
-package model;
+package parte5;
 
 import java.io.Serializable;
 import java.util.Vector;
-
-import com.sun.corba.se.impl.io.TypeMismatchException;
-
-import interfaces.Risorsa;
 
 /**
  * Classe che rappresenta la descrizione di una risorsa multimediale di tipo Libro
  * @author Prandini Stefano
  * @author Landi Federico
  */
-public class Libro implements Risorsa, Serializable
-{
+public class Libro extends Risorsa implements Serializable
+{	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * utile per confrontare risorse con categoria selezionata da utente
-	 */
-	private static final String CATEGORIA = "Libri";
 
 	/********************************************************************
 	 * ogni categoria ha i suoi vincoli per quanto riguarda i PRESTITI: *
@@ -26,19 +18,19 @@ public class Libro implements Risorsa, Serializable
 	/**
 	 * quanto tempo un Libro può restare in prestito ad un fruitore
 	 */
-	private static final int GIORNI_DURATA_PRESTITO = 20;
+	public static final int GIORNI_DURATA_PRESTITO = 20;
 	/**
 	 * quanto dura una proroga del prestito di un Libro
 	 */
-	private static final int GIORNI_DURATA_PROROGA = 20;
+	public static final int GIORNI_DURATA_PROROGA = 20;
 	/**
 	 * quanti giorni prima della scadenza si può chiedere una proroga del prestito del Libro
 	 */
-	private static final int GIORNI_PRIMA_PER_PROROGA = -5;
+	public static final int GIORNI_PRIMA_PER_PROROGA = -5;
 	/**
 	 * quanti Libri possono essere in prestito contemporaneamente allo stesso fruitore
 	 */
-	private static final int PRESTITI_MAX = 3;
+	public static final int PRESTITI_MAX = 3;
 	/**
 	 * ID univoco del libro
 	 */
@@ -50,7 +42,7 @@ public class Libro implements Risorsa, Serializable
 	private String titolo;
 	private Vector<String> autori = new Vector<>();
 	private int pagine;
-	private int annoDiUscita;
+	private int annoPubblicazione;
 	private String casaEditrice;
 	private String lingua;
 	private String genere;
@@ -74,19 +66,19 @@ public class Libro implements Risorsa, Serializable
 	 * @param genere il genere del libro ( "-" se il genere non ha sottogeneri)
 	 * @param nLicenze il numero di licenze disponibili
 	 */
-	public Libro(String id, String sottoCategoria, String titolo, Vector<String> autori, int pagine, int getAnnoDiUscita, String casaEditrice,
+	public Libro(String id, String sottoCategoria, String titolo, Vector<String> autori, int pagine, int annoPubblicazione, String casaEditrice,
 			String lingua, String genere, int nLicenze) 
 	{
-		this.id = (id);
-		this.sottoCategoria = (sottoCategoria);
-		this.titolo = (titolo);
-		this.autori = (autori);
-		this.pagine = (pagine);
-		this.annoDiUscita = (getAnnoDiUscita);
-		this.casaEditrice = (casaEditrice);
-		this.lingua = (lingua);
-		this.genere = (genere);
-		this.nLicenze = (nLicenze);
+		this.setId(id);
+		this.setSottoCategoria(sottoCategoria);
+		this.setTitolo(titolo);
+		this.setAutori(autori);
+		this.setPagine(pagine);
+		this.setAnnoPubblicazione(annoPubblicazione);
+		this.setCasaEditrice(casaEditrice);
+		this.setLingua(lingua);
+		this.setGenere(genere);
+		this.setnLicenze(nLicenze);
 		this.setInPrestito(0);
 		this.prestabile = true;
 	}
@@ -100,112 +92,121 @@ public class Libro implements Risorsa, Serializable
 		else return false;
 	}
 	
-	@Override
-	public boolean stessiAttributi(Risorsa r) 
+	public void stampaDati(boolean perPrestito)
 	{
-		if(r instanceof Libro)
-		{
-//			è istanza di Libro, quindi posso fare il casting per poter usare i metodi di Libro
-			Libro l=(Libro)r;
-			
-			if(l.getTitolo().equals(titolo) && l.getAutori().equals(autori) && l.getAnnoDiUscita()==annoDiUscita
-					&& l.getCasaEditrice().equals(casaEditrice) && l.getGenere().equals(genere) && l.getLingua().equals(lingua)
-					&& l.getSottoCategoria().equals(sottoCategoria) && l.getPagine()==pagine && prestabile)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			throw new TypeMismatchException();
-		}
-	}
-	
-	@Override
-	public String toString(boolean perPrestito) 
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("Categoria-----------------: Libro\n");
-		sb.append("Sottocategoria------------: " + sottoCategoria + "\n");
-		sb.append("Titolo--------------------: " + titolo + "\n");
-		sb.append("Autori--------------------:");
+		System.out.println("Categoria-----------------: Libro");
+//		System.out.println("ID------------------------: " + id);
+//		System.out.println("Hashcode------------------: " + hashCode());
+		System.out.println("Sottocategoria------------: " + sottoCategoria);
+		System.out.println("Titolo--------------------: " + titolo);
+		System.out.print("Autori--------------------:");
 		for(int i = 0; i < autori.size(); i++)
 		{
-			sb.append(" " + autori.elementAt(i));
+			System.out.print(" " + autori.elementAt(i));
 			if(i < autori.size()-1)
 			{
-				sb.append(",");
+				System.out.print(",");
 			}
-			else sb.append("\n");
+			else System.out.println();
 		}
 		if(!genere.equals("-"))
 		{
-			sb.append("Genere--------------------: " + genere + "\n");
+			System.out.println("Genere--------------------: " + genere);
 		}
-		sb.append("Numero pagine-------------: " + pagine + "\n");
-		sb.append("Anno di pubblicazione-----: " + annoDiUscita + "\n");
-		sb.append("Casa editrice-------------: " + casaEditrice + "\n");
-		sb.append("Lingua--------------------: " + lingua + "\n");
+		System.out.println("Numero pagine-------------: " + pagine);
+		System.out.println("Anno di pubblicazione-----: " + annoPubblicazione);
+		System.out.println("Casa editrice-------------: " + casaEditrice);
+		System.out.println("Lingua--------------------: " + lingua);
 		if(!perPrestito)//dati utili all'operatore
 		{
-			sb.append("Numero licenze------------: " + nLicenze + "\n");
-			sb.append("In prestito---------------: " + inPrestito + "\n");
+			System.out.println("Numero licenze------------: " + nLicenze);
+			System.out.println("In prestito---------------: " + inPrestito);
 		}
 		else//dati utili al fruitore
 		{
-			sb.append("Copie disponibili---------: " + (nLicenze - inPrestito) + "\n");
+			System.out.println("Copie disponibili---------: " + (nLicenze - inPrestito));
 		}
+	}
 
-		return sb.toString();
-	}
-	
-	public String getCategoria() 
-	{
-		return CATEGORIA;
-	}
 	public String getId() 
 	{
 		return id;
+	}
+	public void setId(String id) 
+	{
+		this.id = id;
 	}
 	public String getTitolo()
 	{
 		return titolo;
 	}
+	public void setTitolo(String titolo) 
+	{
+		this.titolo = titolo;
+	}
 	public Vector<String> getAutori() 
 	{
 		return autori;
+	}
+	public void setAutori(Vector<String> autori) 
+	{
+		this.autori = autori;
 	}
 	public int getPagine()
 	{
 		return pagine;
 	}
-	public int getAnnoDiUscita() 
+	public void setPagine(int pagine) 
 	{
-		return annoDiUscita;
+		this.pagine = pagine;
+	}
+	public int getAnnoPubblicazione() 
+	{
+		return annoPubblicazione;
+	}
+	public void setAnnoPubblicazione(int annoPubblicazione) 
+	{
+		this.annoPubblicazione = annoPubblicazione;
 	}
 	public String getCasaEditrice() 
 	{
 		return casaEditrice;
 	}
+	public void setCasaEditrice(String casaEditrice) 
+	{
+		this.casaEditrice = casaEditrice;
+	}
 	public String getLingua() 
 	{
 		return lingua;
+	}
+	public void setLingua(String lingua) 
+	{
+		this.lingua = lingua;
 	}
 	public String getSottoCategoria() 
 	{
 		return sottoCategoria;
 	}
+	public void setSottoCategoria(String sottoCategoria) 
+	{
+		this.sottoCategoria = sottoCategoria;
+	}
 	public String getGenere() 
 	{
 		return genere;
 	}
-	public int getNLicenze() 
+	public void setGenere(String sottoGenere) 
+	{
+		this.genere = sottoGenere;
+	}
+	public int getnLicenze() 
 	{
 		return nLicenze;
+	}
+	public void setnLicenze(int nLicenze) 
+	{
+		this.nLicenze = nLicenze;
 	}
 	public int getInPrestito() 
 	{

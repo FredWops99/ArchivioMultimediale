@@ -12,13 +12,6 @@ cosa da rifattorizzare potrebbe essere ricostruisci prestiti: salvando nello ste
 
 es. in MenuScegliGenereLibro c'è un IF con i generi all'interno: bisognerebbe usare qualche pattern!
 
-package Salvataggi, con classi Salva e Carica? c'è già C: a chi assegnare responsabilità? Main? -> GestoreSalvataggi. Salvataggio archivio affidato al main, ha tutte le
-informazioni dell'archivio, che vengono aggiornate man mano dai controller.
-
 sistemare metodi con catena di chiamate troppo lunga (metodo.metodo.metodo ...): è un pattern
 
-ADDFILM ADDLIBBRO nei controller potrebbero andare direttamente nella view: chiediDatiFilm/Libro(), mm no, dopo? view non può creare risorsa
-
 CATEGORIE[] nelle varie classi non va troppo bene
-
-si potrebbe fare un FACADE per i salvataggi? si contatta lui, che "copre" la complessità dei vari salvataggi (anche caricamenti?)

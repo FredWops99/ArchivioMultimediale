@@ -13,7 +13,6 @@ public class FilmsController
 {
 	private Risorse model;
 	private ManageRisorseHandler manageRisorseHandler;
-	
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 	private static final String IDENTIFIER = "F";
 	
@@ -59,6 +58,17 @@ public class FilmsController
 		}
 	}
 	
+	/**
+ 	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
+	 */
+	public void addFilm(String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze)
+	{
+		Film f = new Film("F"+ model.getLastId(), sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
+		
+//		aggiunge il film al model del controller (se non è già esistente)
+		model.addRisorsa(f);
+	}
+	
 	private String scegliSottoCategoria()
 	{
 		final String SCEGLI_CATEGORIA = "scegli la sottocategoria del film: ";
@@ -73,30 +83,6 @@ public class FilmsController
 			return "annulla";
 		}	
 	}
-	
-	/**
- 	 * metodo per Test che consente di non chiedere in input all'utente i campi per creare la risorsa
-	 */
-	public void addFilm(String sottoCategoria, String titolo, String regista, int durata, int annoDiUscita, String lingua, int nLicenze)
-	{
-		Film f = new Film("F"+ model.getLastId(), sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
-		
-//		aggiunge il film al model del controller (se non è già esistente)
-		model.addRisorsa(f);
-	}
-	
-//	public void stampaDatiFilmPrestabili() 
-//	{
-//		Vector<Risorsa>filmDaStampare = new Vector<>();
-//		for(Risorsa risorsa : model.getRisorse())
-//		{
-//			if(risorsa.getId().charAt(0)=='F' && risorsa.isPrestabile())
-//			{
-//				filmDaStampare.add(risorsa);
-//			}
-//		}
-//		FilmsView.stampaDati(filmDaStampare);
-//	}
 
 	public void conferma(boolean aggiuntaRiuscita) 
 	{

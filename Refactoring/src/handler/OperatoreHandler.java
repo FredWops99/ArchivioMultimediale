@@ -11,11 +11,11 @@ public class OperatoreHandler
 {
 	private final String[] CATEGORIE = {"Libri","Films"};
 
-	FruitoriController fruitoriController;
-	RisorseController risorseController;
-	PrestitiController prestitiController;
-	StoricoController storicoController;
-	ISavesManager gestoreSalvataggi;
+	private FruitoriController fruitoriController;
+	private RisorseController risorseController;
+	private PrestitiController prestitiController;
+	private StoricoController storicoController;
+	private ISavesManager gestoreSalvataggi;
 	private ManageRisorseHandler manageRisorseHandler;
 	
 	public OperatoreHandler(FruitoriController fruitoriController, RisorseController risorseController,PrestitiController prestitiController, 
