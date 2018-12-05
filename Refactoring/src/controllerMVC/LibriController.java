@@ -6,7 +6,6 @@ import interfaces.Risorsa;
 import model.Libro;
 import model.Risorse;
 import myLib.MyMenu;
-import view.LibriView;
 import viewInterfaces.ILibriView;
 
 /**
@@ -28,7 +27,15 @@ public class LibriController
 	public LibriController(Risorse risorse, ManageRisorseHandler manageRisorseHandler)
 	{
 		this.model = risorse;
-		this.libriView = new LibriView();
+//		per libriView: sennò Controller dipenderebbe da LibriView, a causa dell'instanziamento. così solo Interface
+		try 
+		{
+			this.libriView = (ILibriView)Class.forName(System.getProperty("LibriView")).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}	
 		this.manageRisorseHandler = manageRisorseHandler;
 	}
 

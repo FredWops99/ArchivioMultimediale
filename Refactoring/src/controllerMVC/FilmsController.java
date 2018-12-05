@@ -6,7 +6,6 @@ import interfaces.Risorsa;
 import model.Film;
 import model.Risorse;
 import myLib.MyMenu;
-import view.FilmsView;
 import viewInterfaces.IFilmsView;
 
 /**
@@ -27,8 +26,19 @@ public class FilmsController
 	public FilmsController(Risorse risorse, ManageRisorseHandler manageRisorseHandler) 
 	{
 		this.model = risorse;
-		this.filmsView = new FilmsView();
 		this.manageRisorseHandler = manageRisorseHandler;
+
+//		per la view: leggo classe da proprietà di sistema (caricata dal Main) 
+//		così Controller non dipende dalla classe View ma solo dalla sua interfaccia IView
+		String className = System.getProperty("FilmsView"); //"FilmsView" è una chiave nel file: il valore corrispondende è il Fully-Qualified Name della classe view
+		try 
+		{
+			this.filmsView = (IFilmsView)Class.forName(className).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public IFilmsView getFilmsView() 

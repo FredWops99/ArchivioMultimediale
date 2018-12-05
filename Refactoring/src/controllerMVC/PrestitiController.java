@@ -8,8 +8,6 @@ import model.Fruitore;
 import model.Prestiti;
 import model.Prestito;
 import myLib.GestioneDate;
-import view.MessaggiSistemaView;
-import view.PrestitiView;
 import viewInterfaces.IMessaggiSistemaView;
 import viewInterfaces.IPrestitiView;
 
@@ -22,8 +20,17 @@ public class PrestitiController
 	public PrestitiController(Prestiti prestiti) 
 	{
 		model = prestiti;
-		prestitiView = new PrestitiView();
-		messaggiSistemaView = new MessaggiSistemaView();
+//		per prestitiView: sennò Controller dipenderebbe da PrestitiView, a causa dell'instanziamento. così solo Interface
+//		stessa cosa per messaggi sistema view
+		try 
+		{
+			this.prestitiView = (IPrestitiView)Class.forName(System.getProperty("PrestitiView")).newInstance();
+			this.messaggiSistemaView = (IMessaggiSistemaView)Class.forName(System.getProperty("MessaggiSistemaView")).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}			
 	}
 	
 	public IPrestitiView getPrestitiView() 

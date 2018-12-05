@@ -4,30 +4,44 @@
   router="FAN">  
   <package id="1" language="java" name="model" project="Refactoring" file="/Refactoring/src/model" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="345" y="161"/>    
+    <position height="-1" width="-1" x="418" y="177"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="view" project="Refactoring" file="/Refactoring/src/view" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="486" y="312"/>    
+    <position height="-1" width="-1" x="553" y="462"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="3" language="java" name="controllerMVC" project="Refactoring" file="/Refactoring/src/controllerMVC" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="625" y="160"/>    
+    <position height="-1" width="-1" x="698" y="176"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <dependency id="4">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
+  <package id="4" language="java" name="viewInterfaces" project="Refactoring" file="/Refactoring/src/viewInterfaces" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="553" y="360"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
   <dependency id="5">    
+    <bendpoint x="418" y="469"/>    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <dependency id="6">    
     <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

@@ -7,9 +7,9 @@ import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
-import view.MessaggiSistemaView;
 import viewInterfaces.IFilmsView;
 import viewInterfaces.ILibriView;
+import viewInterfaces.IMessaggiSistemaView;
 
 public class RisorseController 
 {
@@ -21,7 +21,7 @@ public class RisorseController
 	private IFilmsView filmsView;
 	private LibriController libriController;
 	private ILibriView libriView;
-	private MessaggiSistemaView messaggiSistemaView;
+	private IMessaggiSistemaView messaggiSistemaView;
 	
 	private FiltraLibriHandler filtraLibriHandler;
 	private FiltraFilmHandler filtraFilmHandler;
@@ -35,7 +35,15 @@ public class RisorseController
 		filmsView = filmsController.getFilmsView();
 		libriController = new LibriController(risorse,manageRisorseHandler);
 		libriView = libriController.getLibriView();
-		messaggiSistemaView = new MessaggiSistemaView();
+//		per messaggiSistemaView: sennò Controller dipenderebbe da MessaggiSistemaView, a causa dell'instanziamento. così solo interface
+		try 
+		{
+			this.messaggiSistemaView = (IMessaggiSistemaView)Class.forName(System.getProperty("MessaggiSistemaView")).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public FilmsController getFilmsController() 

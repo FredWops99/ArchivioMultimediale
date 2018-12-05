@@ -2,12 +2,10 @@ package controllerMVC;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import handler.StoricoHandler;
 import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
-import view.StoricoView;
 import viewInterfaces.IStoricoView;
 
 public class StoricoController 
@@ -20,7 +18,15 @@ public class StoricoController
 	public StoricoController(Storico storico) 
 	{
 		model = storico;
-		storicoView = new StoricoView();
+//		per storicoView: sennò Controller dipenderebbe da StoricoView, a causa dell'instanziamento. così solo Interface
+		try 
+		{
+			this.storicoView = (IStoricoView)Class.forName(System.getProperty("StoricoView")).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}	
 	}
 	
 	public IStoricoView getStoricoView() 

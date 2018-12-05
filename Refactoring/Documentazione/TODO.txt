@@ -17,7 +17,11 @@ sistemare metodi con catena di chiamate troppo lunga (metodo.metodo.metodo ...):
 CATEGORIE[] nelle varie classi non va troppo bene
 
 
+PROGETTAZIONE GUIDATA DAI DATI - P.24 GOF-1
 trovare come fare a creare un oggetto leggendo proprietà di sistema: serve per le view, in particolare per il Dependency Inversion Principle (SoliD).
 le view implementano tutte un'interfaccia però da qualche parte bisogna dire Interfaccia v = new View() (da qualche parte deve venire istanziata la classe), 
-e view in questo caso è la view istanziata e non l'interfaccia, quindi la classe in cui si trova questa instanziazione dipenderà sia dall'interfaccia che dalla classe vera e non va bene (cioè non funziona il principio). se leggo proprietà di sistema
+e view in questo caso è la view istanziata e non l'interfaccia, quindi la classe in cui si trova questa instanziazione dipenderà sia dall'interfaccia che dalla classe vera e non 
+va bene (cioè non funziona il principio). se leggo proprietà di sistema
 (forse) aggiro questa cosa. (vedere l'UML "new")
+Carico il file delle proprietà di sistema all'inizio del Main, poi lo uso quando devo istanziare un oggetto che implementa una certa interfaccia (es. per tutte le view)
+-> così tutti i controller non dipendono più da package View ma solo ViewInterface

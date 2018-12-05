@@ -5,7 +5,6 @@ import java.util.Vector;
 import model.Fruitore;
 import model.Fruitori;
 import myLib.GestioneDate;
-import view.FruitoriView;
 import viewInterfaces.IFruitoriView;
 
 public class FruitoriController 
@@ -16,7 +15,15 @@ public class FruitoriController
 	public FruitoriController(Fruitori fruitori)
 	{
 		model = fruitori;
-		fruitoriView = new FruitoriView();
+//		per fruitoriView: sennò Controller dipenderebbe da FruitoriView, a causa dell'instanziamento. così solo Interface
+		try 
+		{
+			this.fruitoriView = (IFruitoriView)Class.forName(System.getProperty("FruitoriView")).newInstance();
+		} 
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}	
 	}
 	
 	public IFruitoriView getFruitoriView() 

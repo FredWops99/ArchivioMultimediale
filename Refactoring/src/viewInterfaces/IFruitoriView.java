@@ -2,7 +2,6 @@ package viewInterfaces;
 
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import model.Fruitore;
 
 public interface IFruitoriView 
