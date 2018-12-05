@@ -4,8 +4,6 @@ import java.util.Vector;
 import controllerMVC.LibriController;
 import interfaces.Risorsa;
 import myLib.MyMenu;
-import view.LibriView;
-import view.MessaggiSistemaView;
 
 public class FiltraLibriHandler 
 {
@@ -56,19 +54,19 @@ public class FiltraLibriHandler
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = LibriView.chiediTitolo();
+				titoloParziale = libriController.getLibriView().chiediTitolo();
 				libriFiltrati = filtraLibriPerTitolo(titoloParziale);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO DI PUBBLICAZIONE
 			{
-				annoPubblicazione = LibriView.chiediAnnoPubblicazione();
+				annoPubblicazione = libriController.getLibriView().chiediAnnoPubblicazione();
 				libriFiltrati = filtraLibriPerAnnoPubblicazione(annoPubblicazione);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
-				nomeAutore = LibriView.chiediAutore();
+				nomeAutore = libriController.getLibriView().chiediAutore();
 				libriFiltrati = filtraLibriPerAutori(nomeAutore);
 				break;
 			}
@@ -77,24 +75,24 @@ public class FiltraLibriHandler
 		{
 			if(scelta == 1 && libriFiltrati.isEmpty()) 
 			{
-				LibriView.risorsaNonPresente("libri",titoloParziale);
+				libriController.getLibriView().risorsaNonPresente("libri",titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && libriFiltrati.isEmpty())
 			{
-				LibriView.annoNonPresente(annoPubblicazione);
+				libriController.getLibriView().annoNonPresente(annoPubblicazione);
 				return null;
 			}
 			if(scelta == 3 && libriFiltrati.isEmpty())
 			{
-				LibriView.autoreNonPresente(nomeAutore);
+				libriController.getLibriView().autoreNonPresente(nomeAutore);
 				return null;
 			}
 			
 			for (int i=0; i <libriFiltrati.size(); i++) 
 			{
-				MessaggiSistemaView.cornice(true,false);
-				LibriView.stampaDati(libriFiltrati.get(i), false);
+				libriController.getLibriView().getMessaggiSistemaView().cornice(true,false);
+				libriController.getLibriView().stampaDati(libriFiltrati.get(i), false);
 			}
 		}
 		

@@ -29,6 +29,11 @@ public class FruitoreHandler
 		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
 	}
 	
+	public FruitoriController getFruitoriController() 
+	{
+		return fruitoriController;
+	}
+	
 	public boolean entryMenuFruitore(int scelta)
 	{
 		boolean terminato = false;

@@ -4,96 +4,95 @@ import interfaces.Risorsa;
 import model.Prestito;
 import myLib.GestioneDate;
 import myLib.InputDati;
+import viewInterfaces.IPrestitiView;
 
-public class PrestitiView 
+public class PrestitiView implements IPrestitiView
 {
-	public static void visualizzaPrestito(Prestito prestito) 
+	public void visualizzaPrestito(Prestito prestito) 
 	{
 		System.out.println(prestito.toString());
 	}
 	
-	public static void messaggioUtenteMinorenne() 
+	public void messaggioUtenteMinorenne() 
 	{
 		System.out.println("Ci dispiace, per accedere devi essere maggiorenne");
 	}
 
-	public static void raggiunteRisorseMassime(String categoria) 
+	public void raggiunteRisorseMassime(String categoria) 
 	{
 		System.out.println("\nNon puoi prenotare altri " + categoria + ": " 
 				+ "\nHai raggiunto il numero massimo di risorse in prestito per questa categoria");
 	}
 
-//	va in risorsaView?
-	public static void prenotazioneEffettuata(Risorsa risorsa) 
+	public void prenotazioneEffettuata(Risorsa risorsa) 
 	{
 		System.out.println(risorsa.getTitolo() + " prenotato con successo!");		
 	}
 
-//	va in risorsa view?
-	public static void risorsaPosseduta() 
+	public void risorsaPosseduta() 
 	{
 		System.out.println("Prenotazione rifiutata: possiedi gi‡ questa risorsa in prestito");	
 	}
 
-	public static void numeroRisorseTornateDaPrestito(int tornati) 
+	public void numeroRisorseTornateDaPrestito(int tornati) 
 	{
 		System.out.println("Risorse tornate dal prestito: " + tornati);	
 	}
 
 //	per l'operatore
-	public static void noPrestitiAttivi() 
+	public void noPrestitiAttivi() 
 	{
 		System.out.println("Al momento non sono presenti prestiti attivi");	
 	}
 
 //	per il fruitore
-	public static void noPrestiti() 
+	public void noPrestiti() 
 	{
 		System.out.println("Non hai prestiti attivi!");	
 	}
 
-	public static void prestitoDaTerminare() 
+	public void prestitoDaTerminare() 
 	{
 		System.out.println("Seleziona il prestito che vuoi terminare: ");	
 	}
 
-	public static int chiediRisorsaDaTerminare(int size) 
+	public int chiediRisorsaDaTerminare(int size) 
 	{
 		return InputDati.leggiIntero("\nSeleziona la risorsa della quale vuoi terminare il prestito (0 per annullare): ", 0, size);
 	}
 
-	public static void prestitoTerminato() 
+	public void prestitoTerminato() 
 	{
 		System.out.println("Prestito terminato!");	
 	}
 
-	public static void prestitiEliminati() 
+	public void prestitiEliminati() 
 	{
 		System.out.println("i tuoi prestiti sono stati eliminati");	
 	}
 
-	public static void noRinnovi() 
+	public void noRinnovi() 
 	{
 		System.out.println("Non hai prestiti attivi da rinnovare!");	
 	}
 
-	public static void selezionaRinnovo() 
+	public void selezionaRinnovo() 
 	{
 		System.out.println("Seleziona il prestito che vuoi rinnovare: ");	
 	}
 
-	public static int chiediRisorsaDaRinnovare(int size) 
+	public int chiediRisorsaDaRinnovare(int size) 
 	{
 		return InputDati.leggiIntero
 				("\nSeleziona la risorsa per la quale chiedere il rinnovo del prestito (0 per annullare): ", 0, size);
 	}
 
-	public static void prestitoGi‡Prorogato() 
+	public void prestitoGi‡Prorogato() 
 	{
 		System.out.println("Hai gi‡ prorogato questo prestito: puoi eseguire questa azione solo una volta per ogni prestito");	
 	}
 
-	public static void prestitoNonRinnovabile(Prestito prestitoSelezionato) 
+	public void prestitoNonRinnovabile(Prestito prestitoSelezionato) 
 	{
 		System.out.println("Il tuo prestito non Ë ancora rinnovabile: ");
 		System.out.println("potrai effettuare questa operazione tra il " + GestioneDate.visualizzaData(prestitoSelezionato.getDataPerRichiestaProroga()) + 

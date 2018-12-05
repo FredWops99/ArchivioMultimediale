@@ -7,18 +7,20 @@ import model.Libro;
 import model.Risorse;
 import myLib.MyMenu;
 import view.LibriView;
-import view.MessaggiSistemaView;
+import viewInterfaces.ILibriView;
 
 /**
- * CONTROLLER interagisce con view (quindi anche menu?) e modifica il MODEL
+ * CONTROLLER interagisce con view e modifica il MODEL
  * @author Stefano Prandini
  * @author Federico Landi
  */
 public class LibriController 
 {
 	private Risorse model;
+	private ILibriView libriView;
+
 	private ManageRisorseHandler manageRisorseHandler;
-//	CATEGORIA è libro
+//	CATEGORIA è Libro
 	private static final String[] SOTTOCATEGORIE = {"Romanzo","Fumetto","Poesia"}; //le sottocategorie della categoria LIBRO (Romanzo, fumetto, poesia,...)
 	private static final String[] GENERI = {"Fantascienza","Fantasy","Avventura","Horror","Giallo"};
 	private static final String IDENTIFIER = "L";
@@ -26,9 +28,15 @@ public class LibriController
 	public LibriController(Risorse risorse, ManageRisorseHandler manageRisorseHandler)
 	{
 		this.model = risorse;
+		this.libriView = new LibriView();
 		this.manageRisorseHandler = manageRisorseHandler;
 	}
 
+	public ILibriView getLibriView() 
+	{
+		return libriView;
+	}
+	
 	public Risorse getModel() 
 	{
 		return model;
@@ -44,20 +52,20 @@ public class LibriController
 		}
 		
 		String genere = scegliGenere(sottoCategoria);
-		String titolo = LibriView.chiediTitolo();
-		int pagine = LibriView.chiediPagine();
-		int annoPubblicazione = LibriView.chiediAnnoPubblicazione();
-		String casaEditrice = LibriView.chiediCasaEditrice();
-		String lingua = LibriView.chiediLingua();
+		String titolo = libriView.chiediTitolo();
+		int pagine = libriView.chiediPagine();
+		int annoPubblicazione = libriView.chiediAnnoPubblicazione();
+		String casaEditrice = libriView.chiediCasaEditrice();
+		String lingua = libriView.chiediLingua();
 		Vector<String> autori = new Vector<String>();
 		do
 		{
-			String autore = LibriView.chiediAutore();
+			String autore = libriView.chiediAutore();
 			autori.add(autore);
 		} 
-		while(LibriView.ciSonoAltriAutori());
+		while(libriView.ciSonoAltriAutori());
 		
-		int nLicenze = LibriView.chiediNumeroLicenze();
+		int nLicenze = libriView.chiediNumeroLicenze();
 		
 		Libro l = new Libro(IDENTIFIER + model.getLastId(), sottoCategoria, titolo, autori, pagine, annoPubblicazione, casaEditrice, lingua, genere, nLicenze);
 		
@@ -65,11 +73,11 @@ public class LibriController
 		
 		if(aggiuntaRiuscita)
 		{
-			LibriView.aggiuntaRiuscita(Libro.class);
+			libriView.aggiuntaRiuscita(Libro.class);
 		}
 		else
 		{
-			LibriView.aggiuntaNonRiuscita(Libro.class);
+			libriView.aggiuntaNonRiuscita(Libro.class);
 		}
 	}
 	
@@ -128,24 +136,24 @@ public class LibriController
 	{
 		if(libriFiltrati.isEmpty())
 		{
-			LibriView.noRisorseDisponibili("libri");
+			libriView.noRisorseDisponibili("libri");
 			return null;
 		}
 		else
 		{
 			for(int i = 0; i < libriFiltrati.size(); i++)
 			{
-				MessaggiSistemaView.stampaPosizione(i);
-				MessaggiSistemaView.cornice();
-				LibriView.stampaDati(libriFiltrati.get(i), true);
-				MessaggiSistemaView.cornice();
+				libriView.getMessaggiSistemaView().stampaPosizione(i);
+				libriView.getMessaggiSistemaView().cornice();
+				libriView.stampaDati(libriFiltrati.get(i), true);
+				libriView.getMessaggiSistemaView().cornice();
 			}
 			
 			int selezione;
 			do
 			{
-				MessaggiSistemaView.cornice();
-				selezione = LibriView.selezionaRisorsa(libriFiltrati.size(), Libro.class);
+				libriView.getMessaggiSistemaView().cornice();
+				selezione = libriView.selezionaRisorsa(libriFiltrati.size(), Libro.class);
 				if(selezione == 0)
 				{
 					return null;
@@ -156,7 +164,7 @@ public class LibriController
 				}
 				else
 				{
-					LibriView.copieTutteInPrestito(libriFiltrati.get(selezione-1).getTitolo());
+					libriView.copieTutteInPrestito(libriFiltrati.get(selezione-1).getTitolo());
 				}
 			}
 			while(true);

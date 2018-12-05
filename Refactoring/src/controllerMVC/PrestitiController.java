@@ -10,14 +10,25 @@ import model.Prestito;
 import myLib.GestioneDate;
 import view.MessaggiSistemaView;
 import view.PrestitiView;
+import viewInterfaces.IMessaggiSistemaView;
+import viewInterfaces.IPrestitiView;
 
 public class PrestitiController 
 {
 	private Prestiti model;
+	private IPrestitiView prestitiView;
+	private IMessaggiSistemaView messaggiSistemaView;
 
 	public PrestitiController(Prestiti prestiti) 
 	{
 		model = prestiti;
+		prestitiView = new PrestitiView();
+		messaggiSistemaView = new MessaggiSistemaView();
+	}
+	
+	public IPrestitiView getPrestitiView() 
+	{
+		return prestitiView;
 	}
 	
 	/**
@@ -40,7 +51,7 @@ public class PrestitiController
 				}
 			}	
 		}
-		PrestitiView.numeroRisorseTornateDaPrestito(rimossi);
+		prestitiView.numeroRisorseTornateDaPrestito(rimossi);
 	}
 
 	//addPrestito può lanciare due eccezioni diverse: o il fruitore possiede già la risorsa o ha raggiunto il limite di risorse possedute
@@ -49,15 +60,15 @@ public class PrestitiController
 		try
 		{
 			model.addPrestito(fruitore, risorsa);
-			PrestitiView.prenotazioneEffettuata(risorsa);
+			prestitiView.prenotazioneEffettuata(risorsa);
 		}
 		catch(RaggiunteRisorseMaxException e)
 		{
-			PrestitiView.raggiunteRisorseMassime(risorsa.getSottoCategoria());
+			prestitiView.raggiunteRisorseMassime(risorsa.getSottoCategoria());
 		}
 		catch(RisorsaGiàPossedutaException e1)
 		{
-			PrestitiView.risorsaPosseduta();
+			prestitiView.risorsaPosseduta();
 		}
 	}
 	
@@ -84,14 +95,14 @@ public class PrestitiController
 		Vector<Prestito> prestitiAttivi = model.prestitiAttivi();
 		if(prestitiAttivi.size() == 0)
 		{
-			PrestitiView.noPrestitiAttivi();
+			prestitiView.noPrestitiAttivi();
 		}
 		else
 		{
 			for (Prestito prestito : prestitiAttivi) 
 			{
-				MessaggiSistemaView.cornice();
-				PrestitiView.visualizzaPrestito(prestito);
+				messaggiSistemaView.cornice();
+				prestitiView.visualizzaPrestito(prestito);
 			}
 		}
 	}
@@ -103,14 +114,14 @@ public class PrestitiController
 		
 		if(prestitiAttivi.size() == 0)
 		{
-			PrestitiView.noPrestitiAttivi();
+			prestitiView.noPrestitiAttivi();
 		}
 		else
 		{
 			for (Prestito prestito : prestitiAttivi) 
 			{
-				PrestitiView.visualizzaPrestito(prestito);
-				MessaggiSistemaView.cornice();
+				prestitiView.visualizzaPrestito(prestito);
+				messaggiSistemaView.cornice();
 			}
 		}
 	}
@@ -128,29 +139,29 @@ public class PrestitiController
 	public void terminaPrestitoDi(Fruitore fruitore)
 	{
 		Vector<Prestito> prestitiAttivi = model.prestitiAttiviDi(fruitore);
-		MessaggiSistemaView.cornice();	
+		messaggiSistemaView.cornice();	
 		
 		if(prestitiAttivi.size() == 0)
 		{
-			PrestitiView.noPrestiti();
+			prestitiView.noPrestiti();
 		}
 		else
 		{
-			PrestitiView.prestitoDaTerminare();
+			prestitiView.prestitoDaTerminare();
 			
 			for(int i = 0; i < prestitiAttivi.size(); i++)
 			{
-				MessaggiSistemaView.stampaPosizione(i);
-				MessaggiSistemaView.cornice();
-				PrestitiView.visualizzaPrestito(prestitiAttivi.get(i));
-				MessaggiSistemaView.cornice();
+				messaggiSistemaView.stampaPosizione(i);
+				messaggiSistemaView.cornice();
+				prestitiView.visualizzaPrestito(prestitiAttivi.get(i));
+				messaggiSistemaView.cornice();
 			}
 			
-			int selezione = PrestitiView.chiediRisorsaDaTerminare(prestitiAttivi.size());
+			int selezione = prestitiView.chiediRisorsaDaTerminare(prestitiAttivi.size());
 			if(selezione != 0)
 			{				
 				(prestitiAttivi.get(selezione-1)).terminaPrestito();
-				PrestitiView.prestitoTerminato();
+				prestitiView.prestitoTerminato();
 			}
 		}
 	}
@@ -173,11 +184,11 @@ public class PrestitiController
 		}
 		if(rimossi == 0)
 		{
-			PrestitiView.noPrestiti();
+			prestitiView.noPrestiti();
 		}
 		else 
 		{
-			PrestitiView.prestitiEliminati();
+			prestitiView.prestitiEliminati();
 		}
 	}	
 	
@@ -207,28 +218,28 @@ public class PrestitiController
 		
 		if(prestitiAttivi.isEmpty())
 		{
-			PrestitiView.noRinnovi();
+			prestitiView.noRinnovi();
 		}
 		else
 		{
-			PrestitiView.selezionaRinnovo();
+			prestitiView.selezionaRinnovo();
 			
 			for(int i = 0; i < prestitiAttivi.size(); i++)
 			{
-				MessaggiSistemaView.stampaPosizione(i);				
-				MessaggiSistemaView.cornice();
-				PrestitiView.visualizzaPrestito(prestitiAttivi.get(i));
-				MessaggiSistemaView.cornice();
+				messaggiSistemaView.stampaPosizione(i);				
+				messaggiSistemaView.cornice();
+				prestitiView.visualizzaPrestito(prestitiAttivi.get(i));
+				messaggiSistemaView.cornice();
 			}
 			
-			int selezione = PrestitiView.chiediRisorsaDaRinnovare(prestitiAttivi.size());
+			int selezione = prestitiView.chiediRisorsaDaRinnovare(prestitiAttivi.size());
 			if(selezione != 0)
 			{
 				Prestito prestitoSelezionato = prestitiAttivi.get(selezione-1);
 				
 				if(prestitoSelezionato.isProrogato())
 				{
-					PrestitiView.prestitoGiàProrogato();
+					prestitiView.prestitoGiàProrogato();
 				}
 				else if(prestitoSelezionato.isRinnovabile())
 //				è necessariamente precedente alla data di scadenza prestito sennò sarebbe terminato
@@ -237,7 +248,7 @@ public class PrestitiController
 				}
 				else//non si può ancora rinnovare prestito
 				{
-					PrestitiView.prestitoNonRinnovabile(prestitoSelezionato);
+					prestitiView.prestitoNonRinnovabile(prestitoSelezionato);
 				}
 			}
 		}

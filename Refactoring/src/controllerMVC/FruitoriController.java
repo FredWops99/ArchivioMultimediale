@@ -6,39 +6,47 @@ import model.Fruitore;
 import model.Fruitori;
 import myLib.GestioneDate;
 import view.FruitoriView;
+import viewInterfaces.IFruitoriView;
 
 public class FruitoriController 
 {
 	private Fruitori model;
+	private IFruitoriView fruitoriView;
 	
 	public FruitoriController(Fruitori fruitori)
 	{
 		model = fruitori;
+		fruitoriView = new FruitoriView();
 	}
 	
+	public IFruitoriView getFruitoriView() 
+	{
+		return fruitoriView;
+	}
+
 	/**
 	 * Crea e aggiunge un Fruitore, se maggiorenne al vettore "fruitori"
 	 */
 	public void addFruitore()
 	{
-		String nome = FruitoriView.chiediNome();
-		String cognome = FruitoriView.chiediCognome();
-		GregorianCalendar dataNascita = FruitoriView.chiediDataNascita();
+		String nome = fruitoriView.chiediNome();
+		String cognome = fruitoriView.chiediCognome();
+		GregorianCalendar dataNascita = fruitoriView.chiediDataNascita();
 		
 		//controllo che l'utente sia maggiorenne
 		if(GestioneDate.differenzaAnniDaOggi(dataNascita) < 18)
 		{
-			FruitoriView.messaggioUtenteMinorenne();
+			fruitoriView.messaggioUtenteMinorenne();
 			return;
 		}
 		
 		String user;
 		do
 		{
-			user = FruitoriView.chiediUsername();
+			user = fruitoriView.chiediUsername();
 			if(!model.usernameDisponibile(user))
 			{
-				FruitoriView.UsernameNonDisponibile();
+				fruitoriView.UsernameNonDisponibile();
 			}
 		}
 		while(!model.usernameDisponibile(user));
@@ -48,8 +56,8 @@ public class FruitoriController
 		boolean corretta = false;
 		do
 		{
-			password1 = FruitoriView.chiediPassword();
-			password2 = FruitoriView.confermaPassword();
+			password1 = fruitoriView.chiediPassword();
+			password2 = fruitoriView.confermaPassword();
 			
 			if(password1.equals(password2)) 
 			{
@@ -57,24 +65,24 @@ public class FruitoriController
 			}
 			else
 			{
-				FruitoriView.passwordNonCoincidono();
+				fruitoriView.passwordNonCoincidono();
 			}
 		}
 		while(!corretta);
 		
 		GregorianCalendar dataIscrizione = GestioneDate.DATA_CORRENTE;
 
-		if(FruitoriView.confermaDati())
+		if(fruitoriView.confermaDati())
 		{
 //			creo il nuovo fruitore
 			Fruitore f = new Fruitore(nome, cognome, dataNascita, dataIscrizione, user, password1); 
 //			aggiungo al vector fruitori il nuovo fruitore
 			model.addFruitore(f);
-			FruitoriView.confermaIscrizione();
+			fruitoriView.confermaIscrizione();
 		}
 		else
 		{
-			FruitoriView.nonConfermaIscrizione();
+			fruitoriView.nonConfermaIscrizione();
 		}
 	}
 	
@@ -95,7 +103,7 @@ public class FruitoriController
 				rimossi++;
 			}
 		}
-		FruitoriView.utentiRimossi(rimossi);
+		fruitoriView.utentiRimossi(rimossi);
 		return utentiRimossi;
 	}
 	
@@ -118,7 +126,7 @@ public class FruitoriController
 		}
 		if(!test)
 		{
-			FruitoriView.utentiRimossi(rimossi);
+			fruitoriView.utentiRimossi(rimossi);
 		}
 		return utentiRimossi;
 	}
@@ -129,31 +137,31 @@ public class FruitoriController
 	 */
 	public Fruitore login() 
 	{
-		String user = FruitoriView.chiediUsername();
-		String password = FruitoriView.chiediPassword();
+		String user = fruitoriView.chiediUsername();
+		String password = fruitoriView.chiediPassword();
 		
 		Fruitore utenteLoggato = model.trovaUtente(user, password);
 		
 		if(utenteLoggato == null)
 		{
-			FruitoriView.utenteNonTrovato();
+			fruitoriView.utenteNonTrovato();
 			return null;
 		}
 		else // -> utente trovato
 		{
-			FruitoriView.benvenuto(utenteLoggato.getNome());
+			fruitoriView.benvenuto(utenteLoggato.getNome());
 			return utenteLoggato;
 		}	
 	}
 	
 	public void stampaDatiFruitori()
 	{
-		FruitoriView.stampaDati(model.getFruitori());
+		fruitoriView.stampaDati(model.getFruitori());
 	}
 	
 	public void stampaDatiFruitore(Fruitore f)
 	{
-		FruitoriView.stampaDati(f);
+		fruitoriView.stampaDati(f);
 	}
 	
 	public void rinnovo(Fruitore fruitore)
@@ -161,11 +169,11 @@ public class FruitoriController
 		boolean riuscito = fruitore.rinnovo();
 		if(riuscito)
 		{
-			FruitoriView.iscrizioneRinnovata();
+			fruitoriView.iscrizioneRinnovata();
 		}
 		else
 		{
-			FruitoriView.iscrizioneNonRinnovata(fruitore.getDataInizioRinnovo(), fruitore.getDataScadenza());
+			fruitoriView.iscrizioneNonRinnovata(fruitore.getDataInizioRinnovo(), fruitore.getDataScadenza());
 		}
 	}	
 }

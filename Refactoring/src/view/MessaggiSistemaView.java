@@ -2,34 +2,34 @@ package view;
 
 import myLib.BelleStringhe;
 import myLib.InputDati;
+import viewInterfaces.IMessaggiSistemaView;
 
-public class MessaggiSistemaView 
+public class MessaggiSistemaView implements IMessaggiSistemaView
 {
-	private static final String MESSAGGIO_ADDIO = "Grazie per aver usato ArchivioMultimediale!";
-	private static final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";	
+	private final String MESSAGGIO_ADDIO = "Grazie per aver usato ArchivioMultimediale!";
+	private final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";	
 	
-	public static void stampaAddio()
+	public void stampaAddio()
 	{
 		System.out.println("\n"+BelleStringhe.incornicia(MESSAGGIO_ADDIO));
 	}
 	
-	public static String chiediPasswordOperatore() 
+	public String chiediPasswordOperatore() 
 	{
 		return InputDati.leggiStringaNonVuota(MESSAGGIO_PASSWORD);	
 	}
 
-	public static void accessoEseguito() 
+	public void accessoEseguito() 
 	{
 		System.out.println("Accesso eseguito con successo!");		
 	}
 
-//	va in RisorsaView?
-	public static void avvisoRimozioneRisorsa() 
+	public void avvisoRimozioneRisorsa() 
 	{
 		System.out.println("ATTENZIONE! Se la risorsa che si desidera rimuovere ha copie attualmente in prestito, queste verranno sottratte ai fruitori");		
 	}
 
-	public static void cornice() 
+	public void cornice() 
 	{
 		System.out.println(BelleStringhe.CORNICE);	
 	}
@@ -39,7 +39,7 @@ public class MessaggiSistemaView
 	 * @param spazioInizio true se si vuole una riga vuota prima della cornice
 	 * @param spazioFine true se si vuole una riga vuota dopo la cornice
 	 */
-	public static void cornice(boolean spazioInizio, boolean spazioFine)
+	public void cornice(boolean spazioInizio, boolean spazioFine)
 	{
 		if(!spazioInizio && !spazioFine)
 		{
@@ -63,7 +63,7 @@ public class MessaggiSistemaView
 		}
 	}
 	
-	public static void stampaPosizione(int i) 
+	public void stampaPosizione(int i) 
 	{
 		System.out.println("\n" + (i+1) + ") ");
 	}

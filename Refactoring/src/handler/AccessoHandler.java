@@ -6,13 +6,14 @@ import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
 import interfaces.ISavesManager;
 import myLib.MyMenu;
-import view.FruitoriView;
 import view.MessaggiSistemaView;
+import viewInterfaces.IMessaggiSistemaView;
 
 public class AccessoHandler 
 {
 	private FruitoreHandler fruitoreHandler;
 	private OperatoreHandler operatoreHandler;
+	private IMessaggiSistemaView messaggiSistemaView;
 	
 	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
 	
@@ -21,6 +22,7 @@ public class AccessoHandler
 	{
 		fruitoreHandler = new FruitoreHandler(fruitoriController, risorseController, prestitiController, gestoreSalvataggi);
 		operatoreHandler = new OperatoreHandler(fruitoriController, risorseController, prestitiController, storicoController, gestoreSalvataggi);
+		messaggiSistemaView = new MessaggiSistemaView();
 	}
 	
 	/**
@@ -35,7 +37,7 @@ public class AccessoHandler
 		{
 			case 0://EXIT
 			{
-				MessaggiSistemaView.stampaAddio();
+				messaggiSistemaView.stampaAddio();
 				terminato = true;
 				break;
 			}
@@ -57,14 +59,14 @@ public class AccessoHandler
 			}
 			case 2://accesso OPERATORE
 			{
-				String passwordOperatore = MessaggiSistemaView.chiediPasswordOperatore();
+				String passwordOperatore = messaggiSistemaView.chiediPasswordOperatore();
 				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
 				{
 					final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
 							"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
 					final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 					
-					MessaggiSistemaView.accessoEseguito();
+					messaggiSistemaView.accessoEseguito();
 					
 					MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
 					boolean terminatoOperatore;
@@ -78,7 +80,7 @@ public class AccessoHandler
 				}
 				else
 				{
-					FruitoriView.pswErrata();
+					fruitoreHandler.getFruitoriController().getFruitoriView().passwordErrata();
 				}
 				
 				terminato = false;

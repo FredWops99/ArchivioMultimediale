@@ -1,7 +1,7 @@
 package handler;
 
 import controllerMVC.StoricoController;
-import view.StoricoView;
+import viewInterfaces.IStoricoView;
 
 /**
  * (precondizione: prestiti != null && archivio != null && fruitori != null)
@@ -12,10 +12,12 @@ import view.StoricoView;
 public class StoricoHandler
 {
 	private StoricoController storicoController;
+	private IStoricoView storicoView;
 	
 	public StoricoHandler(StoricoController storicoController)
 	{
 		this.storicoController = storicoController;
+		this.storicoView = storicoController.getStoricoView();
 	}
 	
 	public boolean mostra(int scelta)
@@ -31,13 +33,13 @@ public class StoricoHandler
 			}
 			case 1://visualizza numero prestiti per anno solare
 			{
-				StoricoView.prestitiPerAnnoSolare(storicoController.prestitiAnnoSolare());
+				storicoView.prestitiPerAnnoSolare(storicoController.prestitiAnnoSolare());
 				terminato = false;
 				break;
 			}
 			case 2://visualizza numero proroghe per anno solare
 			{
-				StoricoView.proroghePerAnnoSolare(storicoController.prorogheAnnoSolare());
+				storicoView.proroghePerAnnoSolare(storicoController.prorogheAnnoSolare());
 				terminato = false;
 				break;
 			}

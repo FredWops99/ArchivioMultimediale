@@ -4,8 +4,6 @@ import java.util.Vector;
 import controllerMVC.FilmsController;
 import interfaces.Risorsa;
 import myLib.MyMenu;
-import view.FilmsView;
-import view.MessaggiSistemaView;
 
 public class FiltraFilmHandler 
 {	
@@ -56,19 +54,19 @@ public class FiltraFilmHandler
 			}
 			case 1: //FILTRA PER TITOLO
 			{
-				titoloParziale = FilmsView.chiediTitolo();
+				titoloParziale = filmsController.getFilmsView().chiediTitolo();
 				filmsFiltrati = filtraFilmPerTitolo(titoloParziale);
 				break;
 			}
 			case 2:	//FILTRA PER ANNO PUBBLICAZIONE
 			{
-				annoUscita = FilmsView.chiediAnnoUscita();
+				annoUscita = filmsController.getFilmsView().chiediAnnoUscita();
 				filmsFiltrati = filtraFilmPerUscita(annoUscita);
 				break;
 			}
 			case 3: //FILTRA PER AUTORE
 			{
-				nomeRegista = FilmsView.chiediRegista();
+				nomeRegista = filmsController.getFilmsView().chiediRegista();
 				filmsFiltrati = filtraFilmPerRegista(nomeRegista);
 				break;
 			}
@@ -77,24 +75,24 @@ public class FiltraFilmHandler
 		{
 			if(scelta == 1 && filmsFiltrati.isEmpty()) 
 			{
-				FilmsView.risorsaNonPresente("films",titoloParziale);
+				filmsController.getFilmsView().risorsaNonPresente("films",titoloParziale);
 				return null;
 			}
 			if(scelta == 2 && filmsFiltrati.isEmpty())
 			{
-				FilmsView.annoNonPresente(annoUscita);
+				filmsController.getFilmsView().annoNonPresente(annoUscita);
 				return null;
 			}
 			if(scelta == 3 && filmsFiltrati.isEmpty())
 			{
-				FilmsView.registaNonPresente(nomeRegista);
+				filmsController.getFilmsView().registaNonPresente(nomeRegista);
 				return null;
 			}
 			
 			for (int i=0; i <filmsFiltrati.size(); i++) 
 			{
-				MessaggiSistemaView.cornice(true, false);
-				FilmsView.stampaDati(filmsFiltrati.get(i), false);
+				filmsController.getFilmsView().getMessaggiSistemaView().cornice(true, false);
+				filmsController.getFilmsView().stampaDati(filmsFiltrati.get(i), false);
 			}	
 		}
 		

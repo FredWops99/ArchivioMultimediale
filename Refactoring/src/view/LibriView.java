@@ -6,61 +6,66 @@ import interfaces.Risorsa;
 import model.Libro;
 import myLib.GestioneDate;
 import myLib.InputDati;
+import viewInterfaces.ILibriView;
+import viewInterfaces.IMessaggiSistemaView;
 
-public class LibriView extends RisorseView
+public class LibriView extends RisorseView implements ILibriView
 {	
-	public static int chiediPagine()
+	private IMessaggiSistemaView messaggiSistemaView = new MessaggiSistemaView();
+	public IMessaggiSistemaView getMessaggiSistemaView() 
+	{
+		return this.messaggiSistemaView;
+	}
+	public int chiediPagine()
 	{
 		return InputDati.leggiInteroPositivo("Inserisci il numero di pagine: ");
 	}
 	
-	public static int chiediAnnoPubblicazione()
+	public int chiediAnnoPubblicazione()
 	{
 		return InputDati.leggiInteroConMassimo("Inserisci l'anno di pubblicazione: ", GestioneDate.ANNO_CORRENTE);
 	}
 	
-	public static String chiediCasaEditrice()
+	public String chiediCasaEditrice()
 	{
 		return InputDati.leggiStringaNonVuota("Inserisci la casa editrice: ");
 	}
 	
-	public static String chiediLingua() 
+	public String chiediLingua() 
 	{
 		return InputDati.leggiStringaNonVuota("Inserisci la lingua del testo: ");
 	}
 	
-	public static String chiediAutore()
+	public String chiediAutore()
 	{
 		return InputDati.leggiStringaNonVuota("Inserisci l'autore: ");
 	}
 	
-	public static Boolean ciSonoAltriAutori()
+	public Boolean ciSonoAltriAutori()
 	{
 		return InputDati.yesOrNo("ci sono altri autori? ");
 	}
 	
-	public static void annoNonPresente(int annoUscita) 
+	public void annoNonPresente(int annoUscita) 
 	{
 		System.out.println("In archivio non sono presenti libri il cui anno di pubblicazione è " + annoUscita);	
 	}
 	
-	public static void autoreNonPresente(String nomeAutore)
+	public void autoreNonPresente(String nomeAutore)
 	{
 		System.out.println("In archivio non sono presenti libri il cui autore è " + nomeAutore);
 	}
 	
-	private static void stampaGenere(Risorsa risorsa) 
+	public void stampaGenere(Risorsa risorsa) 
 	{
 		System.out.println("Genere: " + ((Libro) risorsa).getGenere());	
 	}
 	
-	
-
 	/**
 	 * stampa i libri raggruppandoli per sottocategorie
 	 * @param libriDaStampare
 	 */
-	public static void stampaDatiPerCategorie(Vector<Risorsa> libriDaStampare) 
+	public void stampaDatiPerCategorie(Vector<Risorsa> libriDaStampare) 
 	{
 		if(libriDaStampare.isEmpty())
 		{
@@ -70,24 +75,24 @@ public class LibriView extends RisorseView
 		{
 			if(libriDaStampare.size() == 1)
 			{
-				RisorseView.unaRisorsaInArchivio(Libro.class);
+				unaRisorsaInArchivio(Libro.class);
 			}
 			else//piu di un libro prestabile in archivio
 			{
-				RisorseView.numeroRisorseInArchivio(libriDaStampare.size(), "libri");
+				numeroRisorseInArchivio(libriDaStampare.size(), "libri");
 			}
 			
 			for(int j = 0; j < libriDaStampare.size(); j++)
 			{				
-				MessaggiSistemaView.cornice(true, false);
+				messaggiSistemaView.cornice(true, false);
 //				devo aggiungere cast in Libro perchè passo un vettore di risorse
 				if(!((Libro)libriDaStampare.get(j)).getGenere().equals("-"))
 				{
 					stampaSottoCategoria(libriDaStampare.get(j));
 					stampaGenere(libriDaStampare.get(j));
-					MessaggiSistemaView.cornice();
+					messaggiSistemaView.cornice();
 					
-					RisorseView.stampaTitolo(libriDaStampare.get(j));
+					stampaTitolo(libriDaStampare.get(j));
 //					conteggio al contrario così quando elimino un elemento non salto il successivo
 //					diverso da Films perchè i libri vengono ordinati anche per Genere (che Film non ha)
 					for(int i = libriDaStampare.size() - 1; i >= j + 1; i--) 
@@ -96,7 +101,7 @@ public class LibriView extends RisorseView
 						{
 							if(((Libro)libriDaStampare.get(j)).getGenere().equals(((Libro)libriDaStampare.get(i)).getGenere()))
 							{
-								RisorseView.stampaTitolo(libriDaStampare.get(j));
+								stampaTitolo(libriDaStampare.get(j));
 								libriDaStampare.remove(i);
 							}
 						}
@@ -105,14 +110,14 @@ public class LibriView extends RisorseView
 				else
 				{
 					stampaSottoCategoria(libriDaStampare.get(j));
-					MessaggiSistemaView.cornice();
-					RisorseView.stampaTitolo(libriDaStampare.get(j));
+					messaggiSistemaView.cornice();
+					stampaTitolo(libriDaStampare.get(j));
 //					conteggio al contrario così quando elimino un elemento non salto il successivo
 					for(int i = libriDaStampare.size()-1; i >= j+1; i--)
 					{
 						if(((Libro)libriDaStampare.get(j)).getGenere().equals(((Libro)libriDaStampare.get(i)).getGenere()))
 						{
-							RisorseView.stampaTitolo(libriDaStampare.get(j));
+							stampaTitolo(libriDaStampare.get(j));
 							libriDaStampare.remove(i);
 						}
 					}

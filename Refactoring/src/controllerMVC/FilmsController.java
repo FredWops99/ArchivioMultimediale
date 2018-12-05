@@ -7,19 +7,33 @@ import model.Film;
 import model.Risorse;
 import myLib.MyMenu;
 import view.FilmsView;
-import view.MessaggiSistemaView;
+import viewInterfaces.IFilmsView;
 
+/**
+ * CONTROLLER interagisce con view e modifica il MODEL
+ * @author Stefano Prandini
+ * @author Federico Landi
+ */
 public class FilmsController 
 {
 	private Risorse model;
+	private IFilmsView filmsView;
+
 	private ManageRisorseHandler manageRisorseHandler;
+//	CATEGORIA è Film
 	private static final String[] SOTTOCATEGORIE = {"Azione","Avventura","Fantascienza"}; //le sottocategorie della categoria FILM ("Azione","Avventura","Fantascienza"...)
 	private static final String IDENTIFIER = "F";
 	
 	public FilmsController(Risorse risorse, ManageRisorseHandler manageRisorseHandler) 
 	{
 		this.model = risorse;
+		this.filmsView = new FilmsView();
 		this.manageRisorseHandler = manageRisorseHandler;
+	}
+	
+	public IFilmsView getFilmsView() 
+	{
+		return filmsView;
 	}
 	
 	public Risorse getModel()
@@ -36,12 +50,12 @@ public class FilmsController
 			return;
 		}
 
-		String titolo = FilmsView.chiediTitolo();
-		int durata = FilmsView.chiediDurata();
-		int annoDiUscita = FilmsView.chiediAnnoUscita();
-		String lingua = FilmsView.chiediLingua();
-		String regista = FilmsView.chiediRegista();
-		int nLicenze = FilmsView.chiediNumeroLicenze();
+		String titolo = filmsView.chiediTitolo();
+		int durata = filmsView.chiediDurata();
+		int annoDiUscita = filmsView.chiediAnnoUscita();
+		String lingua = filmsView.chiediLingua();
+		String regista = filmsView.chiediRegista();
+		int nLicenze = filmsView.chiediNumeroLicenze();
 		
 		Film f = new Film(IDENTIFIER + model.getLastId(), sottoCategoria, titolo, regista, durata, annoDiUscita, lingua, nLicenze);
 		
@@ -50,11 +64,11 @@ public class FilmsController
 		
 		if(aggiuntaRiuscita)
 		{
-			FilmsView.aggiuntaRiuscita(Film.class);
+			filmsView.aggiuntaRiuscita(Film.class);
 		}
 		else
 		{
-			FilmsView.aggiuntaNonRiuscita(Film.class);
+			filmsView.aggiuntaNonRiuscita(Film.class);
 		}
 	}
 	
@@ -88,11 +102,11 @@ public class FilmsController
 	{
 		if(aggiuntaRiuscita)
 		{
-			FilmsView.aggiuntaRiuscita(Film.class);
+			filmsView.aggiuntaRiuscita(Film.class);
 		}
 		else
 		{
-			FilmsView.aggiuntaNonRiuscita(Film.class);
+			filmsView.aggiuntaNonRiuscita(Film.class);
 		}
 	}
 	
@@ -129,24 +143,24 @@ public class FilmsController
 	{
 		if(filmsFiltrati.isEmpty())
 		{
-			FilmsView.noRisorseDisponibili("films");
+			filmsView.noRisorseDisponibili("films");
 			return null;
 		}
 		else
 		{
 			for(int i = 0; i < filmsFiltrati.size(); i++)
 			{
-				MessaggiSistemaView.stampaPosizione(i);
-				MessaggiSistemaView.cornice();
-				FilmsView.stampaDati(filmsFiltrati.get(i), true);
-				MessaggiSistemaView.cornice();
+				filmsView.getMessaggiSistemaView().stampaPosizione(i);
+				filmsView.getMessaggiSistemaView().cornice();
+				filmsView.stampaDati(filmsFiltrati.get(i), true);
+				filmsView.getMessaggiSistemaView().cornice();
 			}
 			
 			int selezione;
 			do
 			{
-				MessaggiSistemaView.cornice();
-				selezione = FilmsView.selezionaRisorsa(filmsFiltrati.size(), Film.class);
+				filmsView.getMessaggiSistemaView().cornice();
+				selezione = filmsView.selezionaRisorsa(filmsFiltrati.size(), Film.class);
 				if(selezione == 0)
 				{
 					return null;
@@ -157,7 +171,7 @@ public class FilmsController
 				}
 				else
 				{
-					FilmsView.copieTutteInPrestito(filmsFiltrati.get(selezione-1).getTitolo());
+					filmsView.copieTutteInPrestito(filmsFiltrati.get(selezione-1).getTitolo());
 				}
 			}
 			while(true);

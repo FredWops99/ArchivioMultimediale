@@ -13,7 +13,10 @@ import model.Fruitore;
 import model.Fruitori;
 import model.Libro;
 import model.Risorse;
-import view.RisorseView;
+import view.FilmsView;
+import view.LibriView;
+import viewInterfaces.IFilmsView;
+import viewInterfaces.ILibriView;
 
 public class TestStampaDati 
 {
@@ -21,6 +24,8 @@ public class TestStampaDati
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;
+	private IFilmsView filmsView = new FilmsView();
+	private ILibriView libriView = new LibriView();
 	
 	@Before
 	public void setUpStreams() 
@@ -38,7 +43,7 @@ public class TestStampaDati
 	public void libroAggiunto() 
 	{
 		Film film = TestFilm.creaFilm("titolo", "Avventura");
-		RisorseView.stampaDati(film, false);
+		filmsView.stampaDati(film, false);
 		
 		assertEquals(film.toString(false).trim(), outContent.toString().trim());
 	}
@@ -47,7 +52,7 @@ public class TestStampaDati
 	public void filmAggiunto() 
 	{
 		Libro libro = TestLibri.creaLibro("titolo", "Azione");
-		RisorseView.stampaDati(libro, false);
+		libriView.stampaDati(libro, false);
 		
 		assertEquals(libro.toString(false).trim(), outContent.toString().trim());
 	}
@@ -56,7 +61,7 @@ public class TestStampaDati
 	public void libroAggiuntoPerPrestito() 
 	{
 		Film film = TestFilm.creaFilm("titolo", "Avventura");
-		RisorseView.stampaDati(film, true);
+		filmsView.stampaDati(film, true);
 		
 		assertEquals(film.toString(true).trim(), outContent.toString().trim());
 	}
@@ -65,7 +70,7 @@ public class TestStampaDati
 	public void filmAggiuntoPerPrestito() 
 	{
 		Libro libro = TestLibri.creaLibro("titolo", "Azione");
-		RisorseView.stampaDati(libro, true);
+		libriView.stampaDati(libro, true);
 		
 		assertEquals(libro.toString(true).trim(), outContent.toString().trim());
 	}

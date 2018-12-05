@@ -8,7 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 import model.Film;
 import model.Libro;
-import view.RisorseView;
+import view.FilmsView;
+import view.LibriView;
+import viewInterfaces.IFilmsView;
+import viewInterfaces.ILibriView;
 
 /**
  * testcase creato per controllare se gli output su Console coincidono con quelli desiderati.
@@ -22,6 +25,8 @@ public class TestOutput
 {
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream originalOut = System.out;
+	private IFilmsView filmsView = new FilmsView();
+	private ILibriView libriView = new LibriView();
 	
 	@Before
 	public void setUpStreams() 
@@ -38,42 +43,42 @@ public class TestOutput
 	@Test
 	public void FilmAggiunto() 
 	{
-		RisorseView.aggiuntaRiuscita(Film.class);
+		filmsView.aggiuntaRiuscita(Film.class);
 		assertEquals("Film aggiunto con successo!", outContent.toString().trim());//trim toglie whitespaces iniziali/finali
 	}
 	
 	@Test
 	public void filmNonAggiunto()
 	{
-		RisorseView.aggiuntaNonRiuscita(Film.class);
+		filmsView.aggiuntaNonRiuscita(Film.class);
 		assertEquals("Il film è già presente in archivio", outContent.toString().trim());
 	}
 	
 	@Test
 	public void libroNonAggiunto()
 	{
-		RisorseView.aggiuntaNonRiuscita(Libro.class);
+		libriView.aggiuntaNonRiuscita(Libro.class);
 		assertEquals("Il libro è già presente in archivio", outContent.toString().trim());
 	}
 
 	@Test
 	public void LibroAggiunto() 
 	{
-		RisorseView.aggiuntaRiuscita(Libro.class);
+		libriView.aggiuntaRiuscita(Libro.class);
 		assertEquals("Libro aggiunto con successo!", outContent.toString().trim());
 	}
 	
 	@Test
 	public void piùLibriStessoTitolo()
 	{
-		RisorseView.piùRisorseStessoTitolo("libri","Titolo");
+		libriView.piùRisorseStessoTitolo("libri","Titolo");
 		assertEquals("Sono presenti più libri dal titolo \"Titolo\":", outContent.toString().trim());
 	}
 	
 	@Test
 	public void piùFilmStessoTitolo()
 	{
-		RisorseView.piùRisorseStessoTitolo("films","Titolo");
+		filmsView.piùRisorseStessoTitolo("films","Titolo");
 		assertEquals("Sono presenti più films dal titolo \"Titolo\":", outContent.toString().trim());
 	}
 }

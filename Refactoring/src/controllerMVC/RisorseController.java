@@ -1,17 +1,15 @@
 package controllerMVC;
 
 import java.util.Vector;
-
 import handler.FiltraFilmHandler;
 import handler.FiltraLibriHandler;
 import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
-import view.FilmsView;
-import view.LibriView;
 import view.MessaggiSistemaView;
-import view.RisorseView;
+import viewInterfaces.IFilmsView;
+import viewInterfaces.ILibriView;
 
 public class RisorseController 
 {
@@ -20,7 +18,10 @@ public class RisorseController
 	private Risorse risorse;
 	
 	private FilmsController filmsController;
+	private IFilmsView filmsView;
 	private LibriController libriController;
+	private ILibriView libriView;
+	private MessaggiSistemaView messaggiSistemaView;
 	
 	private FiltraLibriHandler filtraLibriHandler;
 	private FiltraFilmHandler filtraFilmHandler;
@@ -31,7 +32,10 @@ public class RisorseController
 		manageRisorseHandler = new ManageRisorseHandler(this);
 		this.risorse = risorse;
 		filmsController = new FilmsController(risorse,manageRisorseHandler);
+		filmsView = filmsController.getFilmsView();
 		libriController = new LibriController(risorse,manageRisorseHandler);
+		libriView = libriController.getLibriView();
+		messaggiSistemaView = new MessaggiSistemaView();
 	}
 	
 	public FilmsController getFilmsController() 
@@ -88,7 +92,7 @@ public class RisorseController
 	 */
 	public String scegliRisorsaDaRimuovere() 
 	{
-		MessaggiSistemaView.avvisoRimozioneRisorsa();
+		messaggiSistemaView.avvisoRimozioneRisorsa();
 		
 //		se utente annulla procedura removelibro/removefilm ritornato -1
 		String idRimosso = menuRimuoviRisorsa();
@@ -125,7 +129,7 @@ public class RisorseController
 		Vector<Risorsa> elencoRisorse = risorse.getRisorse();
 		String idSelezionato;
 		
-		String titolo = RisorseView.chiediRisorsaDaRimuovere();
+		String titolo = filmsView.chiediRisorsaDaRimuovere();
 				
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -156,7 +160,7 @@ public class RisorseController
 		
 		if(posizioniRicorrenze.size()==0)
 		{
-			RisorseView.risorsaNonPresente();
+			filmsView.risorsaNonPresente();
 			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizione
@@ -164,29 +168,29 @@ public class RisorseController
 		{
 			idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(0)).getId();
 			elencoRisorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-			RisorseView.rimozioneAvvenuta();
+			filmsView.rimozioneAvvenuta();
 		}
 //		se ci sono più elementi nel vettore li stampo e chiedo di selezionare quale si vuole rimuovere
 		else
 		{
-			LibriView.piùRisorseStessoTitolo(categoria, titolo);
+			filmsView.piùRisorseStessoTitolo(categoria, titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
 			{
-				RisorseView.numeroRicorrenza(pos);
-				MessaggiSistemaView.cornice();
-				RisorseView.stampaDati(elencoRisorse.elementAt((int)i), false);
-				MessaggiSistemaView.cornice();
+				filmsView.numeroRicorrenza(pos);
+				messaggiSistemaView.cornice();
+				filmsView.stampaDati(elencoRisorse.elementAt((int)i), false);
+				messaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = RisorseView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
+			int daRimuovere = filmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 			
 			if(daRimuovere > 0)
 			{
 				idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
 				elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				RisorseView.rimozioneAvvenuta();
+				filmsView.rimozioneAvvenuta();
 			}
 			else//0: annulla
 			{
@@ -264,11 +268,11 @@ public class RisorseController
 		//anche se unifico con interfaccia risorsa devo comunque stampare i dati in modo diverso: films e risorse hanno campi diversi
 		if(categoria == CATEGORIE[0])
 		{
-			LibriView.stampaDatiPerCategorie(risorseDaStampare);
+			libriView.stampaDatiPerCategorie(risorseDaStampare);
 		}
 		else if(categoria == CATEGORIE[1])
 		{
-			FilmsView.stampaDati(risorseDaStampare);
+			filmsController.getFilmsView().stampaDati(risorseDaStampare);
 		}
 	}
 }
