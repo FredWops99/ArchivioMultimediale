@@ -11,7 +11,7 @@ import viewInterfaces.IMessaggiSistemaView;
 
 public class FilmsView extends RisorseView implements IFilmsView
 {
-	private IMessaggiSistemaView messaggiSistemaView = new MessaggiSistemaView();
+	private IMessaggiSistemaView messaggiSistemaView = MessaggiSistemaView.getInstance();
 	public IMessaggiSistemaView getMessaggiSistemaView() 
 	{
 		return messaggiSistemaView;

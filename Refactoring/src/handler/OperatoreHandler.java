@@ -29,6 +29,11 @@ public class OperatoreHandler
 		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
 	}
 	
+	public FruitoriController getFruitoriController() 
+	{
+		return fruitoriController;
+	}
+	
 	public boolean menuOperatore(int scelta) 
 	{
 		boolean terminato;

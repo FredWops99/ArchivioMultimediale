@@ -11,7 +11,7 @@ import viewInterfaces.IMessaggiSistemaView;
 
 public class LibriView extends RisorseView implements ILibriView
 {	
-	private IMessaggiSistemaView messaggiSistemaView = new MessaggiSistemaView();
+	private IMessaggiSistemaView messaggiSistemaView = MessaggiSistemaView.getInstance();
 	public IMessaggiSistemaView getMessaggiSistemaView() 
 	{
 		return this.messaggiSistemaView;

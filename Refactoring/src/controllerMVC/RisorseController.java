@@ -1,5 +1,6 @@
 package controllerMVC;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import handler.FiltraFilmHandler;
 import handler.FiltraLibriHandler;
@@ -38,9 +39,15 @@ public class RisorseController
 //		per messaggiSistemaView: sennò Controller dipenderebbe da MessaggiSistemaView, a causa dell'instanziamento. così solo interface
 		try 
 		{
-			this.messaggiSistemaView = (IMessaggiSistemaView)Class.forName(System.getProperty("MessaggiSistemaView")).newInstance();
+//			MessaggiSistemaView è un SINGLETON, quindi il costruttore è privato e facendo "Class.forName(...).getInstance()" il costruttore non può venire 
+//			invocato: Allora una volta ottenuta la classe con "Class.forName(...)" richiamiamo il metodo statico "getInstance()" tipico dei singleton.
+//			essendo il metodo statico i parametri dei metodi non servono e possono essere null
+			this.messaggiSistemaView = (IMessaggiSistemaView)Class
+					.forName(System.getProperty("MessaggiSistemaView"))
+					.getMethod("getInstance",(Class<?>)null)
+					.invoke(null, (Object[])null);		
 		} 
-		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+		catch (IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) 
 		{
 			
 		}

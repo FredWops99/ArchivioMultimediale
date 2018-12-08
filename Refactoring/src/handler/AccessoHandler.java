@@ -4,8 +4,10 @@ import controllerMVC.RisorseController;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
+import command.AccessoFruitoreCommand;
+import command.AccessoOperatoreCommand;
+import command.ICommand;
 import interfaces.ISavesManager;
-import myLib.MyMenu;
 import view.MessaggiSistemaView;
 import viewInterfaces.IMessaggiSistemaView;
 
@@ -15,14 +17,20 @@ public class AccessoHandler
 	private OperatoreHandler operatoreHandler;
 	private IMessaggiSistemaView messaggiSistemaView;
 	
-	private static final String PASSWORD_ACCESSO_OPERATORE = "operatore";	
-	
+//	PATTERN COMMAND: sono i comandi del menu
+	ICommand accessoFruitore;
+	ICommand accessoOperatore;
+		
 	public AccessoHandler(ISavesManager gestoreSalvataggi, RisorseController risorseController,
 			FruitoriController fruitoriController, StoricoController storicoController, PrestitiController prestitiController)
 	{
 		fruitoreHandler = new FruitoreHandler(fruitoriController, risorseController, prestitiController, gestoreSalvataggi);
 		operatoreHandler = new OperatoreHandler(fruitoriController, risorseController, prestitiController, storicoController, gestoreSalvataggi);
-		messaggiSistemaView = new MessaggiSistemaView();
+		messaggiSistemaView = MessaggiSistemaView.getInstance();
+		
+//		PATTERN COMMAND: sono i comandi del menu
+		accessoFruitore = new AccessoFruitoreCommand(fruitoreHandler);
+		accessoOperatore = new AccessoOperatoreCommand(operatoreHandler, messaggiSistemaView);
 	}
 	
 	/**
@@ -42,46 +50,15 @@ public class AccessoHandler
 				break;
 			}
 			case 1://accesso FRUITORE
-			{				
-				final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-				final String[] MENU_SCELTE = {"Registrazione", "Area personale (Login)"};
-				MyMenu menuFruitore=new MyMenu(MENU_INTESTAZIONE, MENU_SCELTE, true);
+			{			
+				accessoFruitore.execute();
 				
-				boolean finito = false;
-				do
-				{
-					scelta = menuFruitore.scegli();
-					finito = fruitoreHandler.entryMenuFruitore(scelta);
-				}
-				while(!finito);
-				
+				terminato = false;
 				break;
 			}
 			case 2://accesso OPERATORE
 			{
-				String passwordOperatore = messaggiSistemaView.chiediPasswordOperatore();
-				if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
-				{
-					final String[] MENU_OPERATORE_SCELTE = {"Visualizza fruitori","Aggiungi una risorsa","Rimuovi una risorsa","Visualizza l'elenco delle risorse",
-							"Cerca una risorsa", "Visualizza tutti i prestiti attivi","Visualizza storico"};
-					final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
-					
-					messaggiSistemaView.accessoEseguito();
-					
-					MyMenu menuOperatore = new MyMenu(MENU_INTESTAZIONE, MENU_OPERATORE_SCELTE, true);
-					boolean terminatoOperatore;
-					int sceltaOperatore;
-					do
-					{
-						sceltaOperatore = menuOperatore.scegli();
-						terminatoOperatore = operatoreHandler.menuOperatore(sceltaOperatore);
-					}
-					while(!terminatoOperatore);				
-				}
-				else
-				{
-					fruitoreHandler.getFruitoriController().getFruitoriView().passwordErrata();
-				}
+				accessoOperatore.execute();
 				
 				terminato = false;
 				break;

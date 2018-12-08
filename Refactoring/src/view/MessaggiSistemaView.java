@@ -6,6 +6,21 @@ import viewInterfaces.IMessaggiSistemaView;
 
 public class MessaggiSistemaView implements IMessaggiSistemaView
 {
+//	SINGLETON: serve in molti punti e non voglio nè creare oggetto nuovo ogni volta nè farlo passare da un'oggetto all'altro
+	private static MessaggiSistemaView instance;
+//	costruttore privato, usato solo da getinstance()
+	private MessaggiSistemaView() {}
+//	se MessaggiSistemaView è già stata instanziata viene restituita l'istanza, altrimenti viene creata
+	public static MessaggiSistemaView getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new MessaggiSistemaView();
+		}
+		return instance;
+	}
+	
+	
 	private final String MESSAGGIO_ADDIO = "Grazie per aver usato ArchivioMultimediale!";
 	private final String MESSAGGIO_PASSWORD = "Inserire la password per accedere all'area riservata agli operatori: ";	
 	
