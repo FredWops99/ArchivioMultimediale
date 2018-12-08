@@ -42,7 +42,7 @@ public class RisorseController
 		} 
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
 		{
-			e.printStackTrace();
+			
 		}
 	}
 	
