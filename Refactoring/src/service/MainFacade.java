@@ -1,12 +1,15 @@
 package service;
 
-import model.*;
 import controllerMVC.FruitoriController;
 import controllerMVC.PrestitiController;
 import controllerMVC.RisorseController;
 import controllerMVC.StoricoController;
 import handler.AccessoHandler;
 import interfaces.ISavesManager;
+import model.Fruitori;
+import model.Prestiti;
+import model.Risorse;
+import model.Storico;
 import myLib.MyMenu;
 
 //POTREBBE ESSERE SINGLETON?
