@@ -26,6 +26,7 @@ public class PrestitiController
 		try 
 		{
 			this.prestitiView = (IPrestitiView)Class.forName(System.getProperty("PrestitiView")).newInstance();
+			
 //			MessaggiSistemaView è un SINGLETON, quindi il costruttore è privato e facendo "Class.forName(...).getInstance()" il costruttore non può venire 
 //			invocato: Allora una volta ottenuta la classe con "Class.forName(...)" richiamiamo il metodo statico "getInstance()" tipico dei singleton.
 //			essendo il metodo statico i parametri dei metodi non servono e possono essere null

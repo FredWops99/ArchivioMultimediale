@@ -13,7 +13,7 @@ public class AccessoFruitoreCommand implements ICommand
 	}
 	
 	@Override
-	public void execute()
+	public void gestisciAccesso()
 	{
 		final String MENU_INTESTAZIONE="Scegli l'opzione desiderata:";
 		final String[] MENU_SCELTE = {"Registrazione", "Area personale (Login)"};

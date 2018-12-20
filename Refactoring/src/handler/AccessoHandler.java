@@ -51,14 +51,14 @@ public class AccessoHandler
 			}
 			case 1://accesso FRUITORE
 			{			
-				accessoFruitore.execute();
+				accessoFruitore.gestisciAccesso();
 				
 				terminato = false;
 				break;
 			}
 			case 2://accesso OPERATORE
 			{
-				accessoOperatore.execute();
+				accessoOperatore.gestisciAccesso();
 				
 				terminato = false;
 				break;

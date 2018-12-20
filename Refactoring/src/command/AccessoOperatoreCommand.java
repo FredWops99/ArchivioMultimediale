@@ -18,7 +18,7 @@ public class AccessoOperatoreCommand implements ICommand
 	}
 	
 	@Override
-	public void execute() 
+	public void gestisciAccesso() 
 	{
 		String passwordOperatore = messaggiSistemaView.chiediPasswordOperatore();
 		if(passwordOperatore.equals(PASSWORD_ACCESSO_OPERATORE))
