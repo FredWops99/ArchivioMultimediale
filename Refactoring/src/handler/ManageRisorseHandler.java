@@ -3,8 +3,6 @@ package handler;
 import java.util.Vector;
 import controllerMVC.RisorseController;
 import interfaces.Risorsa;
-import model.Film;
-import model.Libro;
 
 public class ManageRisorseHandler 
 {	
@@ -34,7 +32,7 @@ public class ManageRisorseHandler
 		}
 	}
 	
-	public Film scegliFilm(int scelta) 
+	public Risorsa scegliFilm(int scelta) 
 	{
 		switch(scelta)
 		{
@@ -46,20 +44,20 @@ public class ManageRisorseHandler
 			{
 				Vector<Risorsa> filmsFiltrati = filtraFilmHandler.menuFiltraFilm(true);
 				
-				return risorseController.getFilmsController().selezionaFilm(filmsFiltrati);
+				return risorseController.selezionaRisorsa(filmsFiltrati);
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
 				Vector<Risorsa>filmPrestabili = risorseController.getFilmsController().filmsPrestabili();
 				
-				return risorseController.getFilmsController().selezionaFilm(filmPrestabili);
+				return risorseController.selezionaRisorsa(filmPrestabili);
 			}
 		}
 //		DEFAULT: qua non arriva mai
 		return null;
 	}
 	
-	public Libro scegliLibro(int scelta)
+	public Risorsa scegliLibro(int scelta)
 	{
 		switch(scelta)
 		{
@@ -71,14 +69,14 @@ public class ManageRisorseHandler
 			{
 				Vector<Risorsa> libriFiltrati = filtraLibriHandler.menuFiltraLibri(true);
 				
-				return risorseController.getLibriController().selezionaLibro(libriFiltrati);
+				return risorseController.selezionaRisorsa(libriFiltrati);
 			}
 				
 			case 2://VISUALIZZA ARCHIVIO
 			{
 				Vector<Risorsa>libriPrestabili = risorseController.getLibriController().libriPrestabili();
 				
-				return risorseController.getLibriController().selezionaLibro(libriPrestabili);
+				return risorseController.selezionaRisorsa(libriPrestabili);
 			}
 		}
 //		DEFAULT: qua non arriva mai

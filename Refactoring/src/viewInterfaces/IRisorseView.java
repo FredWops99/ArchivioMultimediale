@@ -25,4 +25,5 @@ public interface IRisorseView
 	public abstract void stampaSottoCategoria(Risorsa risorsa);
 	public abstract void stampaTitolo(Risorsa risorsa);
 	public abstract void unaRisorsaInArchivio(Class<?> c);
+	public abstract IMessaggiSistemaView getMessaggiSistemaView();
 }

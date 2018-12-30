@@ -3,9 +3,6 @@ package testing;
 import static org.junit.Assert.assertEquals;
 import java.util.Vector;
 import org.junit.Test;
-import controllerMVC.LibriController;
-import controllerMVC.RisorseController;
-import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.Libro;
 import model.Risorse;
@@ -13,9 +10,6 @@ import model.Risorse;
 public class TestLibri
 {
 	Risorse risorse = new Risorse();
-	RisorseController risorseController = new RisorseController(risorse);
-	ManageRisorseHandler mr = new ManageRisorseHandler(risorseController);
-	LibriController libriController = new LibriController(risorse,mr);
 	
 	@Test
 	public void libroEsistente()
@@ -83,23 +77,11 @@ public class TestLibri
 	{
 		Vector<String>autori = new Vector<>();
 		autori.add("autore");
-		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
 		
+		Libro l = new Libro("L0", "Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
+		
+		risorse.addRisorsa(l);
 		assertEquals(1, risorse.getRisorse().size());
-	}
-	
-	@Test
-	public void lastId()
-	{
-		Vector<String>autori = new Vector<>();
-		autori.add("autore");
-		libriController.addLibro("Romanzo", "titolo", autori, 10, 200, "casa", "italiano", "avventura", 10);
-		libriController.addLibro("Fumetto", "fumetto", autori, 10, 200, "casa", "italiano", "avventura", 10);
-
-		assertEquals(risorse.getRisorse().get(0).getId(), "L0");
-		assertEquals(risorse.getRisorse().get(1).getId(), "L1");
-
-		assertEquals(2, risorse.getLastId());
 	}
 	
 	public static Libro creaLibro(String titolo, String sottoCategoria)

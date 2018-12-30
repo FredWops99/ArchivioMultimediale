@@ -65,7 +65,7 @@ public class LibriView extends RisorseView implements ILibriView
 	 * stampa i libri raggruppandoli per sottocategorie
 	 * @param libriDaStampare
 	 */
-	public void stampaDatiPerCategorie(Vector<Risorsa> libriDaStampare) 
+	public void stampaDati(Vector<Risorsa> libriDaStampare) 
 	{
 		if(libriDaStampare.isEmpty())
 		{

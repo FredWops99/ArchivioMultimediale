@@ -32,7 +32,7 @@ public class PrestitiController
 //			essendo il metodo statico i parametri dei metodi non servono e possono essere null
 			this.messaggiSistemaView = (IMessaggiSistemaView)Class
 					.forName(System.getProperty("MessaggiSistemaView"))
-					.getMethod("getInstance",(Class<?>[])null)
+					.getMethod("getInstance")
 					.invoke(null, (Object[])null);
 		} 
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) 

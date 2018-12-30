@@ -2,6 +2,8 @@ package testing;
 
 import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.GregorianCalendar;
 import org.junit.After;
@@ -81,6 +83,15 @@ public class TestStampaDati
 		GregorianCalendar dataNascita = new GregorianCalendar(1900, 0, 1);
 		GregorianCalendar dataIscrizione = new GregorianCalendar(2000, 0, 1);
 		Fruitore fruitore = new Fruitore("nome", "cognome", dataNascita, dataIscrizione, "user", "psw");
+//		serve per costruire il controller
+		try 
+		{
+			System.getProperties().load(new FileInputStream("config.properties"));
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 		FruitoriController fruitoriController = new FruitoriController(new Fruitori());
 		
 		fruitoriController.stampaDatiFruitore(fruitore);

@@ -30,7 +30,7 @@ public class AccessoHandler
 		
 //		PATTERN COMMAND: sono i comandi del menu
 		accessoFruitore = new AccessoFruitoreCommand(fruitoreHandler);
-		accessoOperatore = new AccessoOperatoreCommand(operatoreHandler, messaggiSistemaView);
+		accessoOperatore = new AccessoOperatoreCommand(operatoreHandler);
 	}
 	
 	/**

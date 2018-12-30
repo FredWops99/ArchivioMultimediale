@@ -8,34 +8,42 @@ import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.*;
 import myLib.MyMenu;
-import viewInterfaces.IFilmsView;
-import viewInterfaces.ILibriView;
+import service.RisorseFactory;
 import viewInterfaces.IMessaggiSistemaView;
+import viewInterfaces.IRisorseView;
 
 public class RisorseController 
 {
 	private final String[] CATEGORIE = {"Libri","Films"};
 
 	private Risorse risorse;
+	private IRisorseView risorseView;
 	
 	private FilmsController filmsController;
-	private IFilmsView filmsView;
 	private LibriController libriController;
-	private ILibriView libriView;
 	private IMessaggiSistemaView messaggiSistemaView;
 	
 	private FiltraLibriHandler filtraLibriHandler;
 	private FiltraFilmHandler filtraFilmHandler;
 	private ManageRisorseHandler manageRisorseHandler;
 	
+	private RisorseFactory risorseFactory = null;
+	
 	public RisorseController(Risorse risorse)
 	{
 		manageRisorseHandler = new ManageRisorseHandler(this);
 		this.risorse = risorse;
+//		istanzio da proprietà di sistema
+		try 
+		{
+			this.risorseView = (IRisorseView)Class.forName(System.getProperty("RisorseView")).newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e1) 
+		{
+			e1.printStackTrace();
+		}
 		filmsController = new FilmsController(risorse,manageRisorseHandler);
-		filmsView = filmsController.getFilmsView();
 		libriController = new LibriController(risorse,manageRisorseHandler);
-		libriView = libriController.getLibriView();
 //		per messaggiSistemaView: sennò Controller dipenderebbe da MessaggiSistemaView, a causa dell'instanziamento. così solo interface
 		try 
 		{
@@ -44,12 +52,12 @@ public class RisorseController
 //			essendo il metodo statico i parametri dei metodi non servono e possono essere null
 			this.messaggiSistemaView = (IMessaggiSistemaView)Class
 					.forName(System.getProperty("MessaggiSistemaView"))
-					.getMethod("getInstance",(Class<?>)null)
+					.getMethod("getInstance")
 					.invoke(null, (Object[])null);		
 		} 
 		catch (IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) 
 		{
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -144,7 +152,7 @@ public class RisorseController
 		Vector<Risorsa> elencoRisorse = risorse.getRisorse();
 		String idSelezionato;
 		
-		String titolo = filmsView.chiediRisorsaDaRimuovere();
+		String titolo = risorseView.chiediRisorsaDaRimuovere();
 				
 		Vector<Integer> posizioniRicorrenze = new Vector<>();
 		
@@ -175,7 +183,7 @@ public class RisorseController
 		
 		if(posizioniRicorrenze.size()==0)
 		{
-			filmsView.risorsaNonPresente();
+			risorseView.risorsaNonPresente();
 			idSelezionato = "-1";
 		}
 //		se nel vettore delle ricorrenze c'è solo una posizione, elimino l'elemento in quella posizione
@@ -183,29 +191,29 @@ public class RisorseController
 		{
 			idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(0)).getId();
 			elencoRisorse.get((int)posizioniRicorrenze.get(0)).setPrestabile(false);
-			filmsView.rimozioneAvvenuta();
+			risorseView.rimozioneAvvenuta();
 		}
 //		se ci sono più elementi nel vettore li stampo e chiedo di selezionare quale si vuole rimuovere
 		else
 		{
-			filmsView.piùRisorseStessoTitolo(categoria, titolo);
+			risorseView.piùRisorseStessoTitolo(categoria, titolo);
 			
 			int pos = 0;
 			for(Integer i : posizioniRicorrenze)
 			{
-				filmsView.numeroRicorrenza(pos);
+				risorseView.numeroRicorrenza(pos);
 				messaggiSistemaView.cornice();
-				filmsView.stampaDati(elencoRisorse.elementAt((int)i), false);
+				risorseView.stampaDati(elencoRisorse.elementAt((int)i), false);
 				messaggiSistemaView.cornice();
 			}
 			
-			int daRimuovere = filmsView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
+			int daRimuovere = risorseView.chiediRicorrenzaDaRimuovere(posizioniRicorrenze.size());
 			
 			if(daRimuovere > 0)
 			{
 				idSelezionato = elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).getId();
 				elencoRisorse.get((int)posizioniRicorrenze.get(daRimuovere-1)).setPrestabile(false);;
-				filmsView.rimozioneAvvenuta();
+				risorseView.rimozioneAvvenuta();
 			}
 			else//0: annulla
 			{
@@ -224,7 +232,7 @@ public class RisorseController
 		{
 			String categoria = CATEGORIE[scelta - 1];
 //			viene passata come stringa la categoria selezionata: archivioController deciderà poi se creare un libro o un film
-			addRisorsa(categoria);
+			aggiungiRisorsa(categoria);
 		}
 		catch(ArrayIndexOutOfBoundsException e) 
 		{
@@ -233,17 +241,29 @@ public class RisorseController
 		}
 	} 
 	
-	public void addRisorsa(String categoria)
+//	utilizza FACTORY
+	public void aggiungiRisorsa(String categoria)
 	{
-		if(categoria == CATEGORIE[0])//LIBRO
+		if(risorseFactory == (null))
 		{
-//			controller interagisce con view per creare il libro
-			libriController.addLibro();
+			risorseFactory = new RisorseFactory(risorse, libriController.getLibriView(), filmsController.getFilmsView());
 		}
-		else if(categoria == CATEGORIE[1])//FILM
+		Risorsa risorsa = risorseFactory.creaRisorsa(categoria);
+		
+//		utente ha annullato
+		if(risorsa == (null))
 		{
-//			controller interagisce con view per creare il film
-			filmsController.addFilm();
+			return;
+		}
+		
+		boolean aggiuntaRiuscita = risorse.addRisorsa(risorsa);
+		if(aggiuntaRiuscita)
+		{
+			risorseView.aggiuntaRiuscita(risorsa.getClass());
+		}
+		else
+		{
+			risorseView.aggiuntaNonRiuscita(risorsa.getClass());
 		}
 	}
 
@@ -283,11 +303,51 @@ public class RisorseController
 		//anche se unifico con interfaccia risorsa devo comunque stampare i dati in modo diverso: films e risorse hanno campi diversi
 		if(categoria == CATEGORIE[0])
 		{
-			libriView.stampaDatiPerCategorie(risorseDaStampare);
+			libriController.getLibriView().stampaDati(risorseDaStampare);
 		}
 		else if(categoria == CATEGORIE[1])
 		{
 			filmsController.getFilmsView().stampaDati(risorseDaStampare);
 		}
 	}
+	
+	public Risorsa selezionaRisorsa(Vector<Risorsa> risorseFiltrate) 
+	{
+		if(risorseFiltrate.isEmpty())
+		{
+			risorseView.noRisorseDisponibili("libri");
+			return null;
+		}
+		else
+		{
+			for(int i = 0; i < risorseFiltrate.size(); i++)
+			{
+				risorseView.getMessaggiSistemaView().stampaPosizione(i);
+				risorseView.getMessaggiSistemaView().cornice();
+				risorseView.stampaDati(risorseFiltrate.get(i), true);
+				risorseView.getMessaggiSistemaView().cornice();
+			}
+			
+			int selezione;
+			do
+			{
+				risorseView.getMessaggiSistemaView().cornice();
+				selezione = risorseView.selezionaRisorsa(risorseFiltrate.size(), Libro.class);
+				if(selezione == 0)
+				{
+					return null;
+				}
+				else if(risorseFiltrate.get(selezione-1).getInPrestito() < risorseFiltrate.get(selezione-1).getNLicenze())
+				{
+					return risorseFiltrate.get(selezione-1);
+				}
+				else
+				{
+					risorseView.copieTutteInPrestito(risorseFiltrate.get(selezione-1).getTitolo());
+				}
+			}
+			while(true);
+		}		
+	}
+	
 }

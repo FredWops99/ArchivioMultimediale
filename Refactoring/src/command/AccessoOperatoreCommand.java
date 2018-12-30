@@ -1,5 +1,7 @@
 package command;
 
+import java.lang.reflect.InvocationTargetException;
+
 import handler.OperatoreHandler;
 import myLib.MyMenu;
 import viewInterfaces.IMessaggiSistemaView;
@@ -11,10 +13,20 @@ public class AccessoOperatoreCommand implements ICommand
 	private IMessaggiSistemaView messaggiSistemaView;
 
 	
-	public AccessoOperatoreCommand(OperatoreHandler handler, IMessaggiSistemaView messaggiSistemaView) 
+	public AccessoOperatoreCommand(OperatoreHandler handler) 
 	{
 		this.handler = handler;
-		this.messaggiSistemaView = messaggiSistemaView;
+		try 
+		{	//Singleton, istanziato da proprietà di sistema
+			this.messaggiSistemaView = (IMessaggiSistemaView)Class
+										.forName(System.getProperty("MessaggiSistemaView"))
+										.getMethod("getInstance")
+										.invoke(null, (Object[])null);
+		} 
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

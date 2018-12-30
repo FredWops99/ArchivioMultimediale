@@ -2,9 +2,6 @@ package testing;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import controllerMVC.FilmsController;
-import controllerMVC.RisorseController;
-import handler.ManageRisorseHandler;
 import interfaces.Risorsa;
 import model.Film;
 import model.Risorse;
@@ -12,13 +9,10 @@ import model.Risorse;
 public class TestFilm 
 {
 	Risorse risorse = new Risorse();
-	RisorseController risorseController = new RisorseController(risorse);
-	ManageRisorseHandler mr = new ManageRisorseHandler(risorseController);
-	FilmsController filmsController = new FilmsController(risorse,mr);
 	
 	@Test
 	public void filmEsistente()
-	{
+	{		
 		Film film = creaFilm("Titolo", "Avventura");
 		risorse.addRisorsa(film);
 		boolean esistente = risorse.risorsaEsistente(film);
@@ -79,21 +73,11 @@ public class TestFilm
 	@Test
 	public void creaEAggiungiFilm()
 	{
-		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
+		Film f = new Film("F0", "Azione", "titolo", "regista", 100, 2000, "italiano", 20);
+//		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
+		risorse.addRisorsa(f);
 		
 		assertEquals(1, risorse.getRisorse().size());
-	}
-	
-	@Test
-	public void lastId()
-	{
-		filmsController.addFilm("Azione", "titolo", "regista", 100, 2000, "italiano", 20);
-		filmsController.addFilm("Fantasy", "titolo", "regista", 100, 2000, "italiano", 20);
-
-		assertEquals(risorse.getRisorse().get(0).getId(), "F0");
-		assertEquals(risorse.getRisorse().get(1).getId(), "F1");
-
-		assertEquals(2, risorse.getLastId());
 	}
 	
 	public static Film creaFilm(String titolo, String sottoCategoria)

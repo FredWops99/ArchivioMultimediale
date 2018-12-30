@@ -11,7 +11,7 @@ import model.Prestiti;
 public class TestEccezioni 
 {
 	@Test(expected = RisorsaGi‡PossedutaException.class)
-	public void risorsaGi‡Posseduta() throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException 
+	public void risorsaGi‡PossedutaException() throws RaggiunteRisorseMaxException, RisorsaGi‡PossedutaException 
 	{
 		Prestiti prestiti = new Prestiti();
 		GregorianCalendar dataNascita = new GregorianCalendar(2000, 0, 1);

@@ -13,7 +13,7 @@ public interface ILibriView extends IRisorseView
 	public abstract String chiediLingua();
 	public abstract int chiediPagine();
 	public abstract Boolean ciSonoAltriAutori();
-	public abstract void stampaDatiPerCategorie(Vector<Risorsa> risorse);
+	public abstract void stampaDati(Vector<Risorsa> risorse);
 	public abstract void stampaGenere(Risorsa risorsa);
 	public abstract IMessaggiSistemaView getMessaggiSistemaView();
 }

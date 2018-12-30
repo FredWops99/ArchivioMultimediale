@@ -2,10 +2,16 @@ package view;
 
 import interfaces.Risorsa;
 import myLib.InputDati;
+import viewInterfaces.IMessaggiSistemaView;
 import viewInterfaces.IRisorseView;
 
-public abstract class RisorseView implements IRisorseView
+public class RisorseView implements IRisorseView
 {	
+	private IMessaggiSistemaView messaggiSistemaView = MessaggiSistemaView.getInstance();
+	public IMessaggiSistemaView getMessaggiSistemaView() 
+	{
+		return this.messaggiSistemaView;
+	}
 	public void stampaDati(Risorsa risorsa, boolean perPrestito)
 	{
 		System.out.println(risorsa.toString(perPrestito));

@@ -1,9 +1,10 @@
 package testing;
 
 import static org.junit.Assert.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.GregorianCalendar;
 import org.junit.Test;
-
 import controllerMVC.FruitoriController;
 import model.Fruitore;
 import model.Fruitori;
@@ -118,10 +119,17 @@ public class TestFruitori
 		Fruitori fruitori = new Fruitori();
 		fruitori.addFruitore(fruitore);
 		assertEquals(1, fruitori.getFruitori().size());
+//		serve per creare controller
+		try 
+		{
+			System.getProperties().load(new FileInputStream("config.properties"));
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 		FruitoriController fc = new FruitoriController(fruitori);
 		fc.controlloIscrizioni(true);
 		assertEquals(true, fruitori.trovaUtente("user", "psw").isDecaduto());
-
 	}
-	
 }
