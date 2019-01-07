@@ -10,7 +10,14 @@ import command.ICommand;
 import interfaces.ISavesManager;
 import view.MessaggiSistemaView;
 import viewInterfaces.IMessaggiSistemaView;
-
+/**
+ * Handler che gestisce le operazioni di sistema, delegando alle opportune classi, in base alla scelta dell'utente all'interno di un menu.
+ * qui in particolare vengono gestite le opzioni del menu in cui si seleziona il tipo di utente
+ * in questa classe non è più richiesta l'interazione con l'utente
+ * @author Stefano Prandini
+ * @author Federico Landi
+ *
+ */
 public class AccessoHandler 
 {
 	private FruitoreHandler fruitoreHandler;

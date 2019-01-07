@@ -311,11 +311,11 @@ public class RisorseController
 		}
 	}
 	
-	public Risorsa selezionaRisorsa(Vector<Risorsa> risorseFiltrate) 
+	public Risorsa selezionaRisorsa(Vector<Risorsa> risorseFiltrate, String categoria) 
 	{
 		if(risorseFiltrate.isEmpty())
 		{
-			risorseView.noRisorseDisponibili("libri");
+			risorseView.noRisorseDisponibili(categoria);
 			return null;
 		}
 		else
@@ -349,5 +349,4 @@ public class RisorseController
 			while(true);
 		}		
 	}
-	
 }

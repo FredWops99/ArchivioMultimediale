@@ -141,11 +141,6 @@ public class PrestitiController
 		}
 	}
 	
-//	public void menuTerminaPrestiti(Fruitore utenteLoggato, ArchivioController archivioController) 
-//	{
-		
-//	}
-	
 	/**
 	 * (precondizione: fruitore != null)
 	 * metodo che permette al fruitore di scegliere quale dei suoi prestiti attivi terminare

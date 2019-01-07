@@ -6,7 +6,14 @@ import controllerMVC.PrestitiController;
 import controllerMVC.StoricoController;
 import interfaces.ISavesManager;
 import myLib.MyMenu;
-
+/**
+ * Handler che gestisce le operazioni di sistema, delegando alle opportune classi, in base alla scelta dell'utente all'interno di un menu.
+ * qui in particolare vengono gestite le opzioni del menu personale di un operatore
+ * in questa classe non è più richiesta l'interazione con l'utente
+ * @author Stefano Prandini
+ * @author Federico Landi
+ *
+ */
 public class OperatoreHandler 
 {
 	private final String[] CATEGORIE = {"Libri","Films"};

@@ -62,7 +62,7 @@ public class FilmsController
 	
 	/**
 	 * presenta all'utente il menu per decidere se scegliere un film dall'archivio completo o filtrando la ricerca.
-	 * informerà della scelta l'handler del caso d'uso (ScegliFilmHandler)
+	 * in base alla scelta, delegherà ad un handler la gestione del caso d'uso
 	 * @return la risorsa selezionata dall'utente
 	 */
 	public Risorsa menuScegliFilm() 

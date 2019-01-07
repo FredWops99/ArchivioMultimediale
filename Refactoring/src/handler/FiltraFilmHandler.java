@@ -17,7 +17,7 @@ public class FiltraFilmHandler
 	/**
 	 * se i film vengono filtrati per essere prenotati viene restituita la lista, se invece è solo per la ricerca vengono visualizzati e basta
 	 * @param daPrenotare 
-	 * @return la lista dei film filtrati (if daPrenotare)
+	 * @return la lista dei film filtrati (if daPrenotare==true)
 	 */
 	public Vector<Risorsa> menuFiltraFilm(boolean daPrenotare) 
 	{

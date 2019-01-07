@@ -42,8 +42,11 @@ public class Main
 		}
 		
 		Fruitori fruitori = gestoreSalvataggi.getFruitori();
+		assert fruitori != null;
 		Risorse risorse = gestoreSalvataggi.getRisorse();
+		assert risorse != null;
 		Prestiti prestiti = gestoreSalvataggi.getPrestiti();
+		assert prestiti != null;
 	
 //		associa risorsa in Prestiti a risorsa in Archivio: quando si salva e carica i riferimenti si modificano (verificato con hashcode)
 		prestiti.ricostruisciPrestiti(risorse);
@@ -54,4 +57,19 @@ public class Main
 		MainFacade mainFacade = new MainFacade(risorse, fruitori, prestiti, storico, gestoreSalvataggi);
 		mainFacade.start();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

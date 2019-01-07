@@ -37,8 +37,7 @@ public class MainFacade
 	private StoricoController storicoController;
 	private ISavesManager gestoreSalvataggi;
 	
-	public MainFacade(Risorse risorse, Fruitori fruitori, Prestiti prestiti, 
-						Storico storico, ISavesManager gestoreSalvataggi)
+	public MainFacade(Risorse risorse, Fruitori fruitori, Prestiti prestiti, Storico storico, ISavesManager gestoreSalvataggi)
 	{ 
 		this.risorseController = new RisorseController(risorse);
 		this.fruitoriController = new FruitoriController(fruitori);

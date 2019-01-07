@@ -6,10 +6,17 @@ import controllerMVC.PrestitiController;
 import interfaces.ISavesManager;
 import model.Fruitore;
 import myLib.MyMenu;
-
+/**
+ * Handler che gestisce le operazioni di sistema, delegando alle opportune classi, in base alla scelta dell'utente all'interno di un menu.
+ * qui in particolare vengono gestite le opzioni del menu personale di un fruitore
+ * in questa classe non è più richiesta l'interazione con l'utente
+ * @author Stefano Prandini
+ * @author Federico Landi
+ *
+ */
 public class FruitoreHandler 
 {
-	private final String[] CATEGORIE = {"Libri","Film"};
+	private final String[] CATEGORIE = {"Libri","Films"};
 
 	private Fruitore utenteLoggato;
 	private FruitoriController fruitoriController;
@@ -27,11 +34,6 @@ public class FruitoreHandler
 		this.prestitiController = prestitiController;
 		this.gestoreSalvataggi = gestoreSalvataggi;
 		this.manageRisorseHandler = new ManageRisorseHandler(risorseController);
-	}
-	
-	public FruitoriController getFruitoriController() 
-	{
-		return fruitoriController;
 	}
 	
 	public boolean entryMenuFruitore(int scelta)

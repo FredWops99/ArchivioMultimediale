@@ -321,7 +321,7 @@ public class Films implements Serializable
 						FilmsFiltrati = filtraFilmPerUscita(annoUscita);
 						break;
 					}
-					case 3: //FILTRA PER AUTORE
+					case 3: //FILTRA PER REGISTA
 					{
 						nomeRegista = InputDati.leggiStringaNonVuota("Inserisci il nome del regista:  \n");
 						FilmsFiltrati = filtraFilmPerRegista(nomeRegista);

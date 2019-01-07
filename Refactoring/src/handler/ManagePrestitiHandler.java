@@ -5,10 +5,17 @@ import controllerMVC.PrestitiController;
 import interfaces.ISavesManager;
 import interfaces.Risorsa;
 import model.Fruitore;
-
+/**
+ * Handler che gestisce le operazioni di sistema, delegando alle opportune classi, in base alla scelta dell'utente all'interno di un menu.
+ * qui in particolare vengono gestite le opzioni dei menu per richiedere/terminare prestiti
+ * in questa classe non è più richiesta l'interazione con l'utente
+ * @author Stefano Prandini
+ * @author Federico Landi
+ *
+ */
 public class ManagePrestitiHandler 
 {
-	private static final String[] CATEGORIE = {"Libri","Film"};
+	private static final String[] CATEGORIE = {"Libri","Films"};
 	
 	private Fruitore utenteLoggato;
 	private PrestitiController prestitiController;

@@ -1,14 +1,11 @@
+command
 controllerMVC
 exceptions
-handler.prestiti
-handler.risorse
-handler.risorse.films
-handler.risorse.libri
-handler.storico
-handler.utenti
+handler
 interfaces
 model
 myLib
 service
 testing
 view
+viewInterfaces

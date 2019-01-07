@@ -3,7 +3,14 @@ package handler;
 import java.util.Vector;
 import controllerMVC.RisorseController;
 import interfaces.Risorsa;
-
+/**
+ * Handler che gestisce le operazioni di sistema, delegando alle opportune classi, in base alla scelta dell'utente all'interno di un menu.
+ * qui in particolare vengono gestite le opzioni dei menu per cercare una risorsa e scegliere una risorsa
+ * in questa classe non è più richiesta l'interazione con l'utente
+ * @author Stefano Prandini
+ * @author Federico Landi
+ *
+ */
 public class ManageRisorseHandler 
 {	
 	private RisorseController risorseController;
@@ -42,18 +49,17 @@ public class ManageRisorseHandler
 			}
 			case 1://FILTRA RICERCA
 			{
-				Vector<Risorsa> filmsFiltrati = filtraFilmHandler.menuFiltraFilm(true);
-				
-				return risorseController.selezionaRisorsa(filmsFiltrati);
+				Vector<Risorsa>filmsFiltrati = filtraFilmHandler.menuFiltraFilm(true);
+				return risorseController.selezionaRisorsa(filmsFiltrati, "film");
 			}
 			case 2://VISUALIZZA ARCHIVIO
 			{
 				Vector<Risorsa>filmPrestabili = risorseController.getFilmsController().filmsPrestabili();
-				
-				return risorseController.selezionaRisorsa(filmPrestabili);
+				return risorseController.selezionaRisorsa(filmPrestabili, "film");
 			}
 		}
 //		DEFAULT: qua non arriva mai
+		assert false;
 		return null;
 	}
 	
@@ -69,14 +75,14 @@ public class ManageRisorseHandler
 			{
 				Vector<Risorsa> libriFiltrati = filtraLibriHandler.menuFiltraLibri(true);
 				
-				return risorseController.selezionaRisorsa(libriFiltrati);
+				return risorseController.selezionaRisorsa(libriFiltrati, "libri");
 			}
 				
 			case 2://VISUALIZZA ARCHIVIO
 			{
 				Vector<Risorsa>libriPrestabili = risorseController.getLibriController().libriPrestabili();
 				
-				return risorseController.selezionaRisorsa(libriPrestabili);
+				return risorseController.selezionaRisorsa(libriPrestabili, "libri");
 			}
 		}
 //		DEFAULT: qua non arriva mai
